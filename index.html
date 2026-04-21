@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="idea-slug" content="token-station-smart-routing" />
+  <title>Token Station — Cut LLM Costs 60-80% with Smart Routing</title>
+  <meta name="description" content="Token Station routes each API call to the cheapest capable LLM provider. One endpoint, automatic failover, zero markup. Drop in your key and start saving today." />
+
+  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (code) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0A0A0A',
+            surface: '#1E1E1E',
+            border: '#2A2A2A',
+            muted: '#888888',
+            blue: '#7298F9',
+            green: '#3ECF8E',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- GTM placeholder -->
+  <!-- GTM-XXXXXXX -->
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #0A0A0A;
+      color: #EDEDED;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+    }
+
+    /* Animate on scroll */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Code block */
+    .code-block {
+      background: #111111;
+      border: 1px solid #2A2A2A;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1A1A1A;
+      border-bottom: 1px solid #2A2A2A;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .code-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .code-body { padding: 20px 24px; }
+    .comment { color: #4A5568; }
+    .keyword { color: #7298F9; }
+    .string { color: #3ECF8E; }
+    .diff-add { color: #3ECF8E; }
+    .diff-del { color: #FC8181; text-decoration: line-through; opacity: 0.5; }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #7298F9 0%, #3ECF8E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Pill button */
+    .btn-primary {
+      background: #7298F9;
+      color: #0A0A0A;
+      border-radius: 50px;
+      padding: 14px 28px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { background: #8BAAFF; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(114,152,249,0.3); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: transparent;
+      color: #EDEDED;
+      border: 1px solid #2A2A2A;
+      border-radius: 50px;
+      padding: 13px 26px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-secondary:hover { border-color: #7298F9; color: #7298F9; }
+
+    .btn-stripe {
+      background: linear-gradient(135deg, #3ECF8E, #2BB47C);
+      color: #0A0A0A;
+      border-radius: 50px;
+      padding: 16px 32px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-stripe:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(62,207,142,0.4); }
+
+    /* Card */
+    .card {
+      background: #1E1E1E;
+      border: 1px solid #2A2A2A;
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: #7298F9; transform: translateY(-2px); }
+
+    /* Email form */
+    .email-form-group {
+      display: flex;
+      gap: 8px;
+      max-width: 480px;
+    }
+    .email-input {
+      flex: 1;
+      background: #1E1E1E;
+      border: 1px solid #2A2A2A;
+      border-radius: 50px;
+      padding: 14px 20px;
+      color: #EDEDED;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input:focus { border-color: #7298F9; }
+    .email-input::placeholder { color: #555555; }
+
+    /* Pricing table */
+    .pricing-card {
+      background: #1E1E1E;
+      border: 1px solid #2A2A2A;
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .pricing-card.featured {
+      border-color: #7298F9;
+      box-shadow: 0 0 40px rgba(114,152,249,0.15);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #7298F9;
+      color: #0A0A0A;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 50px;
+    }
+
+    /* Stat number */
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1A1A1A;
+    }
+
+    /* Divider glow */
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #7298F9, transparent);
+      margin: 0 auto;
+      width: 60%;
+    }
+
+    /* Section label */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7298F9;
+    }
+
+    /* ROI bar */
+    .roi-bar-bg {
+      background: #2A2A2A;
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .roi-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #7298F9, #3ECF8E);
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Form message */
+    .form-message {
+      font-size: 13px;
+      margin-top: 8px;
+      padding-left: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .stat-number { font-size: 40px; }
+      .email-form-group { flex-direction: column; }
+      .email-form-group .btn-primary { border-radius: 50px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="https://assets.prizmox.com/lp-assets/token-station-smart-routing_logo_512x512_20260416_121207.jpg"
+           alt="Token Station logo" style="width:30px; height:30px; border-radius:8px; object-fit:cover;" />
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em;">Token Station</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="#features" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">Features</a>
+      <a href="#pricing" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">Pricing</a>
+      <a href="#faq" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">FAQ</a>
+      <a href="#hero-form" class="btn-primary" style="padding:10px 20px; font-size:13px;">Get Early Access</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ─── HERO ─── -->
+<section id="hero" style="padding: 96px 24px 80px; max-width:1200px; margin:0 auto;">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+
+    <!-- Left: Copy -->
+    <div>
+      <div class="section-label" style="margin-bottom:16px;">Smart LLM Routing</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(40px,5vw,68px); font-weight:700; letter-spacing:-0.03em; line-height:1.05; margin:0 0 24px;">
+        60–80% less on<br />LLM costs.<br />
+        <span class="gradient-text">Same output quality.</span>
+      </h1>
+      <p style="font-size:18px; color:#AAAAAA; line-height:1.7; margin:0 0 36px; max-width:460px;">
+        One Token Station key unlocks 100+ models — OpenAI, Anthropic, Google, and more.
+        No sign-ups. No separate API keys. Smart routing picks the cheapest model that gets the job done.
+      </p>
+
+      <!-- Email form -->
+      <form id="hero-form" class="email-capture-form" onsubmit="return submitEmail(event, 'hero')">
+        <div class="email-form-group">
+          <input type="email" name="email" placeholder="you@company.com" required class="email-input" />
+          <button type="submit" class="btn-primary" onclick="dataLayer.push({event: 'cta_click'})">
+            Join Beta Waitlist — Free
+          </button>
+        </div>
+        <p class="form-message" style="color:#3ECF8E; display:none;"></p>
+      </form>
+
+      <p style="font-size:13px; color:#555555; margin-top:16px;">
+        No credit card. First 200 early users lock in launch pricing forever.
+      </p>
+
+      <!-- Proof row -->
+      <div style="display:flex; align-items:center; gap:24px; margin-top:32px; padding-top:32px; border-top: 1px solid #1E1E1E;">
+        <div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#3ECF8E;">85%</span><sup style="color:#3ECF8E; font-size:10px;">†</sup>
+          <span style="font-size:12px; color:#666666; margin-left:6px;">cost reduction</span>
+        </div>
+        <div style="width:1px; height:28px; background:#2A2A2A;"></div>
+        <div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#7298F9;">95%</span>
+          <span style="font-size:12px; color:#666666; margin-left:6px;">quality preserved</span>
+        </div>
+        <div style="width:1px; height:28px; background:#2A2A2A;"></div>
+        <div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#EDEDED;">&lt;200ms</span>
+          <span style="font-size:12px; color:#666666; margin-left:6px;">failover latency</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Code snippet visual anchor -->
+    <div>
+      <div class="code-block" style="box-shadow: 0 0 60px rgba(114,152,249,0.1);">
+        <div class="code-header">
+          <div class="code-dot" style="background:#FC8181;"></div>
+          <div class="code-dot" style="background:#F6AD55;"></div>
+          <div class="code-dot" style="background:#68D391;"></div>
+          <span style="margin-left:8px; color:#4A5568; font-size:12px;">api_client.py</span>
+        </div>
+        <div class="code-body">
+          <div class="comment"># Before: one provider, full price</div>
+          <div style="margin-top:8px;">
+            <span class="diff-del">client = OpenAI(</span><br/>
+            <span class="diff-del">&nbsp;&nbsp;api_key=<span style="color:#FC8181">"sk-..."</span>,</span><br/>
+            <span class="diff-del">)</span>
+          </div>
+          <div style="margin-top:20px;" class="comment"># After: smart routing, 60-80% cheaper</div>
+          <div style="margin-top:8px;">
+            <span class="diff-add">client = OpenAI(</span><br/>
+            <span class="diff-add">&nbsp;&nbsp;api_key=<span style="color:#3ECF8E">"ts_live_..."</span>,</span><br/>
+            <span class="diff-add">&nbsp;&nbsp;base_url=<span style="color:#3ECF8E">"https://api.tokenstation.dev/v1"</span></span><br/>
+            <span class="diff-add">)</span>
+          </div>
+          <div style="margin-top:20px; padding-top:20px; border-top:1px solid #2A2A2A;">
+            <span class="comment"># Everything else stays the same.</span><br/>
+            <span style="color:#7298F9;">response</span> = client.chat.completions.create(
+            <br/>&nbsp;&nbsp;<span style="color:#F6AD55;">model</span>=<span class="string">"gpt-4o"</span>,
+            <br/>&nbsp;&nbsp;<span style="color:#F6AD55;">messages</span>=[...]
+            <br/>)
+            <div style="margin-top:12px; padding:12px 16px; background:#0A1F0F; border-radius:8px; border:1px solid #1A3A1A;">
+              <span style="color:#3ECF8E;">✓</span> <span style="color:#888888; font-size:12px;">Routed to claude-3-haiku · saved </span><span style="color:#3ECF8E;">$0.0041</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Hero image -->
+<div style="max-width:1200px; margin:0 auto 96px; padding: 0 24px;">
+  <img src="https://assets.prizmox.com/lp-assets/token-station-smart-routing_hero_1600x900_20260416_121224.jpg"
+       alt="Developer workspace" loading="lazy"
+       style="width:100%; border-radius:16px; object-fit:cover; max-height:400px; border:1px solid #1E1E1E;" />
+</div>
+
+
+<!-- ─── PAIN POINTS ─── -->
+<section style="padding: 96px 24px; border-top:1px solid #1A1A1A;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">The Hidden Tax You're Paying</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 56px;">
+      Your LLM bill doesn't have to look like this.
+    </h2>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
+
+      <div class="card animate-on-scroll">
+        <div style="font-size:28px; margin-bottom:16px;">📈</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 12px;">Costs that don't stop climbing</h3>
+        <p style="color:#888888; line-height:1.65; margin:0 0 16px; font-size:15px;">
+          "We started with Claude Opus for everything because it worked great. The bill was $250/month for maybe 10K conversations."
+        </p>
+        <p style="color:#555555; font-size:13px; font-family:'JetBrains Mono',monospace;">— HN comment, 2026</p>
+        <p style="margin:12px 0 0; font-size:13px; color:#3ECF8E;">→ Token Station: set a hard cap. Bill stops there.</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.1s;">
+        <div style="font-size:28px; margin-bottom:16px;">🔴</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 12px;">2 AM outages kill your pipeline</h3>
+        <p style="color:#888888; line-height:1.65; margin:0 0 16px; font-size:15px;">
+          "Claude's API had been returning 529 'Overloaded' errors since 2 AM, and our entire document summarization flow was dead."
+        </p>
+        <p style="color:#555555; font-size:13px; font-family:'JetBrains Mono',monospace;">— Production postmortem</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.2s;">
+        <div style="font-size:28px; margin-bottom:16px;">💸</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 12px;">Provider markup is a quiet thief</h3>
+        <p style="color:#888888; line-height:1.65; margin:0 0 16px; font-size:15px;">
+          "The 5% markup at $100K/month is $60K/year just for routing. I could hire someone for that."
+        </p>
+        <p style="color:#555555; font-size:13px; font-family:'JetBrains Mono',monospace;">— Engineering lead, Series B startup</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── HOW IT WORKS ─── -->
+<section style="padding: 96px 24px; max-width:1200px; margin:0 auto;">
+  <div class="section-label animate-on-scroll" style="margin-bottom:16px;">How It Works</div>
+  <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; margin:0 0 64px; max-width:500px;">
+    One URL change. Instant savings.
+  </h2>
+
+  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;">
+
+    <div class="animate-on-scroll">
+      <div style="width:40px; height:40px; border-radius:10px; background:#1E1E1E; border:1px solid #2A2A2A; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#7298F9; margin-bottom:20px;">01</div>
+      <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Swap your base URL</h3>
+      <p style="color:#888888; line-height:1.65; margin:0; font-size:15px;">Change one line. Your existing OpenAI SDK code works unchanged — Token Station is fully API-compatible.</p>
+    </div>
+
+    <div class="animate-on-scroll" style="transition-delay:0.1s;">
+      <div style="width:40px; height:40px; border-radius:10px; background:#1E1E1E; border:1px solid #2A2A2A; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#7298F9; margin-bottom:20px;">02</div>
+      <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">We route every call</h3>
+      <p style="color:#888888; line-height:1.65; margin:0; font-size:15px;">Our router evaluates complexity, context, and quality requirements to pick the cheapest model that passes your bar.</p>
+    </div>
+
+    <div class="animate-on-scroll" style="transition-delay:0.2s;">
+      <div style="width:40px; height:40px; border-radius:10px; background:#1E1E1E; border:1px solid #2A2A2A; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#7298F9; margin-bottom:20px;">03</div>
+      <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Watch costs drop</h3>
+      <p style="color:#888888; line-height:1.65; margin:0; font-size:15px;">Real-time dashboard shows savings per call. If a provider goes down, we failover automatically — your users never notice.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── SUPPORTED PROVIDERS ─── -->
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  .marquee-wrap { overflow: hidden; position: relative; }
+  .marquee-wrap::before, .marquee-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .marquee-wrap::before { left: 0; background: linear-gradient(to right, #0A0A0A, transparent); }
+  .marquee-wrap::after  { right: 0; background: linear-gradient(to left, #0A0A0A, transparent); }
+
+  .provider-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; margin: 0 8px;
+    background: #1A1A1A; border: 1px solid #2A2A2A;
+    border-radius: 50px; white-space: nowrap;
+    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
+    color: #CCCCCC;
+    transition: border-color 0.2s;
+  }
+  .provider-chip:hover { border-color: #444; }
+  .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .model-card {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .model-card:hover { border-color: #333; background: #1A1A1A; }
+  .logo-chip {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 11px; letter-spacing: 0.02em; flex-shrink: 0;
+  }
+  .model-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: #555; background: #1E1E1E; border: 1px solid #282828;
+    border-radius: 4px; padding: 2px 7px; display: inline-block; margin: 2px 2px 0 0;
+  }
+  .type-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px;
+  }
+</style>
+
+<section style="padding: 64px 0 80px; border-top:1px solid #1A1A1A; overflow:hidden;">
+
+  <!-- Header -->
+  <div style="max-width:1200px; margin:0 auto 40px; padding:0 24px;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:12px;">100+ Models</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,3vw,34px); font-weight:700; letter-spacing:-0.02em; text-align:center; margin:0 0 10px;">
+      One endpoint. Text, code, and video.
+    </h2>
+    <p class="animate-on-scroll" style="text-align:center; color:#666; font-size:14px; margin:0;">Route between them automatically — or pin a specific model per request.</p>
+  </div>
+
+  <!-- Marquee ticker -->
+  <div class="marquee-wrap animate-on-scroll" style="margin-bottom:48px; padding:4px 0;">
+    <div class="marquee-track">
+      <!-- Set 1 -->
+      <span class="provider-chip"><span class="chip-dot" style="background:#10A37F;"></span>OpenAI</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#CC785C;"></span>Anthropic</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4285F4;"></span>Google</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF7000;"></span>Mistral</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#0082FB;"></span>Meta / Llama</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF9900;"></span>Amazon Bedrock</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4D6BFE;"></span>DeepSeek</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FFFFFF;"></span>xAI Grok</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#F55036;"></span>Groq</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#7B2FBE;"></span>Runway</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF3D00;"></span>Kling AI</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#6E00FF;"></span>Pika</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#00C2A0;"></span>Luma</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#39594D;"></span>Cohere</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4285F4;"></span>Google Veo</span>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <span class="provider-chip"><span class="chip-dot" style="background:#10A37F;"></span>OpenAI</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#CC785C;"></span>Anthropic</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4285F4;"></span>Google</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF7000;"></span>Mistral</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#0082FB;"></span>Meta / Llama</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF9900;"></span>Amazon Bedrock</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4D6BFE;"></span>DeepSeek</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FFFFFF;"></span>xAI Grok</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#F55036;"></span>Groq</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#7B2FBE;"></span>Runway</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#FF3D00;"></span>Kling AI</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#6E00FF;"></span>Pika</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#00C2A0;"></span>Luma</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#39594D;"></span>Cohere</span>
+      <span class="provider-chip"><span class="chip-dot" style="background:#4285F4;"></span>Google Veo</span>
+    </div>
+  </div>
+
+  <!-- Model grids -->
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+
+    <!-- LLM section -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;" class="animate-on-scroll">
+      <span class="type-label" style="background:rgba(114,152,249,0.1); color:#7298F9; border:1px solid rgba(114,152,249,0.2);">
+        <span style="font-size:11px;">◈</span> Language Models
+      </span>
+      <div style="flex:1; height:1px; background:#1E1E1E;"></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:36px;" class="animate-on-scroll">
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D2E20; color:#10A37F; border:1px solid rgba(16,163,127,0.3);">OAI</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">OpenAI</span>
+        </div>
+        <div><span class="model-tag">gpt-4o</span><span class="model-tag">gpt-4o-mini</span><span class="model-tag">o3</span><span class="model-tag">o4-mini</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#2E1A12; color:#CC785C; border:1px solid rgba(204,120,92,0.3);">ANT</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Anthropic</span>
+        </div>
+        <div><span class="model-tag">opus-4-6</span><span class="model-tag">sonnet-4-6</span><span class="model-tag">haiku-4-5</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D1E3D; color:#4285F4; border:1px solid rgba(66,133,244,0.3);">GGL</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Google</span>
+        </div>
+        <div><span class="model-tag">gemini-2.5-pro</span><span class="model-tag">2.0-flash</span><span class="model-tag">flash-lite</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#2E1800; color:#FF7000; border:1px solid rgba(255,112,0,0.3);">MST</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Mistral</span>
+        </div>
+        <div><span class="model-tag">large-latest</span><span class="model-tag">small-latest</span><span class="model-tag">codestral</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D1A2E; color:#0082FB; border:1px solid rgba(0,130,251,0.3);">LMA</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Meta / Llama</span>
+        </div>
+        <div><span class="model-tag">3.3-70b</span><span class="model-tag">3.1-405b</span><span class="model-tag">3.2-vision</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#1A1200; color:#FF9900; border:1px solid rgba(255,153,0,0.3);">AWS</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Bedrock</span>
+        </div>
+        <div><span class="model-tag">nova-pro-v1</span><span class="model-tag">nova-lite-v1</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D0E2E; color:#4D6BFE; border:1px solid rgba(77,107,254,0.3);">DSK</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">DeepSeek</span>
+        </div>
+        <div><span class="model-tag">v3</span><span class="model-tag">r1</span><span class="model-tag">r1-distill</span></div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#1A1A1A; color:#CCCCCC; border:1px solid #333;">xAI</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">xAI Grok</span>
+        </div>
+        <div><span class="model-tag">grok-3</span><span class="model-tag">grok-3-mini</span></div>
+      </div>
+
+    </div>
+
+    <!-- Video section -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;" class="animate-on-scroll">
+      <span class="type-label" style="background:rgba(62,207,142,0.1); color:#3ECF8E; border:1px solid rgba(62,207,142,0.2);">
+        <span style="font-size:11px;">▶</span> Video &amp; Multimodal Models
+      </span>
+      <div style="flex:1; height:1px; background:#1E1E1E;"></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;" class="animate-on-scroll">
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D2E20; color:#10A37F; border:1px solid rgba(16,163,127,0.3);">SRA</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Sora</span>
+        </div>
+        <div><span class="model-tag">sora-1080p</span><span class="model-tag">sora-turbo</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">OpenAI</div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#1A0D2E; color:#7B2FBE; border:1px solid rgba(123,47,190,0.3);">RWY</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Runway</span>
+        </div>
+        <div><span class="model-tag">gen-4-turbo</span><span class="model-tag">gen-3-alpha</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">Runway ML</div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#2E0D00; color:#FF3D00; border:1px solid rgba(255,61,0,0.3);">KLG</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Kling AI</span>
+        </div>
+        <div><span class="model-tag">kling-v3-0</span><span class="model-tag">kling-v1-6</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">Kuaishou</div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#1A0D2E; color:#6E00FF; border:1px solid rgba(110,0,255,0.3);">PKA</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Pika</span>
+        </div>
+        <div><span class="model-tag">pika-2.2</span><span class="model-tag">pika-2.1</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">Pika Labs</div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#002E28; color:#00C2A0; border:1px solid rgba(0,194,160,0.3);">LMA</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Luma</span>
+        </div>
+        <div><span class="model-tag">dream-machine-2</span><span class="model-tag">ray-2</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">Luma AI</div>
+      </div>
+
+      <div class="model-card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div class="logo-chip" style="background:#0D1E3D; color:#4285F4; border:1px solid rgba(66,133,244,0.3);">VEO</div>
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px;">Google Veo</span>
+        </div>
+        <div><span class="model-tag">veo-3.1-preview</span><span class="model-tag">veo-2</span></div>
+        <div style="margin-top:8px; font-size:11px; color:#555; font-family:'JetBrains Mono',monospace;">Google DeepMind</div>
+      </div>
+
+      <div class="model-card" style="border-style:dashed; border-color:#222; display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100px;">
+        <span style="font-size:20px; margin-bottom:8px;">＋</span>
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; color:#555; text-align:center;">More coming<br/>based on demand</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Section image -->
+<div style="max-width:1200px; margin:0 auto 96px; padding: 0 24px;">
+  <img src="https://assets.prizmox.com/lp-assets/token-station-smart-routing_section_1200x800_20260416_121247.jpg"
+       alt="Server infrastructure" loading="lazy"
+       style="width:100%; border-radius:16px; object-fit:cover; max-height:480px; border:1px solid #1E1E1E;" />
+</div>
+
+
+<!-- ─── FEATURES ─── -->
+<section id="features" style="padding: 96px 24px; border-top:1px solid #1A1A1A;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Built for Production</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 64px;">
+      Everything a serious team needs
+    </h2>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
+
+      <div class="card animate-on-scroll">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(114,152,249,0.1); border:1px solid rgba(114,152,249,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">⚡</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Smart Cost Routing</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">RouteLLM-based intelligent model selection. Sends simple tasks to cheap models, complex ones to capable ones — automatically.</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.08s;">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(62,207,142,0.1); border:1px solid rgba(62,207,142,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">🔁</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Automatic Failover</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">Provider down? We reroute within 200ms. No alerts, no manual intervention — your users stay unaware.</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.16s;">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(114,152,249,0.1); border:1px solid rgba(114,152,249,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">🎯</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Quality Controls</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">Set minimum quality thresholds per request. Guaranteed ≥95% of GPT-4 quality, validated on RouteLLM benchmark (ICLR 2025).</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.08s;">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(62,207,142,0.1); border:1px solid rgba(62,207,142,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">🔌</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">One Endpoint</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">Drop-in OpenAI-compatible API. Works with LangChain, LlamaIndex, and any SDK without changes.</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.16s;">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(114,152,249,0.1); border:1px solid rgba(114,152,249,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">📊</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Cost Analytics</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">Real-time dashboard breaks down spend by model, endpoint, and team. Know exactly where every dollar goes.</p>
+      </div>
+
+      <div class="card animate-on-scroll" style="transition-delay:0.24s;">
+        <div style="width:36px; height:36px; border-radius:8px; background:rgba(62,207,142,0.1); border:1px solid rgba(62,207,142,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <span style="font-size:16px;">🔒</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Zero Markup on Tokens</h3>
+        <p style="color:#888888; line-height:1.65; margin:0; font-size:14px;">Token usage billed at provider's published rates — we add nothing on top. You pay for what you use, nothing more.</p>
+      </div>
+
+    </div>
+
+    <!-- Budget Cap callout — full width featured card -->
+    <div class="animate-on-scroll" style="margin-top:24px; background:#0D1A10; border:1px solid rgba(62,207,142,0.25); border-radius:16px; padding:32px 36px; display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;">
+      <div style="width:52px; height:52px; border-radius:12px; background:rgba(62,207,142,0.12); border:1px solid rgba(62,207,142,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-size:24px;">🛡️</span>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin:0; color:#EDEDED;">Hard Budget Caps — Never See a Surprise Bill Again</h3>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:rgba(62,207,142,0.15); color:#3ECF8E; border:1px solid rgba(62,207,142,0.3); padding:3px 10px; border-radius:50px;">New</span>
+        </div>
+        <p style="color:#888888; line-height:1.65; margin:0 0 16px; font-size:14px; max-width:680px;">
+          Set a monthly spend limit per project, per team, or per API key. When you hit the cap, Token Station stops routing — no overages, no exceptions.
+          Get a Slack or email alert at 70%, 90%, and 100% so you're never caught off guard.
+        </p>
+        <div style="display:flex; gap:24px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:#3ECF8E; font-size:13px;">✓</span>
+            <span style="font-size:13px; color:#AAAAAA;">Hard cap per project or key</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:#3ECF8E; font-size:13px;">✓</span>
+            <span style="font-size:13px; color:#AAAAAA;">Alerts at 70% / 90% / 100%</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:#3ECF8E; font-size:13px;">✓</span>
+            <span style="font-size:13px; color:#AAAAAA;">Zero overage, guaranteed</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="color:#3ECF8E; font-size:13px;">✓</span>
+            <span style="font-size:13px; color:#AAAAAA;">Slack + email notifications</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature image -->
+    <div style="margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center;">
+      <div class="animate-on-scroll">
+        <img src="https://assets.prizmox.com/lp-assets/token-station-smart-routing_feature_800x800_20260416_121304.jpg"
+             alt="Smart routing network" loading="lazy"
+             style="width:100%; border-radius:16px; object-fit:cover; aspect-ratio:1/1; border:1px solid #1E1E1E;" />
+      </div>
+      <div class="animate-on-scroll" style="transition-delay:0.1s;">
+        <div class="section-label" style="margin-bottom:16px;">Research-Backed</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; letter-spacing:-0.02em; margin:0 0 20px;">Built on ICLR 2025 research</h3>
+        <p style="color:#888888; line-height:1.7; margin:0 0 24px;">
+          Token Station's routing engine is grounded in RouteLLM — published at ICLR 2025. The results are clear: route only 14% of calls to GPT-4 while preserving 95% of the benchmark performance.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:13px; color:#EDEDED;">Cost reduction</span>
+              <span style="font-size:13px; color:#3ECF8E; font-weight:600;">85%</span>
+            </div>
+            <div class="roi-bar-bg"><div class="roi-bar-fill" id="bar1" style="width:0%;" data-target="85"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:13px; color:#EDEDED;">Quality preserved</span>
+              <span style="font-size:13px; color:#7298F9; font-weight:600;">95%</span>
+            </div>
+            <div class="roi-bar-bg"><div class="roi-bar-fill" id="bar2" style="width:0%;" data-target="95"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:13px; color:#EDEDED;">Failover success rate</span>
+              <span style="font-size:13px; color:#3ECF8E; font-weight:600;">99.9%</span>
+            </div>
+            <div class="roi-bar-bg"><div class="roi-bar-fill" id="bar3" style="width:0%;" data-target="99.9"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── SOCIAL PROOF ─── -->
+<section style="padding: 96px 24px; background: #0D0D0D; border-top:1px solid #1A1A1A; border-bottom:1px solid #1A1A1A;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Why Developers Are Done with Single-Provider Lock-in</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 64px;">
+      The data is clear.
+    </h2>
+
+    <!-- Stat row -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-bottom:64px; text-align:center;">
+      <div class="animate-on-scroll">
+        <div class="stat-number gradient-text" id="stat1" data-target="80">0</div>
+        <div style="font-size:13px; color:#666; margin-top:6px;">% LLM price drop in 2025–2026</div>
+      </div>
+      <div class="animate-on-scroll" style="transition-delay:0.08s;">
+        <div class="stat-number" style="color:#7298F9;" id="stat2" data-target="85">0</div>
+        <div style="font-size:13px; color:#666; margin-top:6px;">% cost reduction (RouteLLM)<sup style="color:#7298F9; font-size:10px;">†</sup></div>
+      </div>
+      <div class="animate-on-scroll" style="transition-delay:0.16s;">
+        <div class="stat-number" style="color:#3ECF8E;">60<span style="font-size:32px; font-weight:600;">%</span></div>
+        <div style="font-size:13px; color:#666; margin-top:6px;">savings via Amazon Bedrock routing<sup style="color:#3ECF8E; font-size:10px;">‡</sup></div>
+      </div>
+      <div class="animate-on-scroll" style="transition-delay:0.24s;">
+        <div class="stat-number" style="color:#EDEDED;">$0</div>
+        <div style="font-size:13px; color:#666; margin-top:6px;">markup on provider tokens</div>
+      </div>
+    </div>
+
+    <!-- Data source footnotes -->
+    <div class="animate-on-scroll" style="margin-top:48px; padding:20px 24px; background:#111111; border:1px solid #1E1E1E; border-radius:10px; max-width:720px; margin-left:auto; margin-right:auto;">
+      <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#555555; line-height:1.8; margin:0;">
+        <sup style="color:#7298F9;">†</sup> RouteLLM: Learning to Route LLMs with Preference Data — Published at ICLR 2025.
+        Routes only 14% of queries to a strong model while preserving 95% benchmark quality; measured 85% cost reduction.
+        <a href="https://arxiv.org/abs/2406.18665" target="_blank" rel="noopener"
+           style="color:#7298F9; text-decoration:none; border-bottom:1px solid rgba(114,152,249,0.3);">arxiv.org/abs/2406.18665</a>
+        &nbsp;&nbsp;
+        <sup style="color:#3ECF8E;">‡</sup> Amazon Web Services, Intelligent Prompt Routing on Amazon Bedrock — measured 60% cost reduction in production workloads.
+        <a href="https://aws.amazon.com/bedrock/prompt-routing/" target="_blank" rel="noopener"
+           style="color:#3ECF8E; text-decoration:none; border-bottom:1px solid rgba(62,207,142,0.3);">aws.amazon.com/bedrock/prompt-routing</a>
+      </p>
+    </div>
+
+    <!-- Quote -->
+    <div class="animate-on-scroll" style="background:#1E1E1E; border:1px solid #2A2A2A; border-radius:16px; padding:40px; max-width:720px; margin:0 auto; text-align:center;">
+      <p style="font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:500; line-height:1.6; color:#EDEDED; margin:0 0 20px;">
+        "LLM prices dropped 80% — but only if you can actually switch providers. Most teams can't. That's the problem."
+      </p>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#555555;">— Developer community consensus, 2026</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── PRICING ─── -->
+<section id="pricing" style="padding: 96px 24px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Pricing</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 12px;">
+      No subscription. Pay for what you use.
+    </h2>
+    <p class="animate-on-scroll" style="text-align:center; color:#888888; font-size:16px; margin:0 0 56px;">
+      Sign up free. Top up credits when you need them. Smart routing means your credits go further.
+    </p>
+
+    <!-- How it works flow -->
+    <div class="animate-on-scroll" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; max-width:800px; margin:0 auto 48px; background:#1A1A1A; border:1px solid #2A2A2A; border-radius:16px; overflow:hidden;">
+
+      <div style="padding:32px 28px; border-right:1px solid #2A2A2A; text-align:center;">
+        <div style="font-size:28px; margin-bottom:12px;">🎁</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#3ECF8E; margin-bottom:6px;">$5 free</div>
+        <div style="font-size:13px; color:#888; line-height:1.5;">Sign up and get $5 in credits instantly. No credit card needed.</div>
+      </div>
+
+      <div style="padding:32px 28px; border-right:1px solid #2A2A2A; text-align:center;">
+        <div style="font-size:28px; margin-bottom:12px;">⚡</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#7298F9; margin-bottom:6px;">Pay as you go</div>
+        <div style="font-size:13px; color:#888; line-height:1.5;">Top up from $10. Credits never expire. Use across all 100+ models.</div>
+      </div>
+
+      <div style="padding:32px 28px; text-align:center;">
+        <div style="font-size:28px; margin-bottom:12px;">📉</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#3ECF8E; margin-bottom:6px;">Spend less</div>
+        <div style="font-size:13px; color:#888; line-height:1.5;">Smart routing sends each call to the cheapest capable model. Same output, lower bill.</div>
+      </div>
+
+    </div>
+
+    <!-- What $10 gets you -->
+    <div class="animate-on-scroll" style="max-width:800px; margin:0 auto 48px;">
+      <div style="text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:#555; margin-bottom:20px; letter-spacing:0.1em; text-transform:uppercase;">What $10 in credits gets you</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
+
+        <div style="background:#141414; border:1px solid #222; border-radius:12px; padding:16px; text-align:center;">
+          <div class="logo-chip" style="background:#0D2E20; color:#10A37F; border:1px solid rgba(16,163,127,0.3); margin:0 auto 10px;">OAI</div>
+          <div style="font-size:12px; color:#AAAAAA; margin-bottom:4px;">GPT-4o-mini</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#EDEDED;">~60K</div>
+          <div style="font-size:11px; color:#555;">messages</div>
+        </div>
+
+        <div style="background:#141414; border:1px solid #222; border-radius:12px; padding:16px; text-align:center;">
+          <div class="logo-chip" style="background:#0D1E3D; color:#4285F4; border:1px solid rgba(66,133,244,0.3); margin:0 auto 10px;">GGL</div>
+          <div style="font-size:12px; color:#AAAAAA; margin-bottom:4px;">Gemini Flash</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#EDEDED;">~90K</div>
+          <div style="font-size:11px; color:#555;">messages</div>
+        </div>
+
+        <div style="background:#141414; border:1px solid #222; border-radius:12px; padding:16px; text-align:center;">
+          <div class="logo-chip" style="background:#2E1A12; color:#CC785C; border:1px solid rgba(204,120,92,0.3); margin:0 auto 10px;">ANT</div>
+          <div style="font-size:12px; color:#AAAAAA; margin-bottom:4px;">Claude Haiku</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#EDEDED;">~10K</div>
+          <div style="font-size:11px; color:#555;">messages</div>
+        </div>
+
+        <div style="background:#0D1A10; border:1px solid rgba(62,207,142,0.2); border-radius:12px; padding:16px; text-align:center;">
+          <div style="font-size:20px; margin-bottom:10px;">🔀</div>
+          <div style="font-size:12px; color:#AAAAAA; margin-bottom:4px;">Smart Routing</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#3ECF8E;">~40K</div>
+          <div style="font-size:11px; color:#3ECF8E;">avg. messages</div>
+        </div>
+
+      </div>
+      <p style="text-align:center; font-size:12px; color:#444; margin-top:14px; font-family:'JetBrains Mono',monospace;">Smart routing blends cheap + capable models — you get more calls for the same spend.</p>
+    </div>
+
+    <!-- ROI calculator callout -->
+    <div class="animate-on-scroll" style="background:#1E1E1E; border:1px solid #2A2A2A; border-radius:16px; padding:36px 40px;">
+      <div class="section-label" style="margin-bottom:20px;">What Smart Routing Actually Saves</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+        <!-- Scenario 1 -->
+        <div style="background:#141414; border:1px solid #2A2A2A; border-radius:12px; padding:24px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#888888; margin-bottom:12px;">Side Project</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:16px;">Using $200/mo of GPT-4o</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px;">
+              <span style="color:#666;">Without routing</span>
+              <span style="color:#AAAAAA;">$200/mo</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13px;">
+              <span style="color:#666;">With Token Station</span>
+              <span style="color:#3ECF8E; font-weight:600;">~$88/mo</span>
+            </div>
+            <div style="height:1px; background:#2A2A2A; margin:4px 0;"></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;">
+              <span style="color:#EDEDED;">Annual saving</span>
+              <span style="color:#3ECF8E;">$1,344/yr</span>
+            </div>
+          </div>
+          <div style="font-size:12px; color:#555; font-family:'JetBrains Mono',monospace;">routing reduces spend to $80, service fee included</div>
+        </div>
+
+        <!-- Scenario 2 -->
+        <div style="background:#0D1A10; border:1px solid rgba(62,207,142,0.3); border-radius:12px; padding:24px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#3ECF8E; margin-bottom:12px;">Indie App</div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:16px;">Using $500/mo of GPT-4o</div>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px;">
+              <span style="color:#666;">Without routing</span>
+              <span style="color:#AAAAAA;">$500/mo</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:13px;">
+              <span style="color:#666;">With Token Station</span>
+              <span style="color:#3ECF8E; font-weight:600;">~$220/mo</span>
+            </div>
+            <div style="height:1px; background:rgba(62,207,142,0.2); margin:4px 0;"></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600;">
+              <span style="color:#EDEDED;">Annual saving</span>
+              <span style="color:#3ECF8E;">$3,360/yr</span>
+            </div>
+          </div>
+          <div style="font-size:12px; color:#3ECF8E; opacity:0.6; font-family:'JetBrains Mono',monospace;">routing reduces spend to $200, service fee included</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ─── FAQ ─── -->
+<section id="faq" style="padding: 96px 24px; border-top:1px solid #1A1A1A;">
+  <div style="max-width:720px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="margin-bottom:16px;">FAQ</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,36px); font-weight:700; letter-spacing:-0.03em; margin:0 0 48px;">Common questions</h2>
+
+    <div style="display:flex; flex-direction:column; gap:0;">
+
+      <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; padding:24px 0;">
+        <summary style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          Does it work with my existing OpenAI client?
+          <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
+        </summary>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">Yes. Token Station is fully OpenAI-compatible. Change one line — your API key and base URL — and every existing call works. No SDK changes, no new libraries, no migration effort.</p>
+      </details>
+
+      <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; padding:24px 0;">
+        <summary style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          What's the latency overhead?
+          <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
+        </summary>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">Routing decisions happen in &lt;5ms — negligible compared to LLM inference latency. Failover rerouting is &lt;200ms. We run in all major cloud regions, so your requests always hit a nearby edge node.</p>
+      </details>
+
+      <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; padding:24px 0;">
+        <summary style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          Which providers do you support?
+          <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
+        </summary>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">OpenAI, Anthropic, Google Gemini, Mistral, Cohere, and Amazon Bedrock at launch. We're adding new providers continuously based on user feedback.</p>
+      </details>
+
+      <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; padding:24px 0;">
+        <summary style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          What happens if Token Station goes down?
+          <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
+        </summary>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">We use a multi-region active-active architecture with 99.99% uptime SLA. In the unlikely event of issues, our SDK includes automatic bypass mode — requests fall back directly to the provider.</p>
+      </details>
+
+      <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; border-bottom:1px solid #1E1E1E; padding:24px 0;">
+        <summary style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          Is my data sent through your servers?
+          <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
+        </summary>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">Routing metadata (model selection, token counts, latency) passes through our system. Request content is forwarded directly to providers — we don't log or store prompt content. Enterprise plans support VPC deployment for full data isolation.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── FINAL CTA ─── -->
+<section style="padding: 96px 24px 128px; background: linear-gradient(180deg, #0A0A0A 0%, #0D1520 100%); border-top:1px solid #1A1A1A;">
+  <div style="max-width:600px; margin:0 auto; text-align:center;">
+    <div class="animate-on-scroll">
+      <div class="section-label" style="margin-bottom:16px;">Beta Waitlist</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:700; letter-spacing:-0.03em; margin:0 0 20px; line-height:1.1;">
+        Stop overpaying for LLMs.<br />
+        <span class="gradient-text">Start routing smarter.</span>
+      </h2>
+      <p style="color:#888888; font-size:16px; line-height:1.7; margin:0 0 36px;">
+        Join free. First 200 users lock in launch pricing — forever.
+      </p>
+
+      <form id="final-form" class="email-capture-form" onsubmit="return submitEmail(event, 'footer')">
+        <div class="email-form-group" style="margin:0 auto;">
+          <input type="email" name="email" placeholder="you@company.com" required class="email-input" />
+          <button type="submit" class="btn-primary" onclick="dataLayer.push({event: 'cta_click'})">
+            Join Beta Waitlist — Free
+          </button>
+        </div>
+        <p class="form-message" style="color:#3ECF8E; display:none;"></p>
+      </form>
+
+      <p style="font-size:13px; color:#555555; margin-top:16px;">
+        No credit card. First 200 early users lock in launch pricing forever.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:32px 24px; border-top:1px solid #1A1A1A;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="https://assets.prizmox.com/lp-assets/token-station-smart-routing_logo_512x512_20260416_121207.jpg"
+           alt="Token Station logo" style="width:22px; height:22px; border-radius:5px; object-fit:cover;" />
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#555555;">Token Station</span>
+    </div>
+    <p style="color:#444; font-size:13px; margin:0;">© 2026 Token Station. All rights reserved.</p>
+  </div>
+</footer>
+
+
+<!-- ─── SCROLL EVENTS ─── -->
+<script>
+window.dataLayer = window.dataLayer || [];
+
+// scroll_50 event
+(function() {
+  var fired = false;
+  window.addEventListener('scroll', function() {
+    if (fired) return;
+    var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+    if (scrollPercent >= 0.5) {
+      fired = true;
+      dataLayer.push({event: 'scroll_50'});
+    }
+  });
+})();
+</script>
+
+<!-- ─── SCROLL REVEAL ─── -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+
+<!-- ─── COUNTUP ─── -->
+<script>
+function countUp(el, target, duration = 1500) {
+  const start = performance.now();
+  const update = (time) => {
+    const progress = Math.min((time - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(ease * target).toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+// Animate stats when visible
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      if (!isNaN(target)) countUp(el, target);
+      statObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => statObserver.observe(el));
+
+// Animate ROI bars when visible
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bar = entry.target;
+      bar.style.width = bar.dataset.target + '%';
+      barObserver.unobserve(bar);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('[id^="bar"]').forEach(el => barObserver.observe(el));
+</script>
+
+<!-- ─── EMAIL SUBMIT ─── -->
+<script>
+const API_BASE = 'https://minilab-backend-test.up.railway.app';
+const IDEA_ID = '23abe12e-efa1-4450-876d-a52f39ec5d8f';
+const LP_ID = '343905d4-1faa-46d4-a462-0a8eb8114ffb';
+
+function getUTM() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || ''
+  };
+}
+
+async function submitEmail(e, location) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const msg = form.querySelector('.form-message');
+  const btn = form.querySelector('button');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const res = await fetch(API_BASE + '/api/leads', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email,
+        idea_id: IDEA_ID,
+        landing_page_id: LP_ID || undefined,
+        ...getUTM()
+      })
+    });
+    if (res.ok) {
+      dataLayer.push({event: 'email_submit', form_location: location});
+      msg.textContent = '✓ You\'re on the list! We\'ll be in touch.';
+      msg.style.display = 'block';
+      form.email.value = '';
+    } else {
+      throw new Error('Failed');
+    }
+  } catch {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+</script>
+
+</body>
+</html>
