@@ -239,8 +239,78 @@
       transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @media (max-width: 768px) {
+    /* Tablet — collapse 3/4-col grids to 2, stack hero */
+    @media (max-width: 960px) {
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+      }
+      [style*="grid-template-columns:repeat(3"],
+      [style*="grid-template-columns: repeat(3"],
+      [style*="grid-template-columns:repeat(4"],
+      [style*="grid-template-columns: repeat(4"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* Mobile — single-column, shrink nav, scale type + code */
+    @media (max-width: 640px) {
       .stat-number { font-size: 40px; }
+
+      /* Nav: drop secondary links, keep brand + CTA */
+      nav > div { padding: 0 16px !important; gap: 10px !important; }
+      nav a[href="#features"],
+      nav a[href="#pricing"],
+      nav a[href="#faq"] { display: none !important; }
+
+      /* Section padding */
+      section { padding-left: 18px !important; padding-right: 18px !important; }
+      section[id="hero"] { padding-top: 56px !important; padding-bottom: 48px !important; }
+
+      /* Collapse every remaining multi-col grid */
+      [style*="grid-template-columns:repeat(3"],
+      [style*="grid-template-columns: repeat(3"],
+      [style*="grid-template-columns:repeat(4"],
+      [style*="grid-template-columns: repeat(4"],
+      [style*="grid-template-columns:1fr 1fr"],
+      [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Icon-plus-text callout stacks */
+      [style*="grid-template-columns:auto 1fr"],
+      [style*="grid-template-columns: auto 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Hero CTA row wraps full-width */
+      #hero-form { flex-direction: column !important; align-items: stretch !important; }
+      #hero-form a { width: 100%; justify-content: center; }
+
+      /* Code blocks: scale + allow horizontal scroll */
+      .code-block { font-size: 11px; }
+      .code-body {
+        padding: 14px 16px !important;
+        font-size: 11px !important;
+        line-height: 1.6 !important;
+        overflow-x: auto;
+      }
+      .code-header { padding: 8px 14px !important; }
+
+      /* Cards a bit tighter */
+      .card { padding: 22px !important; }
+      .pricing-card { padding: 24px !important; }
+
+      /* Footer stacks */
+      footer > div {
+        flex-direction: column !important;
+        gap: 10px;
+        text-align: center;
+      }
+
+      /* Featured section images scale */
+      img { max-width: 100%; height: auto; }
     }
 
     /* Marquee + modality helpers (provider/modality display) */
