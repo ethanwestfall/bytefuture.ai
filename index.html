@@ -493,7 +493,7 @@
           </div>
           <div style="margin-top:20px; padding-top:20px; border-top:1px solid #2A2A2A;">
             <span class="comment"># Text, vision, speech, image, video — one client.</span><br/>
-            <span style="color:#7298F9;">chat</span>   = client.chat.completions.create(model=<span class="string">"claude-sonnet-4-6"</span>, messages=[...])<br/>
+            <span style="color:#7298F9;">chat</span>   = client.chat.completions.create(model=<span class="string">"claude-opus-4-7"</span>, messages=[...])<br/>
             <span style="color:#7298F9;">embed</span>  = client.embeddings.create(model=<span class="string">"text-embedding-3-large"</span>, input=...)<br/>
             <span style="color:#7298F9;">voice</span>  = client.audio.transcriptions.create(model=<span class="string">"whisper-large-v3"</span>, file=...)<br/>
             <span style="color:#7298F9;">image</span>  = client.images.generate(model=<span class="string">"flux-1.1-pro"</span>, prompt=...)<br/>
@@ -567,7 +567,7 @@
       OpenAI-style endpoints (with streaming) for every provider and modality. Anthropic-style endpoints for all LLMs — so the same model works in Claude Code, Codex, LangChain, LlamaIndex, or whatever you're already using.
     </p>
     <p class="animate-on-scroll" style="text-align:center; font-size:14px; line-height:1.7; max-width:720px; margin:0 auto 40px; color:#EDEDED;">
-      Look closely: the <strong style="color:#7298F9;">OpenAI SDK</strong> below calls <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">claude-opus-4-6</span>, and the <strong style="color:#3ECF8E;">Anthropic SDK</strong> calls <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">gpt-4o</span>. Any model, any SDK — pick whichever shape your tool expects.
+      Look closely: the <strong style="color:#7298F9;">OpenAI SDK</strong> below calls <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">claude-opus-4-7</span>, and the <strong style="color:#3ECF8E;">Anthropic SDK</strong> calls <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">gpt-5.5</span>. Any model, any SDK — pick whichever shape your tool expects.
     </p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;" class="animate-on-scroll">
@@ -589,7 +589,7 @@
             &nbsp;&nbsp;base_url=<span class="string">"https://models.bytefuture.ai/v1"</span>,<br/>
             )<br/><br/>
             stream = client.chat.completions.create(<br/>
-            &nbsp;&nbsp;model=<span class="string">"claude-opus-4-6"</span>,<br/>
+            &nbsp;&nbsp;model=<span class="string">"claude-opus-4-7"</span>,<br/>
             &nbsp;&nbsp;messages=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"..."</span>}],<br/>
             &nbsp;&nbsp;stream=<span style="color:#F6AD55;">True</span>,<br/>
             )<br/>
@@ -615,7 +615,7 @@
             &nbsp;&nbsp;base_url=<span class="string">"https://models.bytefuture.ai"</span>,<br/>
             )<br/><br/>
             resp = client.messages.create(<span class="comment">&nbsp;# → POST /v1/messages</span><br/>
-            &nbsp;&nbsp;model=<span class="string">"gpt-4o"</span>,<span class="comment">&nbsp;&nbsp;# route any LLM via Claude-style API</span><br/>
+            &nbsp;&nbsp;model=<span class="string">"gpt-5.5"</span>,<span class="comment">&nbsp;&nbsp;# route any LLM via Claude-style API</span><br/>
             &nbsp;&nbsp;max_tokens=<span style="color:#F6AD55;">1024</span>,<br/>
             &nbsp;&nbsp;messages=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"..."</span>}],<br/>
             )<br/>
@@ -695,7 +695,7 @@
         </div>
         <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; margin:0 0 6px;">LLMs</h3>
         <p style="color:#888; font-size:13px; line-height:1.55; margin:0 0 10px;">Chat, reasoning, agents, and coding models.</p>
-        <div><span class="model-tag">gpt-4o</span><span class="model-tag">claude-opus-4-6</span><span class="model-tag">gemini-2.5-pro</span></div>
+        <div><span class="model-tag">gpt-5.5</span><span class="model-tag">claude-opus-4-7</span><span class="model-tag">gemini-2.5-pro</span></div>
       </div>
 
       <div class="modality-card">
