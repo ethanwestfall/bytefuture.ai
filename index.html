@@ -604,14 +604,14 @@
           <span style="margin-left:8px; color:#4A5568; font-size:12px;">anthropic_style.py — Claude Code</span>
         </div>
         <div class="code-body">
-          <div class="comment"># Anthropic SDK, pointed at Token Station</div>
+          <div class="comment"># Anthropic SDK — base_url omits /v1 (SDK adds it)</div>
           <div style="margin-top:8px;">
             <span style="color:#7298F9;">from</span> anthropic <span style="color:#7298F9;">import</span> Anthropic<br/>
             client = Anthropic(<br/>
             &nbsp;&nbsp;api_key=<span class="string">"gw_1234...abcd"</span>,<br/>
-            &nbsp;&nbsp;base_url=<span class="string">"https://models.bytefuture.ai/v1"</span>,<br/>
+            &nbsp;&nbsp;base_url=<span class="string">"https://models.bytefuture.ai"</span>,<br/>
             )<br/><br/>
-            resp = client.messages.create(<br/>
+            resp = client.messages.create(<span class="comment">&nbsp;# → POST /v1/messages</span><br/>
             &nbsp;&nbsp;model=<span class="string">"gpt-4o"</span>,<span class="comment">&nbsp;&nbsp;# route any LLM via Claude-style API</span><br/>
             &nbsp;&nbsp;max_tokens=<span style="color:#F6AD55;">1024</span>,<br/>
             &nbsp;&nbsp;messages=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"..."</span>}],<br/>
@@ -943,18 +943,50 @@
       </div>
       <div class="animate-on-scroll" style="transition-delay:0.1s;">
         <div class="section-label" style="margin-bottom:16px;">Works Where You Already Work</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; letter-spacing:-0.02em; margin:0 0 20px;">Same LLMs across Claude Code and Codex</h3>
-        <p style="color:#888888; line-height:1.7; margin:0 0 24px;">
-          Anthropic-style endpoints mean the models you're routing also show up inside Claude Code. OpenAI-style endpoints keep them wired into Codex, your SDKs, and your existing apps. Pick a model once — use it everywhere.
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; letter-spacing:-0.02em; margin:0 0 20px;">Same endpoints you already call.</h3>
+        <p style="color:#888888; line-height:1.7; margin:0 0 20px;">
+          Host: <span style="font-family:'JetBrains Mono',monospace; color:#EDEDED;">models.bytefuture.ai</span>. Each SDK speaks its native paths — no rewrites, no proxies.
         </p>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; background:#141414; border:1px solid #222; border-radius:10px;">
-            <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap;">/v1/chat/completions</span>
-            <span style="font-size:14px; color:#CCC;">OpenAI-style — chat, responses, embeddings, audio, images, video</span>
+
+        <div style="margin-bottom:18px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#7298F9; margin-bottom:8px;">OpenAI-style · base_url /v1</div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/chat/completions</span>
+              <span style="font-size:12px; color:#888;">chat + tool use + streaming</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/responses</span>
+              <span style="font-size:12px; color:#888;">next-gen Responses API</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/embeddings</span>
+              <span style="font-size:12px; color:#888;">vectors for search &amp; retrieval</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/audio/transcriptions</span>
+              <span style="font-size:12px; color:#888;">ASR</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/audio/speech</span>
+              <span style="font-size:12px; color:#888;">TTS</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/images/generations</span>
+              <span style="font-size:12px; color:#888;">image generation</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+              <span style="color:#7298F9; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/videos/generations</span>
+              <span style="font-size:12px; color:#888;">video generation</span>
+            </div>
           </div>
-          <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; background:#141414; border:1px solid #222; border-radius:10px;">
-            <span style="color:#3ECF8E; font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap;">/v1/messages</span>
-            <span style="font-size:14px; color:#CCC;">Anthropic-style — all LLMs, Claude Code ready</span>
+        </div>
+
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#3ECF8E; margin-bottom:8px;">Anthropic-style · base_url host-only</div>
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:#141414; border:1px solid #222; border-radius:8px;">
+            <span style="color:#3ECF8E; font-family:'JetBrains Mono',monospace; font-size:12px;">/v1/messages</span>
+            <span style="font-size:12px; color:#888;">all LLMs — Claude Code compatible</span>
           </div>
         </div>
       </div>
@@ -1151,7 +1183,7 @@
           Can I use the same models in Claude Code and Codex?
           <span style="color:#7298F9; font-size:20px; font-weight:300;">+</span>
         </summary>
-        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">Yes — that's the point. Both API shapes share the same base URL <span style="font-family:'JetBrains Mono',monospace; color:#EDEDED;">https://models.bytefuture.ai/v1</span>. Call <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">/v1/messages</span> for the Anthropic shape (Claude Code) or <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">/v1/chat/completions</span> / <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">/v1/responses</span> for the OpenAI shape (Codex, LangChain). One key, both tools, same models.</p>
+        <p style="color:#888888; line-height:1.7; font-size:15px; margin:16px 0 0;">Yes — same host, different SDK conventions. For the OpenAI SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">base_url="https://models.bytefuture.ai/v1"</span> and the SDK hits <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">/v1/chat/completions</span>, <span style="font-family:'JetBrains Mono',monospace; color:#7298F9;">/v1/responses</span>, plus the multimedia paths. For the Anthropic SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">base_url="https://models.bytefuture.ai"</span> (no <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">/v1</span> — the SDK adds it) and it calls <span style="font-family:'JetBrains Mono',monospace; color:#3ECF8E;">/v1/messages</span>. One key, both tools, same models.</p>
       </details>
 
       <details class="animate-on-scroll" style="border-top:1px solid #1E1E1E; padding:24px 0;">
