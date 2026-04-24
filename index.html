@@ -420,9 +420,12 @@
         Write Once.<br />
         <span class="gradient-text">Use Any AI Model.</span>
       </h1>
-      <p style="font-size:18px; color:#AAAAAA; line-height:1.7; margin:0 0 36px; max-width:490px;">
+      <p style="font-size:18px; color:#AAAAAA; line-height:1.7; margin:0 0 18px; max-width:490px;">
         Build with every AI model through one key, one account, one API layer — LLMs, VLMs, embeddings, speech, image, and video.
-        OpenAI-style and Anthropic-style APIs drop straight into Codex, Claude Code, LangChain, and whatever you already ship. Smart routing you control keeps cost in check.
+        OpenAI-style and Anthropic-style APIs drop straight into Codex, Claude Code, LangChain, and whatever you already ship.
+      </p>
+      <p style="font-size:16px; color:#EDEDED; line-height:1.65; margin:0 0 36px; max-width:490px; padding:14px 18px; background:#0D1A10; border:1px solid rgba(62,207,142,0.25); border-radius:12px;">
+        <strong style="color:#3ECF8E;">Smart routing</strong> allows <strong>YOU</strong> to determine the most cost-effective model for each task, and drastically reduces your overall token cost by <strong style="color:#3ECF8E;">up to 60%</strong>. <a href="#research" style="color:#7298F9; text-decoration:none; border-bottom:1px solid rgba(114,152,249,0.3); font-size:13px; white-space:nowrap;">See the research →</a>
       </p>
 
       <!-- CTA row -->
@@ -901,7 +904,7 @@
           <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:rgba(114,152,249,0.15); color:#7298F9; border:1px solid rgba(114,152,249,0.3); padding:3px 10px; border-radius:50px;">User-defined</span>
         </div>
         <p style="color:#888888; line-height:1.65; margin:0 0 16px; font-size:14px; max-width:720px;">
-          Send each call to the cheapest model that clears your quality bar. Write rules per workload — cheapest-first with a quality floor, latency-capped with a provider allowlist, or strict fallback chains. Your priorities, explicit, versioned, editable without redeploying.
+          Send each call to the cheapest model that clears your quality bar. Write rules per workload — cheapest-first with a quality floor, latency-capped with a provider allowlist, or strict fallback chains. Your priorities, explicit, versioned, editable without redeploying. Grounded in three years of <a href="#research" style="color:#7298F9; text-decoration:none; border-bottom:1px solid rgba(114,152,249,0.3);">peer-reviewed ICLR research on LLM routing</a> — up to 60% token-cost reduction at the same quality bar.
         </p>
         <div style="display:flex; gap:24px; flex-wrap:wrap;">
           <div style="display:flex; align-items:center; gap:8px;">
@@ -990,6 +993,73 @@
       <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#555555;">— Developer community consensus, 2026</span>
     </div>
 
+  </div>
+</section>
+
+
+<!-- ─── RESEARCH ─── -->
+<section id="research" style="padding: 96px 24px; border-top:1px solid #1A1A1A; background: #0B0B0B;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Research-Backed Routing</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 16px;">
+      The science behind cutting cost without losing quality.
+    </h2>
+    <p class="animate-on-scroll" style="text-align:center; color:#888888; font-size:16px; line-height:1.7; max-width:760px; margin:0 auto 56px;">
+      Smart routing isn't marketing — it's three years of peer-reviewed results at ICLR, the top machine-learning conference. Each paper below measured how far you can push a cheap model before quality drops, and where a strong model is actually worth the spend.
+    </p>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;">
+
+      <!-- RouteLLM ICLR 2025 -->
+      <div class="card animate-on-scroll">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; background:rgba(114,152,249,0.12); color:#7298F9; border:1px solid rgba(114,152,249,0.3); padding:3px 10px; border-radius:50px;">ICLR 2025</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin:0 0 8px; line-height:1.3;">RouteLLM: Learning to Route LLMs with Preference Data</h3>
+        <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#666; margin:0 0 14px;">Ong, Almahairi, Wu et al. — UC Berkeley / Anyscale</p>
+        <ul style="margin:0 0 18px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Up to <strong style="color:#3ECF8E;">3.66×</strong> cost savings vs. GPT-4 at 95% of GPT-4 quality on MT Bench.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> ~50% fewer GPT-4 calls with the same quality as random routing.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Router adds &lt;0.4% overhead on top of generation.</li>
+        </ul>
+        <a href="https://proceedings.iclr.cc/paper_files/paper/2025/file/5503a7c69d48a2f86fc00b3dc09de686-Paper-Conference.pdf" target="_blank" rel="noopener" style="color:#7298F9; text-decoration:none; font-size:13px; font-family:'JetBrains Mono',monospace; border-bottom:1px solid rgba(114,152,249,0.3);">Read paper (PDF) ↗</a>
+      </div>
+
+      <!-- Hybrid LLM ICLR 2024 -->
+      <div class="card animate-on-scroll" style="transition-delay:0.08s;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; background:rgba(62,207,142,0.12); color:#3ECF8E; border:1px solid rgba(62,207,142,0.3); padding:3px 10px; border-radius:50px;">ICLR 2024</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin:0 0 8px; line-height:1.3;">Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing</h3>
+        <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#666; margin:0 0 14px;">Ding, Mallick, Wang et al. — UBC / Microsoft</p>
+        <ul style="margin:0 0 18px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Up to <strong style="color:#3ECF8E;">40%</strong> fewer calls to the large cloud LLM with no quality drop.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> BERT-style router sends only hard queries upstream.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Quality/cost tradeoff tunable at runtime — no retraining.</li>
+        </ul>
+        <a href="https://proceedings.iclr.cc/paper_files/paper/2024/file/b47d93c99fa22ac0b377578af0a1f63a-Paper-Conference.pdf" target="_blank" rel="noopener" style="color:#7298F9; text-decoration:none; font-size:13px; font-family:'JetBrains Mono',monospace; border-bottom:1px solid rgba(114,152,249,0.3);">Read paper (PDF) ↗</a>
+      </div>
+
+      <!-- UniRoute ICLR 2026 -->
+      <div class="card animate-on-scroll" style="transition-delay:0.16s;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; background:rgba(246,173,85,0.12); color:#F6AD55; border:1px solid rgba(246,173,85,0.3); padding:3px 10px; border-radius:50px;">ICLR 2026</span>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin:0 0 8px; line-height:1.3;">Universal Model Routing for Efficient LLM Inference (UniRoute)</h3>
+        <p style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#666; margin:0 0 14px;">Jitkrittum, Narasimhan, Rawat et al. — Google</p>
+        <ul style="margin:0 0 18px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Dynamically routes to <strong style="color:#F6AD55;">previously unseen LLMs</strong> without retraining.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Validated across 30+ unseen models on public benchmarks.</li>
+          <li style="font-size:13px; color:#AAA; line-height:1.6;"><span style="color:#3ECF8E;">✓</span> Theoretical excess-risk bound for the routing rule.</li>
+        </ul>
+        <a href="https://iclr.cc/virtual/2026/poster/10007775" target="_blank" rel="noopener" style="color:#7298F9; text-decoration:none; font-size:13px; font-family:'JetBrains Mono',monospace; border-bottom:1px solid rgba(114,152,249,0.3);">View ICLR poster ↗</a>
+      </div>
+
+    </div>
+
+    <p class="animate-on-scroll" style="text-align:center; color:#555; font-size:12px; margin:32px auto 0; max-width:760px; font-family:'JetBrains Mono',monospace; line-height:1.7;">
+      Token Station lets you apply these techniques to your own workloads. Define the cheap-vs-strong tradeoff explicitly — cheapest-first with a quality floor, model-ensemble fallback, or allow/deny lists — and update rules without redeploying.
+    </p>
   </div>
 </section>
 
