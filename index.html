@@ -37,8 +37,15 @@
     }
   </script>
 
-  <!-- GTM placeholder -->
-  <!-- GTM-XXXXXXX -->
+  <!-- Google tag (gtag.js) — GA4 + Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+    // gtag('config', 'AW-XXXXXXXXXX'); // TODO: add Google Ads Conversion ID
+  </script>
 
   <style>
     * { box-sizing: border-box; }
@@ -410,7 +417,7 @@
       <a href="#features" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">Features</a>
       <a href="#pricing" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">Pricing</a>
       <a href="#faq" style="color:#888888; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; transition:color 0.2s;" onmouseover="this.style.color='#EDEDED'" onmouseout="this.style.color='#888888'">FAQ</a>
-      <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="padding:10px 20px; font-size:13px;" onclick="dataLayer.push({event:'cta_click', label:'nav_subscribe'})">Subscribe · $10/mo</a>
+      <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="padding:10px 20px; font-size:13px;" onclick="gtag('event','cta_click',{label:'nav_subscribe'}); gtag('event','begin_checkout',{label:'nav_subscribe'});">Subscribe · $10/mo</a>
     </div>
   </div>
 </nav>
@@ -437,10 +444,10 @@
 
       <!-- CTA row -->
       <div id="hero-form" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
-        <a href="https://models.bytefuture.ai/signup" class="btn-primary" onclick="dataLayer.push({event:'cta_click', label:'hero_subscribe'})">
+        <a href="https://models.bytefuture.ai/signup" class="btn-primary" onclick="gtag('event','cta_click',{label:'hero_subscribe'}); gtag('event','begin_checkout',{label:'hero_subscribe'});">
           Subscribe for $10/month →
         </a>
-        <a href="#pricing" class="btn-secondary" onclick="dataLayer.push({event:'cta_click', label:'hero_pricing'})">
+        <a href="#pricing" class="btn-secondary" onclick="gtag('event','cta_click',{label:'hero_pricing'});">
           See what's included
         </a>
       </div>
@@ -1130,7 +1137,7 @@
             <span style="color:#3ECF8E; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px;">+ $10 signup credit</span>
             <div style="font-size:12px; color:#888; margin-top:4px;">First-month platform fee effectively free.</div>
           </div>
-          <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="width:100%; justify-content:center;" onclick="dataLayer.push({event:'cta_click', label:'pricing_subscribe'})">Subscribe for $10/month →</a>
+          <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="width:100%; justify-content:center;" onclick="gtag('event','cta_click',{label:'pricing_subscribe'}); gtag('event','begin_checkout',{label:'pricing_subscribe'});">Subscribe for $10/month →</a>
         </div>
 
         <div style="margin-top:28px; padding-top:24px; border-top:1px solid #2A2A2A; display:flex; flex-direction:column; gap:12px;">
@@ -1248,7 +1255,7 @@
       </p>
 
       <div style="display:flex; justify-content:center;">
-        <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="padding:16px 32px; font-size:16px;" onclick="dataLayer.push({event:'cta_click', label:'footer_subscribe'})">
+        <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="padding:16px 32px; font-size:16px;" onclick="gtag('event','cta_click',{label:'footer_subscribe'}); gtag('event','begin_checkout',{label:'footer_subscribe'});">
           Subscribe for $10/month →
         </a>
       </div>
@@ -1282,9 +1289,7 @@
 
 <!-- ─── SCROLL EVENTS ─── -->
 <script>
-window.dataLayer = window.dataLayer || [];
-
-// scroll_50 event
+// scroll_50 engagement event
 (function() {
   var fired = false;
   window.addEventListener('scroll', function() {
@@ -1292,7 +1297,7 @@ window.dataLayer = window.dataLayer || [];
     var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
     if (scrollPercent >= 0.5) {
       fired = true;
-      dataLayer.push({event: 'scroll_50'});
+      gtag('event', 'scroll', {percent_scrolled: 50});
     }
   });
 })();
