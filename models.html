@@ -24,29 +24,34 @@
     * { box-sizing: border-box; }
     body { margin:0; background:#faf9f5; color:#18181b; font-family:'DM Sans',sans-serif; }
     a { color:#2563EB; text-decoration:none; }
-    .wrap { max-width:1100px; margin:0 auto; padding:48px 24px 96px; }
+    .wrap { max-width:1180px; margin:0 auto; padding:48px 24px 96px; }
     h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; margin:0 0 10px; }
     .sub { color:#71717a; font-size:16px; line-height:1.6; margin:0 0 24px; max-width:680px; }
     .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:18px; }
     #search { flex:1; min-width:220px; padding:10px 14px; border:1px solid #e4e4e7; border-radius:10px; font-size:14px; font-family:inherit; background:#fff; }
     .chip { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; padding:7px 12px; border-radius:50px; border:1px solid #e4e4e7; background:#fff; color:#52525b; cursor:pointer; }
     .chip[aria-pressed="true"] { background:#2563EB; border-color:#2563EB; color:#fff; }
-    .summary { font-size:13px; color:#71717a; margin-bottom:12px; font-family:'JetBrains Mono',monospace; }
-    table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #e4e4e7; border-radius:12px; overflow:hidden; }
-    th, td { text-align:left; padding:11px 14px; border-bottom:1px solid #f4f4f5; font-size:13px; vertical-align:top; }
-    th { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#71717a; background:#f8fafc; position:sticky; top:0; }
-    td.name { font-family:'JetBrains Mono',monospace; color:#18181b; }
-    td.num { font-family:'JetBrains Mono',monospace; text-align:right; white-space:nowrap; }
-    .free { color:#0D9488; font-weight:600; }
-    .badge { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; padding:2px 7px; border-radius:5px; margin:1px 2px 1px 0; background:#eef4ff; color:#2563EB; border:1px solid rgba(37,99,235,0.18); }
+    .summary { font-size:13px; color:#71717a; margin-bottom:16px; font-family:'JetBrains Mono',monospace; }
+
+    /* Card grid — one card per model */
+    .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(264px, 1fr)); gap:16px; }
+    .mcard { background:#fff; border:1px solid #e4e4e7; border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:12px; transition:border-color .2s, transform .2s, box-shadow .2s; }
+    .mcard:hover { border-color:#2563EB; transform:translateY(-2px); box-shadow:0 8px 24px rgba(24,24,27,0.06); }
+    .mtop { display:flex; align-items:center; gap:10px; }
+    .logo { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; flex-shrink:0; }
+    .mprov { font-size:12px; color:#52525b; font-weight:500; }
+    .mname { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; color:#18181b; word-break:break-word; line-height:1.45; }
+    .mods { display:flex; flex-wrap:wrap; gap:4px; }
+    .badge { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; padding:2px 7px; border-radius:5px; background:#eef4ff; color:#2563EB; border:1px solid rgba(37,99,235,0.18); }
     .badge.media { background:#f0fdfa; color:#0D9488; border-color:rgba(13,148,136,0.20); }
-    .state { padding:40px; text-align:center; color:#71717a; }
-    @media (max-width:640px){ th.hide, td.hide { display:none; } }
+    .mfoot { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:11px; border-top:1px solid #f4f4f5; font-family:'JetBrains Mono',monospace; font-size:11px; color:#71717a; }
+    .price .free { color:#0D9488; font-weight:600; }
+    .state { padding:48px; text-align:center; color:#71717a; }
   </style>
 </head>
 <body>
   <header style="position:sticky; top:0; z-index:50; background:rgba(250,249,245,0.88); backdrop-filter:blur(12px); border-bottom:1px solid #e4e4e7;">
-    <div style="max-width:1100px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between;">
+    <div style="max-width:1180px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between;">
       <a href="index.html" style="display:flex; align-items:center; gap:10px; color:inherit;">
         <svg width="26" height="28" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img">
           <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
@@ -80,21 +85,61 @@
   // Public, CORS-open (access-control-allow-origin: *), no API key required.
   // Do NOT use /v1/models here — it requires Authorization: Bearer <key>.
   const API = 'https://models.bytefuture.ai/api/models';
-
-  // Display categories. Filter order matters (LLM groups first, then media).
   const FILTERS = ['Chat', 'Multimodal', 'Image', 'Video', 'TTS', 'ASR', 'Embeddings', 'Music'];
 
-  // Map the API's raw `modalities` values → display tags.
-  //   text        → Chat            (text-only LLM)
-  //   multimodal  → Chat + Multimodal (image/file-capable LLM — still an LLM,
-  //                                    so it also carries Chat: text ∪ multimodal = all LLMs)
-  //   image/video/tts/asr/embedding/music → their own media tags
+  // ── Provider theming (name · color · glyph) — from the original design ───────
+  const PROVIDERS = {
+    "openai":{"name":"OpenAI","color":"#10A37F","glyph":"O"},
+    "anthropic":{"name":"Anthropic","color":"#D97757","glyph":"A"},
+    "aws-claude":{"name":"AWS · Claude","color":"#FF9900","glyph":"A"},
+    "aws-bedrock":{"name":"AWS Bedrock","color":"#FF9900","glyph":"B"},
+    "aws-bedrock-openai":{"name":"AWS Bedrock · OpenAI","color":"#FF9900","glyph":"B"},
+    "gemini":{"name":"Google Gemini","color":"#4F8DFA","glyph":"G"},
+    "groq":{"name":"Groq","color":"#F55036","glyph":"G"},
+    "bailian":{"name":"Alibaba Bailian","color":"#FF6A00","glyph":"百"},
+    "xai":{"name":"xAI","color":"#E8E8E8","glyph":"X"},
+    "byteplus":{"name":"BytePlus","color":"#3370FF","glyph":"B"},
+    "glm":{"name":"Zhipu GLM","color":"#9B7BF7","glyph":"智"},
+    "glm-coding":{"name":"Zhipu GLM · Coding","color":"#9B7BF7","glyph":"智"},
+    "nvidia-nim":{"name":"NVIDIA NIM","color":"#76B900","glyph":"N"},
+    "mistral":{"name":"Mistral","color":"#FF7000","glyph":"M"},
+    "kling":{"name":"Kling","color":"#FF3D6E","glyph":"K"},
+    "elevenlabs":{"name":"ElevenLabs","color":"#A78BFA","glyph":"11"},
+    "minimax":{"name":"MiniMax","color":"#F472B6","glyph":"M"},
+    "minimax-media":{"name":"MiniMax Media","color":"#F472B6","glyph":"M"},
+    "kimi":{"name":"Moonshot Kimi","color":"#5B8DEE","glyph":"月"},
+    "deepseek":{"name":"DeepSeek","color":"#4D6BFE","glyph":"D"},
+    "openai-codex":{"name":"OpenAI Codex","color":"#10A37F","glyph":"C"},
+    "claude-code":{"name":"Claude Code","color":"#D97757","glyph":"C"},
+    "github-copilot":{"name":"GitHub Copilot","color":"#6E40C9","glyph":"GH"},
+    "azure-foundry":{"name":"Azure AI Foundry","color":"#0078D4","glyph":"Az"},
+    "azure-speech":{"name":"Azure Speech","color":"#0078D4","glyph":"Az"},
+    "ideogram":{"name":"Ideogram","color":"#1C1C1C","glyph":"I"},
+    "reve":{"name":"Reve","color":"#111827","glyph":"R"},
+    "xiaomi":{"name":"Xiaomi","color":"#FF6900","glyph":"Mi"}
+  };
+  const PALETTE = ['#2563EB','#0D9488','#7C3AED','#DB2777','#EA580C','#0891B2','#65A30D','#9333EA','#E11D48','#4F46E5'];
+  function providerStyle(key) {
+    if (PROVIDERS[key]) return PROVIDERS[key];
+    let h = 0; for (const c of (key || '')) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+    const name = (key || 'unknown').replace(/[-_]/g, ' ').replace(/\b\w/g, m => m.toUpperCase());
+    const glyph = ((key || '?').replace(/[^a-z0-9]/gi, '')[0] || '?').toUpperCase();
+    return { name, color: PALETTE[h % PALETTE.length], glyph };
+  }
+  function textOn(hex) {
+    const c = hex.replace('#', '');
+    const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
+    return (0.299*r + 0.587*g + 0.114*b) > 180 ? '#18181b' : '#ffffff';
+  }
+
+  // ── Modality mapping (from the API's real `modalities` field) ────────────────
+  //   text → Chat ; multimodal → Chat + Multimodal (text ∪ multimodal = all LLMs)
   const MEDIA = { image:'Image', video:'Video', tts:'TTS', asr:'ASR', embedding:'Embeddings', music:'Music' };
   function displayMods(raw) {
     const r = new Set((Array.isArray(raw) ? raw : [raw]).map(x => String(x).toLowerCase()));
     const out = [];
-    if (r.has('text') || r.has('multimodal')) out.push('Chat');   // all LLMs
-    if (r.has('multimodal')) out.push('Multimodal');              // accepts images/files
+    if (r.has('text') || r.has('multimodal')) out.push('Chat');
+    if (r.has('multimodal')) out.push('Multimodal');
     for (const k in MEDIA) if (r.has(k)) out.push(MEDIA[k]);
     if (!out.length) out.push('Other');
     return out;
@@ -114,9 +159,29 @@
     if (n >= 1e3) return (n / 1e3) + 'K';
     return String(n);
   }
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
   // ── State + render ───────────────────────────────────────────────────────────
   let MODELS = [], activeFilter = 'All', query = '';
+
+  function card(m) {
+    const st = providerStyle(m.provider);
+    const short = m.name.includes('/') ? m.name.slice(m.name.indexOf('/') + 1) : m.name;
+    const cx = ctx(m.context_size);
+    return `
+      <div class="mcard">
+        <div class="mtop">
+          <div class="logo" style="background:${st.color}; color:${textOn(st.color)}">${esc(st.glyph)}</div>
+          <div class="mprov">${esc(st.name)}</div>
+        </div>
+        <div class="mname" title="${esc(m.name)}">${esc(short)}</div>
+        <div class="mods">${m._mods.map(x => `<span class="badge${isMedia(x) ? ' media' : ''}">${x}</span>`).join('')}</div>
+        <div class="mfoot">
+          <span>${cx === '—' ? '' : cx + ' ctx'}</span>
+          <span class="price">${priceCell(m)}</span>
+        </div>
+      </div>`;
+  }
 
   function render() {
     const q = query.trim().toLowerCase();
@@ -128,25 +193,12 @@
     const providers = new Set(rows.map(m => m.provider));
     document.getElementById('summary').textContent =
       `Showing ${rows.length} of ${MODELS.length} models · ${providers.size} providers · live from /api/models`;
-
-    if (!rows.length) { document.getElementById('out').innerHTML = '<div class="state">No models match.</div>'; return; }
-    const body = rows.map(m => `
-      <tr>
-        <td class="name">${m.name}</td>
-        <td class="hide">${m.provider || ''}</td>
-        <td class="num hide">${ctx(m.context_size)}</td>
-        <td class="num">${priceCell(m)}</td>
-        <td>${m._mods.map(x => `<span class="badge${isMedia(x) ? ' media' : ''}">${x}</span>`).join('')}</td>
-      </tr>`).join('');
-    document.getElementById('out').innerHTML =
-      `<table><thead><tr>
-         <th>Model</th><th class="hide">Provider</th><th class="num hide">Context</th>
-         <th class="num">Price /1M (in&nbsp;/&nbsp;out)</th><th>Modality</th>
-       </tr></thead><tbody>${body}</tbody></table>`;
+    document.getElementById('out').innerHTML = rows.length
+      ? `<div class="grid">${rows.map(card).join('')}</div>`
+      : '<div class="state">No models match.</div>';
   }
 
   function buildChips() {
-    // Only show filters that actually occur in the data.
     const present = new Set(MODELS.flatMap(m => m._mods));
     const el = document.getElementById('chips');
     el.innerHTML = '';
@@ -177,7 +229,7 @@
       render();
     } catch (e) {
       document.getElementById('out').innerHTML =
-        `<div class="state">Couldn't load the live catalog (${e.message}).<br>The API may be unreachable from your network.</div>`;
+        `<div class="state">Couldn't load the live catalog (${esc(e.message)}).<br>The API may be unreachable from your network.</div>`;
     }
   }
 
