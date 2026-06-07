@@ -5,37 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="idea-slug" content="zero-markup-ai-gateway" />
   <title>Token Station — Write Once. Use Any AI Model.</title>
-  <meta name="description" content="One key, one account, one API layer for every AI model — LLMs, VLMs, embeddings, speech, image, video. OpenAI-style and Anthropic-style APIs across providers. Smart routing you control. First month free + $10 credit." />
+  <meta name="description" content="One key, one account, one API layer for every AI model — LLMs, VLMs, embeddings, speech, image, video. OpenAI-style and Anthropic-style APIs across providers. Smart routing you control. Free to register — $10 credit, no subscription." />
+  <link rel="canonical" href="https://tokens.bytefuture.ai/" />
+
+  <!-- Open Graph / social cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tokens.bytefuture.ai/" />
+  <meta property="og:title" content="Token Station — Write Once. Use Any AI Model." />
+  <meta property="og:description" content="One key, one account, one API layer for every AI model — LLMs, VLMs, embeddings, speech, image, video. OpenAI-style and Anthropic-style APIs across providers. Smart routing you control. Free to register — $10 credit, no subscription." />
+  <meta property="og:image" content="https://tokens.bytefuture.ai/dashboard.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Token Station — Write Once. Use Any AI Model." />
+  <meta name="twitter:description" content="One key, one account, one API layer for every AI model — OpenAI- and Anthropic-style APIs across providers, with smart routing you control. Free to register — $10 credit, no subscription." />
+  <meta name="twitter:image" content="https://tokens.bytefuture.ai/dashboard.png" />
+
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'><path d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/><circle cx='14' cy='14' r='3.5' fill='%2360a5fa'/><path d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/><circle cx='14' cy='5' r='1.5' fill='%23a78bfa'/><circle cx='22' cy='19' r='1.5' fill='%2334d399'/><circle cx='6' cy='19' r='1.5' fill='%23fb923c'/></svg>" />
 
-  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (code) + Inter (body) -->
+  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (code) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: '#faf9f5',
-            surface: '#ffffff',
-            border: '#e4e4e7',
-            muted: '#71717a',
-            blue: '#2563EB',
-            green: '#0D9488',
-          },
-          fontFamily: {
-            heading: ['"Space Grotesk"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-            body: ['"DM Sans"', 'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
 
   <!-- Google tag (gtag.js) — GA4 + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
@@ -140,23 +129,6 @@
     }
     .btn-secondary:hover { border-color: #2563EB; color: #2563EB; }
 
-    .btn-stripe {
-      background: linear-gradient(135deg, #0D9488, #0f766e);
-      color: #faf9f5;
-      border-radius: 50px;
-      padding: 16px 32px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-stripe:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(13,148,136,0.18); }
-
     /* Card */
     .card {
       background: #ffffff;
@@ -213,14 +185,6 @@
       border-bottom: 1px solid #e4e4e7;
     }
 
-    /* Divider glow */
-    .glow-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #2563EB, transparent);
-      margin: 0 auto;
-      width: 60%;
-    }
-
     /* Section label */
     .section-label {
       font-family: 'JetBrains Mono', monospace;
@@ -229,20 +193,6 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #2563EB;
-    }
-
-    /* ROI bar */
-    .roi-bar-bg {
-      background: #f4f4f5;
-      border-radius: 4px;
-      height: 6px;
-      overflow: hidden;
-    }
-    .roi-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      background: linear-gradient(90deg, #2563EB, #0D9488);
-      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* Tablet — collapse 3/4-col grids to 2, stack hero */
@@ -320,79 +270,6 @@
       img { max-width: 100%; height: auto; }
     }
 
-    /* Marquee + modality helpers (provider/modality display) */
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: marquee 32s linear infinite;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-    .marquee-wrap { overflow: hidden; position: relative; }
-    .marquee-wrap::before, .marquee-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .marquee-wrap::before { left: 0; background: linear-gradient(to right, #faf9f5, transparent); }
-    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, #faf9f5, transparent); }
-
-    .provider-chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 16px; margin: 0 8px;
-      background: #f4f4f5; border: 1px solid #e4e4e7;
-      border-radius: 50px; white-space: nowrap;
-      font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500;
-      color: #3f3f46;
-      transition: border-color 0.2s;
-    }
-    .provider-chip:hover { border-color: #a1a1aa; }
-    .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-
-    .model-card {
-      background: #ffffff;
-      border: 1px solid #e4e4e7;
-      border-radius: 14px;
-      padding: 18px 20px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .model-card:hover { border-color: #d4d4d8; background: #f4f4f5; }
-    .logo-chip {
-      width: 38px; height: 38px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: 11px; letter-spacing: 0.02em; flex-shrink: 0;
-    }
-    .model-tag {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px;
-      color: #71717a; background: #ffffff; border: 1px solid #e4e4e7;
-      border-radius: 4px; padding: 2px 7px; display: inline-block; margin: 2px 2px 0 0;
-    }
-    .type-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 10px;
-      font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px;
-    }
-
-    .modality-card {
-      background: #ffffff;
-      border: 1px solid #e4e4e7;
-      border-radius: 14px;
-      padding: 22px;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-    }
-    .modality-card:hover { border-color: #2563EB; transform: translateY(-2px); background: #f4f4f5; }
-    .modality-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 14px;
-    }
   </style>
 </head>
 
@@ -402,7 +279,7 @@
 <nav>
   <!-- PROMO BANNER -->
   <div style="background:linear-gradient(90deg,#2563EB,#7C3AED); color:#ffffff; text-align:center; padding:10px 24px; font-size:14px; font-family:'DM Sans',sans-serif; line-height:1.5;">
-    <strong>Gemini 3.5 Flash + Claude Opus 4.8 now available</strong> — first month free + $10 signup credit.
+    <strong>Now free to register — no card, no subscription.</strong> Get $10 in credit instantly · free models always free.
     <a href="https://models.bytefuture.ai/signup" style="color:#ffffff; margin-left:8px; text-decoration:underline; font-weight:600;" onclick="gtag('event','cta_click',{label:'banner_gemini35'});">Start free &rarr;</a>
   </div>
   <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
@@ -442,7 +319,7 @@
         <span class="gradient-text">Use Any AI Model.</span>
       </h1>
       <p style="font-size:18px; color:#52525b; line-height:1.7; margin:0 0 12px; max-width:490px;">
-        One key, one account, one API layer for every AI model — LLMs, vision, embeddings, speech, image, and video. Drop-in for Codex, Claude Code, LangChain, and whatever you already ship.
+        One key, one account, one API layer for every AI model — LLMs, vision, embeddings, speech, image, and video. Drop-in for Codex, Claude Code, LangChain — Token Station translates API shapes, tool names, and voice names so they just work.
       </p>
       <p style="font-size:14px; color:#0D9488; margin:0 0 32px; max-width:490px;">
         Smart routing can cut token cost by up to 73% at the same quality bar (ICLR 2025). <a href="#research" style="color:#2563EB; text-decoration:none; border-bottom:1px solid rgba(37,99,235,0.24);">See the research →</a>
@@ -459,7 +336,7 @@
       </div>
 
       <p style="font-size:13px; color:#71717a; margin-top:14px;">
-        First month free · <span style="color:#0D9488; font-weight:600;">$10 credit</span> on signup · Then <span style="color:#18181b; font-weight:600;">$10/month</span> · No token markup.
+        Free to register — no credit card, no subscription · <span style="color:#0D9488; font-weight:600;">$10 credit</span> on signup · Free models always free.
       </p>
 
     </div>
@@ -557,10 +434,10 @@
       Drop-in. Every SDK you already use.
     </h2>
     <p class="animate-on-scroll" style="text-align:center; color:#71717a; font-size:16px; line-height:1.7; max-width:720px; margin:0 auto 24px;">
-      OpenAI-style endpoints (with streaming) for every provider and modality. Anthropic-style endpoints for all LLMs — so the same model works in Claude Code, Codex, LangChain, LlamaIndex, or whatever you're already using.
+      OpenAI-style endpoints (with streaming) for every provider and modality. Anthropic-style endpoints for all LLMs. And Token Station translates more than the wire format — tool/function names and voice names are mapped too — so the same model works in Claude Code, Codex, LangChain, or LlamaIndex.
     </p>
     <p class="animate-on-scroll" style="text-align:center; font-size:14px; line-height:1.7; max-width:720px; margin:0 auto 40px; color:#18181b;">
-      Look closely: the <strong style="color:#2563EB;">OpenAI SDK</strong> below calls <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">claude-opus-4-7</span>, and the <strong style="color:#0D9488;">Anthropic SDK</strong> calls <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">openai-codex/gpt-5.5</span>. Any model, any SDK — pick whichever shape your tool expects.
+      Look closely: the <strong style="color:#2563EB;">OpenAI SDK</strong> below calls <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">claude-opus-4-8</span>, and the <strong style="color:#0D9488;">Anthropic SDK</strong> calls <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">openai-codex/gpt-5.5</span>. Any model, any SDK — pick whichever shape your tool expects.
     </p>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;" class="animate-on-scroll">
@@ -582,7 +459,7 @@
             &nbsp;&nbsp;base_url=<span class="string">"https://models.bytefuture.ai/v1"</span>,<br/>
             )<br/><br/>
             stream = client.chat.completions.create(<br/>
-            &nbsp;&nbsp;model=<span class="string">"claude-opus-4-7"</span>,<br/>
+            &nbsp;&nbsp;model=<span class="string">"claude-opus-4-8"</span>,<br/>
             &nbsp;&nbsp;messages=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"..."</span>}],<br/>
             &nbsp;&nbsp;stream=<span style="color:#d97706;">True</span>,<br/>
             )<br/>
@@ -618,6 +495,23 @@
       </div>
 
     </div>
+
+    <!-- Beyond-the-wire translation callout -->
+    <div class="animate-on-scroll" style="margin-top:24px; background:#eef4ff; border:1px solid rgba(37,99,235,0.18); border-radius:12px; padding:32px 36px; display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;">
+      <div style="width:52px; height:52px; border-radius:12px; background:rgba(37,99,235,0.10); border:1px solid rgba(37,99,235,0.24); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-size:24px;">🧩</span>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin:0; color:#18181b;">More than API translation — your tools come along.</h3>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:rgba(37,99,235,0.12); color:#2563EB; border:1px solid rgba(37,99,235,0.24); padding:3px 10px; border-radius:50px;">Beyond the wire</span>
+        </div>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:14px; max-width:760px;">
+          Most gateways stop at the wire format. Token Station also maps the details that usually break cross-model use — <strong style="color:#18181b;">tool / function names</strong> and <strong style="color:#18181b;">voice names</strong> — to match what your harness expects. That's why <strong style="color:#2563EB;">Grok Build runs inside Claude Code and Codex</strong> through Token Station: it speaks the OpenAI- and Anthropic-style API <em>and</em> understands the harness's tool names.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -629,7 +523,7 @@
       <div class="animate-on-scroll">
         <div class="section-label" style="margin-bottom:16px;">Current Model Coverage</div>
         <h2 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,56px); font-weight:700; letter-spacing:-0.04em; line-height:1.02; margin:0 0 18px;">162 enabled models across 19 providers.</h2>
-        <p style="color:#71717a; font-size:16px; line-height:1.7; margin:0 0 28px; max-width:520px;">OpenAI, Anthropic, Google, xAI, Seedance 2.0, ElevenLabs, Groq, Mistral, AWS Bedrock, NVIDIA NIM, and more. Browse the full catalog by provider, modality, context window, and price signal.</p>
+        <p style="color:#71717a; font-size:16px; line-height:1.7; margin:0 0 28px; max-width:520px;">OpenAI, Anthropic, Google, xAI, Seedance 2.0, ElevenLabs, Groq, Mistral, AWS Bedrock, NVIDIA NIM, and more — free models included at no cost. Browse the full catalog by provider, modality, context window, and price signal.</p>
         <a href="models.html" class="btn-primary" style="padding:14px 22px; font-size:14px;" onclick="gtag('event','nav_click',{label:'models_catalog'});">View all models →</a>
       </div>
 
@@ -688,7 +582,7 @@
         <p style="color:#71717a; line-height:1.65; margin:0 0 16px; font-size:15px;">
           Chasing receipts, reconciling prepaid credits, and explaining to finance why you're paying ten AI vendors instead of one.
         </p>
-        <p style="margin:0; font-size:13px; color:#0D9488;">→ Token Station: flat fee + provider passthrough.</p>
+        <p style="margin:0; font-size:13px; color:#0D9488;">→ Token Station: no subscription — pay-as-you-go passthrough.</p>
       </div>
 
     </div>
@@ -760,7 +654,7 @@
           <span style="font-size:16px;">🧾</span>
         </div>
         <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">One Account, One Bill</h3>
-        <p style="color:#71717a; line-height:1.65; margin:0; font-size:14px;">No more juggling separate provider billing portals, prepaid credits, and expiration dates. One subscription, one passthrough line item.</p>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:14px;">No more juggling separate provider billing portals, prepaid credits, and expiration dates. No subscription — one balance, one passthrough line item.</p>
       </div>
 
       <div class="card animate-on-scroll" style="transition-delay:0.08s;">
@@ -783,8 +677,8 @@
         <div style="width:36px; height:36px; border-radius:8px; background:rgba(13,148,136,0.08); border:1px solid rgba(13,148,136,0.16); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
           <span style="font-size:16px;">🔒</span>
         </div>
-        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">Zero Markup on Tokens</h3>
-        <p style="color:#71717a; line-height:1.65; margin:0; font-size:14px;">Tokens billed at the provider's published rate. No percentage cut. You pay the platform $10/month — that's it.</p>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; margin:0 0 10px;">No Subscription, No Markup</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:14px;">Free to register — no credit card. Paid tokens bill at the provider's published rate with no percentage cut, and free models (like NVIDIA NIM) cost nothing.</p>
       </div>
 
     </div>
@@ -903,8 +797,8 @@
         <div style="font-size:13px; color:#71717a; margin-top:6px;">modalities, one client</div>
       </div>
       <div class="animate-on-scroll" style="transition-delay:0.24s;">
-        <div class="stat-number" style="color:#0D9488;">$10<span style="font-size:24px; font-weight:600;">/mo</span></div>
-        <div style="font-size:13px; color:#71717a; margin-top:6px;">flat — no token markup</div>
+        <div class="stat-number" style="color:#0D9488;">$0</div>
+        <div style="font-size:13px; color:#71717a; margin-top:6px;">to register — $10 credit, no subscription</div>
       </div>
     </div>
 
@@ -989,58 +883,49 @@
 <!-- ─── PRICING ─── -->
 <section id="pricing" style="padding: 96px 24px;">
   <div style="max-width:1200px; margin:0 auto;">
-    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Low Cost</div>
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Pricing</div>
     <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 12px;">
-      Flat $10/month. Pay providers what providers charge.
+      Free to register. Pay only for what you use.
     </h2>
     <p class="animate-on-scroll" style="text-align:center; color:#71717a; font-size:16px; margin:0 0 56px; max-width:620px; margin-left:auto; margin-right:auto;">
-      Predictable platform subscription plus passthrough token cost at provider rates. Your bill doesn't scale with a hidden percentage fee.
+      No credit card, no subscription. Start with $10 in credit, run free models for free, and pay provider rates — with zero markup — only on the paid models you actually call.
     </p>
 
     <!-- Main pricing card -->
     <div style="display:grid; grid-template-columns:1fr; gap:0; max-width:560px; margin:0 auto 48px;" class="animate-on-scroll">
       <div class="pricing-card featured">
-        <span class="pricing-badge">All features included</span>
+        <span class="pricing-badge">No subscription</span>
         <div style="text-align:center; padding-top:8px;">
           <div style="font-family:'Space Grotesk',sans-serif; font-size:48px; font-weight:700; letter-spacing:-0.03em; line-height:1;">
-            $10<span style="font-size:20px; color:#71717a; font-weight:500;">/month</span>
+            Free<span style="font-size:20px; color:#71717a; font-weight:500;"> to register</span>
           </div>
-          <p style="color:#71717a; font-size:14px; margin:10px 0 24px;">Plus provider token cost — at provider rates, with zero markup.</p>
-          <div style="background:#ecfdf5; border:1px solid rgba(13,148,136,0.22); border-radius:10px; padding:14px; margin-bottom:24px;">
-            <span style="color:#0D9488; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px;">First month free + $10 credit</span>
-            <div style="font-size:12px; color:#71717a; margin-top:4px;">No charge for your first month. $10 credit for token usage on us.</div>
+          <p style="color:#71717a; font-size:14px; margin:10px 0 24px;">No credit card. No subscription. Pay only for the paid models you call — at provider rates, zero markup.</p>
+          <div style="background:#ecfdf5; border:1px solid rgba(13,148,136,0.22); border-radius:10px; padding:14px; margin-bottom:14px;">
+            <span style="color:#0D9488; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px;">$10 credit — added instantly</span>
+            <div style="font-size:12px; color:#71717a; margin-top:4px;">Dropped into your balance the moment you sign up.</div>
+          </div>
+          <div style="background:#eef4ff; border:1px solid rgba(37,99,235,0.18); border-radius:10px; padding:14px; margin-bottom:24px;">
+            <span style="color:#2563EB; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px;">Free models stay free</span>
+            <div style="font-size:12px; color:#71717a; margin-top:4px;">Open models like NVIDIA NIM cost nothing — no credit required.</div>
           </div>
           <a href="https://models.bytefuture.ai/signup" class="btn-primary" style="width:100%; justify-content:center;" onclick="gtag('event','cta_click',{label:'pricing_subscribe'}); gtag('event','begin_checkout',{label:'pricing_subscribe'});">Start free →</a>
         </div>
 
         <div style="margin-top:28px; padding-top:24px; border-top:1px solid #e4e4e7; display:flex; flex-direction:column; gap:12px;">
-          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> OpenAI-style + Anthropic-style APIs</div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> OpenAI-style + Anthropic-style APIs — tool &amp; voice names translated too</div>
           <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> LLMs, VLMs, embeddings, ASR, TTS, image, video</div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> Free models (NVIDIA NIM &amp; more) at no cost</div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> Paid models at provider rates — zero markup</div>
           <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> User-defined routing rules + fallback chains</div>
-          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> Streaming, tool use, multi-turn, function calling</div>
-          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> One key, one invoice, one dashboard</div>
-          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> No percentage fees, ever</div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:14px; color:#3f3f46;"><span style="color:#0D9488;">✓</span> One key, one balance, one dashboard</div>
         </div>
       </div>
     </div>
 
-    <!-- vs other gateways -->
-    <h2 class="animate-on-scroll" style="text-align:center; font-family:'Space Grotesk',sans-serif; font-size:clamp(24px,3vw,36px); font-weight:700; letter-spacing:-0.02em; margin:0 0 24px;">Looking for an OpenRouter Alternative?</h2>
-    <div class="animate-on-scroll" style="max-width:800px; margin:0 auto; background:#ffffff; border:1px solid #e4e4e7; border-radius:12px; padding:32px 36px;">
-      <div class="section-label" style="margin-bottom:20px;">Token Station vs. OpenRouter</div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-        <div style="background:#ffffff; border:1px solid #e4e4e7; border-radius:12px; padding:22px;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#71717a; margin-bottom:8px;">OpenRouter</div>
-          <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:8px; color:#dc2626;">5.5% credit top-up fee</div>
-          <p style="font-size:13px; color:#71717a; line-height:1.55; margin:0;">Every time you top up credits — plus a $0.80 minimum. On $2,000/mo of spend that's ~$110/mo in purchase fees, scaling with your bill.</p>
-        </div>
-        <div style="background:#ecfdf5; border:1px solid rgba(13,148,136,0.22); border-radius:12px; padding:22px;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#0D9488; margin-bottom:8px;">Token Station</div>
-          <div style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:8px; color:#0D9488;">$10/mo, period</div>
-          <p style="font-size:13px; color:#71717a; line-height:1.55; margin:0;">At $2,000/mo of usage, that's still $10. Platform cost doesn't scale with your bill.</p>
-        </div>
-      </div>
-    </div>
+    <!-- vs other gateways (de-emphasized) -->
+    <p class="animate-on-scroll" style="text-align:center; color:#71717a; font-size:13px; line-height:1.6; max-width:620px; margin:0 auto;">
+      Coming from a credit-markup gateway like OpenRouter? There's no subscription and no percentage top-up fee here — register free, get $10 in credit, and pay provider rates only on paid models.
+    </p>
 
   </div>
 </section>
@@ -1067,7 +952,7 @@
           Can I use the same models in Claude Code and Codex?
           <span style="color:#2563EB; font-size:20px; font-weight:300;">+</span>
         </summary>
-        <p style="color:#71717a; line-height:1.7; font-size:15px; margin:16px 0 0;">Yes — same host, different SDK conventions. For the OpenAI SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">base_url="https://models.bytefuture.ai/v1"</span> and the SDK hits <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">/v1/chat/completions</span>, <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">/v1/responses</span>, plus the multimedia paths. For the Anthropic SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">base_url="https://models.bytefuture.ai"</span> (no <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">/v1</span> — the SDK adds it) and it calls <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">/v1/messages</span>. One key, both tools, same models.</p>
+        <p style="color:#71717a; line-height:1.7; font-size:15px; margin:16px 0 0;">Yes — same host, different SDK conventions. For the OpenAI SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">base_url="https://models.bytefuture.ai/v1"</span> and the SDK hits <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">/v1/chat/completions</span>, <span style="font-family:'JetBrains Mono',monospace; color:#2563EB;">/v1/responses</span>, plus the multimedia paths. For the Anthropic SDK, set <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">base_url="https://models.bytefuture.ai"</span> (no <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">/v1</span> — the SDK adds it) and it calls <span style="font-family:'JetBrains Mono',monospace; color:#0D9488;">/v1/messages</span>. One key, both tools, same models. And because Token Station translates tool/function names and voice names — not just the API shape — even non-native models like Grok Build work inside Claude Code and Codex.</p>
       </details>
 
       <details class="animate-on-scroll" style="border-top:1px solid #e4e4e7; padding:24px 0;">
@@ -1091,7 +976,7 @@
           How is pricing different from other gateways?
           <span style="color:#2563EB; font-size:20px; font-weight:300;">+</span>
         </summary>
-        <p style="color:#71717a; line-height:1.7; font-size:15px; margin:16px 0 0;">No token markup. Flat $10/month platform fee. Provider tokens pass through at the published rate. First month is free, plus you get a $10 credit for token usage. Percentage gateways silently scale their take with your bill — we don't.</p>
+        <p style="color:#71717a; line-height:1.7; font-size:15px; margin:16px 0 0;">There's no subscription and no token markup. Registration is free — no credit card — and $10 in credit lands in your balance the moment you sign up. Free models (like NVIDIA NIM) cost nothing; paid models pass through at the provider's published rate. Percentage gateways silently scale their take with your bill — we don't.</p>
       </details>
 
       <details class="animate-on-scroll" style="border-top:1px solid #e4e4e7; padding:24px 0;">
@@ -1125,7 +1010,7 @@
         <span class="gradient-text">Route smarter.</span>
       </h2>
       <p style="color:#71717a; font-size:16px; line-height:1.7; margin:0 0 36px;">
-        One key for every AI model, one account in place of ten, and smart routing you control — first month free, plus a $10 signup credit.
+        One key for every AI model, one account in place of ten, and smart routing you control — free to register, with $10 in credit on us.
       </p>
 
       <div style="display:flex; justify-content:center;">
@@ -1135,7 +1020,7 @@
       </div>
 
       <p style="font-size:13px; color:#71717a; margin-top:16px;">
-        First month free. $10 credit applied on signup. Then $10/month.
+        Free to register — no credit card, no subscription. $10 credit applied instantly.
       </p>
     </div>
   </div>
@@ -1189,46 +1074,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
-
-<!-- ─── COUNTUP ─── -->
-<script>
-function countUp(el, target, duration = 1500) {
-  const start = performance.now();
-  const update = (time) => {
-    const progress = Math.min((time - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(ease * target).toLocaleString();
-    if (progress < 1) requestAnimationFrame(update);
-  };
-  requestAnimationFrame(update);
-}
-
-// Animate stats when visible
-const statObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const target = parseFloat(el.dataset.target);
-      if (!isNaN(target)) countUp(el, target);
-      statObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('[data-target]').forEach(el => statObserver.observe(el));
-
-// Animate ROI bars when visible
-const barObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const bar = entry.target;
-      bar.style.width = bar.dataset.target + '%';
-      barObserver.unobserve(bar);
-    }
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll('[id^="bar"]').forEach(el => barObserver.observe(el));
-</script>
-
 
 </body>
 </html>
