@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Publish on every push to the default branch
+  push:
+    branches: [main]
+  # ...and allow manual runs from the Actions tab
+  workflow_dispatch:
+
+# Permissions required by the Pages deploy actions (OIDC + Pages write)
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One production deploy at a time; never cancel an in-flight publish
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        # enablement:true best-effort switches the Pages source to "GitHub
+        # Actions". If the repo is still set to "Deploy from a branch", flip
+        # Settings → Pages → Source to "GitHub Actions" once.
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload static site
+        # This is a plain static site — upload the repo root as-is.
+        # CNAME (custom domain) and .nojekyll are included automatically.
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
