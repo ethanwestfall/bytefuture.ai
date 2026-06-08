@@ -38,7 +38,9 @@
     .mcard { background:#fff; border:1px solid #e4e4e7; border-radius:14px; padding:18px; display:flex; flex-direction:column; gap:12px; transition:border-color .2s, transform .2s, box-shadow .2s; }
     .mcard:hover { border-color:#2563EB; transform:translateY(-2px); box-shadow:0 8px 24px rgba(24,24,27,0.06); }
     .mtop { display:flex; align-items:center; gap:10px; }
-    .logo { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; flex-shrink:0; }
+    .logo { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; background:#fff; border:1px solid #e4e4e7; flex-shrink:0; overflow:hidden; }
+    .logo img { width:22px; height:22px; object-fit:contain; }
+    .glyph { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; line-height:1; }
     .mprov { font-size:12px; color:#52525b; font-weight:500; }
     .mname { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; color:#18181b; word-break:break-word; line-height:1.45; }
     .mods { display:flex; flex-wrap:wrap; gap:4px; }
@@ -87,7 +89,7 @@
   const API = 'https://models.bytefuture.ai/api/models';
   const FILTERS = ['Chat', 'Multimodal', 'Image', 'Video', 'TTS', 'ASR', 'Embeddings', 'Music'];
 
-  // ── Provider theming (name · color · glyph) — from the original design ───────
+  // ── Provider theming (name · color · glyph) ─────────────────────────────────
   const PROVIDERS = {
     "openai":{"name":"OpenAI","color":"#10A37F","glyph":"O"},
     "anthropic":{"name":"Anthropic","color":"#D97757","glyph":"A"},
@@ -96,8 +98,8 @@
     "aws-bedrock-openai":{"name":"AWS Bedrock · OpenAI","color":"#FF9900","glyph":"B"},
     "gemini":{"name":"Google Gemini","color":"#4F8DFA","glyph":"G"},
     "groq":{"name":"Groq","color":"#F55036","glyph":"G"},
-    "bailian":{"name":"Alibaba Bailian","color":"#FF6A00","glyph":"百"},
-    "xai":{"name":"xAI","color":"#E8E8E8","glyph":"X"},
+    "bailian":{"name":"Alibaba Bailian","color":"#615CED","glyph":"百"},
+    "xai":{"name":"xAI","color":"#18181b","glyph":"X"},
     "byteplus":{"name":"BytePlus","color":"#3370FF","glyph":"B"},
     "glm":{"name":"Zhipu GLM","color":"#9B7BF7","glyph":"智"},
     "glm-coding":{"name":"Zhipu GLM · Coding","color":"#9B7BF7","glyph":"智"},
@@ -126,10 +128,39 @@
     const glyph = ((key || '?').replace(/[^a-z0-9]/gi, '')[0] || '?').toUpperCase();
     return { name, color: PALETTE[h % PALETTE.length], glyph };
   }
-  function textOn(hex) {
+  // Darken a too-light brand colour so the glyph stays legible on a white chip.
+  function guard(hex) {
     const c = hex.replace('#', '');
     const r = parseInt(c.slice(0,2),16), g = parseInt(c.slice(2,4),16), b = parseInt(c.slice(4,6),16);
-    return (0.299*r + 0.587*g + 0.114*b) > 180 ? '#18181b' : '#ffffff';
+    return (0.299*r + 0.587*g + 0.114*b) > 200 ? '#18181b' : hex;
+  }
+
+  // ── Provider logos (real SVGs in /logos) ────────────────────────────────────
+  // Provider key → brand key (several providers share one brand mark).
+  const BRAND = {
+    "openai":"openai","openai-codex":"openai","aws-bedrock-openai":"openai",
+    "anthropic":"anthropic","claude-code":"anthropic","aws-claude":"anthropic",
+    "gemini":"gemini","nvidia-nim":"nvidia","mistral":"mistral","elevenlabs":"elevenlabs",
+    "deepseek":"deepseek","github-copilot":"githubcopilot","xai":"xai","xiaomi":"xiaomi",
+    "bailian":"qwen","minimax":"minimax","minimax-media":"minimax",
+    "azure-foundry":"azure","azure-speech":"azure","aws-bedrock":"aws",
+    "groq":"groq","kimi":"kimi","byteplus":"byteplus","glm":"glm","glm-coding":"glm",
+    "kling":"kling","ideogram":"ideogram","reve":"reve","gmi":"gmi",
+    "deepinfra":"deepinfra","longcat":"longcat"
+  };
+  // brand -> logo filename in /logos (SVG unless noted). Drop a file + add a line here.
+  const LOGO = {
+    openai:"openai.svg", anthropic:"anthropic.svg", gemini:"gemini.svg", nvidia:"nvidia.svg",
+    mistral:"mistral.svg", elevenlabs:"elevenlabs.svg", deepseek:"deepseek.svg",
+    githubcopilot:"githubcopilot.svg", xai:"xai.svg", xiaomi:"xiaomi.svg", qwen:"qwen.svg",
+    minimax:"minimax.svg", azure:"azure.svg", aws:"aws.svg", groq:"groq.svg", kimi:"kimi.svg",
+    glm:"glm.svg", reve:"reve.svg", longcat:"longcat.svg", deepinfra:"deepinfra.svg",
+    kling:"kling.svg", byteplus:"byteplus.svg", gmi:"gmi.svg", ideogram:"ideogram.png"
+  };
+  function logoMarkup(key, st) {
+    const f = LOGO[BRAND[key] || key];
+    if (f) return `<img src="logos/${f}" alt="${esc(st.name)} logo" loading="lazy">`;
+    return `<span class="glyph" style="color:${guard(st.color)}">${esc(st.glyph)}</span>`;
   }
 
   // ── Modality mapping (from the API's real `modalities` field) ────────────────
@@ -171,7 +202,7 @@
     return `
       <div class="mcard">
         <div class="mtop">
-          <div class="logo" style="background:${st.color}; color:${textOn(st.color)}">${esc(st.glyph)}</div>
+          <div class="logo">${logoMarkup(m.provider, st)}</div>
           <div class="mprov">${esc(st.name)}</div>
         </div>
         <div class="mname" title="${esc(m.name)}">${esc(short)}</div>
