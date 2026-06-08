@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ▼ EDIT: title, description, og tags ▼ -->
+  <title>POST_TITLE — Token Station Blog</title>
+  <meta name="description" content="POST_DESCRIPTION" />
+  <meta property="og:title" content="POST_TITLE — Token Station Blog" />
+  <meta property="og:description" content="POST_DESCRIPTION" />
+  <meta property="og:type" content="article" />
+  <!-- ▲ EDIT ▲ -->
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'><path d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/><circle cx='14' cy='14' r='3.5' fill='%2360a5fa'/><path d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/><circle cx='14' cy='5' r='1.5' fill='%23a78bfa'/><circle cx='22' cy='19' r='1.5' fill='%2334d399'/><circle cx='6' cy='19' r='1.5' fill='%23fb923c'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#faf9f5',
+            surface: '#ffffff',
+            border: '#e4e4e7',
+            muted: '#71717a',
+            blue: '#2563EB',
+            green: '#0D9488',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            body: ['"Source Serif 4"', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #faf9f5;
+      color: #18181b;
+      font-family: 'Source Serif 4', Georgia, serif;
+      margin: 0;
+    }
+    a { transition: color 0.2s; }
+
+    /* ─── Article prose ─── */
+    .prose { max-width: 720px; margin: 0 auto; font-size: 18px; line-height: 1.8; }
+    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; }
+    .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
+    .prose p { margin: 0 0 24px; color: #27272a; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; }
+    .prose li { margin-bottom: 8px; }
+    .prose blockquote {
+      border-left: 3px solid #2563EB;
+      margin: 32px 0;
+      padding: 0 0 0 24px;
+      color: #52525b;
+      font-style: italic;
+    }
+    .prose img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid #e4e4e7;
+      margin: 32px 0;
+    }
+    .prose a { color: #2563EB; text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: #1d4ed8; }
+    .prose strong { font-weight: 600; color: #18181b; }
+
+    /* Code blocks */
+    .prose pre {
+      background: #ffffff;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 32px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+      background: rgba(37,99,235,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .prose pre code {
+      background: none;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid #e4e4e7;
+      margin: 48px 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div style="background:linear-gradient(90deg,#2563EB,#7C3AED); color:#ffffff; text-align:center; padding:10px 24px; font-size:14px; font-family:'Source Serif 4',serif; line-height:1.5;">
+    <strong>Gemini 3.5 Flash + Claude Opus 4.8 now available</strong> — first month free + $10 signup credit.
+    <a href="https://models.bytefuture.ai/signup" style="color:#ffffff; margin-left:8px; text-decoration:underline; font-weight:600;">Start free &rarr;</a>
+  </div>
+  <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="../../" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="28" height="30" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img">
+        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
+        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
+        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
+        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
+        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em;">Token Station</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <a href="../../#gateway-features" style="color:#71717a; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Features</a>
+      <a href="../../models.html" style="color:#71717a; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Models</a>
+      <a href="../" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Blog</a>
+      <a href="../../#pricing" style="color:#71717a; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Pricing</a>
+      <a href="https://models.bytefuture.ai/signup" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;">Start free</a>
+    </div>
+  </div>
+  </div>
+</nav>
+
+<!-- ─── ARTICLE HEADER ─── -->
+<header style="max-width:720px; margin:0 auto; padding:80px 24px 40px;">
+  <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+    <!-- ▼ EDIT: category and date ▼ -->
+    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Category</span>
+    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">June 8, 2026</time>
+    <!-- ▲ EDIT ▲ -->
+  </div>
+  <!-- ▼ EDIT: post title ▼ -->
+  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">POST_TITLE</h1>
+  <!-- ▲ EDIT ▲ -->
+</header>
+
+<!-- ─── ARTICLE BODY ─── -->
+<!-- ▼ EDIT: write your post content below ▼ -->
+<article class="prose" style="padding:0 24px 96px;">
+
+  <p>Your opening paragraph goes here. Set the stage for the reader.</p>
+
+  <h2>Section Heading</h2>
+
+  <p>Body text with <strong>bold</strong>, <em>italics</em>, and <a href="#">links</a>.</p>
+
+  <blockquote>
+    <p>A pull quote or key insight goes here.</p>
+  </blockquote>
+
+  <h3>Subsection</h3>
+
+  <ul>
+    <li>Bullet point one</li>
+    <li>Bullet point two</li>
+  </ul>
+
+  <pre><code>// Code example
+const response = await fetch('https://models.bytefuture.ai/v1/chat/completions', {
+  headers: { 'Authorization': 'Bearer YOUR_KEY' }
+});</code></pre>
+
+  <p>Closing thoughts.</p>
+
+  <hr />
+
+  <!-- Share -->
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">Share this post</span>
+    <a href="#" onclick="window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Post
+    </a>
+  </div>
+
+</article>
+<!-- ▲ EDIT ▲ -->
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:32px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <svg width="20" height="22" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img" style="opacity:0.75;">
+        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
+        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
+        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
+        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
+        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">Token Station</span>
+    </div>
+    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 Token Station. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
