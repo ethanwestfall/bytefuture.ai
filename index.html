@@ -3,28 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="idea-slug" content="zero-markup-ai-gateway" />
-  <title>Token Station Blog — AI Models, Routing & Developer Insights</title>
-  <meta name="description" content="Insights on AI model routing, token optimization, and building with LLMs — from the Token Station team." />
-  <link rel="canonical" href="https://tokens.bytefuture.ai/" />
+  <title>ByteFuture — Hybrid AI Inference for AI Agents</title>
+  <meta name="description" content="ByteFuture builds the infrastructure for hybrid AI inference — agents that run privately on the AI PC and at frontier scale in the cloud. Olares OS for on-device inference, Token Station for cloud routing across every model." />
+  <link rel="canonical" href="https://bytefuture.ai/" />
 
   <!-- Open Graph / social cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://tokens.bytefuture.ai/" />
-  <meta property="og:title" content="Token Station Blog — AI Models, Routing & Developer Insights" />
-  <meta property="og:description" content="Insights on AI model routing, token optimization, and building with LLMs — from the Token Station team." />
-  <meta property="og:image" content="https://blog.bytefuture.ai/dashboard.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Token Station Blog — AI Models, Routing & Developer Insights" />
-  <meta name="twitter:description" content="Insights on AI model routing, token optimization, and building with LLMs — from the Token Station team." />
-  <meta name="twitter:image" content="https://blog.bytefuture.ai/dashboard.png" />
+  <meta property="og:url" content="https://bytefuture.ai/" />
+  <meta property="og:title" content="ByteFuture — Hybrid AI Inference for AI Agents" />
+  <meta property="og:description" content="The infrastructure for hybrid AI inference — on-device on the AI PC with Olares OS, and in the cloud with Token Station. Built for AI agents that run everywhere." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ByteFuture — Hybrid AI Inference for AI Agents" />
+  <meta name="twitter:description" content="On-device on the AI PC with Olares OS, and in the cloud with Token Station. Hybrid inference infrastructure for AI agents." />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'><path d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/><circle cx='14' cy='14' r='3.5' fill='%2360a5fa'/><path d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/><circle cx='14' cy='5' r='1.5' fill='%23a78bfa'/><circle cx='22' cy='19' r='1.5' fill='%2334d399'/><circle cx='6' cy='19' r='1.5' fill='%23fb923c'/></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
 
-  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (code) + Source Serif 4 (body) + DM Sans (nav) -->
+  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (mono) + DM Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Google tag (gtag.js) — GA4 + Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
@@ -41,83 +38,10 @@
     body {
       background: #faf9f5;
       color: #18181b;
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: 'DM Sans', sans-serif;
       margin: 0;
     }
     a { transition: color 0.2s; }
-
-    /* Nav */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      border-bottom: 1px solid #e4e4e7;
-    }
-
-    /* Category pill */
-    .cat-pill {
-      font-size: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 500;
-      padding: 4px 12px;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid #e4e4e7;
-      background: transparent;
-      color: #71717a;
-    }
-    .cat-pill:hover { border-color: #2563EB; color: #2563EB; }
-    .cat-pill.active {
-      background: #2563EB;
-      color: #faf9f5;
-      border-color: #2563EB;
-    }
-
-    /* Post card */
-    .post-card {
-      border: 1px solid #e4e4e7;
-      border-radius: 12px;
-      background: #ffffff;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      overflow: hidden;
-    }
-    .post-card:hover {
-      border-color: #2563EB;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.06);
-      transform: translateY(-2px);
-    }
-    .post-card-body { padding: 28px; }
-    .post-card-cover {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Featured card */
-    .featured-card {
-      border: 1px solid #e4e4e7;
-      border-radius: 12px;
-      background: #ffffff;
-      overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .featured-card:hover {
-      border-color: #2563EB;
-      box-shadow: 0 8px 32px rgba(37,99,235,0.08);
-    }
-
-    /* Tag */
-    .post-tag {
-      font-size: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 500;
-      color: #2563EB;
-      background: rgba(37,99,235,0.08);
-      padding: 3px 10px;
-      border-radius: 50px;
-    }
 
     /* Animate on scroll */
     .animate-on-scroll {
@@ -125,36 +49,60 @@
       transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .animate-on-scroll.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+    .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #2563EB 0%, #0D9488 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Grid */
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
+    /* Buttons */
+    .btn-primary {
+      background: #2563EB; color: #faf9f5; border-radius: 50px;
+      padding: 14px 28px; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 15px; border: none; cursor: pointer;
+      transition: all 0.2s ease; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.16); }
+    .btn-secondary {
+      background: transparent; color: #18181b; border: 1px solid #e4e4e7;
+      border-radius: 50px; padding: 13px 26px; font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.2s ease;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary:hover { border-color: #2563EB; color: #2563EB; }
+
+    /* Card */
+    .card {
+      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 14px;
+      padding: 32px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { border-color: #2563EB; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(24,24,27,0.06); }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid #e4e4e7; }
+
+    /* Section label */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase; color: #2563EB;
     }
 
-    /* Tablet */
-    @media (max-width: 960px) {
-      .featured-inner { flex-direction: column !important; }
-      .featured-inner > div { width: 100% !important; }
-      .featured-cover { height: 240px !important; }
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
-    /* Mobile */
+    @media (max-width: 900px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr !important; }
+      .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+      nav a.nav-link { display: none !important; }
+    }
     @media (max-width: 640px) {
-      .posts-grid { grid-template-columns: 1fr; }
-      nav > div:last-child > div:last-child a[href="models.html"],
-      nav > div:last-child > div:last-child a[href="#pricing"],
-      nav > div:last-child > div:last-child a[href="#faq"] { display: none !important; }
-      footer > div {
-        flex-direction: column !important;
-        gap: 10px;
-        text-align: center;
-      }
+      section { padding-left: 18px !important; padding-right: 18px !important; }
+      footer > div { flex-direction: column !important; gap: 10px; text-align: center; }
     }
   </style>
 </head>
@@ -163,80 +111,251 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <!-- PROMO BANNER -->
-  <div style="background:linear-gradient(90deg,#2563EB,#7C3AED); color:#ffffff; text-align:center; padding:10px 24px; font-size:14px; font-family:'DM Sans',sans-serif; line-height:1.5;">
-    <strong>Now free to register — no card, no subscription.</strong> Get $10 in credit instantly · free models always free.
-    <a href="https://models.bytefuture.ai/signup" style="color:#ffffff; margin-left:8px; text-decoration:underline; font-weight:600;" onclick="gtag('event','cta_click',{label:'banner_gemini35'});">Start free &rarr;</a>
-  </div>
   <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
-  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
-    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-      <svg width="28" height="30" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
-      </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em;">Token Station</span>
-    </a>
-    <div style="display:flex; align-items:center; gap:24px;">
-      <a href="/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; font-weight:600;">Blog</a>
-      <a href="https://models.bytefuture.ai/signup" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'nav_subscribe'}); gtag('event','begin_checkout',{label:'nav_subscribe'});">Start free</a>
+    <div style="max-width:1160px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+          <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+          <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+          <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+          <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:26px;">
+        <a class="nav-link" href="#products" style="color:#52525b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">Products</a>
+        <a class="nav-link" href="#hybrid" style="color:#52525b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">Hybrid inference</a>
+        <a class="nav-link" href="/blog/" style="color:#52525b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">Writings</a>
+        <a href="https://models.bytefuture.ai/intro.html" class="btn-primary" style="padding:10px 20px; font-size:13px;" onclick="gtag('event','cta_click',{label:'nav_token_station'});">Token Station</a>
+      </div>
     </div>
-  </div>
   </div>
 </nav>
 
 
 <!-- ─── HERO ─── -->
-<section style="max-width:1200px; margin:0 auto; padding:80px 24px 48px;">
-  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin:0 0 16px;">Blog</h1>
-  <p style="font-size:18px; color:#71717a; line-height:1.7; margin:0; max-width:560px;">Insights on AI model routing, token optimization, and building with LLMs.</p>
-</section>
+<section style="max-width:1160px; margin:0 auto; padding:96px 24px 72px;">
+  <div class="hero-grid" style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:64px; align-items:center;">
+    <div>
+      <div class="section-label" style="margin-bottom:18px;">ByteFuture · Hybrid AI Infrastructure</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(40px,5.2vw,66px); font-weight:700; letter-spacing:-0.03em; line-height:1.05; margin:0 0 24px;">
+        Hybrid AI inference<br /><span class="gradient-text">for AI agents.</span>
+      </h1>
+      <p style="font-size:18px; color:#52525b; line-height:1.7; margin:0 0 18px; max-width:520px;">
+        AI agents need to run everywhere — privately on the AI&nbsp;PC, and at frontier scale in the cloud. ByteFuture builds the stack that spans both: <strong style="color:#18181b;">Olares OS</strong> for on-device inference, and <strong style="color:#18181b;">Token Station</strong> for cloud routing across every model.
+      </p>
+      <p style="font-size:14px; color:#0D9488; margin:0 0 32px; max-width:520px;">
+        One agent. Local when it can, cloud when it must — decided per call.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px;">
+        <a href="https://models.bytefuture.ai/intro.html" class="btn-primary" onclick="gtag('event','cta_click',{label:'hero_token_station'});">
+          Explore Token Station →
+        </a>
+        <a href="https://github.com/beclab/olares" class="btn-secondary" onclick="gtag('event','cta_click',{label:'hero_olares_github'});">
+          Olares on GitHub ↗
+        </a>
+      </div>
+    </div>
 
+    <!-- Hybrid loop diagram -->
+    <div>
+      <div style="background:#ffffff; border:1px solid #e4e4e7; border-radius:16px; padding:28px; box-shadow:0 24px 64px rgba(24,24,27,0.08);">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#71717a; margin-bottom:18px;">One inference call</div>
 
-<!-- ─── CATEGORY FILTER ─── -->
-<section style="max-width:1200px; margin:0 auto; padding:0 24px 40px;">
-  <div style="display:flex; gap:8px; flex-wrap:wrap;" id="cat-filter">
-    <button class="cat-pill active" data-cat="all">All</button>
-    <button class="cat-pill" data-cat="engineering">Engineering</button>
-    <button class="cat-pill" data-cat="product">Product</button>
-    <button class="cat-pill" data-cat="research">Research</button>
-    <button class="cat-pill" data-cat="tutorial">Tutorial</button>
+        <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border:1px solid #e4e4e7; border-radius:12px; background:#f8fafc; margin-bottom:10px;">
+          <span style="font-size:20px;">🧑‍💻</span>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;">Agent on the AI PC</div>
+            <div style="font-size:12px; color:#71717a;">runs on Olares OS</div>
+          </div>
+        </div>
+
+        <div style="text-align:center; color:#a1a1aa; font-size:18px; line-height:1; margin:2px 0;">↓</div>
+
+        <div style="display:flex; align-items:center; gap:12px; padding:14px 16px; border:1px solid rgba(37,99,235,0.30); border-radius:12px; background:#eef4ff; margin-bottom:10px;">
+          <span style="font-size:20px;">🧭</span>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; color:#2563EB;">Token Station routes it</div>
+            <div style="font-size:12px; color:#52525b;">by cost · latency · privacy policy</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="padding:14px 14px; border:1px solid #e4e4e7; border-radius:12px; background:#f0fdfa; text-align:center;">
+            <div style="font-size:18px;">💻</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#0D9488; margin-top:4px;">Local model</div>
+            <div style="font-size:11px; color:#71717a;">private · offline</div>
+          </div>
+          <div style="padding:14px 14px; border:1px solid #e4e4e7; border-radius:12px; background:#f8fafc; text-align:center;">
+            <div style="font-size:18px;">☁️</div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#18181b; margin-top:4px;">Cloud frontier</div>
+            <div style="font-size:11px; color:#71717a;">scale · capability</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 
-<!-- ─── FEATURED POST (rendered by JS) ─── -->
-<section id="featured-section" style="max-width:1200px; margin:0 auto; padding:0 24px 48px;"></section>
+<!-- ─── HYBRID THESIS ─── -->
+<section id="hybrid" style="padding:88px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1160px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Why hybrid</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 16px;">
+      The frontier is in the cloud. Your data is on the device.
+    </h2>
+    <p class="animate-on-scroll" style="text-align:center; color:#71717a; font-size:16px; line-height:1.7; max-width:720px; margin:0 auto 56px;">
+      Agents that only call the cloud leak data and stall offline. Agents that only run locally hit a capability ceiling. Hybrid inference is the answer — and it needs infrastructure on both ends, plus something to route between them.
+    </p>
 
-<!-- ─── POST GRID (rendered by JS) ─── -->
-<section style="max-width:1200px; margin:0 auto; padding:0 24px 96px;">
-  <div class="posts-grid" id="posts-grid"></div>
-  <!-- Load more -->
-  <div id="load-more-wrap" style="text-align:center; padding:48px 0 0; display:none;">
-    <button id="load-more-btn" style="background:transparent; color:#18181b; border:1px solid #e4e4e7; border-radius:50px; padding:13px 32px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#2563EB';this.style.color='#2563EB'" onmouseout="this.style.borderColor='#e4e4e7';this.style.color='#18181b'">Load more</button>
+    <div class="grid-3">
+      <div class="card animate-on-scroll">
+        <div style="font-size:26px; margin-bottom:14px;">🔒</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Local — private &amp; instant</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">Run models and agents on the AI&nbsp;PC. Sensitive data never leaves the device, latency is near-zero, and it works offline.</p>
+      </div>
+      <div class="card animate-on-scroll">
+        <div style="font-size:26px; margin-bottom:14px;">☁️</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Cloud — frontier &amp; elastic</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">Reach the strongest closed and open models when a task demands it, and scale out without provisioning hardware.</p>
+      </div>
+      <div class="card animate-on-scroll">
+        <div style="font-size:26px; margin-bottom:14px;">🧭</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Routing — your policy, per call</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">A single gateway decides local-vs-cloud on every request — by cost, latency, privacy, or capability — without changing your code.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── PRODUCTS ─── -->
+<section id="products" style="padding:88px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1160px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">Two products, one stack</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 56px;">
+      Built for both ends of the inference path.
+    </h2>
+
+    <div class="grid-2">
+
+      <!-- Olares -->
+      <div class="card animate-on-scroll" style="display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:46px; height:46px; border-radius:12px; background:#f0fdfa; border:1px solid rgba(13,148,136,0.20); display:flex; align-items:center; justify-content:center; font-size:22px;">🖥️</div>
+          <div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin:0;">Olares OS</h3>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#0D9488; letter-spacing:0.04em;">ON-DEVICE · OPEN SOURCE</div>
+          </div>
+        </div>
+        <p style="color:#52525b; line-height:1.7; margin:0 0 18px; font-size:15px;">
+          An open-source operating system for AI&nbsp;PCs. Run models, agents, and your own sovereign AI cloud locally — you own the data and the compute. Olares turns a powerful machine into a private inference endpoint for your agents.
+        </p>
+        <ul style="margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#0D9488;">✓</span> Self-hosted models &amp; apps on your own hardware</li>
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#0D9488;">✓</span> Private by default — data stays on the device</li>
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#0D9488;">✓</span> Open source, community-built</li>
+        </ul>
+        <div style="margin-top:auto; display:flex; gap:14px; align-items:center;">
+          <a href="https://github.com/beclab/olares" class="btn-primary" style="padding:11px 20px; font-size:14px;" onclick="gtag('event','cta_click',{label:'product_olares_github'});">View on GitHub ↗</a>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#a1a1aa;">github.com/beclab/olares</span>
+        </div>
+      </div>
+
+      <!-- Token Station -->
+      <div class="card animate-on-scroll" style="display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+          <div style="width:46px; height:46px; border-radius:12px; background:#eef4ff; border:1px solid rgba(37,99,235,0.20); display:flex; align-items:center; justify-content:center; font-size:22px;">🛰️</div>
+          <div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; margin:0;">Token Station</h3>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#2563EB; letter-spacing:0.04em;">GATEWAY · CLOUD + LOCAL</div>
+          </div>
+        </div>
+        <p style="color:#52525b; line-height:1.7; margin:0 0 18px; font-size:15px;">
+          A hybrid inference gateway. One API across every cloud and local model — OpenAI- and Anthropic-style — with smart routing that sends each call to the right place: cheapest, fastest, or most private. Drop-in for the SDKs and agent frameworks you already use.
+        </p>
+        <ul style="margin:0 0 22px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#2563EB;">✓</span> One key for every model and modality</li>
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#2563EB;">✓</span> Policy-based routing — cost, latency, privacy, fallback</li>
+          <li style="font-size:14px; color:#3f3f46; display:flex; gap:10px;"><span style="color:#2563EB;">✓</span> Zero-markup, pay-as-you-go</li>
+        </ul>
+        <div style="margin-top:auto; display:flex; gap:14px; align-items:center;">
+          <a href="https://models.bytefuture.ai/intro.html" class="btn-primary" style="padding:11px 20px; font-size:14px;" onclick="gtag('event','cta_click',{label:'product_token_station_intro'});">Read the intro →</a>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#a1a1aa;">models.bytefuture.ai</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── HOW IT FITS ─── -->
+<section style="padding:88px 24px; border-top:1px solid #e4e4e7; background:#f4f4f5;">
+  <div style="max-width:1160px; margin:0 auto;">
+    <div class="section-label animate-on-scroll" style="text-align:center; margin-bottom:16px;">How it fits together</div>
+    <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:700; letter-spacing:-0.03em; text-align:center; margin:0 0 56px;">
+      The agent stays the same. The inference moves.
+    </h2>
+
+    <div class="grid-3">
+      <div class="animate-on-scroll">
+        <div style="width:40px; height:40px; border-radius:10px; background:#ffffff; border:1px solid #e4e4e7; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#2563EB; margin-bottom:18px;">01</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Your agent runs on Olares</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">On the AI&nbsp;PC, with local models and data close at hand.</p>
+      </div>
+      <div class="animate-on-scroll">
+        <div style="width:40px; height:40px; border-radius:10px; background:#ffffff; border:1px solid #e4e4e7; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#2563EB; margin-bottom:18px;">02</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Token Station routes each call</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">One API decides where every inference request should go.</p>
+      </div>
+      <div class="animate-on-scroll">
+        <div style="width:40px; height:40px; border-radius:10px; background:#ffffff; border:1px solid #e4e4e7; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#2563EB; margin-bottom:18px;">03</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; margin:0 0 10px;">Local or cloud — by policy</h3>
+        <p style="color:#71717a; line-height:1.65; margin:0; font-size:15px;">Private work stays local; frontier work goes to the cloud. Automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── WRITINGS TEASER ─── -->
+<section style="padding:88px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1160px; margin:0 auto;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
+      <div>
+        <div class="section-label animate-on-scroll" style="margin-bottom:14px;">From our Writings</div>
+        <h2 class="animate-on-scroll" style="font-family:'Space Grotesk',sans-serif; font-size:clamp(26px,3.5vw,38px); font-weight:700; letter-spacing:-0.03em; margin:0;">Notes on hybrid inference, agents &amp; open models.</h2>
+      </div>
+      <a href="/blog/" class="btn-secondary animate-on-scroll" onclick="gtag('event','cta_click',{label:'writings_all'});">Read all writings →</a>
+    </div>
+
+    <div class="grid-3" id="writings-teaser">
+      <div style="color:#a1a1aa; font-family:'JetBrains Mono',monospace; font-size:13px;">Loading…</div>
+    </div>
   </div>
 </section>
 
 
 <!-- ─── FOOTER ─── -->
-<footer style="padding:32px 24px; border-top:1px solid #e4e4e7;">
-  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
     <div style="display:flex; align-items:center; gap:10px;">
-      <svg width="20" height="22" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img" style="opacity:0.75;">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">Token Station</span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
     </div>
-    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 Token Station. All rights reserved.</p>
+    <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+      <a href="https://github.com/beclab/olares" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Olares</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Token Station</a>
+      <a href="/blog/" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Writings</a>
+      <span style="color:#a1a1aa; font-size:13px;">© 2026 ByteFuture</span>
+    </div>
   </div>
 </footer>
 
@@ -254,144 +373,38 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 </script>
 
-<!-- ─── POSTS ENGINE ─── -->
+<!-- ─── WRITINGS TEASER (latest 3 from posts.json) ─── -->
 <script>
 (function() {
-  var POSTS_PER_PAGE = 6;
-  var allPosts = [];
-  var filtered = [];
-  var shown = 0;
-  var activeCat = 'all';
-
-  function formatDate(iso) {
+  function fmtDate(iso) {
     var d = new Date(iso + 'T00:00:00');
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-  function catLabel(cat) {
-    return cat.charAt(0).toUpperCase() + cat.slice(1);
-  }
-
-  // Category-based gradient backgrounds
-  var catGradients = {
-    research:    'linear-gradient(135deg,rgba(13,148,136,0.08) 0%,rgba(124,58,237,0.08) 100%)',
-    engineering: 'linear-gradient(135deg,#f4f4f5 0%,#e4e4e7 100%)',
-    tutorial:    'linear-gradient(135deg,rgba(37,99,235,0.06) 0%,rgba(13,148,136,0.06) 100%)',
-    product:     'linear-gradient(135deg,rgba(37,99,235,0.04) 0%,rgba(124,58,237,0.04) 100%)'
-  };
-
-  function renderFeatured(post) {
-    var section = document.getElementById('featured-section');
-    if (!post) { section.innerHTML = ''; return; }
-    section.innerHTML =
-      '<a href="blog/' + post.slug + '.html" style="text-decoration:none;color:inherit;" onclick="gtag(\'event\',\'blog_click\',{label:\'featured\'})">' +
-        '<article class="featured-card animate-on-scroll">' +
-          '<div class="featured-inner" style="display:flex;">' +
-            '<div style="width:50%;min-height:320px;background:linear-gradient(135deg,#2563EB 0%,#0D9488 60%,#7C3AED 100%);position:relative;overflow:hidden;" class="featured-cover">' +
-              '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
-                '<svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.15;"><circle cx="60" cy="60" r="50" stroke="#fff" stroke-width="2"/><path d="M40 60L55 75L80 45" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-              '</div>' +
-              '<div style="position:absolute;bottom:24px;left:24px;"><span style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;">Featured</span></div>' +
-            '</div>' +
-            '<div style="width:50%;padding:40px;">' +
-              '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">' +
-                '<span class="post-tag">' + catLabel(post.category) + '</span>' +
-                '<time style="font-size:13px;color:#a1a1aa;font-family:\'Space Grotesk\',sans-serif;">' + formatDate(post.date) + '</time>' +
-              '</div>' +
-              '<h2 style="font-family:\'Space Grotesk\',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0 0 16px;">' + post.title + '</h2>' +
-              '<p style="font-size:17px;color:#52525b;line-height:1.7;margin:0 0 24px;">' + post.summary + '</p>' +
-              '<span style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;font-weight:600;color:#2563EB;">Read article &rarr;</span>' +
-            '</div>' +
-          '</div>' +
-        '</article>' +
-      '</a>';
-    observeNew();
-  }
-
-  function renderCard(post) {
-    var bg = catGradients[post.category] || catGradients.product;
-    var coverHtml = post.cover
-      ? '<div style="height:180px;overflow:hidden;"><img src="' + post.cover + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>'
-      : '<div style="height:180px;background:' + bg + ';display:flex;align-items:center;justify-content:center;">' +
-          '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="opacity:0.18;"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#18181b" stroke-width="2"/><path d="M12 16H28M12 22H22" stroke="#18181b" stroke-width="2" stroke-linecap="round"/></svg>' +
-        '</div>';
-    return '<a href="blog/' + post.slug + '.html" style="text-decoration:none;color:inherit;" class="animate-on-scroll" onclick="gtag(\'event\',\'blog_click\',{label:\'' + post.slug + '\'})">' +
-      '<article class="post-card" data-cat="' + post.category + '">' +
-        coverHtml +
-        '<div class="post-card-body">' +
-          '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">' +
-            '<span class="post-tag">' + catLabel(post.category) + '</span>' +
-            '<time style="font-size:13px;color:#a1a1aa;font-family:\'Space Grotesk\',sans-serif;">' + formatDate(post.date) + '</time>' +
-          '</div>' +
-          '<h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.01em;line-height:1.3;margin:0 0 8px;">' + post.title + '</h3>' +
-          '<p style="font-size:15px;color:#52525b;line-height:1.65;margin:0;">' + post.summary + '</p>' +
-        '</div>' +
-      '</article>' +
-    '</a>';
-  }
-
-  function renderGrid() {
-    var grid = document.getElementById('posts-grid');
-    var batch = filtered.slice(shown, shown + POSTS_PER_PAGE);
-    var html = '';
-    batch.forEach(function(p) { html += renderCard(p); });
-    if (shown === 0) { grid.innerHTML = html; } else { grid.insertAdjacentHTML('beforeend', html); }
-    shown += batch.length;
-    // Load more button
-    var wrap = document.getElementById('load-more-wrap');
-    wrap.style.display = (shown < filtered.length) ? '' : 'none';
-    observeNew();
-  }
-
-  function applyFilter(cat) {
-    activeCat = cat;
-    shown = 0;
-    var featured = allPosts.find(function(p) { return p.featured; });
-    if (cat === 'all') {
-      filtered = allPosts.filter(function(p) { return !p.featured; });
-      renderFeatured(featured);
-    } else {
-      filtered = allPosts.filter(function(p) { return p.category === cat && !p.featured; });
-      // Also include featured if it matches
-      if (featured && featured.category === cat) {
-        filtered.unshift(featured);
-      }
-      renderFeatured(null);
-    }
-    // Sort by date descending
-    filtered.sort(function(a, b) { return b.date.localeCompare(a.date); });
-    renderGrid();
-  }
-
-  function observeNew() {
-    document.querySelectorAll('.animate-on-scroll:not(.is-visible)').forEach(function(el) {
-      observer.observe(el);
-    });
-  }
-
-  // Filter pills
-  var pills = document.querySelectorAll('#cat-filter .cat-pill');
-  pills.forEach(function(pill) {
-    pill.addEventListener('click', function() {
-      pills.forEach(function(p) { p.classList.remove('active'); });
-      pill.classList.add('active');
-      applyFilter(pill.getAttribute('data-cat'));
-      gtag('event', 'blog_filter', { label: pill.getAttribute('data-cat') });
-    });
-  });
-
-  // Load more
-  document.getElementById('load-more-btn').addEventListener('click', function() {
-    renderGrid();
-    gtag('event', 'blog_load_more', { label: 'page_' + Math.ceil(shown / POSTS_PER_PAGE) });
-  });
-
-  // Fetch posts
   fetch('/posts.json')
     .then(function(r) { return r.json(); })
-    .then(function(data) {
-      allPosts = data.sort(function(a, b) { return b.date.localeCompare(a.date); });
-      applyFilter('all');
+    .then(function(posts) {
+      var latest = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); }).slice(0, 3);
+      var el = document.getElementById('writings-teaser');
+      el.innerHTML = latest.map(function(p) {
+        return '<a class="card animate-on-scroll" href="/blog/' + encodeURIComponent(p.slug) + '.html" ' +
+          'style="text-decoration:none; color:inherit; display:flex; flex-direction:column;" ' +
+          'onclick="gtag(\'event\',\'blog_click\',{label:\'home_teaser\'})">' +
+          '<div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">' +
+            '<span style="font-size:12px; font-family:\'Space Grotesk\',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">' + esc(cap(p.category)) + '</span>' +
+            '<time style="font-size:13px; color:#a1a1aa; font-family:\'Space Grotesk\',sans-serif;">' + fmtDate(p.date) + '</time>' +
+          '</div>' +
+          '<h3 style="font-family:\'Space Grotesk\',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.01em; line-height:1.3; margin:0 0 8px;">' + esc(p.title) + '</h3>' +
+          '<p style="font-size:14px; color:#71717a; line-height:1.6; margin:0;">' + esc(p.summary) + '</p>' +
+        '</a>';
+      }).join('');
+      document.querySelectorAll('#writings-teaser .animate-on-scroll').forEach(function(x){ observer.observe(x); });
+    })
+    .catch(function() {
+      document.getElementById('writings-teaser').innerHTML =
+        '<a href="/blog/" style="color:#2563EB; font-family:\'JetBrains Mono\',monospace; font-size:13px;">Read our writings →</a>';
     });
 })();
 </script>
@@ -411,7 +424,6 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
   });
 })();
 </script>
-
 
 </body>
 </html>
