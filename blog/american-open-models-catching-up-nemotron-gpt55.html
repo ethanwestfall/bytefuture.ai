@@ -63,7 +63,7 @@
     .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; }
     .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
     .prose p { margin: 0 0 24px; color: #27272a; }
-    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; list-style: revert; }
     .prose li { margin-bottom: 8px; }
     .prose blockquote {
       border-left: 3px solid #2563EB;
@@ -106,6 +106,29 @@
       padding: 0;
       font-size: 14px;
     }
+
+    /* Table */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 32px 0;
+      font-size: 16px;
+    }
+    .prose th, .prose td {
+      border: 1px solid #e4e4e7;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .prose th {
+      background: #f4f4f5;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .prose td { color: #27272a; }
 
     /* Horizontal rule */
     .prose hr {
@@ -160,12 +183,11 @@
 <!-- ─── ARTICLE BODY ─── -->
 <!-- ▼ EDIT: write your post content below ▼ -->
 <article class="prose" style="padding:0 24px 96px;">
-<figure><img src="artificial_analysis_intelligence_open_models.png" alt="Artificial Analysis Intelligence chart showing Nemotron 3 Ultra near leading frontier models"><figcaption>Artificial Analysis Intelligence chart showing Nemotron 3 Ultra near leading frontier models</figcaption></figure>
-<p>*Source: Artificial Analysis homepage screenshot, captured June 8, 2026. The chart shows Nemotron 3 Ultra appearing close to leading frontier models on the Artificial Analysis Intelligence Index.*</p>
 <p>Open models are getting harder to dismiss.</p>
 <p>For years, the assumption was simple: if you wanted the strongest model, you used a closed frontier model. Open models were useful, but mostly for experiments, cost savings, or self-hosting.</p>
 <p>That assumption is starting to break.</p>
 <p>We tested <strong>NVIDIA Nemotron-3 Ultra 550B-A55B</strong>, an American open model from NVIDIA, against <strong>GPT-5.5</strong> on three real coding-agent tasks using Token Station Arena.</p>
+<figure><img src="artificial_analysis_intelligence_open_models.png" alt="Artificial Analysis Intelligence chart showing Nemotron 3 Ultra near leading frontier models"><figcaption>Artificial Analysis Intelligence chart showing Nemotron 3 Ultra appearing close to leading frontier models on the Artificial Analysis Intelligence Index. Source: Artificial Analysis, captured June 8, 2026.</figcaption></figure>
 <p>The result was the story:</p>
 <blockquote>Nemotron-3 Ultra completed the same benchmark workload as GPT-5.5.</blockquote>
 <p>Both models passed <strong>9 out of 9</strong> runs.</p>
@@ -243,7 +265,7 @@
 <li>Less dependence on a single closed provider</li>
 </ul>
 <p>Nemotron-3 Ultra is especially important because it is an American open model from NVIDIA. For companies that care about both AI capability and infrastructure control, that combination is strategically relevant.</p>
-<h2>Why this matters for Token Station</h2>
+<h2>What this means for Token Station</h2>
 <p>The future is not one model for every task.</p>
 <p>Some workloads need a closed frontier model. Some workloads can now run on a powerful open model. Many teams will want to test both before deciding what to use in production.</p>
 <p>That is exactly why <strong>tokens.bytefuture.ai</strong> exists.</p>
