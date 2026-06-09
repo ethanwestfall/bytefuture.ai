@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "american-open-models-catching-up-nemotron-gpt55",
+    "title": "American Open Models Are Catching Up: Nemotron-3 Ultra Matched GPT-5.5",
+    "summary": "NVIDIA Nemotron-3 Ultra, an American open model, matched GPT-5.5 on task completion in our coding-agent benchmark.",
+    "category": "research",
+    "date": "2026-06-08",
+    "cover": "blog/artificial_analysis_intelligence_open_models.png",
+    "featured": false
+  },
+  {
+    "slug": "smart-routing-saves-73-percent",
+    "title": "Smart Routing Can Cut Token Cost by 73% — Here's How",
+    "summary": "We break down the ICLR 2025 findings on intelligent model routing and show how Token Station implements these techniques to reduce your API spend without sacrificing output quality.",
+    "category": "research",
+    "date": "2026-06-09",
+    "featured": true
+  },
+  {
+    "slug": "openai-vs-anthropic-api-shapes",
+    "title": "OpenAI vs Anthropic API Shapes: A Practical Comparison",
+    "summary": "Tool calling, streaming, and message formats differ more than you'd think. We map every divergence and show how a translation layer handles them.",
+    "category": "engineering",
+    "date": "2026-06-07",
+    "featured": false
+  },
+  {
+    "slug": "choosing-the-right-model",
+    "title": "Choosing the Right Model for Your Task",
+    "summary": "A decision framework for matching LLMs to use cases — when to pick Claude over GPT, when to use open-source, and when a small model wins.",
+    "category": "tutorial",
+    "date": "2026-06-04",
+    "featured": false
+  },
+  {
+    "slug": "token-station-architecture",
+    "title": "Inside Token Station: Architecture of a Multi-Model Gateway",
+    "summary": "How we built a zero-markup API gateway that routes across 200+ models from 12 providers — edge caching, failover, and real-time usage metering.",
+    "category": "engineering",
+    "date": "2026-05-30",
+    "featured": false
+  },
+  {
+    "slug": "embeddings-compared",
+    "title": "Embedding Models Compared: Cost, Quality & Latency",
+    "summary": "We benchmarked 8 embedding models on retrieval accuracy, cost per 1M tokens, and p99 latency. The results might change your default choice.",
+    "category": "research",
+    "date": "2026-05-26",
+    "featured": false
+  },
+  {
+    "slug": "migrate-from-openai-in-5-minutes",
+    "title": "Migrate from OpenAI to Token Station in 5 Minutes",
+    "summary": "Change two lines of code: base URL and API key. Everything else — tool calls, streaming, structured output — just works.",
+    "category": "tutorial",
+    "date": "2026-05-22",
+    "featured": false
+  },
+  {
+    "slug": "why-zero-markup",
+    "title": "Why Zero Markup? Our Pricing Philosophy",
+    "summary": "Most API gateways add 10-30% on top of provider prices. We charge exactly what providers charge. Here's why that's a better business.",
+    "category": "product",
+    "date": "2026-05-18",
+    "featured": false
+  }
+]
