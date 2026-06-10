@@ -123,6 +123,7 @@ Rules:
 - **Every** `posts.json` entry MUST have a matching `blog/<slug>.html` file, and **every** article file MUST have a matching `posts.json` entry. `blog/index.html` and `blog/post-template.html` are infrastructure, **not** articles — never list them.
 - `slug` is the join key: it equals the filename minus `.html`. Exactly one entry per slug, one file per slug.
 - **Add together, remove together.** Never publish an article without registering it, and never register an entry whose file doesn't exist — no "draft" or "coming soon" placeholders in `posts.json`. An entry with no file 404s from the listing and can even land in the featured hero.
+- **Metadata must stay in sync with the article content, not just the filename.** The entry's `title`, `summary`, `category`, and `date` must accurately reflect what the article currently says — the cards on the listing and home page are built from `posts.json`, not from the article. Whenever you edit an article in a way that changes its title, framing, key claims, or terminology (e.g. renaming a "benchmark" to a "mini benchmark", adding a major offer or result), update the `posts.json` entry in the **same change**. A card that promises something the article no longer says is a sync violation just like a missing file.
 - A cover referenced by an entry (`"cover": "blog/<file>"`) must exist in `blog/`.
 
 **Verify before every commit** — run from the repo root; this should print only `in sync`:
@@ -136,6 +137,8 @@ diff /tmp/ts_entries /tmp/ts_files && echo "in sync"
 ```
 
 A line only in `ts_entries` = registered but missing its file (broken link). A line only in `ts_files` = published but unregistered (invisible). Both are violations — fix one side until `diff` is clean.
+
+The script only verifies slug ↔ file existence. The **metadata-content sync** (title/summary/category/date matching what the article actually says) can't be checked mechanically — when an article changes, re-read its `posts.json` entry and confirm it still describes the article truthfully.
 
 ### Linking & engine invariants
 
