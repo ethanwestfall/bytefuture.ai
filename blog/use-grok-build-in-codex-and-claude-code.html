@@ -50,6 +50,10 @@
       padding: 0 24px;
       align-items: start;
     }
+    /* Grid items default to min-width:auto and can't shrink below their
+       content (wide images, code lines, tables) — this caps them at the
+       column width so the page never scrolls sideways on phones. */
+    .page-grid > * { min-width: 0; }
 
     /* ─── Left sidebar ─── */
     .sidebar-left {
@@ -121,6 +125,8 @@
     .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
     .prose img {
       width: 100%;
+      max-width: 100%;
+      height: auto;
       border-radius: 12px;
       border: 1px solid #e4e4e7;
     }

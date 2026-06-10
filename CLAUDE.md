@@ -33,7 +33,9 @@ Every page on this site — home, listing, template, and every article — must 
 - **No horizontal page scroll at viewport widths down to 360px.** Anything wider than the viewport must scroll *inside its own box* or wrap:
   - `pre` blocks: `overflow-x: auto`.
   - `table`s in prose: `display: block; overflow-x: auto;` at the phone breakpoint.
-  - Images never exceed their container (`width: 100%` or `max-width: 100%`).
+  - Images never exceed their container (`width: 100%; max-width: 100%; height: auto`).
+  - **Grid/flex children that contain wide content (images, `pre`, tables) need `min-width: 0`.** Grid and flex items default to `min-width: auto` and refuse to shrink below their content's intrinsic width — a wide screenshot or long code line silently inflates the column past the viewport, and `width: 100%`/`overflow-x: auto` on the content can't save it. The article pages use `.page-grid > * { min-width: 0; }` for this. (Containers with `overflow: hidden`, like the listing cards, are immune.)
+  - Don't trust the CSS by inspection — **measure**: serve locally, load the page at 375px in headless Chrome, and check `document.documentElement.scrollWidth` is exactly the viewport width.
 - **Multi-column layouts collapse to one column** on small screens. The breakpoints this site uses: article sidebars hide at ≤1024px; content grids collapse at ≤900–960px; phone-level adjustments (nav, footer, padding, type) at ≤640px. New layouts must fit this scheme.
 - **Nav stays usable on phones:** keep the wordmark and the primary CTA visible; hide secondary links at the phone breakpoint with `display: none` rather than shrinking them.
 - **Footer stacks vertically** at ≤640px (`flex-direction: column`).
