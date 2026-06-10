@@ -25,6 +25,23 @@ If tracking code looks unused, broken, duplicated, or "dead," **leave it exactly
 
 ---
 
+## Mobile optimization (required, site-wide)
+
+Every page on this site — home, listing, template, and every article — must render correctly on phones. Concretely:
+
+- Every page keeps `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in `<head>`.
+- **No horizontal page scroll at viewport widths down to 360px.** Anything wider than the viewport must scroll *inside its own box* or wrap:
+  - `pre` blocks: `overflow-x: auto`.
+  - `table`s in prose: `display: block; overflow-x: auto;` at the phone breakpoint.
+  - Images never exceed their container (`width: 100%` or `max-width: 100%`).
+- **Multi-column layouts collapse to one column** on small screens. The breakpoints this site uses: article sidebars hide at ≤1024px; content grids collapse at ≤900–960px; phone-level adjustments (nav, footer, padding, type) at ≤640px. New layouts must fit this scheme.
+- **Nav stays usable on phones:** keep the wordmark and the primary CTA visible; hide secondary links at the phone breakpoint with `display: none` rather than shrinking them.
+- **Footer stacks vertically** at ≤640px (`flex-direction: column`).
+- Display headings use `clamp()` so type scales with the viewport; body text stays ≥16px on phones.
+- Before committing a new page or layout change, sanity-check it at ~375px width (and ideally 360px): no sideways scroll, readable text, tappable buttons.
+
+---
+
 ## Writings section (`blog/`)
 
 The `blog/` folder is the **ByteFuture Writings** section. It contains:
@@ -93,6 +110,7 @@ Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/
 3. **Leave the nav, footer, favicon, and the GA `<script>` exactly as the template ships them.**
 4. **Register it in `posts.json`** (see schema below). The article will not appear in the listing until it's there.
 5. **Cover image (optional):** drop the file in `blog/` and set `"cover": "blog/<file>"` in `posts.json` (root-relative — see Linking).
+6. **Mobile check:** verify the article at ~375px width per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
 
 > Keep `posts.json` and the article files in strict 1:1 sync — see **[Keep `posts.json` and articles in sync](#keep-postsjson-and-articles-in-sync-required)** below. Never register a post whose file doesn't exist, and never publish a file you haven't registered.
 
