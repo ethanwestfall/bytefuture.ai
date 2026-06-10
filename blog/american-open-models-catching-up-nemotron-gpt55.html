@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — ByteFuture Writings</title>
-  <meta name="description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
+  <title>American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent mini benchmark — ByteFuture Writings</title>
+  <meta name="description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 runs of our coding-agent mini benchmark. We break down the tasks, results, and what this means for open vs closed model choice." />
   <link rel="canonical" href="https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
-  <meta property="og:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — ByteFuture Writings" />
-  <meta property="og:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
+  <meta property="og:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent mini benchmark — ByteFuture Writings" />
+  <meta property="og:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 runs of our coding-agent mini benchmark. We break down the tasks, results, and what this means for open vs closed model choice." />
   <meta property="og:type" content="article" />
   <meta property="og:image" content="https://bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
   <meta property="og:url" content="https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark" />
-  <meta name="twitter:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
+  <meta name="twitter:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent mini benchmark" />
+  <meta name="twitter:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 runs of our coding-agent mini benchmark. We break down the tasks, results, and what this means for open vs closed model choice." />
   <meta name="twitter:image" content="https://bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
@@ -254,7 +254,7 @@
         <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Model Benchmarks</span>
         <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">June 8, 2026</time>
       </div>
-      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark</h1>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent mini benchmark</h1>
     </header>
 
     <article class="prose" style="padding:0 0 96px;">
@@ -264,11 +264,11 @@
 <p>We tested <strong>NVIDIA Nemotron-3 Ultra 550B-A55B</strong>, an American open model from NVIDIA, against <strong>GPT-5.5</strong> on three real coding-agent tasks using Token Station Arena.</p>
 <figure><img src="artificial_analysis_intelligence_open_models.png" alt="Artificial Analysis Intelligence chart showing Nemotron 3 Ultra near leading frontier models"><figcaption>Artificial Analysis Intelligence chart showing Nemotron 3 Ultra appearing close to leading frontier models on the Artificial Analysis Intelligence Index. Source: Artificial Analysis, captured June 8, 2026.</figcaption></figure>
 <p>The result was the story:</p>
-<blockquote>Nemotron-3 Ultra completed the same benchmark workload as GPT-5.5.</blockquote>
+<blockquote>Nemotron-3 Ultra completed the same mini benchmark workload as GPT-5.5.</blockquote>
 <p>Both models passed <strong>9 out of 9</strong> runs.</p>
 <p>This does not mean every open model beats every closed model. It means something more important for developers and companies:</p>
 <blockquote>American open models are now strong enough to compete on real agent workloads, not just toy prompts.</blockquote>
-<p>You can try Nemotron-3 Ultra, GPT-5.5, and other frontier models through <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
+<p>A note on access before we dig in: <strong>NVIDIA NIM is offering Nemotron-3 Ultra inference for free for a limited time</strong>, so <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> offers it for free as well. And the free credits you get when you <a href="https://models.bytefuture.ai/signup">sign up for Token Station</a> can go toward GPT-5.5 and Claude Fable 5 — so you can evaluate all three on your own coding tasks.</p>
 <h2 id="why-this-matters">Why this matters</h2>
 <p>The open-vs-closed model debate used to be mostly philosophical.</p>
 <p>Open models gave developers more control. Closed models usually gave better performance.</p>
@@ -277,7 +277,7 @@
 <p>Two things stand out in that chart.</p>
 <p>First, <strong>open models as a group still lag the closed frontier</strong>. Every model on the leading U.S. line — GPT-5.5, GPT-5.4, Anthropic's Opus series, and now Claude Fable 5, the current representative of closed-frontier SOTA — is closed. The open-weight models that chart at all (DeepSeek, Qwen, Kimi) sit on a visibly lower trend line, hundreds of Elo points behind.</p>
 <p>Second, and more striking: <strong>every open model on the chart is Chinese. American open models are nowhere to be found.</strong></p>
-<p>Against that backdrop, an American open model completing the same coding-agent benchmark tasks as GPT-5.5 changes the conversation.</p>
+<p>Against that backdrop, an American open model completing the same coding-agent mini benchmark tasks as GPT-5.5 changes the conversation.</p>
 <p>The question is no longer:</p>
 <blockquote>Are open models useful?</blockquote>
 <p>The better question is:</p>
@@ -286,20 +286,20 @@
 <p>AI agents are not just chatbots. They read files, modify code, call tools, run tests, retry failed steps, and operate across long workflows. For this kind of usage, model choice is not only about raw capability. It is also about control, cost structure, availability, and whether the model can be adapted to the business.</p>
 <p>That is where open models are becoming strategically important.</p>
 <h2 id="the-model-we-tested">The American open model we tested</h2>
-<p>The open model in this benchmark was <strong>NVIDIA Nemotron-3 Ultra 550B-A55B</strong>.</p>
+<p>The open model in this mini benchmark was <strong>NVIDIA Nemotron-3 Ultra 550B-A55B</strong>.</p>
 <p>Its model profile:</p>
 <ul>
 <li><strong>550B total parameters</strong></li>
 <li><strong>55B active parameters</strong></li>
 <li>MoE / latent-MoE style architecture</li>
 <li>Developed by NVIDIA, an American AI infrastructure company</li>
-<li>Currently free to use in our setup</li>
+<li>Inference free for a limited time via NVIDIA NIM — served free on Token Station too</li>
 </ul>
 <p>This is not a small model being used only because it is inexpensive. It is a large American open model designed for serious reasoning and agent workloads.</p>
-<p>GPT-5.5 remains a leading closed frontier model. It is powerful, polished, and widely useful. The same goes for <strong>Claude Fable 5</strong>, Anthropic's newest flagship and a representative of the current closed-frontier SOTA — we don't yet have head-to-head numbers for it in this benchmark, but it is part of the bar that open models are chasing. Nemotron-3 Ultra represents a different kind of value: a strong open model with more transparent model characteristics and a more controllable deployment profile.</p>
+<p>GPT-5.5 remains a leading closed frontier model. It is powerful, polished, and widely useful. The same goes for <strong>Claude Fable 5</strong>, Anthropic's newest flagship and a representative of the current closed-frontier SOTA — we don't yet have head-to-head numbers for it in this mini benchmark, but it is part of the bar that open models are chasing. Nemotron-3 Ultra represents a different kind of value: a strong open model with more transparent model characteristics and a more controllable deployment profile.</p>
 <p>For developers and businesses, that matters.</p>
-<h2 id="benchmark-setup">The benchmark setup</h2>
-<p>We used <strong>Token Station Arena</strong> to run a coding-agent benchmark.</p>
+<h2 id="benchmark-setup">The mini benchmark setup</h2>
+<p>We used <strong>Token Station Arena</strong> to run a coding-agent mini benchmark — a small, focused test, not a leaderboard.</p>
 <p>The setup:</p>
 <ul>
 <li><strong>2 models</strong>: GPT-5.5 and NVIDIA Nemotron-3 Ultra 550B-A55B</li>
@@ -307,7 +307,7 @@
 <li><strong>3 runs per task per model</strong></li>
 <li><strong>18 total runs</strong></li>
 </ul>
-<p>The benchmark used deterministic checks such as unit tests, typecheck, clippy, and task-specific validation.</p>
+<p>The mini benchmark used deterministic checks such as unit tests, typecheck, clippy, and task-specific validation.</p>
 <p>This is important because coding agents should not be judged only by whether their answers sound good. They need to make real code changes and pass checks.</p>
 <h2 id="coding-agent-tasks">The three coding-agent tasks</h2>
 <h3>1. Add an API endpoint</h3>
@@ -354,8 +354,8 @@
 <p>The point is to make model choice practical.</p>
 <h2 id="try-it">Try it</h2>
 <p>American open models are catching up with closed frontier models.</p>
-<p>Nemotron-3 Ultra matching GPT-5.5 on our coding-agent completion benchmark is one more signal that the model landscape is changing.</p>
-<p>Try Nemotron-3 Ultra and other frontier models on <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
+<p>Nemotron-3 Ultra matching GPT-5.5 on our coding-agent mini benchmark is one more signal that the model landscape is changing.</p>
+<p>Try Nemotron-3 Ultra — free for a limited time, courtesy of NVIDIA NIM — alongside GPT-5.5, Claude Fable 5, and other frontier models on <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
     </article>
   </main>
 
