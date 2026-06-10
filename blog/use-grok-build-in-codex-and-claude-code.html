@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Use Grok Build in Codex and Claude Code — Token Station Blog</title>
+  <title>How to Use Grok Build in Codex and Claude Code — ByteFuture Writings</title>
   <meta name="description" content="Grok Build is a fast-improving coding model, but Codex and Claude Code can't talk to xAI directly. Here's the two-minute setup with Token Station." />
-  <meta property="og:title" content="How to Use Grok Build in Codex and Claude Code — Token Station Blog" />
+  <meta property="og:title" content="How to Use Grok Build in Codex and Claude Code — ByteFuture Writings" />
   <meta property="og:description" content="Grok Build is a fast-improving coding model, but Codex and Claude Code can't talk to xAI directly. Here's the two-minute setup with Token Station." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://tokens.bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
-  <meta property="og:image" content="https://tokens.bytefuture.ai/blog/claude-code-grok-build.png" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
+  <meta property="og:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://tokens.bytefuture.ai/blog/claude-code-grok-build.png" />
+  <meta name="twitter:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
   <meta name="twitter:title" content="How to Use Grok Build in Codex and Claude Code" />
   <meta name="twitter:description" content="Grok Build is a fast-improving coding model, but Codex and Claude Code can't talk to xAI directly. Here's the two-minute setup with Token Station." />
-  <link rel="canonical" href="https://tokens.bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
+  <link rel="canonical" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'><path d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/><circle cx='14' cy='14' r='3.5' fill='%2360a5fa'/><path d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/><circle cx='14' cy='5' r='1.5' fill='%23a78bfa'/><circle cx='22' cy='19' r='1.5' fill='%2334d399'/><circle cx='6' cy='19' r='1.5' fill='%23fb923c'/></svg>" />
 
@@ -210,26 +210,20 @@
 
 <!-- ─── NAV ─── -->
 <nav style="position:sticky; top:0; z-index:50; border-bottom:1px solid #e4e4e7;">
-  <div style="background:linear-gradient(90deg,#2563EB,#7C3AED); color:#ffffff; text-align:center; padding:10px 24px; font-size:14px; font-family:'Source Serif 4',serif; line-height:1.5;">
-    <strong>Now free to register — no card, no subscription.</strong> Get $10 in credit instantly.
-    <a href="https://models.bytefuture.ai/signup" style="color:#ffffff; margin-left:8px; text-decoration:underline; font-weight:600;">Start free &rarr;</a>
-  </div>
   <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
   <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
     <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-      <svg width="28" height="30" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em;">Token Station</span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
     </a>
     <div style="display:flex; align-items:center; gap:24px;">
-      <a href="/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Blog</a>
-      <a href="https://models.bytefuture.ai/signup" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'nav_subscribe'}); gtag('event','begin_checkout',{label:'nav_subscribe'});">Start free</a>
+      <a href="/blog/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Writings</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
   </div>
@@ -240,7 +234,7 @@
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-    <a href="/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; All posts</a>
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; All writings</a>
 
     <h4>Recent</h4>
     <div id="recent-posts"></div>
@@ -381,17 +375,15 @@ codex</code></pre>
 <footer style="padding:32px 24px; border-top:1px solid #e4e4e7;">
   <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
     <div style="display:flex; align-items:center; gap:10px;">
-      <svg width="20" height="22" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img" style="opacity:0.75;">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.75;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">Token Station</span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
     </div>
-    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 Token Station. All rights reserved.</p>
+    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 ByteFuture. All rights reserved.</p>
   </div>
 </footer>
 

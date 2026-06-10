@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tokens.bytefuture.ai/</loc>
+    <loc>https://bytefuture.ai/</loc>
     <lastmod>2026-06-09</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tokens.bytefuture.ai/models.html</loc>
+    <loc>https://bytefuture.ai/models.html</loc>
     <lastmod>2026-06-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tokens.bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html</loc>
+    <loc>https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html</loc>
     <lastmod>2026-06-10</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tokens.bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html</loc>
+    <loc>https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html</loc>
     <lastmod>2026-06-08</lastmod>
     <priority>0.7</priority>
   </url>

@@ -2,11 +2,354 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/" />
-  <title>Redirecting to Blog…</title>
-  <link rel="canonical" href="https://tokens.bytefuture.ai/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writings — ByteFuture</title>
+  <meta name="description" content="Writings from ByteFuture on hybrid AI inference, AI agents, open models, and the systems we build — including Olares OS and Token Station." />
+  <link rel="canonical" href="https://bytefuture.ai/blog/" />
+
+  <!-- Open Graph / social cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/" />
+  <meta property="og:title" content="Writings — ByteFuture" />
+  <meta property="og:description" content="On hybrid AI inference, AI agents, open models, and the systems we build at ByteFuture." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Writings — ByteFuture" />
+  <meta name="twitter:description" content="On hybrid AI inference, AI agents, open models, and the systems we build at ByteFuture." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
+
+  <!-- Google Fonts: Space Grotesk (heading) + JetBrains Mono (mono) + Source Serif 4 (body) + DM Sans (nav) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet" />
+
+  <!-- Google tag (gtag.js) — GA4 + Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #faf9f5;
+      color: #18181b;
+      font-family: 'Source Serif 4', Georgia, serif;
+      margin: 0;
+    }
+    a { transition: color 0.2s; }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid #e4e4e7; }
+    .nav-link { color:#52525b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; }
+    .nav-link:hover { color:#18181b; }
+
+    /* Category pill */
+    .cat-pill {
+      font-size: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      padding: 4px 12px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+      border: 1px solid #e4e4e7; background: transparent; color: #71717a;
+    }
+    .cat-pill:hover { border-color: #2563EB; color: #2563EB; }
+    .cat-pill.active { background: #2563EB; color: #faf9f5; border-color: #2563EB; }
+
+    /* Post card */
+    .post-card {
+      border: 1px solid #e4e4e7; border-radius: 12px; background: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; overflow: hidden;
+    }
+    .post-card:hover { border-color: #2563EB; box-shadow: 0 4px 20px rgba(37,99,235,0.06); transform: translateY(-2px); }
+    .post-card-body { padding: 28px; }
+
+    /* Featured card */
+    .featured-card {
+      border: 1px solid #e4e4e7; border-radius: 12px; background: #ffffff; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .featured-card:hover { border-color: #2563EB; box-shadow: 0 8px 32px rgba(37,99,235,0.08); }
+
+    /* Tag */
+    .post-tag {
+      font-size: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      color: #2563EB; background: rgba(37,99,235,0.08); padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* Animate on scroll */
+    .animate-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Grid */
+    .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+    @media (max-width: 960px) {
+      .featured-inner { flex-direction: column !important; }
+      .featured-inner > div { width: 100% !important; }
+      .featured-cover { height: 240px !important; }
+    }
+    @media (max-width: 640px) {
+      .posts-grid { grid-template-columns: 1fr; }
+      nav a.nav-link { display: none !important; }
+      footer > div { flex-direction: column !important; gap: 10px; text-align: center; }
+    }
+  </style>
 </head>
+
 <body>
-  <p>Redirecting to <a href="/">Token Station Blog</a>…</p>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+          <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+          <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+          <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+          <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:26px;">
+        <a class="nav-link" href="/#products">Products</a>
+        <a class="nav-link" href="https://github.com/beclab/olares">Olares</a>
+        <a href="/blog/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; font-weight:600;">Writings</a>
+        <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'blog_nav_token_station'});">Token Station</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ─── HERO ─── -->
+<section style="max-width:1200px; margin:0 auto; padding:80px 24px 48px;">
+  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin:0 0 16px;">Writings</h1>
+  <p style="font-size:18px; color:#71717a; line-height:1.7; margin:0; max-width:600px;">Notes from ByteFuture on hybrid AI inference, AI agents, open models, and the systems we build.</p>
+</section>
+
+
+<!-- ─── CATEGORY FILTER ─── -->
+<section style="max-width:1200px; margin:0 auto; padding:0 24px 40px;">
+  <div style="display:flex; gap:8px; flex-wrap:wrap;" id="cat-filter">
+    <button class="cat-pill active" data-cat="all">All</button>
+    <button class="cat-pill" data-cat="engineering">Engineering</button>
+    <button class="cat-pill" data-cat="product">Product</button>
+    <button class="cat-pill" data-cat="research">Research</button>
+    <button class="cat-pill" data-cat="tutorial">Tutorial</button>
+  </div>
+</section>
+
+
+<!-- ─── FEATURED POST (rendered by JS) ─── -->
+<section id="featured-section" style="max-width:1200px; margin:0 auto; padding:0 24px 48px;"></section>
+
+<!-- ─── POST GRID (rendered by JS) ─── -->
+<section style="max-width:1200px; margin:0 auto; padding:0 24px 96px;">
+  <div class="posts-grid" id="posts-grid"></div>
+  <!-- Load more -->
+  <div id="load-more-wrap" style="text-align:center; padding:48px 0 0; display:none;">
+    <button id="load-more-btn" style="background:transparent; color:#18181b; border:1px solid #e4e4e7; border-radius:50px; padding:13px 32px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#2563EB';this.style.color='#2563EB'" onmouseout="this.style.borderColor='#e4e4e7';this.style.color='#18181b'">Load more</button>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+      <a href="https://github.com/beclab/olares" style="color:#71717a; font-size:13px; text-decoration:none; font-family:'DM Sans',sans-serif;">Olares</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="color:#71717a; font-size:13px; text-decoration:none; font-family:'DM Sans',sans-serif;">Token Station</a>
+      <span style="color:#a1a1aa; font-size:13px; font-family:'DM Sans',sans-serif;">© 2026 ByteFuture</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ─── SCROLL REVEAL ─── -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+
+<!-- ─── POSTS ENGINE ─── -->
+<script>
+(function() {
+  var POSTS_PER_PAGE = 6;
+  var allPosts = [];
+  var filtered = [];
+  var shown = 0;
+  var activeCat = 'all';
+
+  function formatDate(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function catLabel(cat) { return cat.charAt(0).toUpperCase() + cat.slice(1); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  // Cover paths in posts.json are repo-root-relative (e.g. "blog/foo.png"); make them absolute.
+  function coverUrl(c) { return c.charAt(0) === '/' ? c : '/' + c; }
+
+  // Category-based gradient backgrounds
+  var catGradients = {
+    research:    'linear-gradient(135deg,rgba(13,148,136,0.08) 0%,rgba(124,58,237,0.08) 100%)',
+    engineering: 'linear-gradient(135deg,#f4f4f5 0%,#e4e4e7 100%)',
+    tutorial:    'linear-gradient(135deg,rgba(37,99,235,0.06) 0%,rgba(13,148,136,0.06) 100%)',
+    product:     'linear-gradient(135deg,rgba(37,99,235,0.04) 0%,rgba(124,58,237,0.04) 100%)'
+  };
+
+  function renderFeatured(post) {
+    var section = document.getElementById('featured-section');
+    if (!post) { section.innerHTML = ''; return; }
+    section.innerHTML =
+      '<a href="/blog/' + encodeURIComponent(post.slug) + '.html" style="text-decoration:none;color:inherit;" onclick="gtag(\'event\',\'blog_click\',{label:\'featured\'})">' +
+        '<article class="featured-card animate-on-scroll">' +
+          '<div class="featured-inner" style="display:flex;">' +
+            '<div style="width:50%;min-height:320px;background:linear-gradient(135deg,#2563EB 0%,#0D9488 60%,#7C3AED 100%);position:relative;overflow:hidden;" class="featured-cover">' +
+              '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">' +
+                '<svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.15;"><circle cx="60" cy="60" r="50" stroke="#fff" stroke-width="2"/><path d="M40 60L55 75L80 45" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '</div>' +
+              '<div style="position:absolute;bottom:24px;left:24px;"><span style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:rgba(255,255,255,0.7);letter-spacing:0.1em;text-transform:uppercase;">Featured</span></div>' +
+            '</div>' +
+            '<div style="width:50%;padding:40px;">' +
+              '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">' +
+                '<span class="post-tag">' + catLabel(post.category) + '</span>' +
+                '<time style="font-size:13px;color:#a1a1aa;font-family:\'Space Grotesk\',sans-serif;">' + formatDate(post.date) + '</time>' +
+              '</div>' +
+              '<h2 style="font-family:\'Space Grotesk\',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0 0 16px;">' + esc(post.title) + '</h2>' +
+              '<p style="font-size:17px;color:#52525b;line-height:1.7;margin:0 0 24px;">' + esc(post.summary) + '</p>' +
+              '<span style="font-family:\'Space Grotesk\',sans-serif;font-size:14px;font-weight:600;color:#2563EB;">Read article &rarr;</span>' +
+            '</div>' +
+          '</div>' +
+        '</article>' +
+      '</a>';
+    observeNew();
+  }
+
+  function renderCard(post) {
+    var bg = catGradients[post.category] || catGradients.product;
+    var coverHtml = post.cover
+      ? '<div style="height:180px;overflow:hidden;"><img src="' + esc(coverUrl(post.cover)) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>'
+      : '<div style="height:180px;background:' + bg + ';display:flex;align-items:center;justify-content:center;">' +
+          '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="opacity:0.18;"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#18181b" stroke-width="2"/><path d="M12 16H28M12 22H22" stroke="#18181b" stroke-width="2" stroke-linecap="round"/></svg>' +
+        '</div>';
+    return '<a href="/blog/' + encodeURIComponent(post.slug) + '.html" style="text-decoration:none;color:inherit;" class="animate-on-scroll" onclick="gtag(\'event\',\'blog_click\',{label:\'' + esc(post.slug) + '\'})">' +
+      '<article class="post-card" data-cat="' + esc(post.category) + '">' +
+        coverHtml +
+        '<div class="post-card-body">' +
+          '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">' +
+            '<span class="post-tag">' + catLabel(post.category) + '</span>' +
+            '<time style="font-size:13px;color:#a1a1aa;font-family:\'Space Grotesk\',sans-serif;">' + formatDate(post.date) + '</time>' +
+          '</div>' +
+          '<h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.01em;line-height:1.3;margin:0 0 8px;">' + esc(post.title) + '</h3>' +
+          '<p style="font-size:15px;color:#52525b;line-height:1.65;margin:0;">' + esc(post.summary) + '</p>' +
+        '</div>' +
+      '</article>' +
+    '</a>';
+  }
+
+  function renderGrid() {
+    var grid = document.getElementById('posts-grid');
+    var batch = filtered.slice(shown, shown + POSTS_PER_PAGE);
+    var html = '';
+    batch.forEach(function(p) { html += renderCard(p); });
+    if (shown === 0) { grid.innerHTML = html; } else { grid.insertAdjacentHTML('beforeend', html); }
+    shown += batch.length;
+    var wrap = document.getElementById('load-more-wrap');
+    wrap.style.display = (shown < filtered.length) ? '' : 'none';
+    observeNew();
+  }
+
+  function applyFilter(cat) {
+    activeCat = cat;
+    shown = 0;
+    var featured = allPosts.find(function(p) { return p.featured; });
+    if (cat === 'all') {
+      filtered = allPosts.filter(function(p) { return !p.featured; });
+      renderFeatured(featured);
+    } else {
+      filtered = allPosts.filter(function(p) { return p.category === cat && !p.featured; });
+      if (featured && featured.category === cat) { filtered.unshift(featured); }
+      renderFeatured(null);
+    }
+    filtered.sort(function(a, b) { return b.date.localeCompare(a.date); });
+    renderGrid();
+  }
+
+  function observeNew() {
+    document.querySelectorAll('.animate-on-scroll:not(.is-visible)').forEach(function(el) { observer.observe(el); });
+  }
+
+  function setActivePill(cat) {
+    var pills = document.querySelectorAll('#cat-filter .cat-pill');
+    pills.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-cat') === cat); });
+  }
+
+  // Filter pills
+  var pills = document.querySelectorAll('#cat-filter .cat-pill');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      setActivePill(pill.getAttribute('data-cat'));
+      applyFilter(pill.getAttribute('data-cat'));
+      gtag('event', 'blog_filter', { label: pill.getAttribute('data-cat') });
+    });
+  });
+
+  // Load more
+  document.getElementById('load-more-btn').addEventListener('click', function() {
+    renderGrid();
+    gtag('event', 'blog_load_more', { label: 'page_' + Math.ceil(shown / POSTS_PER_PAGE) });
+  });
+
+  // Fetch posts
+  fetch('/posts.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      allPosts = data.sort(function(a, b) { return b.date.localeCompare(a.date); });
+      // Deep-link: /blog/?cat=research selects that category on load.
+      var validCats = { all:1, engineering:1, product:1, research:1, tutorial:1 };
+      var params = new URLSearchParams(location.search);
+      var startCat = params.get('cat');
+      if (!startCat || !validCats[startCat]) startCat = 'all';
+      setActivePill(startCat);
+      applyFilter(startCat);
+    });
+})();
+</script>
+
+<!-- ─── SCROLL EVENTS ─── -->
+<script>
+// scroll_50 engagement event
+(function() {
+  var fired = false;
+  window.addEventListener('scroll', function() {
+    if (fired) return;
+    var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+    if (scrollPercent >= 0.5) {
+      fired = true;
+      gtag('event', 'scroll', {percent_scrolled: 50});
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

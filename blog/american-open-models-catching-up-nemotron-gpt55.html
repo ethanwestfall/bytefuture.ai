@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — Token Station Blog</title>
+  <title>American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — ByteFuture Writings</title>
   <meta name="description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
-  <meta property="og:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — Token Station Blog" />
+  <link rel="canonical" href="https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
+  <meta property="og:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark — ByteFuture Writings" />
   <meta property="og:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
   <meta property="og:type" content="article" />
-  <meta property="og:image" content="https://tokens.bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
-  <meta property="og:url" content="https://tokens.bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
+  <meta property="og:image" content="https://bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="American open models are catching up: Nemotron-3 Ultra matched GPT-5.5 in our coding-agent benchmark" />
   <meta name="twitter:description" content="NVIDIA Nemotron-3 Ultra matched GPT-5.5 on all 9 coding-agent benchmark runs. We break down the tasks, results, and what this means for open vs closed model choice." />
-  <meta name="twitter:image" content="https://tokens.bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
-  <link rel="canonical" href="https://tokens.bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html" />
+  <meta name="twitter:image" content="https://bytefuture.ai/blog/artificial_analysis_intelligence_open_models.png" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'><path d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/><circle cx='14' cy='14' r='3.5' fill='%2360a5fa'/><path d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/><circle cx='14' cy='5' r='1.5' fill='%23a78bfa'/><circle cx='22' cy='19' r='1.5' fill='%2334d399'/><circle cx='6' cy='19' r='1.5' fill='%23fb923c'/></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -214,26 +214,20 @@
 
 <!-- ─── NAV ─── -->
 <nav style="position:sticky; top:0; z-index:50; border-bottom:1px solid #e4e4e7;">
-  <div style="background:linear-gradient(90deg,#2563EB,#7C3AED); color:#ffffff; text-align:center; padding:10px 24px; font-size:14px; font-family:'Source Serif 4',serif; line-height:1.5;">
-    <strong>Gemini 3.5 Flash + Claude Opus 4.8 now available</strong> — first month free + $10 signup credit.
-    <a href="https://models.bytefuture.ai/signup" style="color:#ffffff; margin-left:8px; text-decoration:underline; font-weight:600;">Start free &rarr;</a>
-  </div>
   <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
   <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
     <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-      <svg width="28" height="30" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:-0.01em;">Token Station</span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
     </a>
     <div style="display:flex; align-items:center; gap:24px;">
-      <a href="/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Blog</a>
-      <a href="https://models.bytefuture.ai/signup" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;">Start free</a>
+      <a href="/blog/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Writings</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
   </div>
@@ -244,7 +238,7 @@
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-    <a href="/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; All posts</a>
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; All writings</a>
 
     <h4>Recent</h4>
     <div id="recent-posts"></div>
@@ -274,7 +268,7 @@
 <p>Both models passed <strong>9 out of 9</strong> runs.</p>
 <p>This does not mean every open model beats every closed model. It means something more important for developers and companies:</p>
 <blockquote>American open models are now strong enough to compete on real agent workloads, not just toy prompts.</blockquote>
-<p>You can try Nemotron-3 Ultra, GPT-5.5, and other frontier models through <strong><a href="https://tokens.bytefuture.ai">tokens.bytefuture.ai</a></strong>.</p>
+<p>You can try Nemotron-3 Ultra, GPT-5.5, and other frontier models through <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
 <h2 id="why-this-matters">Why this matters</h2>
 <p>The open-vs-closed model debate used to be mostly philosophical.</p>
 <p>Open models gave developers more control. Closed models usually gave better performance.</p>
@@ -349,14 +343,14 @@
 <h2 id="what-this-means">What this means for Token Station</h2>
 <p>The future is not one model for every task.</p>
 <p>Some workloads need a closed frontier model. Some workloads can now run on a powerful open model. Many teams will want to test both before deciding what to use in production.</p>
-<p>That is exactly why <strong>tokens.bytefuture.ai</strong> exists.</p>
+<p>That is exactly why <strong>Token Station</strong> (<a href="https://models.bytefuture.ai">models.bytefuture.ai</a>) exists.</p>
 <p>With Token Station, developers can access models like Nemotron-3 Ultra, GPT-5.5, and other frontier models through one platform. Instead of choosing based on brand names or assumptions, teams can compare models on their own workloads.</p>
 <p>The point is not to declare one universal winner.</p>
 <p>The point is to make model choice practical.</p>
 <h2 id="try-it">Try it</h2>
 <p>American open models are catching up with closed frontier models.</p>
 <p>Nemotron-3 Ultra matching GPT-5.5 on our coding-agent completion benchmark is one more signal that the model landscape is changing.</p>
-<p>Try Nemotron-3 Ultra and other frontier models at <strong><a href="https://tokens.bytefuture.ai">tokens.bytefuture.ai</a></strong>.</p>
+<p>Try Nemotron-3 Ultra and other frontier models on <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
     </article>
   </main>
 
@@ -368,20 +362,18 @@
 </div>
 
 <!-- ─── FOOTER ─── -->
-<footer style="padding:32px 24px; border-top:1px solid #e4e4e7;">
+<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
   <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <svg width="20" height="22" viewBox="0 0 28 32" fill="none" aria-label="Token Station logo" role="img" style="opacity:0.75;">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">Token Station</span>
-    </div>
-    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 Token Station. All rights reserved.</p>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
+    </a>
+    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">Writings</a></p>
   </div>
 </footer>
 
@@ -437,7 +429,7 @@
       var topicsEl = document.getElementById('topics-list');
       Object.keys(cats).sort().forEach(function(cat) {
         var a = document.createElement('a');
-        a.href = '/?cat=' + cat;
+        a.href = '/blog/?cat=' + cat;
         a.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
         topicsEl.appendChild(a);
       });
