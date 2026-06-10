@@ -1,5 +1,14 @@
 [
   {
+    "slug": "use-grok-build-in-codex-and-claude-code",
+    "title": "How to Use Grok Build in Codex and Claude Code",
+    "summary": "Grok Build is a fast-improving coding model, but Codex and Claude Code can't talk to xAI directly. Here's the two-minute setup with Token Station.",
+    "category": "tutorial",
+    "date": "2026-06-10",
+    "cover": "blog/grok-build-banner.png",
+    "featured": true
+  },
+  {
     "slug": "american-open-models-catching-up-nemotron-gpt55",
     "title": "American Open Models Are Catching Up: Nemotron-3 Ultra Matched GPT-5.5",
     "summary": "NVIDIA Nemotron-3 Ultra, an American open model, matched GPT-5.5 on task completion in our coding-agent benchmark.",
