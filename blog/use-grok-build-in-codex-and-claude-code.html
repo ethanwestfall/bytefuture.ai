@@ -260,6 +260,7 @@
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
         <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Tutorial</span>
         <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">June 10, 2026</time>
+        <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
       </div>
       <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">How to Use Grok Build in Codex and Claude Code</h1>
     </header>
@@ -460,6 +461,26 @@ codex</code></pre>
         topicsEl.appendChild(a);
       });
     });
+})();
+</script>
+
+<!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
+<script data-goatcounter="https://bytefuture.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function() {
+  var el = document.getElementById('view-count');
+  if (!el) return;
+  // Public per-page count; the page path is the key — no per-article edit needed.
+  fetch('https://bytefuture.goatcounter.com/counter/' + location.pathname + '.json')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.count) {
+        var n = String(d.count).trim();
+        el.textContent = n.replace(/[\u2009\u202F ]/g, ',') + (n === '1' ? ' view' : ' views');
+      }
+    })
+    .catch(function() {});
 })();
 </script>
 

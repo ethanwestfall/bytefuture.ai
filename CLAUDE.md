@@ -109,7 +109,7 @@ Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/
    - `canonical` + `og:url` → replace `POST_SLUG` with the real slug.
    - Header category pill text + `<time>`.
    - `<h1>` title and the article body.
-3. **Leave the nav, footer, favicon, and the GA `<script>` exactly as the template ships them.**
+3. **Leave the nav, footer, favicon, the GA `<script>`, and the view-counter span + scripts exactly as the template ships them.**
 4. **Register it in `posts.json`** (see schema below). The article will not appear in the listing until it's there.
 5. **Cover image (optional):** drop the file in `blog/` and set `"cover": "blog/<file>"` in `posts.json` (root-relative — see Linking).
 6. **Mobile check:** verify the article at ~375px width per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
@@ -172,6 +172,31 @@ The script only verifies slug ↔ file existence. The **metadata-content sync** 
 - `canonical` and `og:url`: `https://bytefuture.ai/blog/<slug>.html`.
 - `og:image`: an **absolute** `https://bytefuture.ai/...` URL.
 - Listing canonical: `https://bytefuture.ai/blog/`.
+
+### View counter (every article)
+
+Every article page shows a public view counter in the header meta row, next to the date. It is served by **GoatCounter** (site code `bytefuture`; dashboard at `https://bytefuture.goatcounter.com`) — a hosted service, no database or backend of ours.
+
+The template ships all the pieces; **keep them in every article**:
+
+1. `<span id="view-count">` in the header meta row (styled like the `<time>` next to it). It starts empty and is filled by JS.
+2. The `VIEW COUNTER` block just before `</body>`, which contains **two** scripts:
+   - the GoatCounter tracker (counts the visit), verbatim:
+     ```html
+     <script data-goatcounter="https://bytefuture.goatcounter.com/count"
+             async src="//gc.zgo.at/count.js"></script>
+     ```
+   - a small inline script that fetches `https://bytefuture.goatcounter.com/counter/<pathname>.json` and renders `N views` into the span (GoatCounter formats thousands with thin spaces; the script converts them to commas).
+
+Invariants:
+
+- **The page path is the counter key** (`location.pathname`, e.g. `/blog/foo.html`) — no per-article editing, which is why new articles get a working counter just by copying the template. Renaming an article's file starts its count over.
+- **Dev-safe by default:** `count.js` does not record visits from `localhost` or `file://` (GoatCounter's default), and the display endpoint is read-only — local reloads never inflate counts.
+- **The GoatCounter setting _"Allow using the visitor counter"_ must stay enabled** (GoatCounter → Settings). If it's turned off, the JSON endpoint returns 403 and the number silently disappears from every page — the site still works, but the counters show nothing.
+- **Failure is silent.** If the API is down, blocked, or the path has no views yet, the span just stays empty. Never let the counter block rendering or show an error.
+- **The GA4 HARD RULE applies unchanged** — the GoatCounter snippets are additive and must never replace, move, or modify the GA tag. And being analytics themselves, the GoatCounter snippets get the same protection: don't remove or "clean up" either script.
+- To switch providers later, change the two scripts in the `VIEW COUNTER` block on each page; keep the same span, path-as-key scheme, and silent-failure behavior.
+- Known trade-offs (accepted): counts start from the day GoatCounter was installed, and ad blockers may block counting and/or display.
 
 ### Analytics
 

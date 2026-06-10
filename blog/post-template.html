@@ -190,6 +190,7 @@
     <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Category</span>
     <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">June 8, 2026</time>
     <!-- ▲ EDIT ▲ -->
+    <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
   </div>
   <!-- ▼ EDIT: post title ▼ -->
   <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">POST_TITLE</h1>
@@ -253,6 +254,26 @@ const response = await fetch('https://models.bytefuture.ai/v1/chat/completions',
     <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">Writings</a></p>
   </div>
 </footer>
+
+<!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
+<script data-goatcounter="https://bytefuture.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function() {
+  var el = document.getElementById('view-count');
+  if (!el) return;
+  // Public per-page count; the page path is the key — no per-article edit needed.
+  fetch('https://bytefuture.goatcounter.com/counter/' + location.pathname + '.json')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.count) {
+        var n = String(d.count).trim();
+        el.textContent = n.replace(/[\u2009\u202F ]/g, ',') + (n === '1' ? ' view' : ' views');
+      }
+    })
+    .catch(function() {});
+})();
+</script>
 
 </body>
 </html>
