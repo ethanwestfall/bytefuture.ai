@@ -113,6 +113,7 @@ Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/
 4. **Register it in `posts.json`** (see schema below). The article will not appear in the listing until it's there.
 5. **Cover image (optional):** drop the file in `blog/` and set `"cover": "blog/<file>"` in `posts.json` (root-relative — see Linking).
 6. **Mobile check:** verify the article at ~375px width per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
+7. **Sitemap:** add a `<url>` entry for the article to `sitemap.xml` (root), with `lastmod` = the publish date and `priority` 0.7.
 
 > Keep `posts.json` and the article files in strict 1:1 sync — see **[Keep `posts.json` and articles in sync](#keep-postsjson-and-articles-in-sync-required)** below. Never register a post whose file doesn't exist, and never publish a file you haven't registered.
 
