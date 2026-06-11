@@ -1,5 +1,14 @@
 [
   {
+    "slug": "try-claude-fable-5-in-codex-openclaw-and-pi",
+    "title": "Try Claude Fable 5 in Codex, OpenClaw, and Pi — Before You Commit to It",
+    "summary": "Anthropic's new flagship is state-of-the-art, controversial, and $10/$50 per million tokens. Experiment with it temporarily in your existing harness — no Anthropic account, using Token Station free credits.",
+    "category": "tutorial",
+    "date": "2026-06-12",
+    "cover": "blog/claude-fable-5-cover.png",
+    "featured": false
+  },
+  {
     "slug": "use-grok-build-in-codex-and-claude-code",
     "title": "How to Use Grok Build in Codex and Claude Code",
     "summary": "xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with Token Station free credits — no xAI account needed.",
