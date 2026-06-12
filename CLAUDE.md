@@ -99,6 +99,20 @@ Favicon (same mark, in `<head>`):
 
 Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/h3, blockquote, `pre`/`code`, tables, figures). Don't reinvent them.
 
+### Writing style: no "AI voice" (required)
+
+Applies to everything reader-facing: article bodies, titles, `posts.json` summaries, meta descriptions, figure captions, and text baked into cover images. It does not apply to code blocks, config snippets, or HTML comments (the `───` box-drawing rulers are layout, not prose).
+
+- **No em-dashes (`—`).** They are the single loudest AI tell. Rewrite with a period, comma, colon, or parentheses. Hyphens in compound words and en-dashes in ranges (2024-2026) are fine. One exception: the mandated `— ByteFuture Writings` / `Writings — ByteFuture` title suffixes are brand chrome, defined under Branding; keep those.
+- **No stock AI phrases.** Banned outright: delve, landscape (metaphorical), game-changer, revolutionize, unleash, harness the power, seamlessly, effortlessly, elevate, supercharge, "in today's fast-paced world", "let's dive in", "buckle up", "it's worth noting", "it's important to note", "at the end of the day".
+- **Go easy on the reversal pattern.** "It isn't just X. It's Y." and "not X, but Y" read as TED-talk filler when repeated. At most one per article, and only when the contrast is the actual point.
+- **No rhetorical-question scaffolding.** Don't open sections with "So what does this mean for you?". Just say the thing.
+- **No hollow intensifiers.** truly, incredibly, remarkably, deeply, "powerful" as a bare adjective. Use a number, a name, or a concrete consequence instead.
+- **Specifics beat adjectives.** "80.3% on SWE-bench Pro" earns its place; "impressive benchmark results" does not. If a sentence could appear unchanged in any tech blog about any product, cut it or sharpen it.
+- Short declarative sentences are the default. Vary length for rhythm, not to pad.
+
+When editing an existing article for any reason, fix style violations you touch. A dedicated sweep should rewrite each em-dash by hand; a blind find-and-replace produces broken sentences.
+
 ### Publishing a new article
 
 1. **Copy the template:** `cp blog/post-template.html blog/<slug>.html`.

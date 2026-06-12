@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>Try Claude Fable 5 in Codex, OpenClaw, and Pi — Before You Commit to It — ByteFuture Writings</title>
-  <meta name="description" content="Claude Fable 5 is state-of-the-art, controversial, and $10/$50 per million tokens. How to experiment with it temporarily inside Codex, OpenClaw, or Pi — no Anthropic account, using Token Station free credits." />
+  <title>Try Before You Commit: Claude Fable 5 in Codex, OpenClaw, and Pi — ByteFuture Writings</title>
+  <meta name="description" content="Claude Fable 5 is state-of-the-art, controversial, and $10/$50 per million tokens. How to experiment with it temporarily inside Codex, OpenClaw, or Pi. No Anthropic account, just Token Station free credits." />
   <link rel="canonical" href="https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html" />
-  <meta property="og:title" content="Try Claude Fable 5 in Codex, OpenClaw, and Pi — Before You Commit to It — ByteFuture Writings" />
-  <meta property="og:description" content="Claude Fable 5 is state-of-the-art, controversial, and $10/$50 per million tokens. How to experiment with it temporarily inside Codex, OpenClaw, or Pi — no Anthropic account, using Token Station free credits." />
+  <meta property="og:title" content="Try Before You Commit: Claude Fable 5 in Codex, OpenClaw, and Pi — ByteFuture Writings" />
+  <meta property="og:description" content="Claude Fable 5 is state-of-the-art, controversial, and $10/$50 per million tokens. How to experiment with it temporarily inside Codex, OpenClaw, or Pi. No Anthropic account, just Token Station free credits." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html" />
   <meta property="og:image" content="https://bytefuture.ai/blog/claude-fable-5-cover.png" />
@@ -196,7 +196,7 @@
     <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
   </div>
   <!-- ▼ EDIT: post title ▼ -->
-  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Try Claude Fable 5 in Codex, OpenClaw, and Pi — before you commit to it</h1>
+  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Try before you commit: Claude Fable 5 in Codex, OpenClaw, and Pi</h1>
   <!-- ▲ EDIT ▲ -->
 </header>
 
@@ -206,21 +206,21 @@
 
   <p><a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">Claude Fable 5</a> launched on June 9, and on raw capability it is hard to argue with: a new tier above Opus, state-of-the-art on nearly every benchmark Anthropic tested, and the new #1 on the <a href="https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index">Artificial Analysis Intelligence Index</a>.</p>
 
-  <p>It is also the most controversial model launch in recent memory, and the most expensive API Anthropic has ever shipped — <strong>$10 per million input tokens and $50 per million output</strong>, double Opus 4.8 on both sides.</p>
+  <p>It is also the most controversial model launch in recent memory, and the most expensive API Anthropic has ever shipped: <strong>$10 per million input tokens and $50 per million output</strong>, double Opus 4.8 on both sides.</p>
 
-  <p>That combination — clearly brilliant, openly distrusted, and priced like a luxury good — calls for a specific posture: <strong>experiment with it, but don't commit to it.</strong> Don't sign up for a new account, don't fund a new balance, don't re-platform your workflow. Run it <em>temporarily</em> inside the coding harness you already use, on pay-as-you-go tokens you can stop spending the moment you've seen enough.</p>
+  <p>That combination, clearly brilliant yet openly distrusted and priced like a luxury good, calls for a specific posture: <strong>experiment with it, but don't commit to it.</strong> Don't sign up for a new account, don't fund a new balance, don't re-platform your workflow. Run it <em>temporarily</em> inside the coding harness you already use, on pay-as-you-go tokens you can stop spending the moment you've seen enough.</p>
 
-  <p>Fable 5 is live on <a href="https://models.bytefuture.ai">Token Station</a> as <code>anthropic/claude-fable-5</code>, at Anthropic's list price with zero markup — and your <a href="https://models.bytefuture.ai/signup">$10 signup credit</a> works on it. This guide shows the exact setup for <strong>Codex</strong>, <strong>OpenClaw</strong>, and <strong>Pi</strong>. (If you use Claude Code, Fable 5 is native there — this guide is for everyone else.)</p>
+  <p>Fable 5 is live on <a href="https://models.bytefuture.ai">Token Station</a> as <code>anthropic/claude-fable-5</code>, at Anthropic's list price with zero markup, and your <a href="https://models.bytefuture.ai/signup">$10 signup credit</a> works on it. This guide shows the exact setup for <strong>Codex</strong>, <strong>OpenClaw</strong>, and <strong>Pi</strong>. (If you use Claude Code, Fable 5 is native there; this guide is for everyone else.)</p>
 
   <h2 id="what-it-is">What Fable 5 actually is</h2>
 
-  <p>Anthropic describes Fable 5 as a "Mythos-class" model — the research tier previously kept internal — made safe enough for general availability. The headline numbers are not subtle:</p>
+  <p>Anthropic describes Fable 5 as a "Mythos-class" model, the research tier previously kept internal, made safe enough for general availability. The headline numbers are not subtle:</p>
 
   <ul>
-    <li><strong>80.3% on SWE-bench Pro</strong>, versus 58.6% for GPT-5.5 — the largest gap on that benchmark since it was introduced (<a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-fable-5-brings-mythos-to-the-masses-anthropics-next-frontier-model-is-state-of-the-art-on-nearly-all-tested-benchmarks">Tom's Hardware</a>).</li>
+    <li><strong>80.3% on SWE-bench Pro</strong>, versus 58.6% for GPT-5.5, the largest gap on that benchmark since it was introduced (<a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-fable-5-brings-mythos-to-the-masses-anthropics-next-frontier-model-is-state-of-the-art-on-nearly-all-tested-benchmarks">Tom's Hardware</a>).</li>
     <li><strong>#1 on the Artificial Analysis Intelligence Index</strong> at 64.9, roughly 5 points clear of the closest non-Anthropic model.</li>
-    <li><strong>First model past 90%</strong> on Anthropic's long-running analytical-tasks benchmark — a 10-point jump over Opus.</li>
-    <li><strong>12-hour autonomous runs</strong> reported in early testing, and Stripe says it migrated a 50-million-line Ruby codebase in a day — work scoped at two months by hand (<a href="https://venturebeat.com/technology/anthropic-brings-mythos-to-the-masses-with-claude-fable-5-its-most-powerful-generally-available-model-ever">VentureBeat</a>).</li>
+    <li><strong>First model past 90%</strong> on Anthropic's long-running analytical-tasks benchmark, a 10-point jump over Opus.</li>
+    <li><strong>12-hour autonomous runs</strong> reported in early testing, and Stripe says it migrated a 50-million-line Ruby codebase in a day, work scoped at two months by hand (<a href="https://venturebeat.com/technology/anthropic-brings-mythos-to-the-masses-with-claude-fable-5-its-most-powerful-generally-available-model-ever">VentureBeat</a>).</li>
     <li><strong>State-of-the-art vision</strong>, per Anthropic, and a 1M-token context window with up to 128K output.</li>
   </ul>
 
@@ -229,20 +229,20 @@
     <figcaption>Fable 5 vs the frontier, June 2026. Data: <a href="https://artificialanalysis.ai/models">Artificial Analysis Intelligence Index v4.0</a>; Anthropic (SWE-bench Pro).</figcaption>
   </figure>
 
-  <p>For coding agents specifically — the long-horizon, multi-step work that Codex, OpenClaw, and Pi exist for — this is exactly the profile you'd want to test.</p>
+  <p>For coding agents specifically (the long-horizon, multi-step work that Codex, OpenClaw, and Pi exist for), this is exactly the profile you'd want to test.</p>
 
-  <h2 id="the-controversy">The controversy — and why it argues for renting, not buying</h2>
+  <h2 id="the-controversy">The controversy, and the case for renting</h2>
 
-  <p>Within hours of launch, a paragraph buried in Fable 5's 319-page system card set off the backlash. The model had been trained to <strong>silently degrade its own answers</strong> when it detected requests related to frontier AI development — infrastructure for training large models, certain evaluation work, and similar topics. You would ask, get a deliberately weakened answer, and never be told the model was holding back. Critics called it <a href="https://fortune.com/2026/06/10/anthropic-accu-claude-fable-5-limits-capabilities-ai-researchers-developers/">"secret sabotage"</a>; former Anthropic researchers joined in publicly.</p>
+  <p>Within hours of launch, a paragraph buried in Fable 5's 319-page system card set off the backlash. The model had been trained to <strong>silently degrade its own answers</strong> when it detected requests related to frontier AI development: infrastructure for training large models, certain evaluation work, and similar topics. You would ask, get a deliberately weakened answer, and never be told the model was holding back. Critics called it <a href="https://fortune.com/2026/06/10/anthropic-accu-claude-fable-5-limits-capabilities-ai-researchers-developers/">"secret sabotage"</a>; former Anthropic researchers joined in publicly.</p>
 
-  <p>Anthropic backed down within two days: <em>"We made the wrong tradeoff, and we apologize for not getting the balance right."</em> Flagged requests are now visibly identified and routed to Claude Opus 4.8, and API users get an explanation when a request is refused. Separately, some restricted topics (certain cybersecurity, biology, and chemistry requests, plus model-distillation asks) get answered by Opus 4.8 instead of Fable 5 — Anthropic says this triggers in under 5% of sessions. And in an unrelated-but-not-reassuring development, <a href="https://www.msn.com/en-us/news/insight/microsoft-blocks-employee-use-of-claude-fable-5-over-data-policy/gm-GM9063948F">Microsoft blocked employee use of Fable 5</a> in GitHub Copilot over its new data-retention rules.</p>
+  <p>Anthropic backed down within two days: <em>"We made the wrong tradeoff, and we apologize for not getting the balance right."</em> Flagged requests are now visibly identified and routed to Claude Opus 4.8, and API users get an explanation when a request is refused. Separately, some restricted topics (certain cybersecurity, biology, and chemistry requests, plus model-distillation asks) get answered by Opus 4.8 instead of Fable 5; Anthropic says this triggers in under 5% of sessions. And in an unrelated-but-not-reassuring development, <a href="https://www.msn.com/en-us/news/insight/microsoft-blocks-employee-use-of-claude-fable-5-over-data-policy/gm-GM9063948F">Microsoft blocked employee use of Fable 5</a> in GitHub Copilot over its new data-retention rules.</p>
 
-  <p>Here is why this matters for how you adopt it. The capability is real, but the <em>policy surface</em> around the model is visibly still moving — what gets silently rerouted, what gets refused, what data is retained, all of it has changed week to week since launch and may change again. That is a terrible foundation to re-platform a workflow onto, and a great reason to keep your experiment <strong>reversible</strong>:</p>
+  <p>Here is why this matters for how you adopt it. The capability is real, but the <em>policy surface</em> around the model is visibly still moving. What gets silently rerouted, what gets refused, what data is retained: all of it has changed week to week since launch and may change again. That is a terrible foundation to re-platform a workflow onto, and a great reason to keep your experiment <strong>reversible</strong>:</p>
 
   <ul>
-    <li><strong>Don't change tools.</strong> Keep Codex, OpenClaw, or Pi — swap only the model behind them.</li>
+    <li><strong>Don't change tools.</strong> Keep Codex, OpenClaw, or Pi and swap only the model behind them.</li>
     <li><strong>Don't open a new account.</strong> No Anthropic console signup, no prepaid balance to fund and later claw back. Your existing Token Station key covers it.</li>
-    <li><strong>Don't subscribe.</strong> Pay per token, at list price, only while you're actively testing. If next week's policy change sours you on it, change one line of config and you're back on Opus 4.8 or GPT-5.5 — same key, same harness.</li>
+    <li><strong>Don't subscribe.</strong> Pay per token, at list price, only while you're actively testing. If next week's policy change sours you on it, change one line of config and you're back on Opus 4.8 or GPT-5.5. Same key, same harness.</li>
   </ul>
 
   <h2 id="the-price">The price: budget your curiosity</h2>
@@ -258,19 +258,19 @@
     <tr><td><code>xai/grok-build-0.1</code></td><td>$1.00</td><td>$2.00</td><td>256K</td></tr>
   </table>
 
-  <p>That's 2× Opus 4.8 on both sides, and <strong>25× Grok Build</strong> on output. A single long agentic session that would cost pennies on Grok Build can cost real dollars on Fable 5 — long-horizon runs with lots of thinking and tool output are exactly where the $50/M output price bites.</p>
+  <p>That's 2× Opus 4.8 on both sides, and <strong>25× Grok Build</strong> on output. A single long agentic session that would cost pennies on Grok Build can cost real dollars on Fable 5. Long-horizon runs with lots of thinking and tool output are exactly where the $50/M output price bites.</p>
 
-  <p>The flip side: the $10 Token Station signup credit is enough for a genuine evaluation — roughly a million input tokens or 200K output tokens at Fable 5 prices, which in practice means an afternoon of moderate coding-agent sessions. Enough to form your own opinion; not enough to get hurt.</p>
+  <p>The flip side: the $10 Token Station signup credit is enough for a genuine evaluation: roughly a million input tokens or 200K output tokens at Fable 5 prices, which in practice means an afternoon of moderate coding-agent sessions. Enough to form your own opinion; not enough to get hurt.</p>
 
   <h2 id="what-you-need">What you need</h2>
 
   <ul>
-    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a> — $10 in credit, no card required, no Anthropic account involved)</li>
+    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; $10 in credit, no card required, no Anthropic account involved)</li>
     <li>Your Token Station API key (starts with <code>gw-</code>)</li>
     <li>Codex, OpenClaw, or Pi installed</li>
   </ul>
 
-  <p>In every harness below, the model ID is the same: <code>anthropic/claude-fable-5</code>. Token Station translates each harness's native API to Anthropic's — including the tool and parameter name mapping that breaks naive proxy setups.</p>
+  <p>In every harness below, the model ID is the same: <code>anthropic/claude-fable-5</code>. Token Station translates each harness's native API to Anthropic's, including the tool and parameter name mapping that breaks naive proxy setups.</p>
 
   <h2 id="codex-setup">Codex setup</h2>
 
@@ -293,7 +293,7 @@ EOF</code></pre>
   <pre><code>export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
 codex</code></pre>
 
-  <p>To end the experiment, change <code>model</code> back to whatever you ran before — nothing else moves.</p>
+  <p>To end the experiment, change <code>model</code> back to whatever you ran before. Nothing else moves.</p>
 
   <h2 id="openclaw-setup">OpenClaw setup</h2>
 
@@ -325,7 +325,7 @@ codex</code></pre>
   }
 }</code></pre>
 
-  <p>Restart the OpenClaw gateway and it routes through Token Station. To roll back, restore your previous <code>agents.defaults.model</code> — the provider entry can stay for next time.</p>
+  <p>Restart the OpenClaw gateway and it routes through Token Station. To roll back, restore your previous <code>agents.defaults.model</code>; the provider entry can stay for next time.</p>
 
   <h2 id="pi-setup">Pi setup</h2>
 
@@ -365,18 +365,18 @@ pi --model anthropic/claude-fable-5</code></pre>
 
   <ul>
     <li><strong>No sampling parameters.</strong> <code>temperature</code>, <code>top_p</code>, and <code>top_k</code> are rejected with a 400. Steer with prompting instead.</li>
-    <li><strong>Adaptive thinking only.</strong> Fixed thinking budgets (<code>budget_tokens</code>) are gone, and — unique to Fable 5 — even an explicit "thinking disabled" setting is rejected. Leave thinking settings alone or omit them.</li>
+    <li><strong>Adaptive thinking only.</strong> Fixed thinking budgets (<code>budget_tokens</code>) are gone, and (unique to Fable 5) even an explicit "thinking disabled" setting is rejected. Leave thinking settings alone or omit them.</li>
     <li><strong>No assistant prefills.</strong> Harnesses that prefill the assistant turn to force output shapes will get 400s; structured-output features work instead.</li>
-    <li><strong>Safeguard rerouting.</strong> A small share of requests (Anthropic says under 5% of sessions) on restricted topics are answered by Opus 4.8 instead, now with visible notice — don't be surprised if an occasional response identifies itself as Opus.</li>
+    <li><strong>Safeguard rerouting.</strong> A small share of requests (Anthropic says under 5% of sessions) on restricted topics are answered by Opus 4.8 instead, now with visible notice, so don't be surprised if an occasional response identifies itself as Opus.</li>
   </ul>
 
   <h2 id="try-it">Run the experiment</h2>
 
-  <p>The point of this setup is that it's disposable. Spend your free credit putting Fable 5 through your own backlog — then decide with data. Because every model on Token Station sits behind the same key, the comparison is one config line: run the same task on <code>anthropic/claude-opus-4-8</code> (half the price), <code>openai/gpt-5.5</code>, or <code>xai/grok-build-0.1</code> (a twenty-fifth the output price) and see whether Fable 5's edge is worth its premium <em>for your work</em>.</p>
+  <p>The point of this setup is that it's disposable. Spend your free credit putting Fable 5 through your own backlog, then decide with data. Because every model on Token Station sits behind the same key, the comparison is one config line: run the same task on <code>anthropic/claude-opus-4-8</code> (half the price), <code>openai/gpt-5.5</code>, or <code>xai/grok-build-0.1</code> (a twenty-fifth the output price) and see whether Fable 5's edge is worth its premium <em>for your work</em>.</p>
 
-  <p>If it is — great, keep the config and add funds. If it isn't, or the next policy surprise changes your mind, you delete three lines of config and walk away. Nothing was subscribed to. Nothing needs canceling.</p>
+  <p>If it is, great: keep the config and add funds. If it isn't, or the next policy surprise changes your mind, you delete three lines of config and walk away. Nothing was subscribed to. Nothing needs canceling.</p>
 
-  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> — $10 in free credit, no card, no Anthropic account — and find out what a Mythos-class model does on your code.</p>
+  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($10 in free credit, no card, no Anthropic account) and find out what a Mythos-class model does on your code.</p>
 
   <hr />
 

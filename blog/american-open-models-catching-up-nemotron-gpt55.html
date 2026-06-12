@@ -280,14 +280,14 @@
 <p>Both models passed <strong>9 out of 9</strong> runs.</p>
 <p>This does not mean every open model beats every closed model. It means something more important for developers and companies:</p>
 <blockquote>American open models are now strong enough to compete on real agent workloads, not just toy prompts.</blockquote>
-<p>A note on access before we dig in: <strong>NVIDIA NIM is offering Nemotron-3 Ultra inference for free for a limited time</strong>, so <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> offers it for free as well. And the free credits you get when you <a href="https://models.bytefuture.ai/signup">sign up for Token Station</a> can go toward GPT-5.5 and Claude Fable 5 — so you can evaluate all three on your own coding tasks.</p>
+<p>A note on access before we dig in: <strong>NVIDIA NIM is offering Nemotron-3 Ultra inference for free for a limited time</strong>, so <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> offers it for free as well. And the free credits you get when you <a href="https://models.bytefuture.ai/signup">sign up for Token Station</a> can go toward GPT-5.5 and Claude Fable 5, so you can evaluate all three on your own coding tasks.</p>
 <h2 id="why-this-matters">Why this matters</h2>
 <p>The open-vs-closed model debate used to be mostly philosophical.</p>
 <p>Open models gave developers more control. Closed models usually gave better performance.</p>
 <p>And to be clear about the baseline: the closed frontier is still well ahead. Plot overall capability by release date, and the picture is stark:</p>
 <figure><img src="overall_ai_capability_us_prc_elo.png" alt="Overall AI Capability (Elo) chart by release date: U.S. closed models lead, PRC open models trail on a lower line, and no American open models appear"><figcaption>Overall AI capability (Elo) by release date, U.S. vs PRC models. Source: U.S. Center for AI Standards and Innovation.</figcaption></figure>
 <p>Two things stand out in that chart.</p>
-<p>First, <strong>open models as a group still lag the closed frontier</strong>. Every model on the leading U.S. line — GPT-5.5, GPT-5.4, Anthropic's Opus series, and now Claude Fable 5, the current representative of closed-frontier SOTA — is closed. The open-weight models that chart at all (DeepSeek, Qwen, Kimi) sit on a visibly lower trend line, hundreds of Elo points behind.</p>
+<p>First, <strong>open models as a group still lag the closed frontier</strong>. Every model on the leading U.S. line (GPT-5.5, GPT-5.4, Anthropic's Opus series, and now Claude Fable 5, the current closed-frontier SOTA) is closed. The open-weight models that chart at all (DeepSeek, Qwen, Kimi) sit on a visibly lower trend line, hundreds of Elo points behind.</p>
 <p>Second, and more striking: <strong>every open model on the chart is Chinese. American open models are nowhere to be found.</strong></p>
 <p>Against that backdrop, an American open model completing the same coding-agent mini benchmark tasks as GPT-5.5 changes the conversation.</p>
 <p>The question is no longer:</p>
@@ -305,13 +305,13 @@
 <li><strong>55B active parameters</strong></li>
 <li>MoE / latent-MoE style architecture</li>
 <li>Developed by NVIDIA, an American AI infrastructure company</li>
-<li>Inference free for a limited time via NVIDIA NIM — served free on Token Station too</li>
+<li>Inference free for a limited time via NVIDIA NIM, and served free on Token Station too</li>
 </ul>
 <p>This is not a small model being used only because it is inexpensive. It is a large American open model designed for serious reasoning and agent workloads.</p>
-<p>GPT-5.5 remains a leading closed frontier model. It is powerful, polished, and widely useful. The same goes for <strong>Claude Fable 5</strong>, Anthropic's newest flagship and a representative of the current closed-frontier SOTA — we don't yet have head-to-head numbers for it in this mini benchmark, but it is part of the bar that open models are chasing. Nemotron-3 Ultra represents a different kind of value: a strong open model with more transparent model characteristics and a more controllable deployment profile.</p>
+<p>GPT-5.5 remains a leading closed frontier model. It is powerful, polished, and widely useful. The same goes for <strong>Claude Fable 5</strong>, Anthropic's newest flagship and a representative of the current closed-frontier SOTA. We don't yet have head-to-head numbers for it in this mini benchmark, but it is part of the bar that open models are chasing. Nemotron-3 Ultra represents a different kind of value: a strong open model with more transparent model characteristics and a more controllable deployment profile.</p>
 <p>For developers and businesses, that matters.</p>
 <h2 id="benchmark-setup">The mini benchmark setup</h2>
-<p>We used <strong><a href="https://github.com/hydai/token-station-arena">Token Station Arena</a></strong> to run a coding-agent mini benchmark — a small, focused test, not a leaderboard. The runner, the three tasks, and every check are open source, so you can read exactly what was tested and reproduce it yourself.</p>
+<p>We used <strong><a href="https://github.com/hydai/token-station-arena">Token Station Arena</a></strong> to run a coding-agent mini benchmark: a small, focused test, not a leaderboard. The runner, the three tasks, and every check are open source, so you can read exactly what was tested and reproduce it yourself.</p>
 <p>The setup:</p>
 <ul>
 <li><strong>2 models</strong>: GPT-5.5 and NVIDIA Nemotron-3 Ultra 550B-A55B</li>
@@ -322,7 +322,7 @@
 <p>The mini benchmark used deterministic checks such as unit tests, typecheck, clippy, and task-specific validation.</p>
 <p>This is important because coding agents should not be judged only by whether their answers sound good. They need to make real code changes and pass checks.</p>
 <h2 id="coding-agent-tasks">The three coding-agent tasks</h2>
-<p>All three tasks live in the <a href="https://github.com/hydai/token-station-arena/tree/master/benchmark/tasks">benchmark/tasks</a> folder of the Arena repository. Each task is a self-contained Rust fixture project plus a prompt and a set of machine-checkable success criteria. Every task requires <code>cargo test</code>, <code>cargo check</code>, and <code>cargo clippy --all-targets -- -D warnings</code> to pass, and the judge fails any run that edits files outside the task's allowed paths — an agent cannot pass by making unrelated changes or weakening the tests.</p>
+<p>All three tasks live in the <a href="https://github.com/hydai/token-station-arena/tree/master/benchmark/tasks">benchmark/tasks</a> folder of the Arena repository. Each task is a self-contained Rust fixture project plus a prompt and a set of machine-checkable success criteria. Every task requires <code>cargo test</code>, <code>cargo check</code>, and <code>cargo clippy --all-targets -- -D warnings</code> to pass, and the judge fails any run that edits files outside the task's allowed paths, so an agent cannot pass by making unrelated changes or weakening the tests.</p>
 
 <h3>1. <a href="https://github.com/hydai/token-station-arena/tree/master/benchmark/tasks/add-api-endpoint">Add an API endpoint</a></h3>
 <p>This task tests whether the model can make a normal product development change inside an existing codebase: a small Rust workspace with a <code>catalog-core</code> library crate and a <code>catalog-api</code> Axum crate. The prompt, verbatim from the repo:</p>
@@ -340,7 +340,7 @@
 - Preserve the public function names and signatures.
 - Keep the implementation simple and idiomatic.
 - Do not weaken, remove, or rewrite tests to hide the bug.</code></pre>
-<p>The agent has to identify the underlying issue, fix the implementation, and restore passing tests — without touching the test itself. This matters because real coding agents need to recover from failures. They cannot only write new code when everything is clean and obvious.</p>
+<p>The agent has to identify the underlying issue, fix the implementation, and restore passing tests without touching the test itself. This matters because real coding agents need to recover from failures. They cannot only write new code when everything is clean and obvious.</p>
 
 <h3>3. <a href="https://github.com/hydai/token-station-arena/tree/master/benchmark/tasks/refactor-pricing">Refactor pricing logic</a></h3>
 <p>This task tests whether the model can improve code structure without changing business behavior:</p>
@@ -349,7 +349,7 @@
 - Introduce one shared helper for computing the discount amount.
 - Preserve all public function names, signatures, and behavior.
 - Do not remove or weaken tests or the custom refactor check.</code></pre>
-<p>On top of the standard checks, this task adds a fourth gate — a custom <code>check-refactor.mjs</code> script that verifies the duplication is actually gone. The agent has to preserve pricing rules while passing unit tests, typecheck, clippy, and that refactor-specific validation. This is closer to real production engineering than a simple code-generation prompt. The model has to understand both code and business logic.</p>
+<p>On top of the standard checks, this task adds a fourth gate: a custom <code>check-refactor.mjs</code> script that verifies the duplication is actually gone. The agent has to preserve pricing rules while passing unit tests, typecheck, clippy, and that refactor-specific validation. This is closer to real production engineering than a simple code-generation prompt. The model has to understand both code and business logic.</p>
 <h2 id="results">Results</h2>
 <table>
 <tr><th>Metric</th><th>GPT-5.5</th><th>NVIDIA Nemotron-3 Ultra 550B-A55B</th></tr>
@@ -393,8 +393,8 @@ export ANTHROPIC_AUTH_TOKEN=&lt;your Token Station API key&gt;
 
 # run all three tasks against the configured models
 cargo run --release -- benchmark --tasks all --models all --runs 3</code></pre>
-<p>The runner executes each task in an isolated fixture, applies the deterministic checks, and generates a Markdown report with tokens, cost, and timing per run. You can also drop your own tasks into <code>benchmark/tasks/</code> — a fixture, a <code>prompt.md</code>, and a <code>task.yml</code> — and find out how these models do on <em>your</em> code, not ours.</p>
-<p>Try Nemotron-3 Ultra — free for a limited time, courtesy of NVIDIA NIM — alongside GPT-5.5, Claude Fable 5, and other frontier models on <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
+<p>The runner executes each task in an isolated fixture, applies the deterministic checks, and generates a Markdown report with tokens, cost, and timing per run. You can also drop your own tasks into <code>benchmark/tasks/</code> (a fixture, a <code>prompt.md</code>, and a <code>task.yml</code>) and find out how these models do on <em>your</em> code, not ours.</p>
+<p>Try Nemotron-3 Ultra (free for a limited time, courtesy of NVIDIA NIM) alongside GPT-5.5, Claude Fable 5, and other frontier models on <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>.</p>
     </article>
   </main>
 
