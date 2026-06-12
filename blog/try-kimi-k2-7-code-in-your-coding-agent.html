@@ -266,32 +266,33 @@
 
   <h2 id="claude-code-setup">Claude Code setup: the two-tier split</h2>
 
-  <p>Claude Code exposes its model tiers as environment variables, which makes it the cleanest place to run the share-the-work experiment. Keep the strong slots on a frontier model and point the cheap slots at K2.7 Code:</p>
+  <p>Claude Code exposes its model tiers as environment variables, which makes it the cleanest place to run the share-the-work experiment. Reserve the Opus slot for Claude Fable 5 and give everything else to the workhorse:</p>
 
   <pre><code># Token Station endpoint + auth
 export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
 export ANTHROPIC_AUTH_TOKEN="gw-YOUR_TOKEN_STATION_KEY"
 
-# Main loop: keep a SOTA model in charge
+# Top tier: Fable 5 takes the genuinely hard problems
 export ANTHROPIC_DEFAULT_OPUS_MODEL="anthropic/claude-fable-5"
-export ANTHROPIC_DEFAULT_SONNET_MODEL="anthropic/claude-opus-4-8"
 
-# Workhorse: subagents and background tasks go to K2.7 Code
+# Everything else runs on the workhorse
+export ANTHROPIC_DEFAULT_SONNET_MODEL="kimi/kimi-k2.7-code"
 export ANTHROPIC_DEFAULT_HAIKU_MODEL="kimi/kimi-k2.7-code"
 export CLAUDE_CODE_SUBAGENT_MODEL="kimi/kimi-k2.7-code"
 
 claude</code></pre>
 
-  <p>Every subagent, background search, and quick lookup now bills at K2.7 Code rates while the main conversation keeps frontier-level judgment. Swap <code>anthropic/claude-fable-5</code> for <code>anthropic/claude-opus-4-8</code> in the Opus slot if Fable 5's price makes you wince; the split works at any tier.</p>
+  <p>An ordinary session now runs K2.7 Code end to end: the main loop, every subagent, every background search, all billing at $4 per million output instead of $50. When a problem actually needs frontier judgment, escalate with <code>/model opus</code> and Fable 5 takes over; drop back down when the hard part is done. The expensive model becomes what it should be at that price, a specialist you call in.</p>
 
-  <p>To test K2.7 Code as the main model instead, launch with <code>claude --model "kimi/kimi-k2.7-code"</code> and see how far it gets on its own.</p>
+  <p>Swap <code>anthropic/claude-fable-5</code> for <code>anthropic/claude-opus-4-8</code> in the Opus slot if Fable 5's price makes you wince; the escalation pattern works at any tier.</p>
 
   <h2 id="codex-setup">Codex setup</h2>
 
-  <p>Codex runs one model at a time, so the experiment there is a straight swap. Create the config:</p>
+  <p>Codex runs one model per session, but its <a href="https://developers.openai.com/codex/config-reference">profiles</a> give you the same split at the invocation level: make the workhorse the default and keep a named escalation profile for Fable 5.</p>
 
   <pre><code>mkdir -p ~/.codex
 cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
+# Default: the workhorse
 model = "kimi/kimi-k2.7-code"
 model_provider = "token_station"
 
@@ -300,16 +301,22 @@ name = "token_station"
 base_url = "https://models.bytefuture.ai/v1"
 env_key = "TOKEN_STATION_API_KEY"
 wire_api = "responses"
+
+# Escalation: Fable 5 on demand
+[profiles.deep]
+model = "anthropic/claude-fable-5"
 EOF
 
 export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
-codex</code></pre>
 
-  <p>Run your routine tasks on it for a few days: test fixes, small refactors, boilerplate. Change the <code>model</code> line back when you want the frontier model again. Nothing else moves.</p>
+codex                  # routine work on K2.7 Code
+codex --profile deep   # hard problems on Fable 5</code></pre>
+
+  <p>Day to day you launch plain <code>codex</code> and pay workhorse rates. When a task deserves the frontier model, <code>codex --profile deep</code> brings in Fable 5 for that invocation only. Nothing else in the config moves.</p>
 
   <h2 id="openclaw-setup">OpenClaw setup</h2>
 
-  <p>Register Token Station as a provider in <code>openclaw.json</code> (<a href="https://docs.openclaw.ai/concepts/model-providers">docs</a>) and list both your SOTA model and the workhorse, then pick which one drives:</p>
+  <p>OpenClaw makes the split a first-class setting. Sub-agents inherit the caller's model unless <code>agents.defaults.subagents.model</code> says otherwise (<a href="https://docs.openclaw.ai/tools/subagents">docs</a>), so Fable 5 can drive while every spawned sub-agent runs on K2.7 Code:</p>
 
   <pre><code>{
   "models": {
@@ -321,16 +328,16 @@ codex</code></pre>
         "api": "anthropic-messages",
         "models": [
           {
+            "id": "anthropic/claude-fable-5",
+            "name": "Claude Fable 5 (Token Station)",
+            "contextWindow": 1000000,
+            "maxTokens": 128000
+          },
+          {
             "id": "kimi/kimi-k2.7-code",
             "name": "Kimi K2.7 Code (Token Station)",
             "contextWindow": 256000,
             "maxTokens": 32768
-          },
-          {
-            "id": "anthropic/claude-opus-4-8",
-            "name": "Claude Opus 4.8 (Token Station)",
-            "contextWindow": 1000000,
-            "maxTokens": 128000
           }
         ]
       }
@@ -338,12 +345,13 @@ codex</code></pre>
   },
   "agents": {
     "defaults": {
-      "model": { "primary": "token-station/kimi/kimi-k2.7-code" }
+      "model": { "primary": "token-station/anthropic/claude-fable-5" },
+      "subagents": { "model": "token-station/kimi/kimi-k2.7-code" }
     }
   }
 }</code></pre>
 
-  <p>Both models sit behind the same key, so moving an agent between them is a one-line change to <code>agents.defaults.model</code>.</p>
+  <p>The main agent keeps frontier judgment; the parallel fan-out (the part that burns tokens) bills at workhorse rates. To run the whole thing on K2.7 Code instead, point <code>agents.defaults.model.primary</code> at it; both models sit behind the same key either way.</p>
 
   <h2 id="quirks">Quirks worth knowing</h2>
 
