@@ -473,7 +473,7 @@ codex</code></pre>
   if (!el) return;
   // Public per-page count; the page path is the key — no per-article edit needed.
   fetch('https://bytefuture.goatcounter.com/counter/' + location.pathname + '.json')
-    .then(function(r) { return r.json(); })
+    .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(d) {
       if (d && d.count) {
         var n = String(d.count).trim();
