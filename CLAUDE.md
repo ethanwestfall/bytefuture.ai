@@ -99,9 +99,9 @@ Favicon (same mark, in `<head>`):
 
 Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/h3, blockquote, `pre`/`code`, tables, figures). Don't reinvent them.
 
-### Writing style: no "AI voice" (required)
+### Writing style: no "AI voice" (required, site-wide)
 
-Applies to everything reader-facing: article bodies, titles, `posts.json` summaries, meta descriptions, figure captions, and text baked into cover images. It does not apply to code blocks, config snippets, or HTML comments (the `───` box-drawing rulers are layout, not prose).
+Applies to everything reader-facing on the whole site, the home page included: article bodies, titles, page copy, `posts.json` summaries, meta descriptions, figure captions, and text baked into cover images. It does not apply to code blocks, config snippets, or HTML comments (the `───` box-drawing rulers are layout, not prose).
 
 - **No em-dashes (`—`).** They are the single loudest AI tell. Rewrite with a period, comma, colon, or parentheses. Hyphens in compound words and en-dashes in ranges (2024-2026) are fine. One exception: the mandated `— ByteFuture Writings` / `Writings — ByteFuture` title suffixes are brand chrome, defined under Branding; keep those.
 - **No stock AI phrases.** Banned outright: delve, landscape (metaphorical), game-changer, revolutionize, unleash, harness the power, seamlessly, effortlessly, elevate, supercharge, "in today's fast-paced world", "let's dive in", "buckle up", "it's worth noting", "it's important to note", "at the end of the day".
