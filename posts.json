@@ -1,5 +1,14 @@
 [
   {
+    "slug": "try-kimi-k2-7-code-in-your-coding-agent",
+    "title": "Kimi K2.7 Code: Cheap Enough to Try, Maybe Good Enough to Share the Work",
+    "summary": "Moonshot's new 1T open-weights coding model costs $0.95/$4 per million tokens. Pair it with your SOTA model in Claude Code, Codex, or OpenClaw and let it carry the routine work.",
+    "category": "tutorial",
+    "date": "2026-06-13",
+    "cover": "blog/kimi-k2-7-code-cover.png",
+    "featured": false
+  },
+  {
     "slug": "try-claude-fable-5-in-codex-openclaw-and-pi",
     "title": "Try Before You Commit: Claude Fable 5 in Codex, OpenClaw, and Pi",
     "summary": "Anthropic's new flagship is state-of-the-art, controversial, and $10/$50 per million tokens. Experiment with it temporarily in your existing harness. No Anthropic account, just Token Station free credits.",

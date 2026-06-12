@@ -113,6 +113,17 @@ Applies to everything reader-facing on the whole site, the home page included: a
 
 When editing an existing article for any reason, fix style violations you touch. A dedicated sweep should rewrite each em-dash by hand; a blind find-and-replace produces broken sentences.
 
+**Images.** The rule covers text in images ByteFuture generates: cover images, charts, diagrams. Two kinds of article images are exempt as factual captures: screenshots (terminal output, product UI) and third-party figures reproduced with attribution (e.g. Artificial Analysis charts). Generated images are produced from HTML files in `blog/asset-sources/` (one per image, named after the output PNG), rendered with headless Chrome:
+
+```sh
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=6000 \
+  --window-size=1200,630 \
+  --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.html"
+```
+
+(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory; the `posts.json` sync check's `blog/*.html` glob intentionally does not descend into it.
+
 ### Publishing a new article
 
 1. **Copy the template:** `cp blog/post-template.html blog/<slug>.html`.

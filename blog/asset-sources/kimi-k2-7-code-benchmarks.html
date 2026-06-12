@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:900px; background:#ffffff; font-family:'Space Grotesk',sans-serif; padding:64px 72px 56px; display:flex; flex-direction:column; }
+
+  .head { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:44px; }
+  h1 { font-size:44px; font-weight:700; letter-spacing:-0.025em; color:#18181b; }
+  h1 small { display:block; font-size:21px; font-weight:400; color:#71717a; margin-top:8px; letter-spacing:0; }
+  .brand { display:flex; align-items:center; gap:11px; padding-top:8px; }
+  .brand span { font-size:21px; font-weight:600; color:#52525b; }
+
+  .legend { display:flex; gap:34px; margin-bottom:34px; }
+  .lg { display:flex; align-items:center; gap:11px; font-size:21px; font-weight:600; color:#18181b; }
+  .sw { width:26px; height:26px; border-radius:7px; }
+  .sw.kimi { background:linear-gradient(180deg,#0D9488 0%,#2563EB 100%); }
+  .sw.gpt { background:#d4d4d8; }
+  .sw.opus { background:#a1a1aa; }
+
+  .groups { display:grid; grid-template-columns:repeat(3,1fr); gap:80px; flex:1; align-items:end; }
+  .group { display:flex; flex-direction:column; height:100%; }
+  .bars { display:flex; align-items:flex-end; justify-content:center; gap:26px; flex:1; }
+  .col { display:flex; flex-direction:column; align-items:center; width:110px; }
+  .score { font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600; color:#52525b; margin-bottom:12px; }
+  .score.kimi { color:#0D9488; }
+  .bar { width:100%; border-radius:12px 12px 5px 5px; }
+  .bar.kimi { background:linear-gradient(180deg,#0D9488 0%,#2563EB 100%); box-shadow:0 10px 24px rgba(13,148,136,0.26); }
+  .bar.gpt { background:#d4d4d8; }
+  .bar.opus { background:#a1a1aa; }
+  .gname { font-size:24px; font-weight:600; color:#18181b; text-align:center; margin-top:20px; }
+
+  .src { font-family:'JetBrains Mono',monospace; font-size:15px; color:#a1a1aa; margin-top:44px; display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>Moonshot's own numbers: K2.7 Code vs the frontier
+      <small>Self-reported by the vendor, and it loses all three &middot; higher is better</small>
+    </h1>
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span>ByteFuture</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="lg"><div class="sw kimi"></div>Kimi K2.7 Code</div>
+    <div class="lg"><div class="sw gpt"></div>GPT-5.5</div>
+    <div class="lg"><div class="sw opus"></div>Claude Opus 4.8</div>
+  </div>
+
+  <div class="groups">
+    <!-- scale: 100 pts = 470px -->
+    <div class="group">
+      <div class="bars">
+        <div class="col"><div class="score kimi">62.0</div><div class="bar kimi" style="height:291px"></div></div>
+        <div class="col"><div class="score">69.0</div><div class="bar gpt" style="height:324px"></div></div>
+        <div class="col"><div class="score">67.4</div><div class="bar opus" style="height:317px"></div></div>
+      </div>
+      <div class="gname">Kimi Code Bench v2</div>
+    </div>
+    <div class="group">
+      <div class="bars">
+        <div class="col"><div class="score kimi">53.6</div><div class="bar kimi" style="height:252px"></div></div>
+        <div class="col"><div class="score">69.1</div><div class="bar gpt" style="height:325px"></div></div>
+        <div class="col"><div class="score">63.8</div><div class="bar opus" style="height:300px"></div></div>
+      </div>
+      <div class="gname">ProgramBench</div>
+    </div>
+    <div class="group">
+      <div class="bars">
+        <div class="col"><div class="score kimi">76.0</div><div class="bar kimi" style="height:357px"></div></div>
+        <div class="col"><div class="score">79.4</div><div class="bar gpt" style="height:373px"></div></div>
+        <div class="col"><div class="score">81.3</div><div class="bar opus" style="height:382px"></div></div>
+      </div>
+      <div class="gname">MCP Atlas</div>
+    </div>
+  </div>
+
+  <div class="src">
+    <span>Source: Kimi K2.7 Code model card (Hugging Face), June 2026 &middot; scores as published by Moonshot AI</span>
+    <span>bytefuture.ai</span>
+  </div>
+</body>
+</html>
