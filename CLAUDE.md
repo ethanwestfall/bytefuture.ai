@@ -134,7 +134,7 @@ When editing an existing article for any reason, fix style violations you touch.
    - `canonical` + `og:url` → replace `POST_SLUG` with the real slug.
    - Header category pill text + `<time>`.
    - `<h1>` title and the article body.
-3. **Leave the nav, footer, favicon, the GA `<script>`, and the view-counter span + scripts exactly as the template ships them.**
+3. **Leave the nav, footer, favicon, the GA `<script>`, the view-counter span + scripts, and the share-button row exactly as the template ships them.** (The share buttons fire `share_click` GA events; the HARD RULE protects those too.)
 4. **Register it in `posts.json`** (see schema below). The article will not appear in the listing until it's there.
 5. **Cover image (optional):** drop the file in `blog/` and set `"cover": "blog/<file>"` in `posts.json` (root-relative — see Linking).
 6. **Mobile check:** verify the article at ~375px width per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
