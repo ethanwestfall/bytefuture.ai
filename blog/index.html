@@ -285,14 +285,13 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
   function applyFilter(cat) {
     activeCat = cat;
     shown = 0;
-    var featured = allPosts.find(function(p) { return p.featured; });
+    // allPosts is sorted newest-first; the latest post always leads as the hero.
     if (cat === 'all') {
-      filtered = allPosts.filter(function(p) { return !p.featured; });
-      renderFeatured(featured);
+      renderFeatured(allPosts[0] || null);
+      filtered = allPosts.slice(1);
     } else {
-      filtered = allPosts.filter(function(p) { return p.category === cat && !p.featured; });
-      if (featured && featured.category === cat) { filtered.unshift(featured); }
       renderFeatured(null);
+      filtered = allPosts.filter(function(p) { return p.category === cat; });
     }
     filtered.sort(function(a, b) { return b.date.localeCompare(a.date); });
     renderGrid();

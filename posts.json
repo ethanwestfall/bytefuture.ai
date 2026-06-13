@@ -5,8 +5,7 @@
     "summary": "Moonshot's new 1T open-weights coding model costs $0.95/$4 per million tokens. Pair it with your SOTA model in Claude Code, Codex, or OpenClaw and let it carry the routine work.",
     "category": "tutorial",
     "date": "2026-06-13",
-    "cover": "blog/kimi-k2-7-code-cover.png",
-    "featured": false
+    "cover": "blog/kimi-k2-7-code-cover.png"
   },
   {
     "slug": "try-claude-fable-5-in-codex-openclaw-and-pi",
@@ -14,8 +13,7 @@
     "summary": "Anthropic's new flagship is state-of-the-art, controversial, and $10/$50 per million tokens. Experiment with it temporarily in your existing harness. No Anthropic account, just Token Station free credits.",
     "category": "tutorial",
     "date": "2026-06-12",
-    "cover": "blog/claude-fable-5-cover.png",
-    "featured": false
+    "cover": "blog/claude-fable-5-cover.png"
   },
   {
     "slug": "use-grok-build-in-codex-and-claude-code",
@@ -23,8 +21,7 @@
     "summary": "xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with Token Station free credits. No xAI account needed.",
     "category": "tutorial",
     "date": "2026-06-10",
-    "cover": "blog/claude-code-grok-build.png",
-    "featured": true
+    "cover": "blog/claude-code-grok-build.png"
   },
   {
     "slug": "american-open-models-catching-up-nemotron-gpt55",
@@ -32,7 +29,6 @@
     "summary": "NVIDIA Nemotron-3 Ultra is the most capable American open-weights model on the Artificial Analysis Intelligence Index, and it's free for a limited time via NVIDIA NIM.",
     "category": "research",
     "date": "2026-06-08",
-    "cover": "blog/artificial_analysis_intelligence_open_models.png",
-    "featured": false
+    "cover": "blog/artificial_analysis_intelligence_open_models.png"
   }
 ]

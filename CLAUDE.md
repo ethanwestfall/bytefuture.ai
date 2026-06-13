@@ -154,12 +154,11 @@ Root-level `posts.json` is a JSON array. Each object:
 | `category` | string | ✅ | One of `engineering`, `product`, `research`, `tutorial`. |
 | `date` | string | ✅ | `YYYY-MM-DD`. Sorting + display derive from this. |
 | `cover` | string | optional | Repo-root-relative, e.g. `blog/foo.png`. Omit for an auto gradient cover. |
-| `featured` | boolean | optional | **At most one** post may be `true`. |
 
 Rules:
 
 - **Categories are a closed set.** They must match the filter pills in `blog/index.html` (`#cat-filter` `data-cat`) **and** the `validCats` map in its posts engine. To add a category, update all three.
-- **Exactly one `featured: true`** (or none). The featured post renders in the hero on the **All** tab and is pulled out of the grid.
+- **The hero is automatic: the newest post by `date` always leads.** On the **All** tab the most recent post renders in the hero and is pulled out of the grid; the rest follow newest-first. There is no manual `featured` flag (the engine ignores it) — to put an article on top, give it the latest `date`.
 - Dates are real publish dates; newest sorts first.
 
 ### Keep `posts.json` and articles in sync (required)
@@ -168,7 +167,7 @@ Rules:
 
 - **Every** `posts.json` entry MUST have a matching `blog/<slug>.html` file, and **every** article file MUST have a matching `posts.json` entry. `blog/index.html` and `blog/post-template.html` are infrastructure, **not** articles — never list them.
 - `slug` is the join key: it equals the filename minus `.html`. Exactly one entry per slug, one file per slug.
-- **Add together, remove together.** Never publish an article without registering it, and never register an entry whose file doesn't exist — no "draft" or "coming soon" placeholders in `posts.json`. An entry with no file 404s from the listing and can even land in the featured hero.
+- **Add together, remove together.** Never publish an article without registering it, and never register an entry whose file doesn't exist — no "draft" or "coming soon" placeholders in `posts.json`. An entry with no file 404s from the listing, and if it has the newest date it lands in the hero.
 - **Metadata must stay in sync with the article content, not just the filename.** The entry's `title`, `summary`, `category`, and `date` must accurately reflect what the article currently says — the cards on the listing and home page are built from `posts.json`, not from the article. Whenever you edit an article in a way that changes its title, framing, key claims, or terminology (e.g. renaming a "benchmark" to a "mini benchmark", adding a major offer or result), update the `posts.json` entry in the **same change**. A card that promises something the article no longer says is a sync violation just like a missing file.
 - A cover referenced by an entry (`"cover": "blog/<file>"`) must exist in `blog/`.
 
