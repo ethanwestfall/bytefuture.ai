@@ -1,12 +1,11 @@
 [
   {
-    "slug": "glm-5-2-vs-kimi-k2-7-code-vs-gpt-5-5-coding-agents",
-    "title": "GLM-5.2 is here. Try the new Z.AI coding model for free on Token Station",
-    "summary": "GLM-5.2 launched with strong claims, limited public benchmark evidence, and a Z.AI stock jump. Try it for free on Token Station, compare it with Kimi K2.7 Code and GPT-5.5, and use it in Claude Code, Codex, or OpenClaw.",
-    "category": "benchmark",
+    "slug": "glm-5-2-zai-stock-jump",
+    "title": "GLM-5.2 sent Z.AI's stock up 33%. Now try it free on Token Station",
+    "summary": "Zhipu AI's Hong Kong-listed shares jumped as much as 48% the day GLM-5.2 shipped, its open-source 1M-context coding model. Why it moved, and how to try GLM-5.2 free with a Token Station signup.",
+    "category": "research",
     "date": "2026-06-15",
-    "cover": "",
-    "featured": false
+    "cover": "blog/glm-5-2-zai-stock-jump-cover.png"
   },
   {
     "slug": "try-kimi-k2-7-code-in-your-coding-agent",
