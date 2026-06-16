@@ -87,7 +87,7 @@
     @media (max-width: 960px) {
       .featured-inner { flex-direction: column !important; }
       .featured-inner > div { width: 100% !important; }
-      .featured-cover { height: 240px !important; }
+      .featured-cover { aspect-ratio: 1200/630 !important; align-self: stretch !important; }
     }
     @media (max-width: 640px) {
       .posts-grid { grid-template-columns: 1fr; }
@@ -221,7 +221,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
     if (!post) { section.innerHTML = ''; return; }
     // Cover image when the post has one; gradient fallback otherwise.
     var media = post.cover
-      ? '<img src="' + esc(coverUrl(post.cover)) + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">'
+      ? '<img src="' + esc(coverUrl(post.cover)) + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;">'
       : '<div style="position:absolute;inset:0;background:linear-gradient(135deg,#2563EB 0%,#0D9488 60%,#7C3AED 100%);display:flex;align-items:center;justify-content:center;">' +
           '<svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.15;"><circle cx="60" cy="60" r="50" stroke="#fff" stroke-width="2"/><path d="M40 60L55 75L80 45" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '</div>';
@@ -229,7 +229,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
       '<a href="/blog/' + encodeURIComponent(post.slug) + '.html" style="text-decoration:none;color:inherit;" onclick="gtag(\'event\',\'blog_click\',{label:\'featured\'})">' +
         '<article class="featured-card animate-on-scroll">' +
           '<div class="featured-inner" style="display:flex;">' +
-            '<div style="width:50%;min-height:320px;position:relative;overflow:hidden;" class="featured-cover">' +
+            '<div style="width:50%;aspect-ratio:1200/630;align-self:flex-start;position:relative;overflow:hidden;background:#faf9f5;" class="featured-cover">' +
               media +
               '<div style="position:absolute;bottom:24px;left:24px;"><span style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:#ffffff;letter-spacing:0.1em;text-transform:uppercase;background:rgba(24,24,27,0.55);padding:4px 10px;border-radius:50px;">Featured</span></div>' +
             '</div>' +
@@ -251,7 +251,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
   function renderCard(post) {
     var bg = catGradients[post.category] || catGradients.product;
     var coverHtml = post.cover
-      ? '<div style="height:180px;overflow:hidden;"><img src="' + esc(coverUrl(post.cover)) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>'
+      ? '<div style="aspect-ratio:1200/630;overflow:hidden;background:#faf9f5;"><img src="' + esc(coverUrl(post.cover)) + '" alt="" style="width:100%;height:100%;object-fit:contain;display:block;"></div>'
       : '<div style="height:180px;background:' + bg + ';display:flex;align-items:center;justify-content:center;">' +
           '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="opacity:0.18;"><rect x="4" y="8" width="32" height="24" rx="4" stroke="#18181b" stroke-width="2"/><path d="M12 16H28M12 22H22" stroke="#18181b" stroke-width="2" stroke-linecap="round"/></svg>' +
         '</div>';
