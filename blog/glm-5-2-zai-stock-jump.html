@@ -313,9 +313,9 @@
 
   <h2 id="try-it-free">Try GLM-5.2 free on Token Station</h2>
 
-  <p>GLM-5.2 is live on <a href="https://models.bytefuture.ai/intro.html" onclick="gtag('event','cta_click',{label:'post_body_token_station'});">Token Station</a> as <code>glm-coding/glm-5.2</code>, with the full 1M-token context, at Z.AI's list price and zero markup.</p>
+  <p>GLM-5.2 is live on <a href="https://models.bytefuture.ai/intro.html" onclick="gtag('event','cta_click',{label:'post_body_token_station'});">Token Station</a> as <code>glm/glm-5.2</code>, with the full 1M-token context, at Z.AI's list price and zero markup.</p>
 
-  <p>It is free to start. <a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">Register</a> and you get $10 in credit, with no card and no Z.AI account or Coding Plan subscription to set up. Point the coding tools you already use at <code>glm-coding/glm-5.2</code> and run your real work through it.</p>
+  <p>It is free to start. <a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">Register</a> and you get $10 in credit, with no card and no Z.AI account or Coding Plan subscription to set up. Point the coding tools you already use at <code>glm/glm-5.2</code> and run your real work through it.</p>
 
   <h3>Claude Code</h3>
 
@@ -324,10 +324,10 @@
   <pre><code>export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
 export ANTHROPIC_AUTH_TOKEN="gw-YOUR_TOKEN_STATION_KEY"
 
-export ANTHROPIC_DEFAULT_OPUS_MODEL="glm-coding/glm-5.2"
-export ANTHROPIC_DEFAULT_SONNET_MODEL="glm-coding/glm-5.2"
-export ANTHROPIC_DEFAULT_HAIKU_MODEL="glm-coding/glm-5.2"
-export CLAUDE_CODE_SUBAGENT_MODEL="glm-coding/glm-5.2"
+export ANTHROPIC_DEFAULT_OPUS_MODEL="glm/glm-5.2"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="glm/glm-5.2"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="glm/glm-5.2"
+export CLAUDE_CODE_SUBAGENT_MODEL="glm/glm-5.2"
 
 claude</code></pre>
 
@@ -337,7 +337,7 @@ claude</code></pre>
 
   <pre><code>mkdir -p ~/.codex
 cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
-model = "glm-coding/glm-5.2"
+model = "glm/glm-5.2"
 model_provider = "token_station"
 
 [model_providers.token_station]
@@ -364,7 +364,7 @@ codex</code></pre>
         "api": "anthropic-messages",
         "models": [
           {
-            "id": "glm-coding/glm-5.2",
+            "id": "glm/glm-5.2",
             "name": "GLM-5.2 (Token Station)",
             "contextWindow": 1000000,
             "maxTokens": 131072
@@ -375,7 +375,7 @@ codex</code></pre>
   },
   "agents": {
     "defaults": {
-      "model": { "primary": "token-station/glm-coding/glm-5.2" }
+      "model": { "primary": "token-station/glm/glm-5.2" }
     }
   }
 }</code></pre>
