@@ -44,6 +44,105 @@ Every page on this site — home, listing, template, and every article — must 
 
 ---
 
+## Internationalization: languages + language selector (required, site-wide)
+
+Every reader-facing page ships in **four languages**: English (default), Simplified Chinese, Japanese, Korean. Visitors are routed to their language automatically and can switch with a nav selector; the choice is remembered.
+
+### File scheme
+
+- `file.html` — **English, the canonical / default version** (`x-default`). English has **no** suffix.
+- `file-zh.html` (Simplified Chinese) · `file-ja.html` (Japanese) · `file-ko.html` (Korean).
+- Applies to every page: home (`index.html` → `index-zh.html` …), listing (`blog/index.html` → `blog/index-zh.html` …), template (`blog/post-template.html` → `blog/post-template-zh.html` …), and every article (`blog/<slug>.html` → `blog/<slug>-zh.html` …). The base name is the slug; the language is the suffix.
+
+| Lang | suffix | `<html lang>` | `og:locale` | nav word ("Writings") |
+|---|---|---|---|---|
+| English | (none) | `en` | `en_US` | Writings |
+| Chinese (Simplified) | `-zh` | `zh-Hans` | `zh_CN` | 文章 |
+| Japanese | `-ja` | `ja` | `ja_JP` | 記事 |
+| Korean | `-ko` | `ko` | `ko_KR` | 글 |
+
+### How routing works
+
+1. A **redirect script** runs first in `<head>` (before paint). It derives the page's own language from its filename and the visitor's preferred language; if they differ it `location.replace()`s to the right version.
+2. Preferred language = the **`bf_lang` cookie** if set (an explicit choice), else the first of `navigator.languages` matching zh/ja/ko/en, else English.
+3. The **nav `<select>`** switches language: picking one writes the `bf_lang` cookie (so it sticks site-wide and on return visits) and navigates. The head script preselects the current language on load.
+4. No redirect loop: the destination's own script sees its language already matches the preference and stops. Crawlers (en, no cookie) stay on English.
+
+**Ship the toggle + redirect block only when all four versions of a page exist** — the script redirects to `-zh/-ja/-ko` URLs and would 404 on a missing one. Create and delete the four together; a page with no translations yet omits the i18n block and stays English.
+
+### The three pieces every page carries (copy verbatim from `blog/post-template.html`)
+
+**(a) Redirect script** — first thing in `<head>`, right after the viewport meta. It is identical on every page (it figures everything out from the filename); copy it verbatim from the template, defines `window.bfLang` and auto-redirects.
+
+**(b) hreflang alternates** — in `<head>`, **identical in all four versions**. Only `<html lang>`, `og:locale`, `canonical`, and `og:url` differ per version, and `canonical` / `og:url` point to the page's **own** language URL:
+
+```html
+<meta property="og:locale" content="en_US" />
+<link rel="alternate" hreflang="en"      href="https://bytefuture.ai/blog/<slug>.html" />
+<link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/<slug>-zh.html" />
+<link rel="alternate" hreflang="ja"      href="https://bytefuture.ai/blog/<slug>-ja.html" />
+<link rel="alternate" hreflang="ko"      href="https://bytefuture.ai/blog/<slug>-ko.html" />
+<link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/<slug>.html" />
+```
+
+**(c) Nav language selector** — in the nav action group, with the mobile rule that hides the secondary "Writings" link so the toggle + CTA still fit at 360px. The head script sets the current option on load:
+
+```html
+<select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)" style="…">
+  <option value="en">EN</option><option value="zh">中文</option>
+  <option value="ja">日本語</option><option value="ko">한국어</option>
+</select>
+```
+```css
+@media (max-width: 640px) { .nav-hide-sm { display: none; } }  /* on the Writings link */
+```
+
+### What to translate (and what never to touch)
+
+Translate **prose and visible chrome only**: titles, descriptions, headings, body text, the category pill, dates, sidebar headings, the share heading, the Copy link / Copied! labels.
+
+**Keep byte-for-byte:** every code / config / `pre` block and `<code>` (model IDs, env vars, URLs); the GA tag and **every `gtag(...)` / `onclick`** (the HARD RULE applies in all languages); the GoatCounter scripts; SVGs; CSS; element IDs/classes (the engine + counter depend on them); and `POST_*` placeholders in the template. Keep proper nouns in Latin: **ByteFuture, Token Station, Olares, Claude Code, Codex, OpenClaw**, model names (GLM-5.2, Kimi K2.7), company names (Anthropic, JPMorgan), benchmark names (SWE-bench).
+
+The **no-em-dash / no-AI-voice** rule governs English. CJK uses its own punctuation (。、：「」（）); never import `—`. The title suffix localizes the *section word* only: `— ByteFuture 文章 / 記事 / 글` (keep `ByteFuture` Latin; the leading `—` is brand chrome, allowed).
+
+**Localized chrome lexicon** (use these exact strings):
+
+| English | zh | ja | ko |
+|---|---|---|---|
+| Writings (section) | 文章 | 記事 | 글 |
+| Recent | 最近 | 最近の記事 | 최근 글 |
+| Topics | 主题 | トピック | 주제 |
+| ← All writings | ← 所有文章 | ← すべての記事 | ← 모든 글 |
+| Share this post | 分享这篇文章 | この記事をシェア | 이 글 공유하기 |
+| Copy link / Copied! | 复制链接 / 已复制！ | リンクをコピー / コピーしました！ | 링크 복사 / 복사됨! |
+| engineering | 工程 | エンジニアリング | 엔지니어링 |
+| product | 产品 | プロダクト | 제품 |
+| research | 研究 | 研究 | 연구 |
+| tutorial | 教程 | チュートリアル | 튜토리얼 |
+
+Dates: write them naturally per language (`2026年6月15日`, `2026년 6월 15일`), keeping the same calendar date as English.
+
+### Listing & posts data
+
+The listing is data-driven, so each `blog/index-<lang>.html` reads a **per-language manifest**: `posts-zh.json`, `posts-ja.json`, `posts-ko.json` (repo root), each with the **same slugs / categories / dates / covers** as `posts.json` but **translated `title` and `summary`**. The listing engine builds same-language card links (`/blog/<slug>-<lang>.html`). Keep all four manifests in lockstep: same set of slugs, added and removed together.
+
+### Sync, sitemap, counters
+
+- Language variants are **not** separate posts. The `posts.json` ↔ files sync check excludes `-(zh|ja|ko)` and the template variants (the command below is already updated).
+- **Sitemap:** every translation gets its own `<url>` entry (priority `0.6`; English stays `0.7`).
+- **View counts** key on `location.pathname`, so each language URL counts separately. That is expected.
+
+### Publishing a translated set
+
+Publish or change an article in all four languages **together**:
+1. English `blog/<slug>.html` per the single-language checklist below, with the i18n block in place and `POST_SLUG` filled into the hreflang lines.
+2. `cp blog/post-template-zh.html blog/<slug>-zh.html` (and `-ja`, `-ko`); set `<html lang>`, `canonical` / `og:url` to the `-<lang>` URL and `og:locale`; translate body + chrome.
+3. Add translated `title` / `summary` to `posts-zh.json` / `-ja` / `-ko`.
+4. Add the three translation URLs to `sitemap.xml`.
+5. Verify each at 375px (no sideways scroll), and confirm the toggle switches and the cookie sticks.
+
+---
+
 ## Writings section (`blog/`)
 
 The `blog/` folder is the **ByteFuture Writings** section. It contains:
@@ -165,7 +264,7 @@ Rules:
 
 `posts.json` and the article files in `blog/` must stay in **strict 1:1 correspondence**. This is what keeps the listing free of dead links and keeps every published article discoverable.
 
-- **Every** `posts.json` entry MUST have a matching `blog/<slug>.html` file, and **every** article file MUST have a matching `posts.json` entry. `blog/index.html` and `blog/post-template.html` are infrastructure, **not** articles — never list them.
+- **Every** `posts.json` entry MUST have a matching `blog/<slug>.html` file, and **every** article file MUST have a matching `posts.json` entry. `blog/index.html` and `blog/post-template.html` are infrastructure, **not** articles — never list them. **Language variants (`<slug>-zh.html`, `-ja`, `-ko`) and the translated listing/template (`index-*`, `post-template-*`) are not separate posts either** — they share the English slug and are excluded from the sync check; their translated titles/summaries live in `posts-<lang>.json` (see the i18n section).
 - `slug` is the join key: it equals the filename minus `.html`. Exactly one entry per slug, one file per slug.
 - **Add together, remove together.** Never publish an article without registering it, and never register an entry whose file doesn't exist — no "draft" or "coming soon" placeholders in `posts.json`. An entry with no file 404s from the listing, and if it has the newest date it lands in the hero.
 - **Metadata must stay in sync with the article content, not just the filename.** The entry's `title`, `summary`, `category`, and `date` must accurately reflect what the article currently says — the cards on the listing and home page are built from `posts.json`, not from the article. Whenever you edit an article in a way that changes its title, framing, key claims, or terminology (e.g. renaming a "benchmark" to a "mini benchmark", adding a major offer or result), update the `posts.json` entry in the **same change**. A card that promises something the article no longer says is a sync violation just like a missing file.
@@ -176,8 +275,8 @@ Rules:
 ```sh
 # slugs registered in posts.json
 jq -r '.[].slug' posts.json | sort > /tmp/ts_entries
-# article files on disk (excluding the listing + template)
-ls blog/*.html | sed 's#blog/##; s#\.html$##' | grep -vxE 'index|post-template' | sort > /tmp/ts_files
+# article files on disk (excluding the listing, template, and -zh/-ja/-ko language variants)
+ls blog/*.html | sed 's#blog/##; s#\.html$##' | grep -vxE 'index|post-template|.*-(zh|ja|ko)' | sort > /tmp/ts_files
 diff /tmp/ts_entries /tmp/ts_files && echo "in sync"
 ```
 
