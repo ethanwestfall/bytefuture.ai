@@ -6,9 +6,39 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://bytefuture.ai/index-zh.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/index-ja.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/index-ko.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://bytefuture.ai/blog/</loc>
     <lastmod>2026-06-10</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/index-zh.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/index-ja.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/index-ko.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://bytefuture.ai/blog/glm-5-2-zai-stock-jump.html</loc>
@@ -36,9 +66,39 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-zh.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ja.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ko.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html</loc>
     <lastmod>2026-06-12</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi-zh.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi-ja.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/try-claude-fable-5-in-codex-openclaw-and-pi-ko.html</loc>
+    <lastmod>2026-06-12</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html</loc>
@@ -46,8 +106,38 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-zh.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ja.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ko.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55.html</loc>
     <lastmod>2026-06-08</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55-zh.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55-ja.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/american-open-models-catching-up-nemotron-gpt55-ko.html</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>

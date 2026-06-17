@@ -3,6 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── i18n: remember language choice + auto-redirect; toggle lives in the nav (see CLAUDE.md) ─── -->
+  <script>
+  (function () {
+    var LANGS = ['en', 'zh', 'ja', 'ko'];
+    var path = location.pathname, slash = path.lastIndexOf('/');
+    var dir = path.slice(0, slash + 1), file = path.slice(slash + 1) || 'index.html';
+    var m = file.match(/^(.*?)(?:-(zh|ja|ko))?\.html$/i);
+    var base = m ? m[1] : file.replace(/\.html$/i, '');
+    var cur = (m && m[2]) ? m[2] : 'en';
+    function target(l) { return dir + base + (l === 'en' ? '' : '-' + l) + '.html' + location.search + location.hash; }
+    function cookie() { var h = document.cookie.match(/(?:^|;\s*)bf_lang=([^;]+)/); return h ? decodeURIComponent(h[1]) : ''; }
+    window.bfLang = {
+      cur: cur,
+      pick: function (l) {
+        if (LANGS.indexOf(l) === -1) return;
+        document.cookie = 'bf_lang=' + l + ';path=/;max-age=31536000;samesite=lax';
+        if (l !== cur) location.href = target(l);
+      }
+    };
+    var pref = cookie();
+    if (LANGS.indexOf(pref) === -1) {
+      pref = 'en';
+      var navs = navigator.languages || [navigator.language || ''];
+      for (var i = 0; i < navs.length; i++) {
+        var c = (navs[i] || '').slice(0, 2).toLowerCase();
+        if (c === 'zh' || c === 'ja' || c === 'ko' || c === 'en') { pref = c; break; }
+      }
+    }
+    if (pref !== cur) { location.replace(target(pref)); }
+    document.addEventListener('DOMContentLoaded', function () {
+      var s = document.querySelector('select[data-bf-lang]');
+      if (s) s.value = cur;
+    });
+  })();
+  </script>
   <title>How to Use Grok Build in Codex and Claude Code — ByteFuture Writings</title>
   <meta name="description" content="xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with Token Station free credits. No xAI account needed." />
   <meta property="og:title" content="How to Use Grok Build in Codex and Claude Code — ByteFuture Writings" />
@@ -12,6 +48,13 @@
   <meta property="og:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
+  <meta property="og:locale" content="en_US" />
+  <!-- ─── i18n alternates: one set, identical in every language version (see CLAUDE.md) ─── -->
+  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-zh.html" />
+  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ja.html" />
+  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ko.html" />
+  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
   <meta name="twitter:title" content="How to Use Grok Build in Codex and Claude Code" />
   <meta name="twitter:description" content="xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with Token Station free credits. No xAI account needed." />
   <link rel="canonical" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
@@ -204,6 +247,7 @@
       .article-header { padding: 80px 0 40px; }
     }
     @media (max-width: 640px) {
+      .nav-hide-sm { display: none; }
       footer > div {
         flex-direction: column !important;
         gap: 10px;
@@ -232,8 +276,14 @@
       </svg>
       <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
     </a>
-    <div style="display:flex; align-items:center; gap:24px;">
-      <a href="/blog/" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Writings</a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#18181b; background:#ffffff; border:1px solid #e4e4e7; border-radius:8px; padding:6px 10px; cursor:pointer;">
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+      </select>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Writings</a>
       <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
@@ -457,7 +507,7 @@ codex</code></pre>
 <script>
 (function() {
   var currentSlug = 'use-grok-build-in-codex-and-claude-code';
-  fetch('/posts.json')
+  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
     .then(function(r) { return r.json(); })
     .then(function(posts) {
       var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
@@ -465,7 +515,7 @@ codex</code></pre>
       var recentEl = document.getElementById('recent-posts');
       recent.forEach(function(p) {
         var a = document.createElement('a');
-        a.href = '/blog/' + p.slug + '.html';
+        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
         a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
         if (p.slug === currentSlug) a.classList.add('active');
         recentEl.appendChild(a);
@@ -476,7 +526,7 @@ codex</code></pre>
       var topicsEl = document.getElementById('topics-list');
       Object.keys(cats).sort().forEach(function(cat) {
         var a = document.createElement('a');
-        a.href = '/blog/?cat=' + cat;
+        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
         a.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
         topicsEl.appendChild(a);
       });

@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "glm-5-2-zai-stock-jump",
+    "title": "GLM-5.2 让 Z.AI 股价大涨 33%。现在可在 Token Station 免费体验",
+    "summary": "GLM-5.2 发布当天，智谱 AI 的香港上市股票一度上涨 48%。这是它的开源、100 万 token 上下文编程模型。本文解释股价为何大涨，以及如何注册 Token Station 免费试用 GLM-5.2。",
+    "category": "research",
+    "date": "2026-06-15",
+    "cover": "blog/glm-5-2-zai-stock-jump-cover.png"
+  },
+  {
+    "slug": "try-kimi-k2-7-code-in-your-coding-agent",
+    "title": "Kimi K2.7 Code：便宜到值得一试，或许好到可以分担工作",
+    "summary": "Moonshot 全新的 1T 开源权重编程模型，价格为每百万 token 0.95/4 美元。在 Claude Code、Codex 或 OpenClaw 中把它与你的 SOTA 模型搭配，让它分担日常工作。",
+    "category": "tutorial",
+    "date": "2026-06-13",
+    "cover": "blog/kimi-k2-7-code-cover.png"
+  },
+  {
+    "slug": "try-claude-fable-5-in-codex-openclaw-and-pi",
+    "title": "先试后用：在 Codex、OpenClaw 和 Pi 中体验 Claude Fable 5",
+    "summary": "Anthropic 全新的旗舰模型性能领先、备受争议，价格为每百万 token 10/50 美元。在你现有的工具中临时体验它，无需 Anthropic 账户，只要 Token Station 的免费额度。",
+    "category": "tutorial",
+    "date": "2026-06-12",
+    "cover": "blog/claude-fable-5-cover.png"
+  },
+  {
+    "slug": "use-grok-build-in-codex-and-claude-code",
+    "title": "如何在 Codex 和 Claude Code 中使用 Grok Build",
+    "summary": "xAI 的 Grok Build 模型迭代很快，价格只有 GPT-5.5 或 Claude Fable 5 的零头。用 Token Station 的免费额度在 Claude Code 或 Codex 中运行它，无需 xAI 账户。",
+    "category": "tutorial",
+    "date": "2026-06-10",
+    "cover": "blog/claude-code-grok-build.png"
+  },
+  {
+    "slug": "american-open-models-catching-up-nemotron-gpt55",
+    "title": "美国开源模型正在追赶：Nemotron-3 Ultra 领跑美国开源权重模型",
+    "summary": "NVIDIA Nemotron-3 Ultra 是 Artificial Analysis 智能指数上最强的美国开源权重模型，并在限定时间内通过 NVIDIA NIM 免费提供。",
+    "category": "research",
+    "date": "2026-06-08",
+    "cover": "blog/american-open-models-catching-up-nemotron-gpt55-cover.png"
+  }
+]

@@ -523,7 +523,7 @@ codex</code></pre>
 <script>
 (function() {
   var currentSlug = 'glm-5-2-zai-stock-jump';
-  fetch('/posts.json')
+  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
     .then(function(r) { return r.json(); })
     .then(function(posts) {
       var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
@@ -531,7 +531,7 @@ codex</code></pre>
       var recentEl = document.getElementById('recent-posts');
       recent.forEach(function(p) {
         var a = document.createElement('a');
-        a.href = '/blog/' + p.slug + '.html';
+        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
         a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
         if (p.slug === currentSlug) a.classList.add('active');
         recentEl.appendChild(a);
@@ -542,7 +542,7 @@ codex</code></pre>
       var topicsEl = document.getElementById('topics-list');
       Object.keys(cats).sort().forEach(function(cat) {
         var a = document.createElement('a');
-        a.href = '/blog/?cat=' + cat;
+        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
         a.textContent = ({engineering:'工程',product:'产品',research:'研究',tutorial:'教程'})[cat] || cat;
         topicsEl.appendChild(a);
       });

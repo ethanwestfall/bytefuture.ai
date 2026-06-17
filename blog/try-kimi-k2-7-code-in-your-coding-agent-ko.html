@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,17 +40,17 @@
   })();
   </script>
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>Kimi K2.7 Code: Cheap Enough to Try, Maybe Good Enough to Share the Work — ByteFuture Writings</title>
-  <meta name="description" content="Moonshot's new 1T open-weights coding model costs $0.95/$4 per million tokens. Pair it with your SOTA model in Claude Code, Codex, or OpenClaw and let it carry the routine work." />
-  <link rel="canonical" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent.html" />
-  <meta property="og:title" content="Kimi K2.7 Code: Cheap Enough to Try, Maybe Good Enough to Share the Work — ByteFuture Writings" />
-  <meta property="og:description" content="Moonshot's new 1T open-weights coding model costs $0.95/$4 per million tokens. Pair it with your SOTA model in Claude Code, Codex, or OpenClaw and let it carry the routine work." />
+  <title>Kimi K2.7 Code: 시도해 볼 만큼 저렴하고, 어쩌면 일을 나눌 만큼 괜찮을지도 — ByteFuture 글</title>
+  <meta name="description" content="Moonshot의 새로운 1T 오픈 웨이트 코딩 모델은 100만 토큰당 0.95/4달러입니다. Claude Code, Codex, OpenClaw에서 여러분의 SOTA 모델과 짝지어 일상적인 작업을 맡겨 보세요." />
+  <link rel="canonical" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ko.html" />
+  <meta property="og:title" content="Kimi K2.7 Code: 시도해 볼 만큼 저렴하고, 어쩌면 일을 나눌 만큼 괜찮을지도 — ByteFuture 글" />
+  <meta property="og:description" content="Moonshot의 새로운 1T 오픈 웨이트 코딩 모델은 100만 토큰당 0.95/4달러입니다. Claude Code, Codex, OpenClaw에서 여러분의 SOTA 모델과 짝지어 일상적인 작업을 맡겨 보세요." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent.html" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ko.html" />
   <meta property="og:image" content="https://bytefuture.ai/blog/kimi-k2-7-code-cover.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://bytefuture.ai/blog/kimi-k2-7-code-cover.png" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content="ko_KR" />
   <!-- ─── i18n alternates: one set, identical in every language version (see CLAUDE.md) ─── -->
   <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent.html" />
   <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-zh.html" />
@@ -229,7 +229,7 @@
         <option value="ja">日本語</option>
         <option value="ko">한국어</option>
       </select>
-      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">Writings</a>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">글</a>
       <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
@@ -240,13 +240,13 @@
 <header style="max-width:720px; margin:0 auto; padding:80px 24px 40px;">
   <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
     <!-- ▼ EDIT: category and date ▼ -->
-    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Tutorial</span>
-    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">June 13, 2026</time>
+    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">튜토리얼</span>
+    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026년 6월 13일</time>
     <!-- ▲ EDIT ▲ -->
     <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
   </div>
   <!-- ▼ EDIT: post title ▼ -->
-  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Kimi K2.7 Code: Cheap Enough to Try, Maybe Good Enough to Share the Work</h1>
+  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Kimi K2.7 Code: 시도해 볼 만큼 저렴하고, 어쩌면 일을 나눌 만큼 괜찮을지도</h1>
   <!-- ▲ EDIT ▲ -->
 </header>
 
@@ -254,42 +254,42 @@
 <!-- ▼ EDIT: write your post content below ▼ -->
 <article class="prose" style="padding:0 24px 96px;">
 
-  <p>Yesterday Moonshot AI dropped <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code</a> on Hugging Face: a 1-trillion-parameter Mixture-of-Experts coding model (32B active) with a 256K context window, open weights under a Modified MIT license.</p>
+  <p>어제 Moonshot AI가 Hugging Face에 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code</a>를 공개했습니다. 1조 파라미터의 Mixture-of-Experts 코딩 모델(활성 32B)로, 256K 컨텍스트 윈도를 갖추고 Modified MIT 라이선스로 가중치가 공개됩니다.</p>
 
-  <p>If you read our <a href="/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html">Claude Fable 5 piece</a>, this is the same logic running in reverse. With Fable 5, the capability was proven and the price was the risk. With K2.7 Code, the price is trivial and the capability is the open question. The model is one day old, no third party has benchmarked it, and Moonshot's own numbers put it behind the frontier. Both situations end in the same posture: run a cheap, reversible experiment inside the coding harness you already use.</p>
+  <p>저희 <a href="/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html">Claude Fable 5 글</a>을 읽으셨다면, 이번에는 그 논리가 정반대로 작동한다는 것을 아실 겁니다. Fable 5는 성능이 입증되어 있었고, 위험은 가격이었습니다. K2.7 Code는 가격이 미미하고, 성능이야말로 미결의 문제입니다. 이 모델은 공개된 지 하루밖에 안 되었고, 제3자의 벤치마크도 아직 없으며, Moonshot 자신의 수치마저 이 모델을 프런티어 뒤에 둡니다. 두 상황 모두 결국 같은 태도로 귀결됩니다. 이미 쓰고 있는 코딩 환경 안에서 저렴하고 언제든 되돌릴 수 있는 실험을 돌려 보는 것입니다.</p>
 
-  <p>There is one twist that makes this experiment more interesting than a simple swap. At <strong>$0.95 per million input tokens and $4.00 per million output</strong>, K2.7 Code costs about a tenth of Claude Fable 5 on input and a twelfth on output. That is cheap enough to give it a different job: working alongside your SOTA model, taking the routine fan-out work while the expensive model keeps the hard parts.</p>
+  <p>이 실험을 단순한 교체 이상으로 흥미롭게 만드는 점이 하나 있습니다. <strong>입력 100만 토큰당 0.95달러, 출력 100만 토큰당 4.00달러</strong>로, K2.7 Code는 입력에서 Claude Fable 5의 약 10분의 1, 출력에서는 12분의 1 비용입니다. 이는 다른 역할을 맡길 만큼 저렴하다는 뜻입니다. 여러분의 SOTA 모델과 나란히 일하며, 비싼 모델이 어려운 부분을 맡는 동안 일상적인 팬아웃 작업을 가져가는 것이죠.</p>
 
-  <p>K2.7 Code is on <a href="https://models.bytefuture.ai">Token Station</a> as <code>kimi/kimi-k2.7-code</code>, at Moonshot's list price with zero markup, and your <a href="https://models.bytefuture.ai/signup">$10 signup credit</a> covers a lot of it.</p>
+  <p>K2.7 Code는 <a href="https://models.bytefuture.ai">Token Station</a>에서 <code>kimi/kimi-k2.7-code</code>로 이용할 수 있으며, Moonshot의 정가 그대로 추가 마진 없이 제공됩니다. <a href="https://models.bytefuture.ai/signup">10달러의 가입 크레딧</a>이면 상당히 오래 쓸 수 있습니다.</p>
 
-  <h2 id="what-we-know">What we know (and what we don't)</h2>
+  <h2 id="what-we-know">우리가 아는 것(그리고 모르는 것)</h2>
 
-  <p>From the <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">model card</a>:</p>
+  <p><a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">모델 카드</a>에서:</p>
 
   <ul>
-    <li><strong>Built for coding agents.</strong> It is a coding-focused successor to Kimi K2.6, tuned for long-horizon software engineering: interleaved thinking, multi-step tool calls, MCP support, and reasoning preserved across turns.</li>
-    <li><strong>About 30% fewer thinking tokens</strong> than K2.6 at higher coding scores, which matters when you pay per output token.</li>
-    <li><strong>1T total parameters, 32B active</strong>, 384 experts, native INT4 support, plus a 400M-parameter vision encoder for image input.</li>
-    <li><strong>Open weights, Modified MIT.</strong> You can download the whole thing and serve it yourself with vLLM or SGLang.</li>
+    <li><strong>코딩 에이전트를 위해 만들어졌다.</strong> Kimi K2.6의 코딩 특화 후속 모델로, 장기 소프트웨어 엔지니어링에 맞춰 조정되었습니다. 인터리브된 사고, 다단계 도구 호출, MCP 지원, 그리고 턴을 넘어 유지되는 추론이 특징입니다.</li>
+    <li><strong>사고 토큰이 K2.6보다 약 30% 적으면서</strong> 코딩 점수는 더 높은데, 이는 출력 토큰당 과금될 때 중요합니다.</li>
+    <li><strong>총 파라미터 1T, 활성 32B</strong>, 384개의 전문가, INT4 네이티브 지원, 그리고 이미지 입력을 위한 400M 파라미터 비전 인코더를 갖추고 있습니다.</li>
+    <li><strong>오픈 웨이트, Modified MIT.</strong> 전체를 내려받아 vLLM이나 SGLang으로 직접 서빙할 수 있습니다.</li>
   </ul>
 
-  <p>And the honest part. Moonshot published its own comparison against the frontier, and K2.7 Code loses:</p>
+  <p>그리고 솔직한 부분입니다. Moonshot은 프런티어와의 비교를 직접 공개했고, 거기서 K2.7 Code는 뒤집니다.</p>
 
   <figure>
-    <img src="kimi-k2-7-code-benchmarks.png" alt="Grouped bar chart of Moonshot's self-reported benchmarks: Kimi K2.7 Code scores 62.0 on Kimi Code Bench v2 versus 69.0 for GPT-5.5 and 67.4 for Claude Opus 4.8; 53.6 on ProgramBench versus 69.1 and 63.8; and 76.0 on MCP Atlas versus 79.4 and 81.3" />
-    <figcaption>Moonshot's own published numbers. K2.7 Code trails the frontier on all three. Data: <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code model card</a>, June 2026.</figcaption>
+    <img src="kimi-k2-7-code-benchmarks.png" alt="Moonshot가 자체 보고한 벤치마크의 그룹 막대 차트: Kimi K2.7 Code는 Kimi Code Bench v2에서 62.0으로, GPT-5.5의 69.0 및 Claude Opus 4.8의 67.4와 비교됨; ProgramBench에서 53.6으로 69.1 및 63.8과 비교됨; MCP Atlas에서 76.0으로 79.4 및 81.3과 비교됨" />
+    <figcaption>Moonshot가 직접 공개한 수치. K2.7 Code는 세 항목 모두에서 프런티어에 뒤처집니다. 출처: <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code 모델 카드</a>, 2026년 6월.</figcaption>
   </figure>
 
-  <p>A vendor publishing benchmarks where its model loses is a good sign for the numbers' honesty, and the gaps are not embarrassing: roughly 7 points behind GPT-5.5 on Moonshot's coding bench, closer on tool use. The previous Kimi release (K2.6) is currently the best open-weights model on the Artificial Analysis Intelligence Index. What nobody knows yet is how K2.7 Code behaves on <em>your</em> codebase, in <em>your</em> harness, over a long agentic session. That is the unknown this experiment resolves.</p>
+  <p>자사 모델이 지는 벤치마크를 공개하는 벤더는 그 수치가 정직하다는 좋은 신호이며, 격차도 민망한 수준은 아닙니다. Moonshot의 코딩 벤치에서 GPT-5.5에 약 7점 뒤지고, 도구 사용에서는 더 가깝습니다. 직전의 Kimi(K2.6)는 현재 Artificial Analysis Intelligence Index에서 가장 뛰어난 오픈 웨이트 모델입니다. 아직 아무도 모르는 것은 K2.7 Code가 <em>여러분의</em> 코드베이스에서, <em>여러분의</em> 환경에서, 긴 에이전트 세션 동안 어떻게 행동하느냐입니다. 이 실험이 풀어낼 미지수가 바로 그것입니다.</p>
 
-  <p>One disambiguation, in the same spirit as our Grok Build article: K2.7 Code the <strong>model</strong> is optimized for Moonshot's own <em>Kimi Code CLI</em>, their coding harness. You do not need that CLI. The model speaks OpenAI- and Anthropic-compatible APIs, and Token Station translates whatever your existing harness sends.</p>
+  <p>저희 Grok Build 글과 같은 취지로 한 가지 분명히 해 둡니다. <strong>모델</strong>로서의 K2.7 Code는 Moonshot 자체 코딩 환경인 <em>Kimi Code CLI</em>에 맞춰 최적화되어 있습니다. 그 CLI가 필요하지는 않습니다. 이 모델은 OpenAI 호환 및 Anthropic 호환 API를 구사하며, Token Station이 기존 환경이 보내는 무엇이든 변환해 줍니다.</p>
 
-  <h2 id="the-price">The price: a rounding error next to the frontier</h2>
+  <h2 id="the-price">가격: 프런티어 옆에서는 반올림 오차 수준</h2>
 
-  <p>All of these are live on Token Station at the providers' list prices:</p>
+  <p>아래 모델들은 모두 각 제공사의 정가 그대로 Token Station에서 이용할 수 있습니다.</p>
 
   <table>
-    <tr><th>Model</th><th>Input / 1M</th><th>Output / 1M</th><th>Context</th></tr>
+    <tr><th>모델</th><th>입력 / 1M</th><th>출력 / 1M</th><th>컨텍스트</th></tr>
     <tr><td><code>kimi/kimi-k2.7-code</code></td><td><strong>$0.95</strong></td><td><strong>$4.00</strong></td><td>256K</td></tr>
     <tr><td><code>xai/grok-build-0.1</code></td><td>$1.00</td><td>$2.00</td><td>256K</td></tr>
     <tr><td><code>anthropic/claude-sonnet-4-6</code></td><td>$3.00</td><td>$15.00</td><td>1M</td></tr>
@@ -298,25 +298,25 @@
     <tr><td><code>anthropic/claude-fable-5</code></td><td>$10.00</td><td>$50.00</td><td>1M</td></tr>
   </table>
 
-  <p>The $10 signup credit buys roughly 10 million input tokens or 2.5 million output tokens at K2.7 Code prices. Where the same credit bought an afternoon of Fable 5, here it buys weeks of evaluation. The downside risk of this experiment rounds to zero.</p>
+  <p>K2.7 Code 가격으로 치면 10달러의 가입 크레딧으로 약 1,000만 개의 입력 토큰 또는 250만 개의 출력 토큰을 살 수 있습니다. 같은 크레딧으로 Fable 5라면 한나절 분량이었지만, 여기서는 몇 주치 평가를 살 수 있습니다. 이 실험의 하방 위험은 반올림하면 0입니다.</p>
 
-  <h2 id="share-the-work">The real experiment: share the work</h2>
+  <h2 id="share-the-work">진짜 실험: 일을 나누기</h2>
 
-  <p>Coding agents already split their work into tiers. There is the main loop, where planning and hard reasoning happen, and there is the fan-out: subagents reading files, running searches, executing tests, summarizing results. The fan-out burns most of the tokens and needs the least brilliance.</p>
+  <p>코딩 에이전트는 이미 작업을 계층으로 나눕니다. 계획과 어려운 추론이 일어나는 메인 루프가 있고, 팬아웃이 있습니다. 파일을 읽고, 검색을 돌리고, 테스트를 실행하고, 결과를 요약하는 서브에이전트들이죠. 팬아웃은 토큰의 대부분을 소모하지만 필요한 영민함은 가장 적습니다.</p>
 
-  <p>That split is exactly where a $4-per-million model earns a place next to a $50-per-million one. Keep Fable 5 or Opus 4.8 in the driver's seat and hand the routine work to K2.7 Code. If Moonshot's numbers hold up in practice, the quality drop on delegated tasks is small and the cost drop is more than 10x on every delegated token.</p>
+  <p>바로 그 분담에서 100만당 4달러짜리 모델이 100만당 50달러짜리 모델 옆에 자리를 얻습니다. Fable 5나 Opus 4.8을 운전석에 두고, 일상적인 작업은 K2.7 Code에 넘기세요. Moonshot의 수치가 실제로도 유지된다면, 위임된 작업의 품질 저하는 작고, 위임된 토큰마다 비용 절감은 10배가 넘습니다.</p>
 
-  <h2 id="what-you-need">What you need</h2>
+  <h2 id="what-you-need">필요한 것</h2>
 
   <ul>
-    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; $10 in credit, no card, no Moonshot account needed)</li>
-    <li>Your Token Station API key (starts with <code>gw-</code>)</li>
-    <li>Claude Code, Codex, or OpenClaw installed</li>
+    <li>Token Station 계정(<a href="https://models.bytefuture.ai/signup">무료 가입</a>. 10달러 크레딧, 카드 불필요, Moonshot 계정도 불필요)</li>
+    <li>여러분의 Token Station API 키(<code>gw-</code>로 시작)</li>
+    <li>설치된 Claude Code, Codex 또는 OpenClaw</li>
   </ul>
 
-  <h2 id="claude-code-setup">Claude Code setup: the two-tier split</h2>
+  <h2 id="claude-code-setup">Claude Code 설정: 2단계 분담</h2>
 
-  <p>Claude Code exposes its model tiers as environment variables, which makes it the cleanest place to run the share-the-work experiment. Reserve the Opus slot for Claude Fable 5 and give everything else to the workhorse:</p>
+  <p>Claude Code는 모델 계층을 환경 변수로 노출하므로, 일을 나누는 실험을 돌리기에 가장 깔끔한 곳입니다. Opus 자리는 Claude Fable 5를 위해 남겨 두고, 나머지는 전부 주력 모델에 맡기세요.</p>
 
   <pre><code># Token Station endpoint + auth
 export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
@@ -332,13 +332,13 @@ export CLAUDE_CODE_SUBAGENT_MODEL="kimi/kimi-k2.7-code"
 
 claude</code></pre>
 
-  <p>An ordinary session now runs K2.7 Code end to end: the main loop, every subagent, every background search, all billing at $4 per million output instead of $50. When a problem actually needs frontier judgment, escalate with <code>/model opus</code> and Fable 5 takes over; drop back down when the hard part is done. The expensive model becomes what it should be at that price, a specialist you call in.</p>
+  <p>이제 평범한 세션이 처음부터 끝까지 K2.7 Code로 돌아갑니다. 메인 루프, 모든 서브에이전트, 모든 백그라운드 검색이 출력 100만당 50달러가 아니라 4달러로 과금됩니다. 어떤 문제가 정말로 프런티어급 판단을 요구할 때는 <code>/model opus</code>로 승격하면 Fable 5가 넘겨받고, 어려운 부분이 끝나면 다시 내려옵니다. 비싼 모델은 그 가격에 걸맞은 역할, 즉 필요할 때 불러오는 전문가가 됩니다.</p>
 
-  <p>Swap <code>anthropic/claude-fable-5</code> for <code>anthropic/claude-opus-4-8</code> in the Opus slot if Fable 5's price makes you wince; the escalation pattern works at any tier.</p>
+  <p>Fable 5의 가격이 부담스럽다면 Opus 자리의 <code>anthropic/claude-fable-5</code>를 <code>anthropic/claude-opus-4-8</code>로 바꾸세요. 이 승격 패턴은 어떤 계층에서도 작동합니다.</p>
 
-  <h2 id="codex-setup">Codex setup</h2>
+  <h2 id="codex-setup">Codex 설정</h2>
 
-  <p>Codex runs one model per session, but its <a href="https://developers.openai.com/codex/config-reference">profiles</a> give you the same split at the invocation level: make the workhorse the default and keep a named escalation profile for Fable 5.</p>
+  <p>Codex는 세션당 모델 하나만 돌리지만, <a href="https://developers.openai.com/codex/config-reference">profiles</a>를 쓰면 호출 단위로 동일한 분담을 할 수 있습니다. 주력 모델을 기본값으로 두고, Fable 5를 위한 이름 붙은 승격 프로필을 따로 마련해 두세요.</p>
 
   <pre><code>mkdir -p ~/.codex
 cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
@@ -362,11 +362,11 @@ export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
 codex                  # routine work on K2.7 Code
 codex --profile deep   # hard problems on Fable 5</code></pre>
 
-  <p>Day to day you launch plain <code>codex</code> and pay workhorse rates. When a task deserves the frontier model, <code>codex --profile deep</code> brings in Fable 5 for that invocation only. Nothing else in the config moves.</p>
+  <p>평소에는 그냥 <code>codex</code>를 실행해 주력 모델 요금만 냅니다. 어떤 작업이 프런티어 모델을 쓸 만할 때만 <code>codex --profile deep</code>이 그 호출에 한해 Fable 5를 불러옵니다. 설정의 다른 부분은 전혀 움직이지 않습니다.</p>
 
-  <h2 id="openclaw-setup">OpenClaw setup</h2>
+  <h2 id="openclaw-setup">OpenClaw 설정</h2>
 
-  <p>OpenClaw makes the split a first-class setting. Sub-agents inherit the caller's model unless <code>agents.defaults.subagents.model</code> says otherwise (<a href="https://docs.openclaw.ai/tools/subagents">docs</a>), so Fable 5 can drive while every spawned sub-agent runs on K2.7 Code:</p>
+  <p>OpenClaw는 이 분담을 일급 설정으로 만듭니다. <code>agents.defaults.subagents.model</code>이 달리 지정하지 않는 한 서브에이전트는 호출자의 모델을 상속하므로(<a href="https://docs.openclaw.ai/tools/subagents">문서</a>), Fable 5가 운전석에 앉은 채 생성되는 모든 서브에이전트를 K2.7 Code로 돌릴 수 있습니다.</p>
 
   <pre><code>{
   "models": {
@@ -401,28 +401,28 @@ codex --profile deep   # hard problems on Fable 5</code></pre>
   }
 }</code></pre>
 
-  <p>The main agent keeps frontier judgment; the parallel fan-out (the part that burns tokens) bills at workhorse rates. To run the whole thing on K2.7 Code instead, point <code>agents.defaults.model.primary</code> at it; both models sit behind the same key either way.</p>
+  <p>메인 에이전트는 프런티어급 판단을 유지하고, 병렬 팬아웃(토큰을 소모하는 부분)은 주력 모델 요금으로 과금됩니다. 전체를 대신 K2.7 Code로 돌리려면 <code>agents.defaults.model.primary</code>를 그쪽으로 가리키게 하면 됩니다. 어느 쪽이든 두 모델은 같은 키 뒤에 있습니다.</p>
 
-  <h2 id="quirks">Quirks worth knowing</h2>
+  <h2 id="quirks">알아 두면 좋은 특징들</h2>
 
   <ul>
-    <li><strong>Thinking is always on.</strong> K2.7 Code reasons before answering and carries that reasoning across turns; you cannot turn it off. Budget for reasoning tokens in the output bill, softened by the 30% reduction over K2.6.</li>
-    <li><strong>256K context.</strong> Generous, but a quarter of the 1M window on frontier Claude and GPT models. Long agentic sessions will compact sooner.</li>
-    <li><strong>It has a home-team harness.</strong> Moonshot tunes it for the Kimi Code CLI, so expect occasional rough edges elsewhere. Token Station's tool and parameter name translation handles the wire-level mismatches.</li>
-    <li><strong>The exit path goes both ways.</strong> If the experiment fails, delete the config. If it succeeds, the weights are Modified MIT on <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Hugging Face</a>: you can eventually serve the exact same model on your own hardware. A cloud experiment that can graduate to self-hosting is the hybrid-inference story in miniature.</li>
+    <li><strong>사고는 항상 켜져 있다.</strong> K2.7 Code는 답하기 전에 추론하고 그 추론을 턴을 넘어 이어 갑니다. 이를 끌 수는 없습니다. 출력 청구서에 추론 토큰을 감안해 두세요. K2.6 대비 30% 줄어든 덕분에 부담은 덜합니다.</li>
+    <li><strong>256K 컨텍스트.</strong> 넉넉하지만, 프런티어 Claude 및 GPT 모델의 1M 윈도의 4분의 1입니다. 긴 에이전트 세션은 더 일찍 압축됩니다.</li>
+    <li><strong>홈팀 환경이 있다.</strong> Moonshot은 Kimi Code CLI에 맞춰 조정하므로, 다른 곳에서는 가끔 거친 부분이 나타날 수 있습니다. Token Station의 도구 및 파라미터 이름 변환이 프로토콜 수준의 불일치를 처리합니다.</li>
+    <li><strong>나가는 길은 양방향이다.</strong> 실험이 실패하면 설정을 삭제하면 됩니다. 성공하면, 가중치는 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Hugging Face</a>에 Modified MIT로 공개되어 있어, 결국 똑같은 모델을 자체 하드웨어에서 서빙할 수 있습니다. 자체 호스팅으로 졸업할 수 있는 클라우드 실험은 하이브리드 추론 이야기를 축소해 놓은 것입니다.</li>
   </ul>
 
-  <h2 id="try-it">Run the experiment</h2>
+  <h2 id="try-it">실험을 돌려 보기</h2>
 
-  <p>Give K2.7 Code the work your expensive model is overqualified for: subagent searches, test runs, boilerplate, summaries. Watch for a week where it holds up and where it drops the ball, then settle the split accordingly. The same Token Station key runs <code>anthropic/claude-fable-5</code>, <code>anthropic/claude-opus-4-8</code>, and <code>kimi/kimi-k2.7-code</code> side by side, so the comparison is built in.</p>
+  <p>여러분의 비싼 모델에게는 과한 작업을 K2.7 Code에 맡기세요. 서브에이전트 검색, 테스트 실행, 보일러플레이트, 요약 같은 것들입니다. 한 주 동안 어디서 버티고 어디서 헛발질하는지 지켜본 뒤, 그에 맞춰 분담을 정하세요. 같은 Token Station 키로 <code>anthropic/claude-fable-5</code>, <code>anthropic/claude-opus-4-8</code>, <code>kimi/kimi-k2.7-code</code>를 나란히 돌릴 수 있으니, 비교는 처음부터 내장되어 있습니다.</p>
 
-  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($10 in free credit, no card) and find out whether a one-day-old open-weights model can carry half your agent's workload at a tenth of the price.</p>
+  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>에서 가입하고(10달러 무료 크레딧, 카드 불필요), 공개된 지 하루밖에 안 된 오픈 웨이트 모델이 10분의 1 가격으로 여러분 에이전트 작업량의 절반을 감당할 수 있는지 직접 확인해 보세요.</p>
 
   <hr />
 
   <!-- Share -->
   <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">Share this post</span>
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">이 글 공유하기</span>
     <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Post
@@ -443,9 +443,9 @@ codex --profile deep   # hard problems on Fable 5</code></pre>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
       Reddit
     </a>
-    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='Copied!';setTimeout(function(){s.textContent='Copy link';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='복사됨!';setTimeout(function(){s.textContent='링크 복사';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
-      <span class="share-label">Copy link</span>
+      <span class="share-label">링크 복사</span>
     </a>
   </div>
 
@@ -464,7 +464,7 @@ codex --profile deep   # hard problems on Fable 5</code></pre>
       </svg>
       <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
     </a>
-    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">Writings</a></p>
+    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">글</a></p>
   </div>
 </footer>
 

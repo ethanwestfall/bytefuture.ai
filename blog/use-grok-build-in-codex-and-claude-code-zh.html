@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="zh-Hans">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,55 +39,31 @@
     });
   })();
   </script>
-
-  <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる — ByteFuture 記事</title>
-  <meta name="description" content="オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。その理由と、Token Station に登録して GLM-5.2 を無料で試す方法を解説する。" />
-  <link rel="canonical" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <meta property="og:title" content="GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる — ByteFuture 記事" />
-  <meta property="og:description" content="オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。その理由と、Token Station に登録して GLM-5.2 を無料で試す方法を解説する。" />
+  <title>如何在 Codex 和 Claude Code 中使用 Grok Build — ByteFuture 文章</title>
+  <meta name="description" content="xAI 的 Grok Build 模型进化飞快，价格只是 GPT-5.5 或 Claude Fable 5 的零头。借助 Token Station 的免费额度，直接在 Claude Code 或 Codex 中运行它，无需 xAI 账户。" />
+  <meta property="og:title" content="如何在 Codex 和 Claude Code 中使用 Grok Build — ByteFuture 文章" />
+  <meta property="og:description" content="xAI 的 Grok Build 模型进化飞快，价格只是 GPT-5.5 或 Claude Fable 5 的零头。借助 Token Station 的免费额度，直接在 Claude Code 或 Codex 中运行它，无需 xAI 账户。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <meta property="og:image" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-cover.png" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-zh.html" />
+  <meta property="og:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-cover.png" />
-  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:image" content="https://bytefuture.ai/blog/claude-code-grok-build.png" />
+  <meta property="og:locale" content="zh_CN" />
   <!-- ─── i18n alternates: one set, identical in every language version (see CLAUDE.md) ─── -->
-  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump.html" />
-  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-zh.html" />
-  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ko.html" />
-  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump.html" />
-  <!-- ▲ EDIT ▲ -->
+  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-zh.html" />
+  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ja.html" />
+  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-ko.html" />
+  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code.html" />
+  <meta name="twitter:title" content="如何在 Codex 和 Claude Code 中使用 Grok Build" />
+  <meta name="twitter:description" content="xAI 的 Grok Build 模型进化飞快，价格只是 GPT-5.5 或 Claude Fable 5 的零头。借助 Token Station 的免费额度，直接在 Claude Code 或 Codex 中运行它，无需 xAI 账户。" />
+  <link rel="canonical" href="https://bytefuture.ai/blog/use-grok-build-in-codex-and-claude-code-zh.html" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: '#faf9f5',
-            surface: '#ffffff',
-            border: '#e4e4e7',
-            muted: '#71717a',
-            blue: '#2563EB',
-            green: '#0D9488',
-          },
-          fontFamily: {
-            heading: ['"Space Grotesk"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-            body: ['"Source Serif 4"', 'Georgia', 'serif'],
-          },
-        }
-      }
-    }
-  </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
   <script>
@@ -212,21 +188,18 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 14px;
       line-height: 1.7;
-      max-width: 100%;
     }
     .prose code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.88em;
-      background: #f4f4f5;
-      padding: 2px 5px;
+      background: rgba(37,99,235,0.06);
+      padding: 2px 6px;
       border-radius: 4px;
     }
     .prose pre code {
       background: none;
       padding: 0;
       font-size: 14px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
     }
 
     /* Table */
@@ -310,7 +283,7 @@
         <option value="ja">日本語</option>
         <option value="ko">한국어</option>
       </select>
-      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">記事</a>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">文章</a>
       <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
@@ -322,73 +295,93 @@
 
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; すべての記事</a>
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; 所有文章</a>
 
-    <h4>最近の記事</h4>
+    <h4>最近</h4>
     <div id="recent-posts"></div>
 
-    <h4>トピック</h4>
+    <h4>主题</h4>
     <div id="topics-list"></div>
   </aside>
 
   <!-- CENTER: ARTICLE -->
   <main>
     <header class="article-header">
-  <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-    <!-- ▼ EDIT: category and date ▼ -->
-    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">研究</span>
-    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026年6月15日</time>
-  
-    <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
-  </div>
-  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる</h1>
-
-</header>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">教程</span>
+        <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026年6月10日</time>
+        <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">如何在 Codex 和 Claude Code 中使用 Grok Build</h1>
+    </header>
 
     <article class="prose" style="padding:0 0 96px;">
-<p>GLM-5.2 は、一見ありふれたモデルの公開を市場を動かす出来事に変えた。6 月 15 日、<a href="https://finance.yahoo.com/quote/2513.HK/">Zhipu AI の香港上場株</a>は取引時間中に一時 48% 上昇して 1,620 香港ドルを付け、32.8% 高の 1,457 香港ドルで引けた。</p>
 
-  <p>同株は 1 月初旬の Zhipu の IPO 以来、約 820% 上昇している。JPモルガンは目標株価を 1,400 香港ドルに引き上げて「オーバーウェイト」を維持し、バンク・オブ・アメリカは「買い」でカバレッジを開始した。バージョンアップが企業をここまで動かすことは普通ない。今回はそれが起きた。</p>
+<p>Grok Build 是 xAI 的编程<strong>模型</strong>：<code>grok-build-0.1</code>，详情见<a href="https://docs.x.ai/docs/models/grok-build-0.1">它的模型卡</a>。不要把它和同名的 xAI 编程工具 <em>Grok Build CLI</em> 混淆；本文讲的是这个模型。它进化飞快，每次发布都在真实编程任务上有可见的提升，而且价格为<strong>每百万输入 token 1 美元、每百万输出 token 2 美元</strong>，只是 GPT-5.5、Claude Fable 5 这类前沿旗舰的零头。</p>
 
-  <p>ドル建てで見ると規模がはっきりする。GLM-5.2 の公開前日、Z.AI の上場株の時価総額は約 600 億ドルだった。今回の公開は 1 営業日で 200 億ドル近くを上乗せし、同社を約 800 億ドル、<a href="https://finance.yahoo.com/quote/ABNB/">Airbnb</a> とほぼ同じ規模へ押し上げた。最も分かりやすい物差しは <a href="https://finance.yahoo.com/quote/COIN/">Coinbase</a> で、2026 年 6 月中旬の時価総額は約 420 億ドル。GLM-5.2 は Z.AI を 1 日で「Coinbase 約 1.5 個分」から「2 個分近く」へ引き上げた。いまやコーディングモデルの公開が、米テックの優良株に匹敵する規模の企業を動かしている。</p>
+<p>一个进步飞快、价格又只是零头的模型，正是值得一试的东西。但几乎没有人愿意仅仅为了测试一个模型就换工具。xAI 给出的答案是它自家的 Grok Build CLI；而大多数开发者更想把这个模型直接放进自己每天都在用的工具里：<strong>Claude Code</strong> 或 <strong>Codex</strong>。问题就出在这里：这两者都无法直接和 xAI 的 API 对话。问题不止于 API 的格式。例如 Codex 发送工具调用时，会带上 xAI 端点无法识别的内置工具名称和参数，于是请求在模型还没看到你的提示词之前就失败了。</p>
 
-  <h2 id="why-the-stock-moved">なぜ株価は動いたのか</h2>
+<p><a href="https://models.bytefuture.ai/signup">Token Station</a> 位于你的编程智能体和 xAI 之间，用四点补上这道缺口：</p>
 
-  <p>GLM-5.2 は Z.AI の新しいフラッグシップ・コーディングモデルであり、その公開を脚注ではなく市場の話題にした要因が二つある。</p>
+<ul>
+<li><strong>Grok Build 可用的免费额度。</strong>注册即得的 10 美元额度可用于 Grok Build。无需信用卡，无需订阅。</li>
+<li><strong>无需 xAI 账户。</strong>你不必再单独创建并充值一个 xAI 账户；一把 Token Station 密钥就够了。</li>
+<li><strong>Claude Code：API 转换。</strong>Claude Code 使用 Anthropic 的 Messages API。Token Station 把这些请求转换成 xAI 端点所期望的格式，再把响应转换回来。</li>
+<li><strong>Codex：工具与参数名转换。</strong>Codex 的内置工具调用使用了 xAI 无法识别的名称和参数。Token Station 在两个方向上重写它们，让工具调用真正可用。</li>
+</ul>
 
-  <p>第一に、これは<strong>オープンソース</strong>である。MIT ライセンスで公開され、100 万トークンのコンテキストウィンドウを備え、長期的なエージェント型コーディングに重点を置く。クローズドな最前線に迫り続けてきた系譜を引き継ぐものだ。GLM-5 は SWE-bench Verified で 77.8% を記録し、その後の各リリースで差を詰めてきた。重みをダウンロードできるため、この能力が取り消されることはない。</p>
+<p>你无需自己改动任何代码，就能让 Grok Build 在 Codex 或 Claude Code 中跑起来。本教程涵盖两种配置，每种大约两分钟。</p>
 
-  <p>第二に、タイミングだ。GLM-5.2 が登場したのと同じ週末、米国の輸出管理命令により Anthropic は最も強力な二つのモデル、Claude Fable 5 と Mythos 5 を全ユーザー向けに停止せざるを得なくなった。ある最前線のベンダーが政府の指示で止まった。一方で、最前線級のコンテキストウィンドウを備えたオープンモデルが、Anthropic の最上位 Claude Code および Max プランのおよそ 10 分の 1 の価格で現れた。投資家はこれを、中国のオープンモデルがその空白に入り込んでいると読み、こうしたモデルを世に出す企業を再評価した。</p>
+<h2 id="what-you-need">你需要什么</h2>
 
-  <p>この上昇が続くかどうかは市場が決める問題だ。開発者にとってより有用な問いはもっと狭い。その裏にあるモデルは、あなたのコードで本当に役立つのか。それを確かめるのに株を買う必要はない。</p>
+<ul>
+<li>一个 Token Station 账户（<a href="https://models.bytefuture.ai/signup">免费注册</a>；获得 10 美元额度，无需信用卡）</li>
+<li>你的 Token Station API 密钥（以 <code>gw-</code> 开头）</li>
+<li>已安装 Claude Code 或 Codex</li>
+</ul>
 
-  <h2 id="try-it-free">Token Station で GLM-5.2 を無料で試す</h2>
+<h2 id="claude-code-setup">配置 Claude Code</h2>
 
-  <p>GLM-5.2 は <a href="https://models.bytefuture.ai/intro.html" onclick="gtag('event','cta_click',{label:'post_body_token_station'});">Token Station</a> で <code>glm/glm-5.2</code> として利用でき、100 万トークンのフルコンテキストに対応し、Z.AI の定価そのまま、上乗せなしで課金される。入力 100 万トークンあたり 1.40 ドル、出力 100 万トークンあたり 4.40 ドルだ。予算で見込んでおくべき点が一つある。思考は常に有効なので、推論トークンは出力として課金される。</p>
+<p>Claude Code 从环境变量读取配置。要把所有模型槽位都通过 Token Station 路由到 Grok Build，请在启动前设置以下变量：</p>
 
-  <p>無料で始められる。<a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">登録</a>すると 10 ドル分のクレジットがもらえる。カードは不要で、Z.AI のアカウントや Coding Plan の契約も必要ない。すでに使っているコーディングツールを <code>glm/glm-5.2</code> に向けて、実際の作業をそのまま流してみてほしい。</p>
-
-  <h3>Claude Code</h3>
-
-  <p>Claude Code はモデルとエンドポイントを環境変数から読み込む。すべてのティアを Token Station 経由で GLM-5.2 にルーティングする。</p>
-
-  <pre><code>export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
+<pre><code># Token Station endpoint + auth
+export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
 export ANTHROPIC_AUTH_TOKEN="gw-YOUR_TOKEN_STATION_KEY"
 
-export ANTHROPIC_DEFAULT_OPUS_MODEL="glm/glm-5.2"
-export ANTHROPIC_DEFAULT_SONNET_MODEL="glm/glm-5.2"
-export ANTHROPIC_DEFAULT_HAIKU_MODEL="glm/glm-5.2"
-export CLAUDE_CODE_SUBAGENT_MODEL="glm/glm-5.2"
+# Route every Claude Code model slot to Grok Build
+export ANTHROPIC_DEFAULT_OPUS_MODEL="xai/grok-build-0.1"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="xai/grok-build-0.1"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="xai/grok-build-0.1"
+export CLAUDE_CODE_SUBAGENT_MODEL="xai/grok-build-0.1"
 
-claude</code></pre>
+# Launch
+claude --model "xai/grok-build-0.1"</code></pre>
 
-  <h3>Codex</h3>
+<figure><img src="claude-code-grok-build.png" alt="Claude Code terminal showing Grok Build model xai/grok-build-0.1 running and responding to prompts"><figcaption>Claude Code 通过 Token Station 运行 Grok Build。模型确认自己由 xai/grok-build-0.1 驱动。</figcaption></figure>
 
-  <p>Token Station をプロバイダーとして設定し、GLM-5.2 をモデルにする。</p>
+<p>配置到此结束。Claude Code 会把每一个请求都发往 Token Station，由它转换给 xAI 端点。工具调用、流式输出和多轮对话全都正常工作。</p>
 
-  <pre><code>mkdir -p ~/.codex
-cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
-model = "glm/glm-5.2"
+<h3>这些环境变量的作用</h3>
+
+<table>
+<tr><th>变量</th><th>作用</th></tr>
+<tr><td><code>ANTHROPIC_BASE_URL</code></td><td>让 Claude Code 指向 Token Station，而不是 Anthropic 的 API</td></tr>
+<tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>你的 Token Station API 密钥</td></tr>
+<tr><td><code>ANTHROPIC_DEFAULT_OPUS_MODEL</code></td><td>用 Grok Build 替换 Opus 模型槽位</td></tr>
+<tr><td><code>ANTHROPIC_DEFAULT_SONNET_MODEL</code></td><td>用 Grok Build 替换 Sonnet 模型槽位</td></tr>
+<tr><td><code>ANTHROPIC_DEFAULT_HAIKU_MODEL</code></td><td>用 Grok Build 替换 Haiku 模型槽位</td></tr>
+<tr><td><code>CLAUDE_CODE_SUBAGENT_MODEL</code></td><td>也把子智能体调用路由到 Grok Build</td></tr>
+</table>
+
+<p>你可以自由搭配。例如，主模型仍用 Sonnet，只把子智能体路由到 Grok Build 以节省成本。</p>
+
+<h2 id="codex-setup">配置 Codex</h2>
+
+<p>Codex 使用一个 TOML 配置文件。用两条命令即可创建：</p>
+
+<pre><code>mkdir -p ~/.codex
+cat > ~/.codex/config.toml &lt;&lt;'EOF'
+model = "xai/grok-build-0.1"
 model_provider = "token_station"
 
 [model_providers.token_station]
@@ -396,50 +389,41 @@ name = "token_station"
 base_url = "https://models.bytefuture.ai/v1"
 env_key = "TOKEN_STATION_API_KEY"
 wire_api = "responses"
-EOF
+EOF</code></pre>
 
-export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
+<p>然后设置你的 API 密钥并启动：</p>
+
+<pre><code>export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
 codex</code></pre>
 
-  <h3>OpenClaw</h3>
+<figure><img src="codex-grok-build.png" alt="OpenAI Codex terminal showing model set to xai/grok-build-0.1 via Token Station"><figcaption>Codex 通过 Token Station 运行 Grok Build。model 字段确认 xai/grok-build-0.1 已生效。</figcaption></figure>
 
-  <p>Token Station をプロバイダーとして登録し、GLM-5.2 をデフォルトモデルに設定する。</p>
+<p>现在 Codex 的所有请求都会使用 Grok Build。Token Station 负责 API 转换，包括工具与参数名的重写；否则 Codex 直接对接 xAI 时就会失败。</p>
 
-  <pre><code>{
-  "models": {
-    "mode": "merge",
-    "providers": {
-      "token-station": {
-        "baseUrl": "https://models.bytefuture.ai/v1",
-        "apiKey": "${TOKEN_STATION_API_KEY}",
-        "api": "anthropic-messages",
-        "models": [
-          {
-            "id": "glm/glm-5.2",
-            "name": "GLM-5.2 (Token Station)",
-            "contextWindow": 1000000,
-            "maxTokens": 131072
-          }
-        ]
-      }
-    }
-  },
-  "agents": {
-    "defaults": {
-      "model": { "primary": "token-station/glm/glm-5.2" }
-    }
-  }
-}</code></pre>
+<h2 id="why-you-need-a-gateway">为什么这件事需要一个网关</h2>
 
-  <p>鍵が一つ、すでに使っているハーネス、そして市場が再評価したばかりのモデル。GLM-5.2 があなたのリポジトリで通用するなら、それを確かめるコストは無料登録だけだ。通用しないなら、設定を 1 行変えて先に進めばいい。</p>
+<p>你可能会想：为什么不干脆让 Codex 直接指向 xAI 的 API 呢？</p>
 
-  <p>ここから始めよう：<a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">models.bytefuture.ai</a></p>
+<p>两个原因：</p>
 
-  <hr />
+<ol>
+<li><strong>API 格式不匹配。</strong>Claude Code 使用 Anthropic 的 Messages API，Codex 则以 OpenAI 的 Responses API 格式发送请求。而 xAI 端点期望的结构与两者都不同。Token Station 对两者都进行转换：请求进来，响应出去。</li>
+<li><strong>工具与参数名转换。</strong>Codex 发送的内置工具调用带有 xAI 无法识别的名称和参数。Token Station 会重写它们，让模型真正能用上这些工具。没有这一步，Codex 的工具调用会悄然失败或直接报错。</li>
+</ol>
 
-  <!-- Share -->
+<p>这不是一个理论上的问题。试图把 Codex 直接连到 Grok Build 的开发者，会在第一次工具调用时就撞上莫名其妙的错误。</p>
+
+<h2 id="try-it">动手试试</h2>
+
+<p>在 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册，即可获得 10 美元免费额度。无需信用卡，无需订阅，也无需创建或充值 xAI 账户。这笔免费额度适用于平台上的每一个模型，包括 Grok Build、GPT-5.5、Claude、Gemini 以及其他 200 多个模型。而且由于 Grok Build 每 token 的价格只是前沿旗舰的零头，这笔额度能用很久。</p>
+
+<p>两分钟配置，然后你就在用 Grok Build 写代码了。如果 Grok Build 不太合适，这 10 美元额度也适用于平台上的其他每一个模型。</p>
+
+      <hr />
+
+      <!-- Share -->
   <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">この記事をシェア</span>
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">分享这篇文章</span>
     <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Post
@@ -460,9 +444,9 @@ codex</code></pre>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
       Reddit
     </a>
-    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='コピーしました！';setTimeout(function(){s.textContent='リンクをコピー';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='已复制！';setTimeout(function(){s.textContent='复制链接';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
-      <span class="share-label">リンクをコピー</span>
+      <span class="share-label">复制链接</span>
     </a>
   </div>
 
@@ -477,18 +461,18 @@ codex</code></pre>
 </div>
 
 <!-- ─── FOOTER ─── -->
-<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
+<footer style="padding:32px 24px; border-top:1px solid #e4e4e7;">
   <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
-    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.75;">
         <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
         <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
         <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
         <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
       <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
-    </a>
-    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">記事</a></p>
+    </div>
+    <p style="color:#a1a1aa; font-size:13px; margin:0;">&copy; 2026 ByteFuture. 保留所有权利。</p>
   </div>
 </footer>
 
@@ -522,7 +506,7 @@ codex</code></pre>
 <!-- ─── Left sidebar: recent posts + topics from posts.json ─── -->
 <script>
 (function() {
-  var currentSlug = 'glm-5-2-zai-stock-jump';
+  var currentSlug = 'use-grok-build-in-codex-and-claude-code';
   fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
     .then(function(r) { return r.json(); })
     .then(function(posts) {
@@ -543,7 +527,7 @@ codex</code></pre>
       Object.keys(cats).sort().forEach(function(cat) {
         var a = document.createElement('a');
         a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
-        a.textContent = ({engineering:'エンジニアリング',product:'プロダクト',research:'研究',tutorial:'チュートリアル'})[cat] || cat;
+        a.textContent = ({engineering:'工程',product:'产品',research:'研究',tutorial:'教程'})[cat] || cat;
         topicsEl.appendChild(a);
       });
     });

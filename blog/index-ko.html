@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,19 +40,19 @@
   })();
   </script>
 
-  <title>Writings — ByteFuture</title>
-  <meta name="description" content="Writings from ByteFuture on hybrid AI inference, AI agents, open models, and the systems we build, including Olares OS and Token Station." />
-  <link rel="canonical" href="https://bytefuture.ai/blog/" />
+  <title>글 — ByteFuture</title>
+  <meta name="description" content="하이브리드 AI 추론, AI 에이전트, 오픈 모델, 그리고 우리가 만드는 시스템(Olares OS와 Token Station 포함)에 대한 ByteFuture의 글." />
+  <link rel="canonical" href="https://bytefuture.ai/blog/index-ko.html" />
 
   <!-- Open Graph / social cards -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://bytefuture.ai/blog/" />
-  <meta property="og:title" content="Writings — ByteFuture" />
-  <meta property="og:description" content="On hybrid AI inference, AI agents, open models, and the systems we build at ByteFuture." />
+  <meta property="og:url" content="https://bytefuture.ai/blog/index-ko.html" />
+  <meta property="og:title" content="글 — ByteFuture" />
+  <meta property="og:description" content="하이브리드 AI 추론, AI 에이전트, 오픈 모델, 그리고 ByteFuture에서 우리가 만드는 시스템에 대하여." />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Writings — ByteFuture" />
-  <meta name="twitter:description" content="On hybrid AI inference, AI agents, open models, and the systems we build at ByteFuture." />
-  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:title" content="글 — ByteFuture" />
+  <meta name="twitter:description" content="하이브리드 AI 추론, AI 에이전트, 오픈 모델, 그리고 ByteFuture에서 우리가 만드는 시스템에 대하여." />
+  <meta property="og:locale" content="ko_KR" />
   <!-- ─── i18n alternates: identical in every language version (see CLAUDE.md) ─── -->
   <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/" />
   <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/index-zh.html" />
@@ -157,9 +157,9 @@
         <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
       </a>
       <div style="display:flex; align-items:center; gap:26px;">
-        <a class="nav-link" href="/#products">Products</a>
+        <a class="nav-link" href="/#products">제품</a>
         <a class="nav-link" href="https://github.com/beclab/olares">Olares</a>
-        <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; font-weight:600;">Writings</a>
+        <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'DM Sans',sans-serif; font-weight:600;">글</a>
         <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#18181b; background:#ffffff; border:1px solid #e4e4e7; border-radius:8px; padding:6px 10px; cursor:pointer;">
           <option value="en">EN</option>
           <option value="zh">中文</option>
@@ -175,19 +175,19 @@
 
 <!-- ─── HERO ─── -->
 <section style="max-width:1200px; margin:0 auto; padding:80px 24px 48px;">
-  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin:0 0 16px;">Writings</h1>
-  <p style="font-size:18px; color:#71717a; line-height:1.7; margin:0; max-width:600px;">Notes from ByteFuture on hybrid AI inference, AI agents, open models, and the systems we build.</p>
+  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin:0 0 16px;">글</h1>
+  <p style="font-size:18px; color:#71717a; line-height:1.7; margin:0; max-width:600px;">하이브리드 AI 추론, AI 에이전트, 오픈 모델, 그리고 우리가 만드는 시스템에 대한 ByteFuture의 노트.</p>
 </section>
 
 
 <!-- ─── CATEGORY FILTER ─── -->
 <section style="max-width:1200px; margin:0 auto; padding:0 24px 40px;">
   <div style="display:flex; gap:8px; flex-wrap:wrap;" id="cat-filter">
-    <button class="cat-pill active" data-cat="all">All</button>
-    <button class="cat-pill" data-cat="engineering">Engineering</button>
-    <button class="cat-pill" data-cat="product">Product</button>
-    <button class="cat-pill" data-cat="research">Research</button>
-    <button class="cat-pill" data-cat="tutorial">Tutorial</button>
+    <button class="cat-pill active" data-cat="all">전체</button>
+    <button class="cat-pill" data-cat="engineering">엔지니어링</button>
+    <button class="cat-pill" data-cat="product">제품</button>
+    <button class="cat-pill" data-cat="research">연구</button>
+    <button class="cat-pill" data-cat="tutorial">튜토리얼</button>
   </div>
 </section>
 
@@ -200,7 +200,7 @@
   <div class="posts-grid" id="posts-grid"></div>
   <!-- Load more -->
   <div id="load-more-wrap" style="text-align:center; padding:48px 0 0; display:none;">
-    <button id="load-more-btn" style="background:transparent; color:#18181b; border:1px solid #e4e4e7; border-radius:50px; padding:13px 32px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#2563EB';this.style.color='#2563EB'" onmouseout="this.style.borderColor='#e4e4e7';this.style.color='#18181b'">Load more</button>
+    <button id="load-more-btn" style="background:transparent; color:#18181b; border:1px solid #e4e4e7; border-radius:50px; padding:13px 32px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:14px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#2563EB';this.style.color='#2563EB'" onmouseout="this.style.borderColor='#e4e4e7';this.style.color='#18181b'">더 보기</button>
   </div>
 </section>
 

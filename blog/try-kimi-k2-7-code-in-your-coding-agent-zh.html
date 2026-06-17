@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="zh-Hans">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,25 +39,24 @@
     });
   })();
   </script>
-
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる — ByteFuture 記事</title>
-  <meta name="description" content="オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。その理由と、Token Station に登録して GLM-5.2 を無料で試す方法を解説する。" />
-  <link rel="canonical" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <meta property="og:title" content="GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる — ByteFuture 記事" />
-  <meta property="og:description" content="オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。その理由と、Token Station に登録して GLM-5.2 を無料で試す方法を解説する。" />
+  <title>Kimi K2.7 Code：便宜到值得一试，或许好到可以分担工作 — ByteFuture 文章</title>
+  <meta name="description" content="Moonshot 全新的 1T 开放权重编码模型，价格为每百万 token 0.95/4 美元。把它和你的 SOTA 模型一起用在 Claude Code、Codex 或 OpenClaw 里，让它承担那些常规工作。" />
+  <link rel="canonical" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-zh.html" />
+  <meta property="og:title" content="Kimi K2.7 Code：便宜到值得一试，或许好到可以分担工作 — ByteFuture 文章" />
+  <meta property="og:description" content="Moonshot 全新的 1T 开放权重编码模型，价格为每百万 token 0.95/4 美元。把它和你的 SOTA 模型一起用在 Claude Code、Codex 或 OpenClaw 里，让它承担那些常规工作。" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <meta property="og:image" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-cover.png" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-zh.html" />
+  <meta property="og:image" content="https://bytefuture.ai/blog/kimi-k2-7-code-cover.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-cover.png" />
-  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:image" content="https://bytefuture.ai/blog/kimi-k2-7-code-cover.png" />
+  <meta property="og:locale" content="zh_CN" />
   <!-- ─── i18n alternates: one set, identical in every language version (see CLAUDE.md) ─── -->
-  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump.html" />
-  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-zh.html" />
-  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ja.html" />
-  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump-ko.html" />
-  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/glm-5-2-zai-stock-jump.html" />
+  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-zh.html" />
+  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ja.html" />
+  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent-ko.html" />
+  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/try-kimi-k2-7-code-in-your-coding-agent.html" />
   <!-- ▲ EDIT ▲ -->
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
@@ -107,79 +106,12 @@
     }
     a { transition: color 0.2s; }
 
-    /* ─── 3-column layout ─── */
-    .page-grid {
-      display: grid;
-      grid-template-columns: 200px 1fr 200px;
-      gap: 48px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      align-items: start;
-    }
-    /* Grid items default to min-width:auto and can't shrink below their
-       content (wide images, code lines, tables) — this caps them at the
-       column width so the page never scrolls sideways on phones. */
-    .page-grid > * { min-width: 0; }
-
-    /* ─── Left sidebar ─── */
-    .sidebar-left {
-      position: sticky;
-      top: 120px;
-      padding-top: 80px;
-    }
-    .sidebar-left a {
-      display: block;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      color: #71717a;
-      text-decoration: none;
-      padding: 4px 0;
-      line-height: 1.5;
-    }
-    .sidebar-left a:hover { color: #18181b; }
-    .sidebar-left a.active { color: #18181b; font-weight: 600; background: #f4f4f5; padding: 4px 8px; margin: 0 -8px; border-radius: 6px; }
-    .sidebar-left h4 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: #18181b;
-      margin: 24px 0 8px;
-      letter-spacing: 0.01em;
-    }
-    .sidebar-left h4:first-child { margin-top: 0; }
-
-    /* ─── Right sidebar (TOC) ─── */
-    .sidebar-right {
-      position: sticky;
-      top: 120px;
-      padding-top: 80px;
-    }
-    .toc a {
-      display: block;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      color: #a1a1aa;
-      text-decoration: none;
-      padding: 5px 0 5px 12px;
-      border-left: 2px solid transparent;
-      line-height: 1.5;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .toc a:hover { color: #18181b; }
-    .toc a.active { color: #18181b; border-left-color: #18181b; }
-
-    /* ─── Article header ─── */
-    .article-header {
-      padding: 80px 0 40px;
-    }
-
     /* ─── Article prose ─── */
-    .prose { font-size: 18px; line-height: 1.8; }
-    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; scroll-margin-top: 120px; }
+    .prose { max-width: 720px; margin: 0 auto; font-size: 18px; line-height: 1.8; }
+    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; }
     .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
     .prose p { margin: 0 0 24px; color: #27272a; }
-    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; list-style: revert; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; }
     .prose li { margin-bottom: 8px; }
     .prose blockquote {
       border-left: 3px solid #2563EB;
@@ -188,14 +120,13 @@
       color: #52525b;
       font-style: italic;
     }
-    .prose figure { margin: 32px 0; }
-    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
     .prose img {
       width: 100%;
       max-width: 100%;
       height: auto;
       border-radius: 12px;
       border: 1px solid #e4e4e7;
+      margin: 32px 0;
     }
     .prose a { color: #2563EB; text-decoration: underline; text-underline-offset: 3px; }
     .prose a:hover { color: #1d4ed8; }
@@ -212,22 +143,30 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 14px;
       line-height: 1.7;
-      max-width: 100%;
     }
     .prose code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.88em;
-      background: #f4f4f5;
-      padding: 2px 5px;
+      background: rgba(37,99,235,0.06);
+      padding: 2px 6px;
       border-radius: 4px;
     }
     .prose pre code {
       background: none;
       padding: 0;
       font-size: 14px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
     }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid #e4e4e7;
+      margin: 48px 0;
+    }
+
+    /* Figures */
+    .prose figure { margin: 32px 0; }
+    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
 
     /* Table */
     .prose table {
@@ -252,39 +191,19 @@
     }
     .prose td { color: #27272a; }
 
-    /* Horizontal rule */
-    .prose hr {
-      border: none;
-      border-top: 1px solid #e4e4e7;
-      margin: 48px 0;
-    }
-
-    /* ─── Responsive ─── */
-    @media (max-width: 1024px) {
-      .page-grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-      .sidebar-left, .sidebar-right {
-        position: static;
-        padding-top: 0;
-      }
-      .sidebar-left { display: none; }
-      .sidebar-right { display: none; }
-      .article-header { padding: 80px 0 40px; }
-    }
+    /* ─── Mobile (see CLAUDE.md: Mobile optimization) ─── */
     @media (max-width: 640px) {
       .nav-hide-sm { display: none; }
+      body > header { padding: 48px 24px 28px !important; }
+      .prose { font-size: 17px; }
+      .prose pre { padding: 14px 16px; font-size: 13px; }
+      .prose pre code { font-size: 13px; }
+      .prose table { display: block; overflow-x: auto; }
       footer > div {
         flex-direction: column !important;
         gap: 10px;
         text-align: center;
       }
-      .article-header { padding: 48px 0 28px; }
-      .prose { font-size: 17px; }
-      .prose pre { padding: 14px 16px; font-size: 13px; }
-      .prose pre code { font-size: 13px; }
-      .prose table { display: block; overflow-x: auto; }
     }
   </style>
 </head>
@@ -310,85 +229,121 @@
         <option value="ja">日本語</option>
         <option value="ko">한국어</option>
       </select>
-      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">記事</a>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">文章</a>
       <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
     </div>
   </div>
   </div>
 </nav>
 
-<!-- ─── 3-COLUMN LAYOUT ─── -->
-<div class="page-grid">
-
-  <!-- LEFT SIDEBAR -->
-  <aside class="sidebar-left">
-    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; すべての記事</a>
-
-    <h4>最近の記事</h4>
-    <div id="recent-posts"></div>
-
-    <h4>トピック</h4>
-    <div id="topics-list"></div>
-  </aside>
-
-  <!-- CENTER: ARTICLE -->
-  <main>
-    <header class="article-header">
+<!-- ─── ARTICLE HEADER ─── -->
+<header style="max-width:720px; margin:0 auto; padding:80px 24px 40px;">
   <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
     <!-- ▼ EDIT: category and date ▼ -->
-    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">研究</span>
-    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026年6月15日</time>
-  
+    <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">教程</span>
+    <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026年6月13日</time>
+    <!-- ▲ EDIT ▲ -->
     <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
   </div>
-  <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる</h1>
-
+  <!-- ▼ EDIT: post title ▼ -->
+  <h1 class="font-heading" style="font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Kimi K2.7 Code：便宜到值得一试，或许好到可以分担工作</h1>
+  <!-- ▲ EDIT ▲ -->
 </header>
 
-    <article class="prose" style="padding:0 0 96px;">
-<p>GLM-5.2 は、一見ありふれたモデルの公開を市場を動かす出来事に変えた。6 月 15 日、<a href="https://finance.yahoo.com/quote/2513.HK/">Zhipu AI の香港上場株</a>は取引時間中に一時 48% 上昇して 1,620 香港ドルを付け、32.8% 高の 1,457 香港ドルで引けた。</p>
+<!-- ─── ARTICLE BODY ─── -->
+<!-- ▼ EDIT: write your post content below ▼ -->
+<article class="prose" style="padding:0 24px 96px;">
 
-  <p>同株は 1 月初旬の Zhipu の IPO 以来、約 820% 上昇している。JPモルガンは目標株価を 1,400 香港ドルに引き上げて「オーバーウェイト」を維持し、バンク・オブ・アメリカは「買い」でカバレッジを開始した。バージョンアップが企業をここまで動かすことは普通ない。今回はそれが起きた。</p>
+  <p>昨天 Moonshot AI 在 Hugging Face 上发布了 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code</a>：一个 1 万亿参数的混合专家（MoE）编码模型（激活参数 32B），上下文窗口 256K，权重以 Modified MIT 许可证开放。</p>
 
-  <p>ドル建てで見ると規模がはっきりする。GLM-5.2 の公開前日、Z.AI の上場株の時価総額は約 600 億ドルだった。今回の公開は 1 営業日で 200 億ドル近くを上乗せし、同社を約 800 億ドル、<a href="https://finance.yahoo.com/quote/ABNB/">Airbnb</a> とほぼ同じ規模へ押し上げた。最も分かりやすい物差しは <a href="https://finance.yahoo.com/quote/COIN/">Coinbase</a> で、2026 年 6 月中旬の時価総額は約 420 億ドル。GLM-5.2 は Z.AI を 1 日で「Coinbase 約 1.5 個分」から「2 個分近く」へ引き上げた。いまやコーディングモデルの公開が、米テックの優良株に匹敵する規模の企業を動かしている。</p>
+  <p>如果你读过我们那篇 <a href="/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html">Claude Fable 5 的文章</a>，这次的逻辑正好反过来。Fable 5 的能力已被验证，风险在于价格。而 K2.7 Code 的价格微不足道，能力才是悬而未决的问题。这个模型才发布一天，还没有任何第三方对它做过基准测试，连 Moonshot 自己公布的数字都把它排在前沿模型之后。但这两种情形最终都指向同一种做法：在你已经在用的编码工具里，跑一个便宜且可随时回退的实验。</p>
 
-  <h2 id="why-the-stock-moved">なぜ株価は動いたのか</h2>
+  <p>有一点让这个实验比单纯的替换更有意思。在 <strong>每百万输入 token 0.95 美元、每百万输出 token 4.00 美元</strong> 的价格下，K2.7 Code 的输入价格约为 Claude Fable 5 的十分之一，输出价格约为十二分之一。这便宜到足以让它担任另一种角色：和你的 SOTA 模型并肩工作，承担那些常规的分发任务，而把难啃的部分留给昂贵的模型。</p>
 
-  <p>GLM-5.2 は Z.AI の新しいフラッグシップ・コーディングモデルであり、その公開を脚注ではなく市場の話題にした要因が二つある。</p>
+  <p>K2.7 Code 已经上线 <a href="https://models.bytefuture.ai">Token Station</a>，模型 ID 为 <code>kimi/kimi-k2.7-code</code>，按 Moonshot 的标价、零加价提供，而你的 <a href="https://models.bytefuture.ai/signup">10 美元注册赠金</a> 足够用上很久。</p>
 
-  <p>第一に、これは<strong>オープンソース</strong>である。MIT ライセンスで公開され、100 万トークンのコンテキストウィンドウを備え、長期的なエージェント型コーディングに重点を置く。クローズドな最前線に迫り続けてきた系譜を引き継ぐものだ。GLM-5 は SWE-bench Verified で 77.8% を記録し、その後の各リリースで差を詰めてきた。重みをダウンロードできるため、この能力が取り消されることはない。</p>
+  <h2 id="what-we-know">我们已知的（以及未知的）</h2>
 
-  <p>第二に、タイミングだ。GLM-5.2 が登場したのと同じ週末、米国の輸出管理命令により Anthropic は最も強力な二つのモデル、Claude Fable 5 と Mythos 5 を全ユーザー向けに停止せざるを得なくなった。ある最前線のベンダーが政府の指示で止まった。一方で、最前線級のコンテキストウィンドウを備えたオープンモデルが、Anthropic の最上位 Claude Code および Max プランのおよそ 10 分の 1 の価格で現れた。投資家はこれを、中国のオープンモデルがその空白に入り込んでいると読み、こうしたモデルを世に出す企業を再評価した。</p>
+  <p>来自<a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">模型卡</a>：</p>
 
-  <p>この上昇が続くかどうかは市場が決める問題だ。開発者にとってより有用な問いはもっと狭い。その裏にあるモデルは、あなたのコードで本当に役立つのか。それを確かめるのに株を買う必要はない。</p>
+  <ul>
+    <li><strong>为编码 agent 而生。</strong>它是 Kimi K2.6 面向编码的后继版本，针对长周期的软件工程做了调优：交错思考、多步工具调用、MCP 支持，以及跨轮次保留的推理过程。</li>
+    <li><strong>思考 token 比 K2.6 少约 30%</strong>，同时编码得分更高，这在按输出 token 计费时很关键。</li>
+    <li><strong>总参数 1T，激活参数 32B</strong>，384 个专家，原生支持 INT4，外加一个 400M 参数的视觉编码器用于图像输入。</li>
+    <li><strong>开放权重，Modified MIT 许可。</strong>你可以把整个模型下载下来，用 vLLM 或 SGLang 自行部署。</li>
+  </ul>
 
-  <h2 id="try-it-free">Token Station で GLM-5.2 を無料で試す</h2>
+  <p>还有坦诚的一面。Moonshot 公布了它和前沿模型的对比，而 K2.7 Code 落了下风：</p>
 
-  <p>GLM-5.2 は <a href="https://models.bytefuture.ai/intro.html" onclick="gtag('event','cta_click',{label:'post_body_token_station'});">Token Station</a> で <code>glm/glm-5.2</code> として利用でき、100 万トークンのフルコンテキストに対応し、Z.AI の定価そのまま、上乗せなしで課金される。入力 100 万トークンあたり 1.40 ドル、出力 100 万トークンあたり 4.40 ドルだ。予算で見込んでおくべき点が一つある。思考は常に有効なので、推論トークンは出力として課金される。</p>
+  <figure>
+    <img src="kimi-k2-7-code-benchmarks.png" alt="Moonshot 自报基准的分组柱状图：Kimi K2.7 Code 在 Kimi Code Bench v2 上得 62.0，对比 GPT-5.5 的 69.0 和 Claude Opus 4.8 的 67.4；在 ProgramBench 上得 53.6，对比 69.1 和 63.8；在 MCP Atlas 上得 76.0，对比 79.4 和 81.3" />
+    <figcaption>Moonshot 自己公布的数字。K2.7 Code 在这三项上都落后于前沿模型。数据来源：<a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code 模型卡</a>，2026 年 6 月。</figcaption>
+  </figure>
 
-  <p>無料で始められる。<a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">登録</a>すると 10 ドル分のクレジットがもらえる。カードは不要で、Z.AI のアカウントや Coding Plan の契約も必要ない。すでに使っているコーディングツールを <code>glm/glm-5.2</code> に向けて、実際の作業をそのまま流してみてほしい。</p>
+  <p>一家厂商公布自己模型落败的基准，是这些数字诚实可信的好迹象，而且差距并不难看：在 Moonshot 的编码基准上比 GPT-5.5 落后约 7 分，在工具使用上更接近。上一代 Kimi（K2.6）目前是 Artificial Analysis Intelligence Index 上最强的开放权重模型。眼下没人知道的是，K2.7 Code 在<em>你的</em>代码库、<em>你的</em>工具里、经过一段长时间的 agent 会话之后表现如何。这正是这个实验要回答的未知数。</p>
 
-  <h3>Claude Code</h3>
+  <p>有一点需要厘清，和我们那篇 Grok Build 文章的思路一致：K2.7 Code 这个<strong>模型</strong>是针对 Moonshot 自家的 <em>Kimi Code CLI</em>（他们的编码工具）做优化的。但你并不需要那个 CLI。这个模型支持 OpenAI 和 Anthropic 兼容的 API，而 Token Station 会把你现有工具发出的请求翻译成它能理解的格式。</p>
 
-  <p>Claude Code はモデルとエンドポイントを環境変数から読み込む。すべてのティアを Token Station 経由で GLM-5.2 にルーティングする。</p>
+  <h2 id="the-price">价格：在前沿模型面前几乎可以忽略不计</h2>
 
-  <pre><code>export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
+  <p>下面这些模型都已在 Token Station 上线，按各家厂商的标价提供：</p>
+
+  <table>
+    <tr><th>模型</th><th>输入 / 1M</th><th>输出 / 1M</th><th>上下文</th></tr>
+    <tr><td><code>kimi/kimi-k2.7-code</code></td><td><strong>$0.95</strong></td><td><strong>$4.00</strong></td><td>256K</td></tr>
+    <tr><td><code>xai/grok-build-0.1</code></td><td>$1.00</td><td>$2.00</td><td>256K</td></tr>
+    <tr><td><code>anthropic/claude-sonnet-4-6</code></td><td>$3.00</td><td>$15.00</td><td>1M</td></tr>
+    <tr><td><code>anthropic/claude-opus-4-8</code></td><td>$5.00</td><td>$25.00</td><td>1M</td></tr>
+    <tr><td><code>openai/gpt-5.5</code></td><td>$5.00</td><td>$30.00</td><td>1M</td></tr>
+    <tr><td><code>anthropic/claude-fable-5</code></td><td>$10.00</td><td>$50.00</td><td>1M</td></tr>
+  </table>
+
+  <p>按 K2.7 Code 的价格，10 美元注册赠金大约能买 1000 万个输入 token 或 250 万个输出 token。同样一笔赠金，用 Fable 5 只够跑一个下午，用它却能撑起好几周的评测。这个实验的下行风险几乎为零。</p>
+
+  <h2 id="share-the-work">真正的实验：分担工作</h2>
+
+  <p>编码 agent 早就把工作分成了不同层级。一边是主循环，负责规划和高难度推理；另一边是分发任务：子 agent 读取文件、执行搜索、运行测试、汇总结果。分发任务消耗了绝大部分 token，却最不需要聪明才智。</p>
+
+  <p>正是在这种分工下，一个每百万 4 美元的模型才有理由和每百万 50 美元的模型并肩而立。让 Fable 5 或 Opus 4.8 坐镇主驾，把常规工作交给 K2.7 Code。如果 Moonshot 的数字在实际中站得住脚，那么委派任务上的质量下降很小，而每个被委派的 token 成本下降都超过 10 倍。</p>
+
+  <h2 id="what-you-need">你需要准备什么</h2>
+
+  <ul>
+    <li>一个 Token Station 账号（<a href="https://models.bytefuture.ai/signup">免费注册</a>；10 美元赠金，无需信用卡，也不需要 Moonshot 账号）</li>
+    <li>你的 Token Station API 密钥（以 <code>gw-</code> 开头）</li>
+    <li>已安装 Claude Code、Codex 或 OpenClaw</li>
+  </ul>
+
+  <h2 id="claude-code-setup">Claude Code 配置：两层分工</h2>
+
+  <p>Claude Code 把它的模型层级以环境变量的形式暴露出来，因此它是跑这个分担工作实验最干净利落的地方。把 Opus 这一档留给 Claude Fable 5，其余全部交给这匹主力模型：</p>
+
+  <pre><code># Token Station endpoint + auth
+export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
 export ANTHROPIC_AUTH_TOKEN="gw-YOUR_TOKEN_STATION_KEY"
 
-export ANTHROPIC_DEFAULT_OPUS_MODEL="glm/glm-5.2"
-export ANTHROPIC_DEFAULT_SONNET_MODEL="glm/glm-5.2"
-export ANTHROPIC_DEFAULT_HAIKU_MODEL="glm/glm-5.2"
-export CLAUDE_CODE_SUBAGENT_MODEL="glm/glm-5.2"
+# Top tier: Fable 5 takes the genuinely hard problems
+export ANTHROPIC_DEFAULT_OPUS_MODEL="anthropic/claude-fable-5"
+
+# Everything else runs on the workhorse
+export ANTHROPIC_DEFAULT_SONNET_MODEL="kimi/kimi-k2.7-code"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="kimi/kimi-k2.7-code"
+export CLAUDE_CODE_SUBAGENT_MODEL="kimi/kimi-k2.7-code"
 
 claude</code></pre>
 
-  <h3>Codex</h3>
+  <p>现在一次普通的会话会全程跑在 K2.7 Code 上：主循环、每个子 agent、每次后台搜索，全部按每百万输出 4 美元计费，而不是 50 美元。当某个问题确实需要前沿级判断时，用 <code>/model opus</code> 升级，Fable 5 就会接手；难啃的部分搞定后再降回来。这样昂贵的模型就回到了它在那个价位上本该扮演的角色：一位被你请来的专家。</p>
 
-  <p>Token Station をプロバイダーとして設定し、GLM-5.2 をモデルにする。</p>
+  <p>如果 Fable 5 的价格让你心疼，就把 Opus 档里的 <code>anthropic/claude-fable-5</code> 换成 <code>anthropic/claude-opus-4-8</code>；这套升级模式在任何档位都适用。</p>
+
+  <h2 id="codex-setup">Codex 配置</h2>
+
+  <p>Codex 每次会话只跑一个模型，但它的 <a href="https://developers.openai.com/codex/config-reference">profiles</a> 能在调用层面实现同样的分工：把主力模型设为默认，再为 Fable 5 单独保留一个命名的升级 profile。</p>
 
   <pre><code>mkdir -p ~/.codex
 cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
-model = "glm/glm-5.2"
+# Default: the workhorse
+model = "kimi/kimi-k2.7-code"
 model_provider = "token_station"
 
 [model_providers.token_station]
@@ -396,14 +351,22 @@ name = "token_station"
 base_url = "https://models.bytefuture.ai/v1"
 env_key = "TOKEN_STATION_API_KEY"
 wire_api = "responses"
+
+# Escalation: Fable 5 on demand
+[profiles.deep]
+model = "anthropic/claude-fable-5"
 EOF
 
 export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
-codex</code></pre>
 
-  <h3>OpenClaw</h3>
+codex                  # routine work on K2.7 Code
+codex --profile deep   # hard problems on Fable 5</code></pre>
 
-  <p>Token Station をプロバイダーとして登録し、GLM-5.2 をデフォルトモデルに設定する。</p>
+  <p>日常你直接运行 <code>codex</code>，按主力模型的价格付费。当某个任务值得动用前沿模型时，<code>codex --profile deep</code> 仅在这一次调用中请出 Fable 5。配置里其他部分一概不动。</p>
+
+  <h2 id="openclaw-setup">OpenClaw 配置</h2>
+
+  <p>OpenClaw 把这种分工做成了一等公民的设置。除非 <code>agents.defaults.subagents.model</code> 另有指定，否则子 agent 会继承调用方的模型（<a href="https://docs.openclaw.ai/tools/subagents">文档</a>），因此可以让 Fable 5 坐镇主驾，而每个派生出来的子 agent 都跑在 K2.7 Code 上：</p>
 
   <pre><code>{
   "models": {
@@ -415,10 +378,16 @@ codex</code></pre>
         "api": "anthropic-messages",
         "models": [
           {
-            "id": "glm/glm-5.2",
-            "name": "GLM-5.2 (Token Station)",
+            "id": "anthropic/claude-fable-5",
+            "name": "Claude Fable 5 (Token Station)",
             "contextWindow": 1000000,
-            "maxTokens": 131072
+            "maxTokens": 128000
+          },
+          {
+            "id": "kimi/kimi-k2.7-code",
+            "name": "Kimi K2.7 Code (Token Station)",
+            "contextWindow": 256000,
+            "maxTokens": 32768
           }
         ]
       }
@@ -426,20 +395,34 @@ codex</code></pre>
   },
   "agents": {
     "defaults": {
-      "model": { "primary": "token-station/glm/glm-5.2" }
+      "model": { "primary": "token-station/anthropic/claude-fable-5" },
+      "subagents": { "model": "token-station/kimi/kimi-k2.7-code" }
     }
   }
 }</code></pre>
 
-  <p>鍵が一つ、すでに使っているハーネス、そして市場が再評価したばかりのモデル。GLM-5.2 があなたのリポジトリで通用するなら、それを確かめるコストは無料登録だけだ。通用しないなら、設定を 1 行変えて先に進めばいい。</p>
+  <p>主 agent 保留前沿级判断；并行的分发任务（也就是烧 token 的那部分）按主力模型的价格计费。如果想让整套流程全部跑在 K2.7 Code 上，就把 <code>agents.defaults.model.primary</code> 指向它；无论哪种方式，两个模型都在同一个密钥背后。</p>
 
-  <p>ここから始めよう：<a href="https://models.bytefuture.ai/signup" onclick="gtag('event','cta_click',{label:'post_body_signup'});">models.bytefuture.ai</a></p>
+  <h2 id="quirks">值得了解的几个特性</h2>
+
+  <ul>
+    <li><strong>思考始终开启。</strong>K2.7 Code 在回答前会先推理，并把推理过程带入后续轮次；你无法关闭它。要把推理 token 算进输出账单，好在相比 K2.6 减少了 30%，压力会小一些。</li>
+    <li><strong>256K 上下文。</strong>已经很慷慨，但只有前沿 Claude 和 GPT 模型 1M 窗口的四分之一。较长的 agent 会话会更早触发压缩。</li>
+    <li><strong>它有自己的主场工具。</strong>Moonshot 是针对 Kimi Code CLI 调优的，所以在别处偶尔会遇到一些粗糙之处。Token Station 对工具和参数名的翻译会处理掉协议层面的不匹配。</li>
+    <li><strong>退出之路两头都通。</strong>如果实验失败，删掉配置就行。如果成功，权重以 Modified MIT 许可放在 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Hugging Face</a> 上：你最终可以在自己的硬件上部署一模一样的模型。一个能够升级为自托管的云端实验，正是混合推理故事的缩影。</li>
+  </ul>
+
+  <h2 id="try-it">开始这个实验</h2>
+
+  <p>把那些你那昂贵模型大材小用的活儿交给 K2.7 Code：子 agent 搜索、测试运行、样板代码、内容汇总。观察一周，看它在哪里站得住、在哪里掉链子，然后据此确定分工。同一个 Token Station 密钥能并排跑 <code>anthropic/claude-fable-5</code>、<code>anthropic/claude-opus-4-8</code> 和 <code>kimi/kimi-k2.7-code</code>，所以对比是天然内置的。</p>
+
+  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（10 美元免费赠金，无需信用卡），亲自看看一个才发布一天的开放权重模型，能否以十分之一的价格扛起你 agent 一半的工作量。</p>
 
   <hr />
 
   <!-- Share -->
   <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">この記事をシェア</span>
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">分享这篇文章</span>
     <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Post
@@ -460,21 +443,14 @@ codex</code></pre>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
       Reddit
     </a>
-    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='コピーしました！';setTimeout(function(){s.textContent='リンクをコピー';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='已复制！';setTimeout(function(){s.textContent='复制链接';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
-      <span class="share-label">リンクをコピー</span>
+      <span class="share-label">复制链接</span>
     </a>
   </div>
 
-    </article>
-  </main>
-
-  <!-- RIGHT SIDEBAR (TOC) -->
-  <aside class="sidebar-right">
-    <nav class="toc" id="toc"></nav>
-  </aside>
-
-</div>
+</article>
+<!-- ▲ EDIT ▲ -->
 
 <!-- ─── FOOTER ─── -->
 <footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
@@ -488,67 +464,9 @@ codex</code></pre>
       </svg>
       <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
     </a>
-    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">記事</a></p>
+    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">文章</a></p>
   </div>
 </footer>
-
-<!-- ─── TOC generator ─── -->
-<script>
-(function() {
-  var toc = document.getElementById('toc');
-  var headings = document.querySelectorAll('.prose h2[id]');
-  headings.forEach(function(h) {
-    var a = document.createElement('a');
-    a.href = '#' + h.id;
-    a.textContent = h.textContent;
-    toc.appendChild(a);
-  });
-
-  // Scroll spy
-  var tocLinks = toc.querySelectorAll('a');
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(function(l) { l.classList.remove('active'); });
-        var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-100px 0px -70% 0px' });
-  headings.forEach(function(h) { observer.observe(h); });
-})();
-</script>
-
-<!-- ─── Left sidebar: recent posts + topics from posts.json ─── -->
-<script>
-(function() {
-  var currentSlug = 'glm-5-2-zai-stock-jump';
-  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
-    .then(function(r) { return r.json(); })
-    .then(function(posts) {
-      var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
-      var recent = sorted.slice(0, 5);
-      var recentEl = document.getElementById('recent-posts');
-      recent.forEach(function(p) {
-        var a = document.createElement('a');
-        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
-        a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
-        if (p.slug === currentSlug) a.classList.add('active');
-        recentEl.appendChild(a);
-      });
-
-      var cats = {};
-      posts.forEach(function(p) { cats[p.category] = true; });
-      var topicsEl = document.getElementById('topics-list');
-      Object.keys(cats).sort().forEach(function(cat) {
-        var a = document.createElement('a');
-        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
-        a.textContent = ({engineering:'エンジニアリング',product:'プロダクト',research:'研究',tutorial:'チュートリアル'})[cat] || cat;
-        topicsEl.appendChild(a);
-      });
-    });
-})();
-</script>
 
 <!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
 <script data-goatcounter="https://bytefuture.goatcounter.com/count"

@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "glm-5-2-zai-stock-jump",
+    "title": "GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる",
+    "summary": "オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。なぜ動いたのか、そして Token Station に登録して GLM-5.2 を無料で試す方法。",
+    "category": "research",
+    "date": "2026-06-15",
+    "cover": "blog/glm-5-2-zai-stock-jump-cover.png"
+  },
+  {
+    "slug": "try-kimi-k2-7-code-in-your-coding-agent",
+    "title": "Kimi K2.7 Code：試すには十分に安く、仕事を分担させるにも十分かもしれない",
+    "summary": "Moonshot の新しい 1T オープンウェイトのコーディングモデルは 100 万トークンあたり 0.95/4 ドル。Claude Code、Codex、OpenClaw で SOTA モデルと組み合わせ、日常的な作業を任せよう。",
+    "category": "tutorial",
+    "date": "2026-06-13",
+    "cover": "blog/kimi-k2-7-code-cover.png"
+  },
+  {
+    "slug": "try-claude-fable-5-in-codex-openclaw-and-pi",
+    "title": "本採用の前に試す：Codex、OpenClaw、Pi で Claude Fable 5 を使う",
+    "summary": "Anthropic の新しいフラッグシップは最先端だが物議を醸し、100 万トークンあたり 10/50 ドル。既存のハーネスで一時的に試してみよう。Anthropic アカウントは不要、Token Station の無料クレジットだけ。",
+    "category": "tutorial",
+    "date": "2026-06-12",
+    "cover": "blog/claude-fable-5-cover.png"
+  },
+  {
+    "slug": "use-grok-build-in-codex-and-claude-code",
+    "title": "Codex と Claude Code で Grok Build を使う方法",
+    "summary": "xAI の Grok Build モデルは進化が速く、価格は GPT-5.5 や Claude Fable 5 のほんの一部。Token Station の無料クレジットで Claude Code や Codex 内で動かせる。xAI アカウントは不要。",
+    "category": "tutorial",
+    "date": "2026-06-10",
+    "cover": "blog/claude-code-grok-build.png"
+  },
+  {
+    "slug": "american-open-models-catching-up-nemotron-gpt55",
+    "title": "アメリカのオープンモデルが追い上げる：Nemotron-3 Ultra が米国オープンウェイトを牽引",
+    "summary": "NVIDIA Nemotron-3 Ultra は Artificial Analysis Intelligence Index で最も高性能なアメリカのオープンウェイトモデルであり、期間限定で NVIDIA NIM から無料で利用できる。",
+    "category": "research",
+    "date": "2026-06-08",
+    "cover": "blog/american-open-models-catching-up-nemotron-gpt55-cover.png"
+  }
+]
