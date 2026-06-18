@@ -347,7 +347,12 @@
     <article class="prose" style="padding:0 0 96px;">
   <p>Claude Code can talk to Token Station without a wrapper or proxy. Point Claude Code at <code>https://models.bytefuture.ai</code>, use your Token Station key as the Anthropic auth token, and choose which Token Station model should answer Opus, Sonnet, Haiku, and subagent requests.</p>
 
-  <p>There are two clean ways to do it. Use <code>~/.claude/settings.json</code> when you want the setup to persist across shells. Use exported environment variables when you want a temporary session, a CI job, or a one-off test.</p>
+  <p>There are two clean ways to do it:</p>
+
+  <ul>
+    <li>Use <code>~/.claude/settings.json</code> when you want the setup to persist across shells.</li>
+    <li>Use exported environment variables when you want a temporary session, a CI job, or a one-off test.</li>
+  </ul>
 
   <h2 id="settings-json">Option 1: persistent settings.json</h2>
 
