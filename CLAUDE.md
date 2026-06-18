@@ -198,6 +198,8 @@ Favicon (same mark, in `<head>`):
 
 Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/h3, blockquote, `pre`/`code`, tables, figures). Don't reinvent them.
 
+**List markers — keep `list-style: revert`.** Every page loads Tailwind via CDN, whose Preflight reset sets `ul, ol { list-style: none }`, which kills the bullets/numbers in article lists. The `.prose ul, .prose ol` rule counteracts this with `list-style: revert` (reverts to the browser default: `disc` for `<ul>`, `decimal` for `<ol>`). **Never drop that declaration** when copying or editing `.prose` CSS, and confirm any new page's `.prose ul, .prose ol` rule still carries it — without it, `<li>` bullets silently disappear even though indentation looks correct. To verify, the computed `list-style-type` on a `.prose li` must be `disc`/`decimal`, not `none`.
+
 ### Writing style: no "AI voice" (required, site-wide)
 
 Applies to everything reader-facing on the whole site, the home page included: article bodies, titles, page copy, `posts.json` summaries, meta descriptions, figure captions, and text baked into cover images. It does not apply to code blocks, config snippets, or HTML comments (the `───` box-drawing rulers are layout, not prose).

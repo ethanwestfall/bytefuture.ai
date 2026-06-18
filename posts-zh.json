@@ -1,5 +1,12 @@
 [
   {
+    "slug": "run-any-model-in-codex-through-token-station",
+    "title": "在 Codex 中通过 Token Station 运行任意模型",
+    "summary": "OpenAI 的 Codex 可以运行任意模型，不只是 OpenAI 自家的。自 2026 年 2 月起它强制使用 Responses API，所以你对接的平台必须原生支持它。本文给出对接 Token Station 的完整 ~/.codex/config.toml 配置，并与 OpenAI 官方文档逐项核对，还介绍了 smart routing。",
+    "category": "tutorial",
+    "date": "2026-06-18"
+  },
+  {
     "slug": "glm-5-2-zai-stock-jump",
     "title": "GLM-5.2 让 Z.AI 股价大涨 33%。现在可在 Token Station 免费体验",
     "summary": "GLM-5.2 发布当天，智谱 AI 的香港上市股票一度上涨 48%。这是它的开源、100 万 token 上下文编程模型。本文解释股价为何大涨，以及如何注册 Token Station 免费试用 GLM-5.2。",

@@ -1,5 +1,12 @@
 [
   {
+    "slug": "run-any-model-in-codex-through-token-station",
+    "title": "Run any model in Codex through Token Station",
+    "summary": "OpenAI's Codex can run any model, not just OpenAI's. Since February 2026 it requires the Responses API, so the platform you point it at must support that natively. The exact ~/.codex/config.toml for Token Station, verified against the OpenAI docs, plus smart routing.",
+    "category": "tutorial",
+    "date": "2026-06-18"
+  },
+  {
     "slug": "glm-5-2-zai-stock-jump",
     "title": "GLM-5.2 sent Z.AI's stock up 33%. Now try it free on Token Station",
     "summary": "Zhipu AI's Hong Kong-listed shares jumped as much as 48% the day GLM-5.2 shipped, its open-source 1M-context coding model. Why it moved, and how to try GLM-5.2 free with a Token Station signup.",
