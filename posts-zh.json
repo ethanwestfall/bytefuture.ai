@@ -1,5 +1,12 @@
 [
   {
+    "slug": "use-any-model-in-claude-code-through-token-station",
+    "title": "在 Claude Code 中通过 Token Station 使用任意模型",
+    "summary": "Claude Code 可以通过 Token Station 运行任意模型。你可以把配置写入 ~/.claude/settings.json，也可以临时 export ANTHROPIC_* 环境变量，设置 base URL、Token、Opus/Sonnet/Haiku 模型和 subagent 模型，再用一行 pong 命令验证。",
+    "category": "tutorial",
+    "date": "2026-06-18"
+  },
+  {
     "slug": "run-any-model-in-codex-through-token-station",
     "title": "在 Codex 中通过 Token Station 运行任意模型",
     "summary": "OpenAI 的 Codex 可以运行任意模型，不只是 OpenAI 自家的。自 2026 年 2 月起它强制使用 Responses API，所以你对接的平台必须原生支持它。本文给出对接 Token Station 的完整 ~/.codex/config.toml 配置，并与 OpenAI 官方文档逐项核对，还介绍了 smart routing。",

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── i18n: remember language choice + auto-redirect; toggle lives in the nav (see CLAUDE.md) ─── -->
+  <script>
+  (function () {
+    var LANGS = ['en', 'zh', 'ja', 'ko'];
+    var path = location.pathname, slash = path.lastIndexOf('/');
+    var dir = path.slice(0, slash + 1), file = path.slice(slash + 1) || 'index.html';
+    var m = file.match(/^(.*?)(?:-(zh|ja|ko))?\.html$/i);
+    var base = m ? m[1] : file.replace(/\.html$/i, '');
+    var cur = (m && m[2]) ? m[2] : 'en';
+    function target(l) { return dir + base + (l === 'en' ? '' : '-' + l) + '.html' + location.search + location.hash; }
+    function cookie() { var h = document.cookie.match(/(?:^|;\s*)bf_lang=([^;]+)/); return h ? decodeURIComponent(h[1]) : ''; }
+    window.bfLang = {
+      cur: cur,
+      pick: function (l) {
+        if (LANGS.indexOf(l) === -1) return;
+        document.cookie = 'bf_lang=' + l + ';path=/;max-age=31536000;samesite=lax';
+        if (l !== cur) location.href = target(l);
+      }
+    };
+    var pref = cookie();
+    if (LANGS.indexOf(pref) === -1) {
+      pref = 'en';
+      var navs = navigator.languages || [navigator.language || ''];
+      for (var i = 0; i < navs.length; i++) {
+        var c = (navs[i] || '').slice(0, 2).toLowerCase();
+        if (c === 'zh' || c === 'ja' || c === 'ko' || c === 'en') { pref = c; break; }
+      }
+    }
+    if (pref !== cur) { location.replace(target(pref)); }
+    document.addEventListener('DOMContentLoaded', function () {
+      var s = document.querySelector('select[data-bf-lang]');
+      if (s) s.value = cur;
+    });
+  })();
+  </script>
+
+  <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
+  <title>Token Station을 통해 Claude Code에서 어떤 모델이든 사용하기 — ByteFuture 글</title>
+  <meta name="description" content="Claude Code는 Token Station을 통해 어떤 모델이든 사용할 수 있다. ~/.claude/settings.json에 저장하는 방법과 ANTHROPIC_* 환경 변수를 임시로 export하는 방법, base URL, token, Opus/Sonnet/Haiku/subagent 모델 설정, pong 검증 명령을 다룬다." />
+  <link rel="canonical" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station-ko.html" />
+  <meta property="og:title" content="Token Station을 통해 Claude Code에서 어떤 모델이든 사용하기 — ByteFuture 글" />
+  <meta property="og:description" content="Claude Code는 Token Station을 통해 어떤 모델이든 사용할 수 있다. ~/.claude/settings.json에 저장하는 방법과 ANTHROPIC_* 환경 변수를 임시로 export하는 방법, base URL, token, Opus/Sonnet/Haiku/subagent 모델 설정, pong 검증 명령을 다룬다." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station-ko.html" />
+  <meta property="og:locale" content="ko_KR" />
+  <!-- ─── i18n alternates: identical in every language version; just keep use-any-model-in-claude-code-through-token-station in sync (see CLAUDE.md) ─── -->
+  <link rel="alternate" hreflang="en" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station.html" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station-zh.html" />
+  <link rel="alternate" hreflang="ja" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station-ja.html" />
+  <link rel="alternate" hreflang="ko" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station-ko.html" />
+  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/use-any-model-in-claude-code-through-token-station.html" />
+  <!-- ▲ EDIT ▲ -->
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#faf9f5',
+            surface: '#ffffff',
+            border: '#e4e4e7',
+            muted: '#71717a',
+            blue: '#2563EB',
+            green: '#0D9488',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            body: ['"Source Serif 4"', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #faf9f5;
+      color: #18181b;
+      font-family: 'Source Serif 4', Georgia, serif;
+      margin: 0;
+    }
+    a { transition: color 0.2s; }
+
+    /* ─── 3-column layout ─── */
+    .page-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: start;
+    }
+    /* Grid items default to min-width:auto and can't shrink below their
+       content (wide images, code lines, tables) — this caps them at the
+       column width so the page never scrolls sideways on phones. */
+    .page-grid > * { min-width: 0; }
+
+    /* ─── Left sidebar ─── */
+    .sidebar-left {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .sidebar-left a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #71717a;
+      text-decoration: none;
+      padding: 4px 0;
+      line-height: 1.5;
+    }
+    .sidebar-left a:hover { color: #18181b; }
+    .sidebar-left a.active { color: #18181b; font-weight: 600; background: #f4f4f5; padding: 4px 8px; margin: 0 -8px; border-radius: 6px; }
+    .sidebar-left h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #18181b;
+      margin: 24px 0 8px;
+      letter-spacing: 0.01em;
+    }
+    .sidebar-left h4:first-child { margin-top: 0; }
+
+    /* ─── Right sidebar (TOC) ─── */
+    .sidebar-right {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .toc a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #a1a1aa;
+      text-decoration: none;
+      padding: 5px 0 5px 12px;
+      border-left: 2px solid transparent;
+      line-height: 1.5;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc a:hover { color: #18181b; }
+    .toc a.active { color: #18181b; border-left-color: #18181b; }
+
+    /* ─── Article header ─── */
+    .article-header {
+      padding: 80px 0 40px;
+    }
+
+    /* ─── Article prose ─── */
+    .prose { font-size: 18px; line-height: 1.8; }
+    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; scroll-margin-top: 120px; }
+    .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
+    .prose p { margin: 0 0 24px; color: #27272a; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; list-style: revert; }
+    .prose li { margin-bottom: 8px; }
+    .prose blockquote {
+      border-left: 3px solid #2563EB;
+      margin: 32px 0;
+      padding: 0 0 0 24px;
+      color: #52525b;
+      font-style: italic;
+    }
+    .prose figure { margin: 32px 0; }
+    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
+    .prose img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #e4e4e7;
+    }
+    .prose a { color: #2563EB; text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: #1d4ed8; }
+    .prose strong { font-weight: 600; color: #18181b; }
+
+    /* Code blocks */
+    .prose pre {
+      background: #ffffff;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 32px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+    .prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+      background: #f4f4f5;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .prose pre code {
+      background: none;
+      padding: 0;
+      font-size: 14px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    /* Table */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 32px 0;
+      font-size: 16px;
+    }
+    .prose th, .prose td {
+      border: 1px solid #e4e4e7;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .prose th {
+      background: #f4f4f5;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .prose td { color: #27272a; }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid #e4e4e7;
+      margin: 48px 0;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .sidebar-left, .sidebar-right {
+        position: static;
+        padding-top: 0;
+      }
+      .sidebar-left { display: none; }
+      .sidebar-right { display: none; }
+      .article-header { padding: 80px 0 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-hide-sm { display: none; }
+      footer > div {
+        flex-direction: column !important;
+        gap: 10px;
+        text-align: center;
+      }
+      .article-header { padding: 48px 0 28px; }
+      .prose { font-size: 17px; }
+      .prose pre { padding: 14px 16px; font-size: 13px; }
+      .prose pre code { font-size: 13px; }
+      .prose table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav style="position:sticky; top:0; z-index:50; border-bottom:1px solid #e4e4e7;">
+  <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#18181b; background:#ffffff; border:1px solid #e4e4e7; border-radius:8px; padding:6px 10px; cursor:pointer;">
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+      </select>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">글</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
+    </div>
+  </div>
+  </div>
+</nav>
+
+<!-- ─── 3-COLUMN LAYOUT ─── -->
+<div class="page-grid">
+
+  <!-- LEFT SIDEBAR (recent posts + topics, filled by JS from posts.json) -->
+  <aside class="sidebar-left">
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; 모든 글</a>
+
+    <h4>최근 글</h4>
+    <div id="recent-posts"></div>
+
+    <h4>주제</h4>
+    <div id="topics-list"></div>
+  </aside>
+
+  <!-- CENTER: ARTICLE -->
+  <main>
+    <header class="article-header">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <!-- ▼ EDIT: category and date ▼ -->
+        <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">튜토리얼</span>
+        <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026년 6월 18일</time>
+        <!-- ▲ EDIT ▲ -->
+        <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
+      </div>
+      <!-- ▼ EDIT: post title ▼ -->
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">Token Station을 통해 Claude Code에서 어떤 모델이든 사용하기</h1>
+      <!-- ▲ EDIT ▲ -->
+    </header>
+
+    <!-- ▼ EDIT: write your post content below. Give every <h2> an id so it appears in the right-hand TOC. ▼ -->
+    <article class="prose" style="padding:0 0 96px;">
+  <p>Claude Code는 별도 래퍼나 프록시 없이 Token Station에 연결할 수 있다. Claude Code의 요청 주소를 <code>https://models.bytefuture.ai</code>로 향하게 하고, Token Station 키를 Anthropic auth token으로 사용한 뒤, Opus, Sonnet, Haiku, subagent 요청에 어떤 Token Station 모델을 쓸지 지정하면 된다.</p>
+
+  <p>방법은 두 가지다. 셸을 넘어 계속 유지하려면 <code>~/.claude/settings.json</code>을 사용한다. 임시 세션, CI 작업, 한 번만 하는 테스트라면 환경 변수를 export하면 된다.</p>
+
+  <h2 id="settings-json">방법 1: 영구 settings.json</h2>
+
+  <p>Claude Code 설정 디렉터리를 만들고 <code>~/.claude/settings.json</code>에 환경 변수 블록을 쓴다:</p>
+
+  <pre><code>mkdir -p ~/.claude
+cat &gt; ~/.claude/settings.json &lt;&lt;'EOF'
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://models.bytefuture.ai",
+    "ANTHROPIC_AUTH_TOKEN": "YOUR TOKEN AT TOKEN STATION",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "openai/gpt-5.5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "openai/gpt-5.4-mini",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "openai/gpt-5.4-nano",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "openai/gpt-5.4-mini"
+  }
+}
+EOF</code></pre>
+
+  <p>그런 다음 최소 프롬프트로 CLI가 Token Station을 쓰는지 확인한다:</p>
+
+  <pre><code>claude -p "Respond with exactly the word: pong"</code></pre>
+
+  <p>출력이 정확히 <code>pong</code>이면 Claude Code가 Token Station에 도달했고, 설정한 모델이 응답하고 있는 것이다.</p>
+
+  <h2 id="shell-env">방법 2: 임시 shell export</h2>
+
+  <p>설정 파일을 쓰고 싶지 않다면, Claude Code를 실행할 같은 shell에서 같은 값을 export한다:</p>
+
+  <pre><code>export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
+export ANTHROPIC_AUTH_TOKEN="YOUR TOKEN AT TOKEN STATION"
+
+export ANTHROPIC_DEFAULT_OPUS_MODEL="openai/gpt-5.5"
+export ANTHROPIC_DEFAULT_SONNET_MODEL="openai/gpt-5.4-mini"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="openai/gpt-5.4-nano"
+export CLAUDE_CODE_SUBAGENT_MODEL="openai/gpt-5.4-mini"
+
+claude -p "Respond with exactly the word: pong"</code></pre>
+
+  <p>저장된 Claude Code 설정을 바꾸지 않고 다른 모델 매핑을 시험할 때 유용하다.</p>
+
+  <h2 id="what-each-variable-does">각 변수의 의미</h2>
+
+  <table>
+    <tr><th>변수</th><th>의미</th></tr>
+    <tr><td><code>ANTHROPIC_BASE_URL</code></td><td>Claude Code가 요청을 보내는 API 엔드포인트. Token Station에서는 <code>https://models.bytefuture.ai</code>를 사용한다.</td></tr>
+    <tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>Token Station API 키. 소스 관리에 넣지 않는다.</td></tr>
+    <tr><td><code>ANTHROPIC_DEFAULT_OPUS_MODEL</code></td><td>Opus급 요청에 Claude Code가 사용할 모델.</td></tr>
+    <tr><td><code>ANTHROPIC_DEFAULT_SONNET_MODEL</code></td><td>Sonnet급 요청에 Claude Code가 사용할 모델.</td></tr>
+    <tr><td><code>ANTHROPIC_DEFAULT_HAIKU_MODEL</code></td><td>Haiku급 요청에 Claude Code가 사용할 모델.</td></tr>
+    <tr><td><code>CLAUDE_CODE_SUBAGENT_MODEL</code></td><td>Claude Code subagent가 사용할 모델.</td></tr>
+  </table>
+
+  <h2 id="choosing-models">모델 고르기</h2>
+
+  <p>위의 모델 ID는 단순한 매핑이다. Claude Code의 각 슬롯을 서로 다른 Token Station 모델로 향하게 할 수도 있고, 모두 같은 모델로 둘 수도 있다. 실용적인 기본값은 Opus에는 강한 모델을, Sonnet, Haiku, subagent에는 더 빠르고 저렴한 모델을 두는 것이다.</p>
+
+  <table>
+    <tr><th>슬롯</th><th>예시 모델</th><th>용도</th></tr>
+    <tr><td><code>Opus</code></td><td><code>openai/gpt-5.5</code></td><td>어려운 계획, 디버깅, 아키텍처, 긴 편집.</td></tr>
+    <tr><td><code>Sonnet</code></td><td><code>openai/gpt-5.4-mini</code></td><td>일상 코딩, 리뷰, 저장소 탐색.</td></tr>
+    <tr><td><code>Haiku</code></td><td><code>openai/gpt-5.4-nano</code></td><td>짧고 저렴하며 지연 시간이 낮은 작업.</td></tr>
+    <tr><td><code>Subagent</code></td><td><code>openai/gpt-5.4-mini</code></td><td>병렬 조사와 위임된 코딩 작업.</td></tr>
+  </table>
+
+  <h2 id="troubleshooting">연결이 안 될 때</h2>
+
+  <ul>
+    <li><strong>여전히 기본 Anthropic 엔드포인트를 쓴다.</strong> <code>ANTHROPIC_BASE_URL</code>이 <code>claude</code>를 실행하는 shell에 있거나 <code>~/.claude/settings.json</code> 안에 있는지 확인하라.</li>
+    <li><strong>401 / 인증 오류.</strong> <code>YOUR TOKEN AT TOKEN STATION</code>을 실제 Token Station 키로 바꿔라.</li>
+    <li><strong>다른 모델이 응답한다.</strong> Opus, Sonnet, Haiku, subagent 모델 변수를 확인하라. Claude Code는 요청 유형에 따라 이 슬롯들 중 하나를 선택한다.</li>
+    <li><strong>settings 파일이 적용되지 않는 것 같다.</strong> <code>~/.claude/settings.json</code>이 올바른 JSON인지 확인하고, 수정 후 Claude Code 명령을 다시 실행하라.</li>
+  </ul>
+
+  <h2 id="wrap">시작하기</h2>
+
+  <p>영구 설정에는 <code>~/.claude/settings.json</code>을 쓰고, 임시 설정에는 현재 shell에서 변수를 export하면 된다. 두 경우 모두 확인 방법은 같다. <code>claude -p "Respond with exactly the word: pong"</code>을 실행하고 <code>pong</code>이 돌아오는지 보면 된다.</p>
+
+  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>에서 가입하고($10 무료 크레딧, 카드 불필요), Token Station 키를 Claude Code에 넣은 뒤 Claude Code의 모델 슬롯들을 실제로 쓰고 싶은 모델에 연결하라.</p>
+
+      <hr />
+
+      <!-- Share (leave exactly as-is; the buttons fire share_click GA events) -->
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">이 글 공유하기</span>
+        <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Post
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'linkedin'});window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+          LinkedIn
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'facebook'});window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'hackernews'});window.open('https://news.ycombinator.com/submitlink?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+          Hacker News
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'reddit'});window.open('https://www.reddit.com/submit?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Reddit
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='복사됨!';setTimeout(function(){s.textContent='링크 복사';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+          <span class="share-label">링크 복사</span>
+        </a>
+      </div>
+
+    </article>
+    <!-- ▲ EDIT ▲ -->
+  </main>
+
+  <!-- RIGHT SIDEBAR (TOC, filled by JS from the article's h2[id] headings) -->
+  <aside class="sidebar-right">
+    <nav class="toc" id="toc"></nav>
+  </aside>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
+    </a>
+    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">글</a></p>
+  </div>
+</footer>
+
+<!-- ─── TOC generator (right sidebar) ─── -->
+<script>
+(function() {
+  var toc = document.getElementById('toc');
+  var headings = document.querySelectorAll('.prose h2[id]');
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    toc.appendChild(a);
+  });
+
+  // Scroll spy
+  var tocLinks = toc.querySelectorAll('a');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(function(l) { l.classList.remove('active'); });
+        var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -70% 0px' });
+  headings.forEach(function(h) { observer.observe(h); });
+})();
+</script>
+
+<!-- ─── Left sidebar: recent posts + topics (language-aware: reads posts-<lang>.json, links same-language) ─── -->
+<script>
+(function() {
+  var currentSlug = 'use-any-model-in-claude-code-through-token-station';
+  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
+    .then(function(r) { return r.json(); })
+    .then(function(posts) {
+      var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
+      var recent = sorted.slice(0, 5);
+      var recentEl = document.getElementById('recent-posts');
+      recent.forEach(function(p) {
+        var a = document.createElement('a');
+        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
+        a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
+        if (p.slug === currentSlug) a.classList.add('active');
+        recentEl.appendChild(a);
+      });
+
+      var cats = {};
+      posts.forEach(function(p) { cats[p.category] = true; });
+      var topicsEl = document.getElementById('topics-list');
+      Object.keys(cats).sort().forEach(function(cat) {
+        var a = document.createElement('a');
+        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
+        a.textContent = ({engineering:'엔지니어링',product:'제품',research:'연구',tutorial:'튜토리얼'})[cat] || cat;
+        topicsEl.appendChild(a);
+      });
+    });
+})();
+</script>
+
+<!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
+<script data-goatcounter="https://bytefuture.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function() {
+  var el = document.getElementById('view-count');
+  if (!el) return;
+  // Public per-page count; the page path is the key — no per-article edit needed.
+  fetch('https://bytefuture.goatcounter.com/counter/' + location.pathname + '.json')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (d && d.count) {
+        var n = String(d.count).trim();
+        el.textContent = n.replace(/[\u2009\u202F ]/g, ',') + (n === '1' ? ' view' : ' views');
+      }
+    })
+    .catch(function() {});
+})();
+</script>
+
+</body>
+</html>
