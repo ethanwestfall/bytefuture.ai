@@ -345,7 +345,7 @@
 
     <!-- ▼ EDIT: write your post content below. Give every <h2> an id so it appears in the right-hand TOC. ▼ -->
     <article class="prose" style="padding:0 0 96px;">
-  <p>Claude Code 可以不通过额外代理，直接连到 Token Station。把 Claude Code 的请求地址指向 <code>https://models.bytefuture.ai</code>，把 Token Station 的 key 当作 Anthropic auth token，再分别指定 Opus、Sonnet、Haiku 和 subagent 请求由哪些 Token Station 模型来回答。</p>
+  <p>Claude Code 可以不通过额外代理，直接连到 <a href="https://models.bytefuture.ai">Token Station</a>。把 Claude Code 的请求地址指向 <code>https://models.bytefuture.ai</code>，把 <a href="https://models.bytefuture.ai">Token Station</a> 的 key 当作 Anthropic auth token，再分别指定 Opus、Sonnet、Haiku 和 subagent 请求由哪些 <a href="https://models.bytefuture.ai">Token Station</a> 模型来回答。</p>
 
   <p>有两种干净的配置方式。想长期生效，就写入 <code>~/.claude/settings.json</code>。只想临时试一次、跑 CI、或者切一个测试会话，就用 shell 里的环境变量。</p>
 
@@ -367,11 +367,11 @@ cat &gt; ~/.claude/settings.json &lt;&lt;'EOF'
 }
 EOF</code></pre>
 
-  <p>然后用一个最小 prompt 验证 CLI 是否已经在走 Token Station：</p>
+  <p>然后用一个最小 prompt 验证 CLI 是否已经在走 <a href="https://models.bytefuture.ai">Token Station</a>：</p>
 
   <pre><code>claude -p "Respond with exactly the word: pong"</code></pre>
 
-  <p>如果输出正好是 <code>pong</code>，说明 Claude Code 已经连上 Token Station，并且由你配置的模型返回了结果。</p>
+  <p>如果输出正好是 <code>pong</code>，说明 Claude Code 已经连上 <a href="https://models.bytefuture.ai">Token Station</a>，并且由你配置的模型返回了结果。</p>
 
   <h2 id="shell-env">方式二：临时 export 环境变量</h2>
 
@@ -393,8 +393,8 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <table>
     <tr><th>变量</th><th>含义</th></tr>
-    <tr><td><code>ANTHROPIC_BASE_URL</code></td><td>Claude Code 发送请求的 API 地址。Token Station 使用 <code>https://models.bytefuture.ai</code>。</td></tr>
-    <tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>你的 Token Station API key。不要把它提交到代码仓库。</td></tr>
+    <tr><td><code>ANTHROPIC_BASE_URL</code></td><td>Claude Code 发送请求的 API 地址。<a href="https://models.bytefuture.ai">Token Station</a> 使用 <code>https://models.bytefuture.ai</code>。</td></tr>
+    <tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>你的 <a href="https://models.bytefuture.ai">Token Station</a> API key。不要把它提交到代码仓库。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_OPUS_MODEL</code></td><td>Claude Code 处理 Opus 档请求时使用的模型。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_SONNET_MODEL</code></td><td>Claude Code 处理 Sonnet 档请求时使用的模型。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_HAIKU_MODEL</code></td><td>Claude Code 处理 Haiku 档请求时使用的模型。</td></tr>
@@ -403,12 +403,12 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <h2 id="choosing-models">怎么选模型</h2>
 
-  <p>上面的模型 ID 只是一个映射。你可以给 Claude Code 的每个档位分配不同的 Token Station 模型，也可以全部指向同一个模型。实用的默认方案是：Opus 给强模型，Sonnet、Haiku 和 subagent 给更快、更便宜的模型。</p>
+  <p>上面的模型 ID 只是一个映射。你可以给 Claude Code 的每个档位分配不同的 <a href="https://models.bytefuture.ai">Token Station</a> 模型，也可以全部指向同一个模型。实用的默认方案是：Opus 给强模型，Sonnet、Haiku 和 subagent 给更快、更便宜的模型。</p>
 
-  <p>几个适合作为起点的 Token Station 模型：</p>
+  <p>几个适合作为起点的 <a href="https://models.bytefuture.ai">Token Station</a> 模型：</p>
 
   <table>
-    <tr><th>Claude Code 档位</th><th>Token Station 模型</th><th>为什么用它</th></tr>
+    <tr><th>Claude Code 档位</th><th><a href="https://models.bytefuture.ai">Token Station</a> 模型</th><th>为什么用它</th></tr>
     <tr><td><code>Opus</code></td><td><code>openai/gpt-5.5</code></td><td>复杂规划、调试、架构设计和长编辑的默认强模型。</td></tr>
     <tr><td><code>Sonnet</code></td><td><code>openai/gpt-5.4-mini</code></td><td>适合作为日常编码、代码审查、仓库导航和重构的均衡主力。</td></tr>
     <tr><td><code>Haiku</code></td><td><code>openai/gpt-5.4-nano</code></td><td>适合短 prompt、快速检查、低成本和低延迟任务。</td></tr>
@@ -423,7 +423,7 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <ul>
     <li><strong>还是走默认 Anthropic endpoint。</strong>确认 <code>ANTHROPIC_BASE_URL</code> 出现在启动 <code>claude</code> 的 shell 里，或者已经写进 <code>~/.claude/settings.json</code>。</li>
-    <li><strong>401 / 鉴权错误。</strong>把 <code>YOUR TOKEN AT TOKEN STATION</code> 换成真实的 Token Station key。</li>
+    <li><strong>401 / 鉴权错误。</strong>把 <code>YOUR TOKEN AT TOKEN STATION</code> 换成真实的 <a href="https://models.bytefuture.ai">Token Station</a> key。</li>
     <li><strong>回答的模型不对。</strong>检查 Opus、Sonnet、Haiku 和 subagent 的模型变量。Claude Code 会根据请求类型在这些档位之间选择。</li>
     <li><strong>settings 文件看起来没生效。</strong>确认 <code>~/.claude/settings.json</code> 是合法 JSON，并在修改后重新运行 Claude Code 命令。</li>
   </ul>
@@ -432,7 +432,7 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <p>想长期使用，就写 <code>~/.claude/settings.json</code>。想临时使用，就在当前 shell 里 export 这些变量。两种方式的验证命令都一样：运行 <code>claude -p "Respond with exactly the word: pong"</code>，看它是否返回 <code>pong</code>。</p>
 
-  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（10 美元免费额度，无需信用卡），把 Token Station key 放进 Claude Code，再把 Claude Code 的各个模型档位指向你真正想用的模型。</p>
+  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（10 美元免费额度，无需信用卡），把 <a href="https://models.bytefuture.ai">Token Station</a> key 放进 Claude Code，再把 Claude Code 的各个模型档位指向你真正想用的模型。</p>
 
       <hr />
 

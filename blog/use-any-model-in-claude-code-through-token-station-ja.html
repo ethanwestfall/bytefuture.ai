@@ -345,7 +345,7 @@
 
     <!-- ▼ EDIT: write your post content below. Give every <h2> an id so it appears in the right-hand TOC. ▼ -->
     <article class="prose" style="padding:0 0 96px;">
-  <p>Claude Code は、追加のラッパーやプロキシなしで Token Station に接続できる。Claude Code の接続先を <code>https://models.bytefuture.ai</code> に向け、Token Station のキーを Anthropic auth token として使い、Opus、Sonnet、Haiku、subagent の各リクエストにどの Token Station モデルを使うかを指定する。</p>
+  <p>Claude Code は、追加のラッパーやプロキシなしで <a href="https://models.bytefuture.ai">Token Station</a> に接続できる。Claude Code の接続先を <code>https://models.bytefuture.ai</code> に向け、<a href="https://models.bytefuture.ai">Token Station</a> のキーを Anthropic auth token として使い、Opus、Sonnet、Haiku、subagent の各リクエストにどの <a href="https://models.bytefuture.ai">Token Station</a> モデルを使うかを指定する。</p>
 
   <p>設定方法は 2 つある。シェルをまたいで永続化したいなら <code>~/.claude/settings.json</code> を使う。一時的なセッション、CI ジョブ、または 1 回限りのテストなら、環境変数を export するだけでよい。</p>
 
@@ -367,11 +367,11 @@ cat &gt; ~/.claude/settings.json &lt;&lt;'EOF'
 }
 EOF</code></pre>
 
-  <p>次に、最小のプロンプトで CLI が Token Station を使っているか確認する：</p>
+  <p>次に、最小のプロンプトで CLI が <a href="https://models.bytefuture.ai">Token Station</a> を使っているか確認する：</p>
 
   <pre><code>claude -p "Respond with exactly the word: pong"</code></pre>
 
-  <p>出力がちょうど <code>pong</code> なら、Claude Code は Token Station に到達し、設定したモデルが応答している。</p>
+  <p>出力がちょうど <code>pong</code> なら、Claude Code は <a href="https://models.bytefuture.ai">Token Station</a> に到達し、設定したモデルが応答している。</p>
 
   <h2 id="shell-env">方法 2：一時的な shell export</h2>
 
@@ -393,8 +393,8 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <table>
     <tr><th>変数</th><th>意味</th></tr>
-    <tr><td><code>ANTHROPIC_BASE_URL</code></td><td>Claude Code がリクエストを送る API エンドポイント。Token Station では <code>https://models.bytefuture.ai</code> を使う。</td></tr>
-    <tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td>Token Station の API キー。ソース管理には入れない。</td></tr>
+    <tr><td><code>ANTHROPIC_BASE_URL</code></td><td>Claude Code がリクエストを送る API エンドポイント。<a href="https://models.bytefuture.ai">Token Station</a> では <code>https://models.bytefuture.ai</code> を使う。</td></tr>
+    <tr><td><code>ANTHROPIC_AUTH_TOKEN</code></td><td><a href="https://models.bytefuture.ai">Token Station</a> の API キー。ソース管理には入れない。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_OPUS_MODEL</code></td><td>Opus クラスのリクエストに使うモデル。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_SONNET_MODEL</code></td><td>Sonnet クラスのリクエストに使うモデル。</td></tr>
     <tr><td><code>ANTHROPIC_DEFAULT_HAIKU_MODEL</code></td><td>Haiku クラスのリクエストに使うモデル。</td></tr>
@@ -403,12 +403,12 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <h2 id="choosing-models">モデルの選び方</h2>
 
-  <p>上のモデル ID は単なる割り当てだ。Claude Code の各スロットを別々の Token Station モデルに向けてもよいし、すべて同じモデルにしてもよい。実用的な初期値は、Opus に強いモデルを置き、Sonnet、Haiku、subagent にはより速く安いモデルを置くことだ。</p>
+  <p>上のモデル ID は単なる割り当てだ。Claude Code の各スロットを別々の <a href="https://models.bytefuture.ai">Token Station</a> モデルに向けてもよいし、すべて同じモデルにしてもよい。実用的な初期値は、Opus に強いモデルを置き、Sonnet、Haiku、subagent にはより速く安いモデルを置くことだ。</p>
 
-  <p>Token Station での出発点として使いやすいモデル：</p>
+  <p><a href="https://models.bytefuture.ai">Token Station</a> での出発点として使いやすいモデル：</p>
 
   <table>
-    <tr><th>Claude Code スロット</th><th>Token Station モデル</th><th>使う理由</th></tr>
+    <tr><th>Claude Code スロット</th><th><a href="https://models.bytefuture.ai">Token Station</a> モデル</th><th>使う理由</th></tr>
     <tr><td><code>Opus</code></td><td><code>openai/gpt-5.5</code></td><td>難しい設計、デバッグ、アーキテクチャ、長い編集の強い既定値。</td></tr>
     <tr><td><code>Sonnet</code></td><td><code>openai/gpt-5.4-mini</code></td><td>日常的なコーディング、レビュー、リポジトリ調査、リファクタリング向けのバランス型。</td></tr>
     <tr><td><code>Haiku</code></td><td><code>openai/gpt-5.4-nano</code></td><td>短いプロンプト、素早い確認、低コスト・低レイテンシのタスク向け。</td></tr>
@@ -423,7 +423,7 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <ul>
     <li><strong>まだ既定の Anthropic エンドポイントを使う。</strong><code>ANTHROPIC_BASE_URL</code> が <code>claude</code> を起動する shell にあるか、または <code>~/.claude/settings.json</code> に入っているか確認する。</li>
-    <li><strong>401 / 認証エラー。</strong><code>YOUR TOKEN AT TOKEN STATION</code> を実際の Token Station キーに置き換える。</li>
+    <li><strong>401 / 認証エラー。</strong><code>YOUR TOKEN AT TOKEN STATION</code> を実際の <a href="https://models.bytefuture.ai">Token Station</a> キーに置き換える。</li>
     <li><strong>違うモデルが応答する。</strong>Opus、Sonnet、Haiku、subagent のモデル変数を確認する。Claude Code はリクエスト種別に応じてこれらのスロットを選ぶ。</li>
     <li><strong>settings ファイルが効かない。</strong><code>~/.claude/settings.json</code> が正しい JSON であることを確認し、編集後に Claude Code コマンドを実行し直す。</li>
   </ul>
@@ -432,7 +432,7 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <p>恒久的に使うなら <code>~/.claude/settings.json</code>。一時的に使うなら現在の shell で変数を export する。どちらの場合も確認方法は同じで、<code>claude -p "Respond with exactly the word: pong"</code> を実行し、<code>pong</code> が返るかを見る。</p>
 
-  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録し（無料クレジット 10 ドル、カード不要）、Token Station キーを Claude Code に入れ、Claude Code の各モデルスロットを実際に使いたいモデルへ向けよう。</p>
+  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録し（無料クレジット 10 ドル、カード不要）、<a href="https://models.bytefuture.ai">Token Station</a> キーを Claude Code に入れ、Claude Code の各モデルスロットを実際に使いたいモデルへ向けよう。</p>
 
       <hr />
 
