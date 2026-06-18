@@ -106,12 +106,79 @@
     }
     a { transition: color 0.2s; }
 
+    /* ─── 3-column layout ─── */
+    .page-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: start;
+    }
+    /* Grid items default to min-width:auto and can't shrink below their
+       content (wide images, code lines, tables) — this caps them at the
+       column width so the page never scrolls sideways on phones. */
+    .page-grid > * { min-width: 0; }
+
+    /* ─── Left sidebar ─── */
+    .sidebar-left {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .sidebar-left a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #71717a;
+      text-decoration: none;
+      padding: 4px 0;
+      line-height: 1.5;
+    }
+    .sidebar-left a:hover { color: #18181b; }
+    .sidebar-left a.active { color: #18181b; font-weight: 600; background: #f4f4f5; padding: 4px 8px; margin: 0 -8px; border-radius: 6px; }
+    .sidebar-left h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #18181b;
+      margin: 24px 0 8px;
+      letter-spacing: 0.01em;
+    }
+    .sidebar-left h4:first-child { margin-top: 0; }
+
+    /* ─── Right sidebar (TOC) ─── */
+    .sidebar-right {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .toc a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #a1a1aa;
+      text-decoration: none;
+      padding: 5px 0 5px 12px;
+      border-left: 2px solid transparent;
+      line-height: 1.5;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc a:hover { color: #18181b; }
+    .toc a.active { color: #18181b; border-left-color: #18181b; }
+
+    /* ─── Article header ─── */
+    .article-header {
+      padding: 80px 0 40px;
+    }
+
     /* ─── Article prose ─── */
-    .prose { max-width: 720px; margin: 0 auto; font-size: 18px; line-height: 1.8; }
-    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; }
+    .prose { font-size: 18px; line-height: 1.8; }
+    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; scroll-margin-top: 120px; }
     .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
     .prose p { margin: 0 0 24px; color: #27272a; }
-    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; list-style: revert; }
     .prose li { margin-bottom: 8px; }
     .prose blockquote {
       border-left: 3px solid #2563EB;
@@ -120,13 +187,14 @@
       color: #52525b;
       font-style: italic;
     }
+    .prose figure { margin: 32px 0; }
+    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
     .prose img {
       width: 100%;
       max-width: 100%;
       height: auto;
       border-radius: 12px;
       border: 1px solid #e4e4e7;
-      margin: 32px 0;
     }
     .prose a { color: #2563EB; text-decoration: underline; text-underline-offset: 3px; }
     .prose a:hover { color: #1d4ed8; }
@@ -143,30 +211,22 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 14px;
       line-height: 1.7;
+      max-width: 100%;
     }
     .prose code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.88em;
-      background: rgba(37,99,235,0.06);
-      padding: 2px 6px;
+      background: #f4f4f5;
+      padding: 2px 5px;
       border-radius: 4px;
     }
     .prose pre code {
       background: none;
       padding: 0;
       font-size: 14px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
-
-    /* Horizontal rule */
-    .prose hr {
-      border: none;
-      border-top: 1px solid #e4e4e7;
-      margin: 48px 0;
-    }
-
-    /* Figures */
-    .prose figure { margin: 32px 0; }
-    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
 
     /* Table */
     .prose table {
@@ -191,19 +251,39 @@
     }
     .prose td { color: #27272a; }
 
-    /* ─── Mobile (see CLAUDE.md: Mobile optimization) ─── */
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid #e4e4e7;
+      margin: 48px 0;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .sidebar-left, .sidebar-right {
+        position: static;
+        padding-top: 0;
+      }
+      .sidebar-left { display: none; }
+      .sidebar-right { display: none; }
+      .article-header { padding: 80px 0 40px; }
+    }
     @media (max-width: 640px) {
       .nav-hide-sm { display: none; }
-      body > header { padding: 48px 24px 28px !important; }
-      .prose { font-size: 17px; }
-      .prose pre { padding: 14px 16px; font-size: 13px; }
-      .prose pre code { font-size: 13px; }
-      .prose table { display: block; overflow-x: auto; }
       footer > div {
         flex-direction: column !important;
         gap: 10px;
         text-align: center;
       }
+      .article-header { padding: 48px 0 28px; }
+      .prose { font-size: 17px; }
+      .prose pre { padding: 14px 16px; font-size: 13px; }
+      .prose pre code { font-size: 13px; }
+      .prose table { display: block; overflow-x: auto; }
     }
   </style>
 </head>
@@ -236,8 +316,22 @@
   </div>
 </nav>
 
-<!-- ─── ARTICLE HEADER ─── -->
-<header style="max-width:720px; margin:0 auto; padding:80px 24px 40px;">
+<!-- ─── 3-COLUMN LAYOUT ─── -->
+<div class="page-grid">
+
+  <aside class="sidebar-left">
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; All writings</a>
+
+    <h4>Recent</h4>
+    <div id="recent-posts"></div>
+
+    <h4>Topics</h4>
+    <div id="topics-list"></div>
+  </aside>
+
+  <!-- CENTER: ARTICLE -->
+  <main>
+    <header class="article-header">
   <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
     <!-- ▼ EDIT: category and date ▼ -->
     <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">Tutorial</span>
@@ -252,7 +346,7 @@
 
 <!-- ─── ARTICLE BODY ─── -->
 <!-- ▼ EDIT: write your post content below ▼ -->
-<article class="prose" style="padding:0 24px 96px;">
+<article class="prose" style="padding:0 0 96px;">
 
   <p><a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">Claude Fable 5</a> launched on June 9, and on raw capability it is hard to argue with: a new tier above Opus, state-of-the-art on nearly every benchmark Anthropic tested, and the new #1 on the <a href="https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index">Artificial Analysis Intelligence Index</a>.</p>
 
@@ -460,7 +554,15 @@ pi --model anthropic/claude-fable-5</code></pre>
   </div>
 
 </article>
-<!-- ▲ EDIT ▲ -->
+    <!-- ▲ EDIT ▲ -->
+  </main>
+
+  <!-- RIGHT SIDEBAR (TOC) -->
+  <aside class="sidebar-right">
+    <nav class="toc" id="toc"></nav>
+  </aside>
+
+</div>
 
 <!-- ─── FOOTER ─── -->
 <footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
@@ -477,6 +579,64 @@ pi --model anthropic/claude-fable-5</code></pre>
     <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">Writings</a></p>
   </div>
 </footer>
+
+<!-- ─── TOC generator (right sidebar) ─── -->
+<script>
+(function() {
+  var toc = document.getElementById('toc');
+  var headings = document.querySelectorAll('.prose h2[id]');
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    toc.appendChild(a);
+  });
+
+  // Scroll spy
+  var tocLinks = toc.querySelectorAll('a');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(function(l) { l.classList.remove('active'); });
+        var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -70% 0px' });
+  headings.forEach(function(h) { observer.observe(h); });
+})();
+</script>
+
+<!-- ─── Left sidebar: recent posts + topics (language-aware: reads posts-<lang>.json, links same-language) ─── -->
+<script>
+(function() {
+  var currentSlug = 'try-claude-fable-5-in-codex-openclaw-and-pi';
+  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
+    .then(function(r) { return r.json(); })
+    .then(function(posts) {
+      var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
+      var recent = sorted.slice(0, 5);
+      var recentEl = document.getElementById('recent-posts');
+      recent.forEach(function(p) {
+        var a = document.createElement('a');
+        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
+        a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
+        if (p.slug === currentSlug) a.classList.add('active');
+        recentEl.appendChild(a);
+      });
+
+      var cats = {};
+      posts.forEach(function(p) { cats[p.category] = true; });
+      var topicsEl = document.getElementById('topics-list');
+      Object.keys(cats).sort().forEach(function(cat) {
+        var a = document.createElement('a');
+        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
+        a.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+        topicsEl.appendChild(a);
+      });
+    });
+})();
+</script>
 
 <!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
 <script data-goatcounter="https://bytefuture.goatcounter.com/count"
