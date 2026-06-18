@@ -1,5 +1,12 @@
 [
   {
+    "slug": "run-any-model-in-codex-through-token-station",
+    "title": "Token Station 経由で Codex に任意のモデルを使う",
+    "summary": "OpenAI の Codex は OpenAI 製に限らず任意のモデルを動かせる。2026 年 2 月以降は Responses API が必須となったため、対接するプラットフォームはそれをネイティブにサポートする必要がある。Token Station 向けの ~/.codex/config.toml をそのまま掲載し、OpenAI 公式ドキュメントと照合。smart routing も紹介する。",
+    "category": "tutorial",
+    "date": "2026-06-18"
+  },
+  {
     "slug": "glm-5-2-zai-stock-jump",
     "title": "GLM-5.2 で Z.AI の株価が 33% 急騰。Token Station で今すぐ無料で試せる",
     "summary": "オープンソースで 100 万トークンのコンテキストを持つコーディングモデル GLM-5.2 の公開当日、Zhipu AI の香港上場株は一時 48% 上昇した。なぜ動いたのか、そして Token Station に登録して GLM-5.2 を無料で試す方法。",
