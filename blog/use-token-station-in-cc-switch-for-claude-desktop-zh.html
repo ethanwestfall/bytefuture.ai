@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ─── i18n: remember language choice + auto-redirect; toggle lives in the nav (see CLAUDE.md) ─── -->
+  <script>
+  (function () {
+    var LANGS = ['zh'];
+    var path = location.pathname, slash = path.lastIndexOf('/');
+    var dir = path.slice(0, slash + 1), file = path.slice(slash + 1) || 'index.html';
+    var m = file.match(/^(.*?)(?:-(zh|ja|ko))?\.html$/i);
+    var base = m ? m[1] : file.replace(/\.html$/i, '');
+    var cur = (m && m[2]) ? m[2] : 'en';
+    function target(l) { return dir + base + (l === 'en' ? '' : '-' + l) + '.html' + location.search + location.hash; }
+    function cookie() { var h = document.cookie.match(/(?:^|;\s*)bf_lang=([^;]+)/); return h ? decodeURIComponent(h[1]) : ''; }
+    window.bfLang = {
+      cur: cur,
+      pick: function (l) {
+        if (LANGS.indexOf(l) === -1) return;
+        document.cookie = 'bf_lang=' + l + ';path=/;max-age=31536000;samesite=lax';
+        if (l !== cur) location.href = target(l);
+      }
+    };
+    var pref = cookie();
+    if (LANGS.indexOf(pref) === -1) {
+      pref = 'zh';
+      var navs = navigator.languages || [navigator.language || ''];
+      for (var i = 0; i < navs.length; i++) {
+        var c = (navs[i] || '').slice(0, 2).toLowerCase();
+        if (c === 'zh' || c === 'ja' || c === 'ko' || c === 'en') { pref = c; break; }
+      }
+    }
+    if (pref !== cur) { location.replace(target(pref)); }
+    document.addEventListener('DOMContentLoaded', function () {
+      var s = document.querySelector('select[data-bf-lang]');
+      if (s) s.value = cur;
+    });
+  })();
+  </script>
+
+  <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
+  <title>在 CC Switch 里用 Token Station 配置 Claude Desktop — ByteFuture 文章</title>
+  <meta name="description" content="用 CC Switch 把 Token Station 接入 Claude Desktop：添加自定义 Provider，选择 OpenAI Responses API，开启 Claude Desktop model mapping，本地路由到 127.0.0.1:15721，然后重启 Claude Desktop 生效。" />
+  <link rel="canonical" href="https://bytefuture.ai/blog/use-token-station-in-cc-switch-for-claude-desktop-zh.html" />
+  <meta property="og:title" content="在 CC Switch 里用 Token Station 配置 Claude Desktop — ByteFuture 文章" />
+  <meta property="og:description" content="用 CC Switch 把 Token Station 接入 Claude Desktop：添加自定义 Provider，选择 OpenAI Responses API，开启 Claude Desktop model mapping，本地路由到 127.0.0.1:15721，然后重启 Claude Desktop 生效。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bytefuture.ai/blog/use-token-station-in-cc-switch-for-claude-desktop-zh.html" />
+  <meta property="og:locale" content="zh_CN" />
+  <!-- ─── Chinese-only article: no EN/JA/KO alternates are published for this post. ─── -->
+  <link rel="alternate" hreflang="zh-Hans" href="https://bytefuture.ai/blog/use-token-station-in-cc-switch-for-claude-desktop-zh.html" />
+  <link rel="alternate" hreflang="x-default" href="https://bytefuture.ai/blog/use-token-station-in-cc-switch-for-claude-desktop-zh.html" />
+  <!-- ▲ EDIT ▲ -->
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#faf9f5',
+            surface: '#ffffff',
+            border: '#e4e4e7',
+            muted: '#71717a',
+            blue: '#2563EB',
+            green: '#0D9488',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            body: ['"Source Serif 4"', 'Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #faf9f5;
+      color: #18181b;
+      font-family: 'Source Serif 4', Georgia, serif;
+      margin: 0;
+    }
+    a { transition: color 0.2s; }
+
+    /* ─── 3-column layout ─── */
+    .page-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      align-items: start;
+    }
+    /* Grid items default to min-width:auto and can't shrink below their
+       content (wide images, code lines, tables) — this caps them at the
+       column width so the page never scrolls sideways on phones. */
+    .page-grid > * { min-width: 0; }
+
+    /* ─── Left sidebar ─── */
+    .sidebar-left {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .sidebar-left a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #71717a;
+      text-decoration: none;
+      padding: 4px 0;
+      line-height: 1.5;
+    }
+    .sidebar-left a:hover { color: #18181b; }
+    .sidebar-left a.active { color: #18181b; font-weight: 600; background: #f4f4f5; padding: 4px 8px; margin: 0 -8px; border-radius: 6px; }
+    .sidebar-left h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #18181b;
+      margin: 24px 0 8px;
+      letter-spacing: 0.01em;
+    }
+    .sidebar-left h4:first-child { margin-top: 0; }
+
+    /* ─── Right sidebar (TOC) ─── */
+    .sidebar-right {
+      position: sticky;
+      top: 120px;
+      padding-top: 80px;
+    }
+    .toc a {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: #a1a1aa;
+      text-decoration: none;
+      padding: 5px 0 5px 12px;
+      border-left: 2px solid transparent;
+      line-height: 1.5;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc a:hover { color: #18181b; }
+    .toc a.active { color: #18181b; border-left-color: #18181b; }
+
+    /* ─── Article header ─── */
+    .article-header {
+      padding: 80px 0 40px;
+    }
+
+    /* ─── Article prose ─── */
+    .prose { font-size: 18px; line-height: 1.8; }
+    .prose h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 16px; line-height: 1.3; scroll-margin-top: 120px; }
+    .prose h3 { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600; margin: 40px 0 12px; line-height: 1.35; }
+    .prose p { margin: 0 0 24px; color: #27272a; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 24px; color: #27272a; list-style: revert; }
+    .prose li { margin-bottom: 8px; }
+    .prose blockquote {
+      border-left: 3px solid #2563EB;
+      margin: 32px 0;
+      padding: 0 0 0 24px;
+      color: #52525b;
+      font-style: italic;
+    }
+    .prose figure { margin: 32px 0; }
+    .prose figure figcaption { font-size: 14px; color: #71717a; margin-top: 8px; text-align: center; }
+    .prose img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #e4e4e7;
+    }
+    .prose a { color: #2563EB; text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: #1d4ed8; }
+    .prose strong { font-weight: 600; color: #18181b; }
+
+    /* Code blocks */
+    .prose pre {
+      background: #ffffff;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 32px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+    .prose code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+      background: #f4f4f5;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .prose pre code {
+      background: none;
+      padding: 0;
+      font-size: 14px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    /* Table */
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 32px 0;
+      font-size: 16px;
+    }
+    .prose th, .prose td {
+      border: 1px solid #e4e4e7;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .prose th {
+      background: #f4f4f5;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .prose td { color: #27272a; }
+
+    /* Horizontal rule */
+    .prose hr {
+      border: none;
+      border-top: 1px solid #e4e4e7;
+      margin: 48px 0;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .sidebar-left, .sidebar-right {
+        position: static;
+        padding-top: 0;
+      }
+      .sidebar-left { display: none; }
+      .sidebar-right { display: none; }
+      .article-header { padding: 80px 0 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-hide-sm { display: none; }
+      footer > div {
+        flex-direction: column !important;
+        gap: 10px;
+        text-align: center;
+      }
+      .article-header { padding: 48px 0 28px; }
+      .prose { font-size: 17px; }
+      .prose pre { padding: 14px 16px; font-size: 13px; }
+      .prose pre code { font-size: 13px; }
+      .prose table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav style="position:sticky; top:0; z-index:50; border-bottom:1px solid #e4e4e7;">
+  <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#18181b; background:#ffffff; border:1px solid #e4e4e7; border-radius:8px; padding:6px 10px; cursor:pointer;">
+        <option value="en">EN</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+      </select>
+      <a href="/blog/" class="nav-hide-sm" style="color:#18181b; font-size:14px; text-decoration:none; font-family:'Space Grotesk',sans-serif; font-weight:600;">文章</a>
+      <a href="https://models.bytefuture.ai/intro.html" style="background:#2563EB; color:#faf9f5; border-radius:50px; padding:10px 20px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; text-decoration:none;" onclick="gtag('event','cta_click',{label:'post_nav_token_station'});">Token Station</a>
+    </div>
+  </div>
+  </div>
+</nav>
+
+<!-- ─── 3-COLUMN LAYOUT ─── -->
+<div class="page-grid">
+
+  <!-- LEFT SIDEBAR (recent posts + topics, filled by JS from posts.json) -->
+  <aside class="sidebar-left">
+    <a href="/blog/" style="font-weight:500; color:#18181b; margin-bottom:16px;">&larr; 所有文章</a>
+
+    <h4>最近</h4>
+    <div id="recent-posts"></div>
+
+    <h4>主题</h4>
+    <div id="topics-list"></div>
+  </aside>
+
+  <!-- CENTER: ARTICLE -->
+  <main>
+    <header class="article-header">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+        <!-- ▼ EDIT: category and date ▼ -->
+        <span style="font-size:12px; font-family:'Space Grotesk',sans-serif; font-weight:500; color:#2563EB; background:rgba(37,99,235,0.08); padding:3px 10px; border-radius:50px;">教程</span>
+        <time style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;">2026年6月19日</time>
+        <!-- ▲ EDIT ▲ -->
+        <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
+      </div>
+      <!-- ▼ EDIT: post title ▼ -->
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">在 CC Switch 里用 Token Station 配置 Claude Desktop</h1>
+      <!-- ▲ EDIT ▲ -->
+    </header>
+
+    <!-- ▼ EDIT: write your post content below. Give every <h2> an id so it appears in the right-hand TOC. ▼ -->
+    <article class="prose" style="padding:0 0 96px;">
+  <p><a href="https://github.com/farion1231/cc-switch">CC Switch</a> 是一个桌面工具，用来集中管理 Claude Code、Claude Desktop、Codex、Gemini CLI、OpenCode、OpenClaw 和 Hermes 的 Provider、MCP、Prompts 与 Skills。它的价值在于：你不需要手工改一堆 JSON、TOML 或 env 文件，而是在同一个界面里添加 Provider、切换 Provider，并让 CC Switch 写入各个工具自己的配置。</p>
+
+  <p>这篇只讲一个场景：把 <a href="https://models.bytefuture.ai">Token Station</a> 加进 CC Switch，然后以 <strong>Claude Desktop</strong> 为例使用它。重点不是 Claude Code。CC Switch 官方文档说得很清楚：Claude Code 和 Claude Desktop 是两个独立入口。Claude Code 用 <code>~/.claude/settings.json</code>；Claude Desktop 用自己的 3P profile 配置，在 CC Switch 里也显示为单独的 “Claude Desktop” 面板。</p>
+
+  <h2 id="install">先安装 CC Switch</h2>
+
+  <p>macOS 用户最简单的安装方式是 Homebrew：</p>
+
+  <pre><code>brew install --cask cc-switch</code></pre>
+
+  <p>Windows、Linux 或手动安装，可以去 <a href="https://github.com/farion1231/cc-switch/releases">CC Switch Releases</a> 下载对应安装包。首次打开时，如果它提示导入已有工具配置，可以先跳过；我们下面会单独为 Claude Desktop 添加一个 Token Station Provider。</p>
+
+  <h2 id="add-provider">添加 Token Station Provider</h2>
+
+  <p>在 CC Switch 左侧选择 <strong>Claude Desktop</strong>。如果看不到这个入口，去 <strong>Settings → General → Homepage Display</strong>，确认 Claude Desktop 没有被隐藏。</p>
+
+  <p>进入 Claude Desktop 面板后，点右上角的 <strong>+</strong> 添加 Provider。Token Station 不是 Claude Desktop 的官方登录模式，也不应该当作 Claude Desktop 官方账号处理；这里选择自定义 Provider。</p>
+
+  <table>
+    <tr><th>字段</th><th>建议填写</th></tr>
+    <tr><td>名称</td><td><code>Token Station</code></td></tr>
+    <tr><td>API Key</td><td>你的 Token Station key</td></tr>
+    <tr><td>Endpoint / Base URL</td><td><code>https://models.bytefuture.ai/v1</code></td></tr>
+    <tr><td>API Format</td><td><code>OpenAI Responses API</code></td></tr>
+    <tr><td>Needs model mapping</td><td>开启</td></tr>
+  </table>
+
+  <p>为什么要选 <code>OpenAI Responses API</code>？因为 Token Station 的 OpenAI 兼容入口在 <code>/v1/responses</code>，而 Claude Desktop 原生只认识自己的 Claude role 模型。CC Switch 的本地路由会负责把 Claude Desktop 发出的请求转换成上游 Provider 能理解的格式。</p>
+
+  <h2 id="model-mapping">配置 Claude Desktop 的 model mapping</h2>
+
+  <p>Claude Desktop 现在会拒绝不属于 <code>claude-sonnet-*</code>、<code>claude-opus-*</code>、<code>claude-haiku-*</code> 这三类 role family 的模型名。也就是说，你不能直接把 <code>openai/gpt-5.5</code> 写进 Claude Desktop 的模型菜单里。官方文档建议：非 Claude 模型、旧版 Claude ID、Kimi、DeepSeek、GLM、DouBao、OpenAI、Gemini 这类模型，都应该走 <strong>Model Mapping Mode</strong>。</p>
+
+  <p>在 Token Station Provider 里打开 <strong>Needs model mapping</strong>，然后按角色填入真实上游模型：</p>
+
+  <table>
+    <tr><th>Claude Desktop role</th><th>菜单显示名</th><th>Requested model</th><th>说明</th></tr>
+    <tr><td>Sonnet</td><td>GPT-5.4 Mini</td><td><code>openai/gpt-5.4-mini</code></td><td>日常对话、写代码、读文档的默认档。</td></tr>
+    <tr><td>Opus</td><td>GPT-5.5</td><td><code>openai/gpt-5.5</code></td><td>复杂推理、长上下文、架构设计。</td></tr>
+    <tr><td>Haiku</td><td>GPT-5.4 Nano</td><td><code>openai/gpt-5.4-nano</code></td><td>短任务、低延迟、低成本。</td></tr>
+  </table>
+
+  <p>如果你只想先跑通，也可以只填 Sonnet。CC Switch 文档里说，空白 role 会继承第一个已填写的模型（优先 Sonnet），所以 Haiku 这类调用不会因为没填而完全不可用。等确认能用后，再分别补 Opus 和 Haiku。</p>
+
+  <h2 id="local-routing">打开本地路由</h2>
+
+  <p>Model Mapping Mode 不是直接让 Claude Desktop 访问 Token Station。它会让 Claude Desktop 连接到 CC Switch 的本地网关：</p>
+
+  <pre><code>http://127.0.0.1:15721/claude-desktop</code></pre>
+
+  <p>CC Switch 在本机做四件事：给 Claude Desktop 暴露安全的 Sonnet / Opus / Haiku 路由；把 Claude Desktop 选择的 role 映射到真实的 Token Station 模型；按需要转换 Anthropic / OpenAI / Gemini API 格式；再用你保存在 CC Switch 里的 Token Station key 去请求上游。</p>
+
+  <p>本地路由开关默认可能隐藏。按官方文档路径打开：</p>
+
+  <pre><code>Settings → Routing → Local Routing
+打开 Show Routing Toggle on Main Page</code></pre>
+
+  <p>回到 Claude Desktop 面板，打开右上角的 Claude Desktop local routing toggle。状态为 On 时，本地网关通常运行在 <code>127.0.0.1:15721</code>。Direct mode 不需要这个开关，但 Token Station 这种 OpenAI Responses + model mapping 的配置需要保持 CC Switch 运行，并保持本地路由开启。</p>
+
+  <h2 id="enable">启用并重启 Claude Desktop</h2>
+
+  <p>Provider 配好以后，在 Token Station 卡片上点 <strong>Enable</strong>。然后完全退出 Claude Desktop，再重新打开。这里不要套用 Claude Code 的经验：Claude Code 可以热切换 Provider 数据，但 Claude Desktop 不会热加载 3P profile。每次切换 Provider 后，都要完整重启 Claude Desktop。</p>
+
+  <p>重启后，在 Claude Desktop 的模型菜单里，你应该看到 model mapping 里填写的显示名，比如 <code>GPT-5.4 Mini</code>、<code>GPT-5.5</code>、<code>GPT-5.4 Nano</code>。选一个模型，发一条简单消息，例如：</p>
+
+  <pre><code>请只回复：pong</code></pre>
+
+  <p>如果它返回 <code>pong</code>，说明 Claude Desktop → CC Switch 本地路由 → Token Station → 上游模型 这条链路已经通了。</p>
+
+  <h2 id="troubleshooting">常见问题</h2>
+
+  <ul>
+    <li><strong>Claude Desktop 还是没变化。</strong>完全退出并重新打开 Claude Desktop。它通常只在启动时读取 3P profile。</li>
+    <li><strong>非 Claude 模型不出现在菜单里。</strong>不要把真实模型名直接写进 Claude Desktop profile。开启 <strong>Needs model mapping</strong>，通过 Sonnet / Opus / Haiku role 映射真实模型。</li>
+    <li><strong>请求失败。</strong>确认 CC Switch 还在运行，本地路由是 On，Token Station API key 和 endpoint 正确，model mapping 至少有一个 Requested model。</li>
+    <li><strong>Direct mode 失败。</strong>Direct mode 只适合原生 Anthropic Messages API 且模型名能被 Claude Desktop 识别的 Provider。Token Station 这里建议使用 OpenAI Responses API + Model Mapping Mode。</li>
+    <li><strong>想回到 Claude Desktop 官方登录。</strong>在 CC Switch 里选择 <strong>Claude Desktop Official</strong>，点 Enable，然后重启 Claude Desktop。</li>
+  </ul>
+
+  <h2 id="wrap">总结</h2>
+
+  <p>用 CC Switch 接入 <a href="https://models.bytefuture.ai">Token Station</a> 的关键不是“把一个 base URL 填进 Claude Desktop”，而是走 Claude Desktop 面板里的 Provider + Model Mapping。Token Station 负责统一模型入口；CC Switch 负责把 Claude Desktop 认可的 Sonnet / Opus / Haiku role 映射到真实模型，并在本地完成格式转换。</p>
+
+  <p>配置完成后，Claude Desktop 可以继续保持原来的使用方式，但背后的模型已经可以换成 Token Station 上的 <code>openai/gpt-5.5</code>、<code>openai/gpt-5.4-mini</code>、<code>openai/gpt-5.4-nano</code>，或者你在 Token Station 里可用的其他模型。</p>
+
+      <hr />
+
+      <!-- Share (leave exactly as-is; the buttons fire share_click GA events) -->
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">分享这篇文章</span>
+        <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Post
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'linkedin'});window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+          LinkedIn
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'facebook'});window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'hackernews'});window.open('https://news.ycombinator.com/submitlink?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+          Hacker News
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'reddit'});window.open('https://www.reddit.com/submit?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Reddit
+        </a>
+        <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='已复制！';setTimeout(function(){s.textContent='复制链接';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+          <span class="share-label">复制链接</span>
+        </a>
+      </div>
+
+    </article>
+    <!-- ▲ EDIT ▲ -->
+  </main>
+
+  <!-- RIGHT SIDEBAR (TOC, filled by JS from the article's h2[id] headings) -->
+  <aside class="sidebar-right">
+    <nav class="toc" id="toc"></nav>
+  </aside>
+
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
+        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
+        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
+        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
+        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
+    </a>
+    <p style="color:#a1a1aa; font-size:13px; margin:0; font-family:'Space Grotesk',sans-serif;">&copy; 2026 ByteFuture. <a href="/blog/" style="color:#71717a; text-decoration:none;">文章</a></p>
+  </div>
+</footer>
+
+<!-- ─── TOC generator (right sidebar) ─── -->
+<script>
+(function() {
+  var toc = document.getElementById('toc');
+  var headings = document.querySelectorAll('.prose h2[id]');
+  headings.forEach(function(h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    toc.appendChild(a);
+  });
+
+  // Scroll spy
+  var tocLinks = toc.querySelectorAll('a');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(function(l) { l.classList.remove('active'); });
+        var active = toc.querySelector('a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -70% 0px' });
+  headings.forEach(function(h) { observer.observe(h); });
+})();
+</script>
+
+<!-- ─── Left sidebar: recent posts + topics (language-aware: reads posts-<lang>.json, links same-language) ─── -->
+<script>
+(function() {
+  var currentSlug = 'use-token-station-in-cc-switch-for-claude-desktop';
+  fetch((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/posts-'+window.bfLang.cur+'.json'):'/posts.json')
+    .then(function(r) { return r.json(); })
+    .then(function(posts) {
+      var sorted = posts.slice().sort(function(a, b) { return b.date.localeCompare(a.date); });
+      var recent = sorted.slice(0, 5);
+      var recentEl = document.getElementById('recent-posts');
+      recent.forEach(function(p) {
+        var a = document.createElement('a');
+        a.href = '/blog/' + p.slug + ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('-'+window.bfLang.cur):'') + '.html';
+        a.textContent = p.title.length > 50 ? p.title.slice(0, 47) + '...' : p.title;
+        if (p.slug === currentSlug) a.classList.add('active');
+        recentEl.appendChild(a);
+      });
+
+      var cats = {};
+      posts.forEach(function(p) { cats[p.category] = true; });
+      var topicsEl = document.getElementById('topics-list');
+      Object.keys(cats).sort().forEach(function(cat) {
+        var a = document.createElement('a');
+        a.href = ((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?('/blog/index-'+window.bfLang.cur+'.html'):'/blog/') + '?cat=' + cat;
+        a.textContent = ({engineering:'工程',product:'产品',research:'研究',tutorial:'教程'})[cat] || cat;
+        topicsEl.appendChild(a);
+      });
+    });
+})();
+</script>
+
+<!-- ─── VIEW COUNTER (GoatCounter — hosted, no database; see CLAUDE.md) ─── -->
+<script data-goatcounter="https://bytefuture.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<script>
+(function() {
+  var el = document.getElementById('view-count');
+  if (!el) return;
+  // Public per-page count; the page path is the key — no per-article edit needed.
+  fetch('https://bytefuture.goatcounter.com/counter/' + location.pathname + '.json')
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (d && d.count) {
+        var n = String(d.count).trim();
+        el.textContent = n.replace(/[\u2009\u202F ]/g, ',') + (n === '1' ? ' view' : ' views');
+      }
+    })
+    .catch(function() {});
+})();
+</script>
+
+</body>
+</html>
