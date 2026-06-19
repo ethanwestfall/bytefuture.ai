@@ -1,5 +1,12 @@
 [
   {
+    "slug": "use-token-station-in-cc-switch-for-claude-desktop",
+    "title": "在 CC Switch 里用 Token Station 配置 Claude Desktop",
+    "summary": "先了解 CC Switch 如何集中管理不同 AI 工具的 Provider，再用 Token Station 配置 Claude Desktop：添加 Provider，填写 Token Station API key，开启 model mapping 和本地路由。Claude Code 推荐使用专门的 Token Station 配置方式。",
+    "category": "tutorial",
+    "date": "2026-06-19"
+  },
+  {
     "slug": "use-any-model-in-claude-code-through-token-station",
     "title": "在 Claude Code 中通过 Token Station 使用任意模型",
     "summary": "Claude Code 可以通过 Token Station 运行任意模型。你可以把配置写入 ~/.claude/settings.json，也可以临时 export ANTHROPIC_* 环境变量，设置 base URL、Token、Opus/Sonnet/Haiku 模型和 subagent 模型，再用一行 pong 命令验证。",
