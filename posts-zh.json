@@ -2,7 +2,7 @@
   {
     "slug": "use-token-station-in-cc-switch-for-claude-desktop",
     "title": "在 CC Switch 里用 Token Station 配置 Claude Desktop",
-    "summary": "用 CC Switch 把 Token Station 接入 Claude Desktop：添加自定义 Provider，选择 OpenAI Responses API，开启 model mapping，通过本地路由 127.0.0.1:15721 映射 Sonnet / Opus / Haiku，再重启 Claude Desktop 生效。",
+    "summary": "先了解 CC Switch 如何集中管理不同 AI 工具的 Provider，再用 Token Station 配置 Claude Desktop：添加 Provider，填写 Token Station API key，开启 model mapping 和本地路由。Claude Code 推荐使用专门的 Token Station 配置方式。",
     "category": "tutorial",
     "date": "2026-06-19"
   },
