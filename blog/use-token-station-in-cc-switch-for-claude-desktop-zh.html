@@ -12,7 +12,7 @@
     var dir = path.slice(0, slash + 1), file = path.slice(slash + 1) || 'index.html';
     var m = file.match(/^(.*?)(?:-(zh|ja|ko))?\.html$/i);
     var base = m ? m[1] : file.replace(/\.html$/i, '');
-    var cur = (m && m[2]) ? m[2] : 'en';
+    var cur = 'zh';
     function target(l) { return dir + base + (l === 'en' ? '' : '-' + l) + '.html' + location.search + location.hash; }
     function cookie() { var h = document.cookie.match(/(?:^|;\s*)bf_lang=([^;]+)/); return h ? decodeURIComponent(h[1]) : ''; }
     window.bfLang = {
