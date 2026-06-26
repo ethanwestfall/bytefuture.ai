@@ -282,7 +282,7 @@
     </header>
 
     <!-- ▼ EDIT: write your post content below. Give every <h2> an id so it appears in the right-hand TOC. ▼ -->
-    <article class="prose" style="padding:0 0 96px;"><p>HappyHorse-1.1 is now available through Cloud AI Gateway and Token Station, giving developers a new video model for both text-to-video and image-to-video generation.</p>
+    <article class="prose" style="padding:0 0 96px;"><p>HappyHorse-1.1 is now available through Token Station, giving developers a new video model for both text-to-video and image-to-video generation.</p>
 <p>The important part is not only that there is a new video model. It is that HappyHorse can generate video with native synchronized audio. Instead of producing a silent clip first and then stitching in speech, music, or sound effects later, you can start with a single video generation request that is designed to return motion and sound together.</p>
 <p>That makes HappyHorse-1.1 useful for product demos, social clips, ad concepts, creative agents, and video workflows where iteration speed matters.</p>
 <p>The new model IDs are:</p>
@@ -297,16 +297,13 @@
 <p>That is especially useful for:</p>
 <ul><li>product teaser clips</li><li>social media videos</li><li>ad concept drafts</li><li>agent-generated creative assets</li><li>first-frame animation with sound</li><li>quick demos for landing pages or launches</li><li>prototype video generation inside a larger app</li></ul>
 <p>The model is not a replacement for every professional editing pipeline. But it gives developers a stronger default output from one API call.</p>
-<h2 id="what-changed-in-happyhorse-1-1">What changed in HappyHorse-1.1</h2>
-<p>HappyHorse-1.1 is not just a renamed 1.0 model.</p>
-<p>In Cloud AI Gateway, it has separate model IDs and its own per-second price card:</p>
-<ul><li>720P: <code>$0.14/s</code></li><li>1080P: <code>$0.18/s</code></li></ul>
-<p>For a 5-second clip, that is approximately:</p>
+<h2 id="what-changed-in-happyhorse-1-1">HappyHorse-1.1 vs 1.0: pricing</h2>
+<p>The easiest way to understand the 1.1 update is the price comparison:</p>
+<ul><li>HappyHorse-1.1 720P: <code>$0.14/s</code></li><li>HappyHorse-1.0 720P: about <code>$0.124/s</code></li><li>HappyHorse-1.1 1080P: <code>$0.18/s</code></li><li>HappyHorse-1.0 1080P: about <code>$0.221/s</code></li></ul>
+<p>For a 5-second HappyHorse-1.1 clip, that is approximately:</p>
 <ul><li>720P: <code>$0.70</code></li><li>1080P: <code>$0.90</code></li></ul>
-<p>That price shape is different from HappyHorse-1.0. In the current gateway config, HappyHorse-1.0 is:</p>
-<ul><li>720P: about <code>$0.124/s</code></li><li>1080P: about <code>$0.221/s</code></li></ul>
-<p>So 1.1 is more expensive at 720P, but cheaper at 1080P.</p>
-<p>That detail matters if you are building a real product. For low-resolution draft generation, 1.0 may still be attractive. For higher-resolution clips, 1.1&#x27;s 1080P tier can be a better fit.</p>
+<p>So HappyHorse-1.1 is more expensive at 720P, but cheaper at 1080P.</p>
+<p>That matters if you are building a real product. For low-resolution draft generation, 1.0 may still be attractive. For higher-resolution clips, 1.1's 1080P tier can be a better fit.</p>
 <h2 id="use-happyhorse-1-1-for-text-to-video">Use HappyHorse-1.1 for text-to-video</h2>
 <p>Use <code>bailian/happyhorse-1.1-t2v</code> when you want to generate a video directly from a prompt.</p>
 <pre><code>curl -X POST https://models.bytefuture.ai/v1/video/generations \
@@ -341,7 +338,7 @@
 <p>Image-to-video is useful when visual consistency matters. Instead of asking the model to invent the whole scene from text, you give it a starting frame and ask it to animate that frame.</p>
 <p>Good use cases include:</p>
 <ul><li>animating a product shot</li><li>turning a generated image into a short clip</li><li>making a character move while preserving identity</li><li>creating motion variations from the same visual concept</li><li>testing ad creatives from a static mockup</li></ul>
-<p>Cloud AI Gateway handles the Bailian-specific first-frame request shape behind the scenes. You pass an <code>image</code> URL through the gateway interface; the gateway converts the request into the format HappyHorse expects upstream.</p>
+<p>Token Station handles the Bailian-specific first-frame request shape behind the scenes. You pass an <code>image</code> URL through the gateway interface; the gateway converts the request into the format HappyHorse expects upstream.</p>
 <h2 id="why-expose-both-1-0-and-1-1">Why expose both 1.0 and 1.1?</h2>
 <p>Versioned model IDs are important for production systems.</p>
 <p>If a provider changes output style, cost, model behavior, or supported features, developers need a way to choose when to move. Replacing 1.0 with 1.1 behind the same name would make existing workflows harder to reproduce and harder to budget.</p>
