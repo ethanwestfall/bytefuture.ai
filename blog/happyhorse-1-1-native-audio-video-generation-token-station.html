@@ -309,7 +309,7 @@
 <p>That detail matters if you are building a real product. For low-resolution draft generation, 1.0 may still be attractive. For higher-resolution clips, 1.1&#x27;s 1080P tier can be a better fit.</p>
 <h2 id="use-happyhorse-1-1-for-text-to-video">Use HappyHorse-1.1 for text-to-video</h2>
 <p>Use <code>bailian/happyhorse-1.1-t2v</code> when you want to generate a video directly from a prompt.</p>
-<pre><code>curl -X POST https://YOUR_GATEWAY/v1/video/generations \
+<pre><code>curl -X POST https://models.bytefuture.ai/v1/video/generations \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Authorization: Bearer APIKEY&quot; \
   -d &#x27;{
@@ -328,7 +328,7 @@
 <p>Use text-to-video when the prompt is enough to define the scene. It is the fastest path for ideation: product demo concepts, background scenes, social media clips, and quick visual experiments.</p>
 <h2 id="use-happyhorse-1-1-for-image-to-video">Use HappyHorse-1.1 for image-to-video</h2>
 <p>Use <code>bailian/happyhorse-1.1-i2v</code> when you already have a first frame, product shot, character image, or generated still image that you want to animate.</p>
-<pre><code>curl -X POST https://YOUR_GATEWAY/v1/video/generations \
+<pre><code>curl -X POST https://models.bytefuture.ai/v1/video/generations \
   -H &quot;Content-Type: application/json&quot; \
   -H &quot;Authorization: Bearer APIKEY&quot; \
   -d &#x27;{
