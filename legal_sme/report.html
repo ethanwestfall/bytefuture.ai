@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corp Secretary — e2e report 20260622T184320Z</title>
+<style>
+  :root { --ink:#1d1c17; --paper:#f5f3ec; --jade:#2e7d4f; --red:#c0392b; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--paper); color:var(--ink); margin:0; }
+  header { background:var(--ink); color:var(--paper); padding:22px 30px; position:sticky; top:0; z-index:5; }
+  header h1 { margin:0 0 6px; font-size:1.25rem; }
+  header .meta { opacity:.8; font-size:.9rem; }
+  header .tally b { font-weight:700; }
+  .tally .ok { color:#7fd1a0; } .tally .bad { color:#ff9a8c; }
+  nav { padding:14px 30px; background:#fff; border-bottom:1px solid #e0ddd2; display:flex; flex-wrap:wrap; gap:8px; }
+  nav a { font-size:.82rem; text-decoration:none; color:var(--ink); background:#efece3; border-radius:999px; padding:4px 11px; }
+  nav a.fail { background:#fbe0dd; color:var(--red); }
+  main { max-width:1180px; margin:0 auto; padding:24px 30px 60px; }
+  .wf { background:#fff; border:1px solid #e0ddd2; border-radius:14px; padding:18px 22px; margin:18px 0; box-shadow:0 1px 3px rgba(0,0,0,.05); }
+  .wf h2 { font-size:1.05rem; margin:0 0 12px; display:flex; align-items:center; gap:10px; }
+  .badge { font-size:.72rem; font-weight:700; border-radius:999px; padding:3px 10px; }
+  .badge.pass { background:#daefe0; color:var(--jade); } .badge.fail { background:#fbe0dd; color:var(--red); }
+  .err { color:var(--red); font-family:ui-monospace,Menlo,monospace; font-size:.82rem; background:#fdf3f2; padding:8px 10px; border-radius:8px; }
+  .shots { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+  figure.shot { margin:0; border:1px solid #e8e5da; border-radius:10px; overflow:hidden; background:#fafaf7; }
+  figure.shot img { width:100%; display:block; }
+  figure.shot.pdf { padding:18px; text-align:center; }
+  figcaption { font-size:.82rem; color:#46443c; padding:9px 11px; line-height:1.4; border-top:1px solid #eee; }
+</style></head><body>
+<header>
+  <h1>Corp Secretary — browser e2e report</h1>
+  <div class="meta">20260622T184320Z · local fake-agent run</div>
+  <div class="tally meta"><b class="ok">11/11 workflows passed</b></div>
+</header>
+<nav><a href="#wf0" class="pass">✓ New Project — Register a US LLC</a><a href="#wf1" class="pass">✓ New Project — Import an existing US LLC</a><a href="#wf2" class="pass">✓ New Project — Register a Cayman company</a><a href="#wf3" class="pass">✓ New Project — Personal legal project</a><a href="#wf4" class="pass">✓ Sign a document (single-signer Operating Agreement)</a><a href="#wf5" class="pass">✓ "I need…" a document → fill the counterparty → sign our side</a><a href="#wf6" class="pass">✓ Runbook via "I need…" (hire a contractor)</a><a href="#wf7" class="pass">✓ Upload a counter-signed copy → "Auto" picks the to-do</a><a href="#wf8" class="pass">✓ Review an inbound contract → 3-stance redline → counter-redline → PDF</a><a href="#wf9" class="pass">✓ Departments &amp; categories — overview cards, tags, and filter</a><a href="#wf10" class="pass">✓ Ask a question (Q&amp;A over the company corpus)</a></nav>
+<main><section id="wf0" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> New Project — Register a US LLC</h2>
+    
+    <div class="shots"><figure class="shot"><a href="01.png" target="_blank"><img src="01.png" loading="lazy"></a><figcaption>Register US LLC — Step 1: choose the project type</figcaption></figure>
+<figure class="shot"><a href="02.png" target="_blank"><img src="02.png" loading="lazy"></a><figcaption>Register US LLC — Step 2: choose the entity type</figcaption></figure>
+<figure class="shot"><a href="03.png" target="_blank"><img src="03.png" loading="lazy"></a><figcaption>Register US LLC — Step 3: project details</figcaption></figure>
+<figure class="shot"><a href="04.png" target="_blank"><img src="04.png" loading="lazy"></a><figcaption>Created: the formation drafts are prepared and the filing steps become to-dos</figcaption></figure>
+<figure class="shot"><a href="05.png" target="_blank"><img src="05.png" loading="lazy"></a><figcaption>Unsigned tab: Operating Agreement, board consent, and banking resolution drafts ready to sign</figcaption></figure></div>
+  </section>
+<section id="wf1" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> New Project — Import an existing US LLC</h2>
+    
+    <div class="shots"><figure class="shot"><a href="06.png" target="_blank"><img src="06.png" loading="lazy"></a><figcaption>Import US LLC — Step 1: choose the project type</figcaption></figure>
+<figure class="shot"><a href="07.png" target="_blank"><img src="07.png" loading="lazy"></a><figcaption>Import US LLC — Step 2: choose the entity type</figcaption></figure>
+<figure class="shot"><a href="08.png" target="_blank"><img src="08.png" loading="lazy"></a><figcaption>Import US LLC — Step 3: project details</figcaption></figure>
+<figure class="shot"><a href="09.png" target="_blank"><img src="09.png" loading="lazy"></a><figcaption>Imported: to-dos to upload the certificate, operating agreement, and EIN letter — no drafts generated</figcaption></figure></div>
+  </section>
+<section id="wf2" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> New Project — Register a Cayman company</h2>
+    
+    <div class="shots"><figure class="shot"><a href="10.png" target="_blank"><img src="10.png" loading="lazy"></a><figcaption>Register Cayman — Step 1: choose the project type</figcaption></figure>
+<figure class="shot"><a href="11.png" target="_blank"><img src="11.png" loading="lazy"></a><figcaption>Register Cayman — Step 2: choose the entity type</figcaption></figure>
+<figure class="shot"><a href="12.png" target="_blank"><img src="12.png" loading="lazy"></a><figcaption>Register Cayman — Step 3: project details</figcaption></figure>
+<figure class="shot"><a href="13.png" target="_blank"><img src="13.png" loading="lazy"></a><figcaption>Created: the Memorandum &amp; Articles of Association draft + registrar to-dos</figcaption></figure></div>
+  </section>
+<section id="wf3" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> New Project — Personal legal project</h2>
+    
+    <div class="shots"><figure class="shot"><a href="14.png" target="_blank"><img src="14.png" loading="lazy"></a><figcaption>Personal project — Step 1: choose the project type</figcaption></figure>
+<figure class="shot"><a href="15.png" target="_blank"><img src="15.png" loading="lazy"></a><figcaption>Personal project — Step 3: project details</figcaption></figure>
+<figure class="shot"><a href="16.png" target="_blank"><img src="16.png" loading="lazy"></a><figcaption>Created: a personal matter with generic to-dos (gather documents, build a timeline, engage counsel)</figcaption></figure></div>
+  </section>
+<section id="wf4" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Sign a document (single-signer Operating Agreement)</h2>
+    
+    <div class="shots"><figure class="shot"><a href="17.png" target="_blank"><img src="17.png" loading="lazy"></a><figcaption>Signature on file — ready to sign in-app</figcaption></figure>
+<figure class="shot"><a href="18.png" target="_blank"><img src="18.png" loading="lazy"></a><figcaption>Operating Agreement signed → moved to the Signed (permanent record) tab</figcaption></figure>
+<figure class="shot"><a href="19.png" target="_blank"><img src="19.png" loading="lazy"></a><figcaption>The signed Operating Agreement — our signature, signer name, and today's date stamped onto the document</figcaption></figure></div>
+  </section>
+<section id="wf5" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> "I need…" a document → fill the counterparty → sign our side</h2>
+    
+    <div class="shots"><figure class="shot"><a href="20.png" target="_blank"><img src="20.png" loading="lazy"></a><figcaption>The agent prepared a Mutual NDA draft from the natural-language request</figcaption></figure>
+<figure class="shot"><a href="21.png" target="_blank"><img src="21.png" loading="lazy"></a><figcaption>Filling the counterparty name on the document</figcaption></figure>
+<figure class="shot"><a href="22.png" target="_blank"><img src="22.png" loading="lazy"></a><figcaption>Signed on our side — the multi-party NDA stays Unsigned, marked "Awaiting other party"</figcaption></figure>
+<figure class="shot"><a href="23.png" target="_blank"><img src="23.png" loading="lazy"></a><figcaption>The NDA with our signature stamped in and "Alpha Partners Inc." filled as the counterparty</figcaption></figure></div>
+  </section>
+<section id="wf6" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Runbook via "I need…" (hire a contractor)</h2>
+    
+    <div class="shots"><figure class="shot"><a href="24.png" target="_blank"><img src="24.png" loading="lazy"></a><figcaption>The runbook expanded: the contractor-agreement draft is prepared and the steps are added as to-dos</figcaption></figure></div>
+  </section>
+<section id="wf7" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Upload a counter-signed copy → "Auto" picks the to-do</h2>
+    
+    <div class="shots"><figure class="shot"><a href="25.png" target="_blank"><img src="25.png" loading="lazy"></a><figcaption>Intake: "Resolves a to-do" defaults to Auto — the agent reads the doc and picks the to-do</figcaption></figure>
+<figure class="shot"><a href="26.png" target="_blank"><img src="26.png" loading="lazy"></a><figcaption>The counter-signed NDA is filed as Signed and the countersignature to-do is cleared</figcaption></figure></div>
+  </section>
+<section id="wf8" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Review an inbound contract → 3-stance redline → counter-redline → PDF</h2>
+    
+    <div class="shots"><figure class="shot"><a href="27.png" target="_blank"><img src="27.png" loading="lazy"></a><figcaption>Review complete — three self-protective stances and a combined redline</figcaption></figure>
+<figure class="shot"><a href="28.png" target="_blank"><img src="28.png" loading="lazy"></a><figcaption>The redline: the MSA marked up with aggressive / moderate / mild comments, colour-coded</figcaption></figure>
+<figure class="shot"><a href="29.png" target="_blank"><img src="29.png" loading="lazy"></a><figcaption>Selecting which revisions to send back</figcaption></figure>
+<figure class="shot"><a href="30.png" target="_blank"><img src="30.png" loading="lazy"></a><figcaption>The generated counter-redline document to send to the counterparty</figcaption></figure>
+<figure class="shot pdf"><a href="counter-redline.pdf">📄 counter-redline.pdf</a><figcaption>Exported PDF (download)</figcaption></figure></div>
+  </section>
+<section id="wf9" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Departments &amp; categories — overview cards, tags, and filter</h2>
+    
+    <div class="shots"><figure class="shot"><a href="31.png" target="_blank"><img src="31.png" loading="lazy"></a><figcaption>"By department" overview cards summarise documents + to-dos per functional department; each to-do carries its department tag</figcaption></figure>
+<figure class="shot"><a href="32.png" target="_blank"><img src="32.png" loading="lazy"></a><figcaption>Documents tab: every row is tagged with its functional department in the Type column</figcaption></figure>
+<figure class="shot"><a href="33.png" target="_blank"><img src="33.png" loading="lazy"></a><figcaption>Clicking the "Corporate &amp; Governance" card filters every to-do and document on the page to that department</figcaption></figure></div>
+  </section>
+<section id="wf10" class="wf pass">
+    <h2><span class="badge pass">✓ PASS</span> Ask a question (Q&amp;A over the company corpus)</h2>
+    
+    <div class="shots"><figure class="shot"><a href="34.png" target="_blank"><img src="34.png" loading="lazy"></a><figcaption>Q&amp;A answers from the company wiki + documents, with citations</figcaption></figure></div>
+  </section></main>
+</body></html>

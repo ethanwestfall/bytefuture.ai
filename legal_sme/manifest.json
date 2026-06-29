@@ -1,0 +1,226 @@
+{
+  "when": "20260622T184320Z",
+  "pass": 11,
+  "fail": 0,
+  "total": 11,
+  "workflows": [
+    {
+      "wf": "New Project — Register a US LLC",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "01.png",
+          "caption": "Register US LLC — Step 1: choose the project type"
+        },
+        {
+          "file": "02.png",
+          "caption": "Register US LLC — Step 2: choose the entity type"
+        },
+        {
+          "file": "03.png",
+          "caption": "Register US LLC — Step 3: project details"
+        },
+        {
+          "file": "04.png",
+          "caption": "Created: the formation drafts are prepared and the filing steps become to-dos"
+        },
+        {
+          "file": "05.png",
+          "caption": "Unsigned tab: Operating Agreement, board consent, and banking resolution drafts ready to sign"
+        }
+      ]
+    },
+    {
+      "wf": "New Project — Import an existing US LLC",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "06.png",
+          "caption": "Import US LLC — Step 1: choose the project type"
+        },
+        {
+          "file": "07.png",
+          "caption": "Import US LLC — Step 2: choose the entity type"
+        },
+        {
+          "file": "08.png",
+          "caption": "Import US LLC — Step 3: project details"
+        },
+        {
+          "file": "09.png",
+          "caption": "Imported: to-dos to upload the certificate, operating agreement, and EIN letter — no drafts generated"
+        }
+      ]
+    },
+    {
+      "wf": "New Project — Register a Cayman company",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "10.png",
+          "caption": "Register Cayman — Step 1: choose the project type"
+        },
+        {
+          "file": "11.png",
+          "caption": "Register Cayman — Step 2: choose the entity type"
+        },
+        {
+          "file": "12.png",
+          "caption": "Register Cayman — Step 3: project details"
+        },
+        {
+          "file": "13.png",
+          "caption": "Created: the Memorandum & Articles of Association draft + registrar to-dos"
+        }
+      ]
+    },
+    {
+      "wf": "New Project — Personal legal project",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "14.png",
+          "caption": "Personal project — Step 1: choose the project type"
+        },
+        {
+          "file": "15.png",
+          "caption": "Personal project — Step 3: project details"
+        },
+        {
+          "file": "16.png",
+          "caption": "Created: a personal matter with generic to-dos (gather documents, build a timeline, engage counsel)"
+        }
+      ]
+    },
+    {
+      "wf": "Sign a document (single-signer Operating Agreement)",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "17.png",
+          "caption": "Signature on file — ready to sign in-app"
+        },
+        {
+          "file": "18.png",
+          "caption": "Operating Agreement signed → moved to the Signed (permanent record) tab"
+        },
+        {
+          "file": "19.png",
+          "caption": "The signed Operating Agreement — our signature, signer name, and today's date stamped onto the document"
+        }
+      ]
+    },
+    {
+      "wf": "\"I need…\" a document → fill the counterparty → sign our side",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "20.png",
+          "caption": "The agent prepared a Mutual NDA draft from the natural-language request"
+        },
+        {
+          "file": "21.png",
+          "caption": "Filling the counterparty name on the document"
+        },
+        {
+          "file": "22.png",
+          "caption": "Signed on our side — the multi-party NDA stays Unsigned, marked \"Awaiting other party\""
+        },
+        {
+          "file": "23.png",
+          "caption": "The NDA with our signature stamped in and \"Alpha Partners Inc.\" filled as the counterparty"
+        }
+      ]
+    },
+    {
+      "wf": "Runbook via \"I need…\" (hire a contractor)",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "24.png",
+          "caption": "The runbook expanded: the contractor-agreement draft is prepared and the steps are added as to-dos"
+        }
+      ]
+    },
+    {
+      "wf": "Upload a counter-signed copy → \"Auto\" picks the to-do",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "25.png",
+          "caption": "Intake: \"Resolves a to-do\" defaults to Auto — the agent reads the doc and picks the to-do"
+        },
+        {
+          "file": "26.png",
+          "caption": "The counter-signed NDA is filed as Signed and the countersignature to-do is cleared"
+        }
+      ]
+    },
+    {
+      "wf": "Review an inbound contract → 3-stance redline → counter-redline → PDF",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "27.png",
+          "caption": "Review complete — three self-protective stances and a combined redline"
+        },
+        {
+          "file": "28.png",
+          "caption": "The redline: the MSA marked up with aggressive / moderate / mild comments, colour-coded"
+        },
+        {
+          "file": "29.png",
+          "caption": "Selecting which revisions to send back"
+        },
+        {
+          "file": "30.png",
+          "caption": "The generated counter-redline document to send to the counterparty"
+        },
+        {
+          "file": "counter-redline.pdf",
+          "caption": "Exported PDF (download)",
+          "pdf": true
+        }
+      ]
+    },
+    {
+      "wf": "Departments & categories — overview cards, tags, and filter",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "31.png",
+          "caption": "\"By department\" overview cards summarise documents + to-dos per functional department; each to-do carries its department tag"
+        },
+        {
+          "file": "32.png",
+          "caption": "Documents tab: every row is tagged with its functional department in the Type column"
+        },
+        {
+          "file": "33.png",
+          "caption": "Clicking the \"Corporate & Governance\" card filters every to-do and document on the page to that department"
+        }
+      ]
+    },
+    {
+      "wf": "Ask a question (Q&A over the company corpus)",
+      "status": "pass",
+      "error": "",
+      "shots": [
+        {
+          "file": "34.png",
+          "caption": "Q&A answers from the company wiki + documents, with citations"
+        }
+      ]
+    }
+  ]
+}
