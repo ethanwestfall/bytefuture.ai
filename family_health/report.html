@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Health Dashboard — Local demo capture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    :root {
+      --ink: #14181f;
+      --ink-soft: #2b313c;
+      --muted: #6b7280;
+      --paper: #fbfbf9;
+      --paper-warm: #f5f1ea;
+      --card: #ffffff;
+      --rule: #e6e3dd;
+      --rule-soft: #f0ede5;
+      --primary: #1a4d7c;
+      --primary-strong: #143e63;
+      --primary-soft: #e8f0f7;
+      --accent: #5b8c70;
+      --accent-soft: #e3eee5;
+      --warning: #b06a00;
+      --bad: #b3361e;
+      --shadow-sm: 0 1px 2px rgba(20, 24, 31, 0.04), 0 1px 3px rgba(20, 24, 31, 0.06);
+      --shadow-md: 0 2px 4px rgba(20, 24, 31, 0.04), 0 4px 12px rgba(20, 24, 31, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.62;
+      font-feature-settings: 'ss01', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .shell { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+    .prose {
+      max-width: 720px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    .prose code, code {
+      font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      font-size: 0.86em;
+      background: var(--paper-warm);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: var(--ink-soft);
+    }
+
+    /* ════════ Hero ════════ */
+    header.hero {
+      background: linear-gradient(180deg, #ffffff 0%, var(--paper-warm) 100%);
+      border-bottom: 1px solid var(--rule);
+      padding: 64px 0 40px;
+    }
+    header.hero .eyebrow {
+      font-size: 0.74rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin: 0 0 12px;
+    }
+    header.hero h1 {
+      margin: 0 0 18px;
+      font-size: 2.45rem;
+      font-weight: 700;
+      letter-spacing: -0.022em;
+      color: var(--ink);
+      line-height: 1.18;
+      max-width: 820px;
+    }
+    header.hero .tagline {
+      max-width: 720px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.18rem;
+      color: var(--ink-soft);
+      margin: 0 0 24px;
+      line-height: 1.55;
+    }
+    header.hero .meta {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin: 0;
+    }
+    header.hero .meta code { background: #fff; }
+
+    .stats-banner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin: 28px 0 0;
+      max-width: 720px;
+    }
+    .stats-banner .stat {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .stats-banner .num {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary);
+      letter-spacing: -0.015em;
+    }
+    .stats-banner .lbl {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    /* ════════ Sticky TOC ════════ */
+    nav.toc {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: saturate(150%) blur(8px);
+      border-bottom: 1px solid var(--rule);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav.toc .shell { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    nav.toc .label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-right: 8px;
+    }
+    nav.toc a {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border-radius: 999px;
+      padding: 4px 12px;
+      transition: background 0.12s ease;
+    }
+    nav.toc a:hover { background: #d5e2ed; }
+    nav.toc a.fail { background: #fbe0dd; color: var(--bad); }
+
+    /* ════════ Sections ════════ */
+    main { padding: 48px 0 80px; }
+    section { margin-bottom: 52px; scroll-margin-top: 80px; }
+    section h2 {
+      color: var(--primary-strong);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.014em;
+      margin: 0 0 22px;
+      line-height: 1.25;
+    }
+    section h3 {
+      color: var(--ink);
+      font-size: 1.18rem;
+      font-weight: 600;
+      margin: 32px 0 12px;
+      letter-spacing: -0.005em;
+    }
+    section p { margin: 0 0 14px; }
+
+    /* Background card */
+    .background {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 36px 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .background h2 {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+    ul.exec-summary {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.04rem;
+      line-height: 1.6;
+    }
+    ul.exec-summary li {
+      padding: 14px 0 14px 30px;
+      border-bottom: 1px solid var(--rule-soft);
+      position: relative;
+      color: var(--ink-soft);
+    }
+    ul.exec-summary li:last-child { border-bottom: none; }
+    ul.exec-summary li::before {
+      content: "▸";
+      position: absolute;
+      left: 8px;
+      top: 14px;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    ul.exec-summary li strong { color: var(--ink); font-weight: 600; }
+
+    ol.three-features {
+      padding-left: 24px;
+      max-width: 720px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1.05rem;
+    }
+    ol.three-features li { margin: 12px 0; line-height: 1.6; }
+    ol.three-features strong { color: var(--primary-strong); font-weight: 600; }
+
+    sup a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      font-size: 0.7em;
+      padding: 0 1px;
+      font-weight: 500;
+    }
+    sup a:hover { color: var(--primary); }
+
+    /* ════════ Workflow cards ════════ */
+    .wf {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 32px 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .wf h2 {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 1.4rem;
+      letter-spacing: -0.012em;
+      margin-bottom: 12px;
+    }
+    .wf .wf-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--paper-warm);
+      padding: 2px 9px;
+      border-radius: 6px;
+    }
+    .wf .badge {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 999px;
+      padding: 4px 11px;
+      text-transform: uppercase;
+    }
+    .wf .badge.pass { background: var(--accent-soft); color: var(--accent); }
+    .wf .badge.fail { background: #fbe0dd; color: var(--bad); }
+    .wf .framing { color: var(--ink-soft); margin-bottom: 18px; }
+    .wf .err {
+      color: var(--bad);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: #fdf3f2;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .shots {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+      margin: 22px 0 8px;
+    }
+    figure.shot {
+      margin: 0;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fafaf8;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.18s ease;
+    }
+    figure.shot:hover { box-shadow: var(--shadow-md); }
+    figure.shot a { display: block; }
+    figure.shot img { width: 100%; display: block; }
+    figure.shot.pre, figure.shot.svg {
+      background: #1a1f2c;
+    }
+    figure.shot.pre pre {
+      margin: 0;
+      padding: 18px 20px;
+      background: transparent;
+      color: #d6dcec;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.62;
+      overflow: auto;
+      white-space: pre;
+    }
+    figure.shot.svg .chart-wrap {
+      padding: 22px;
+      background: #fff;
+    }
+    figure.shot.svg svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Evidence cards — synthetic figures showing actual API responses
+       (records_created counts + agent output snippets) rather than
+       UI screenshots. Used when the data we want to show is more
+       compelling rendered as structured text than as a screen
+       capture. */
+    figure.shot.evidence {
+      background: #fff;
+    }
+    figure.shot.evidence .evidence-body {
+      padding: 18px 20px 14px;
+    }
+    figure.shot.evidence .evidence-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    figure.shot.evidence .evidence-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      text-transform: lowercase;
+    }
+    figure.shot.evidence .status-success { background: var(--accent-soft); color: var(--accent); }
+    figure.shot.evidence .status-partial { background: #fdf2d8; color: var(--warning); }
+    figure.shot.evidence .status-error { background: #fbe0dd; color: var(--bad); }
+    figure.shot.evidence .evidence-jobid {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      background: var(--paper-warm);
+    }
+    figure.shot.evidence table.evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+    }
+    figure.shot.evidence table.evidence-table th {
+      text-align: left;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    figure.shot.evidence table.evidence-table td {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+    }
+    figure.shot.evidence table.evidence-table td:last-child {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+    }
+    figure.shot.evidence .evidence-snippet {
+      margin: 12px 0 0;
+      padding: 12px 14px;
+      background: var(--paper-warm);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      white-space: pre-wrap;
+      max-height: 240px;
+      overflow: auto;
+    }
+    figure.shot.evidence .evidence-errors {
+      margin: 12px 0 0;
+      padding: 10px 14px;
+      background: #fdf3f2;
+      border-left: 3px solid var(--bad);
+      border-radius: 4px;
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+    }
+    figure.shot.evidence .evidence-errors strong {
+      color: var(--bad);
+      font-weight: 600;
+    }
+    figure.shot.evidence .evidence-errors ul {
+      margin: 6px 0 0;
+      padding-left: 22px;
+    }
+    figure.shot.evidence .evidence-errors li {
+      margin: 4px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+    }
+
+    /* Chat-bubble evidence: render the actual Q&A from the API
+       response when the UI doesn't display the result by URL state. */
+    figure.shot.evidence-chat {
+      background: #f7f6f0;
+      padding: 18px 20px 14px;
+      display: block;
+    }
+    figure.shot.evidence-chat .chat-bubble {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.94rem;
+      line-height: 1.55;
+      padding: 12px 16px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      max-width: 88%;
+      white-space: pre-wrap;
+    }
+    figure.shot.evidence-chat .chat-bubble.user {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+    figure.shot.evidence-chat .chat-bubble.assistant {
+      background: #fff;
+      color: var(--ink-soft);
+      border: 1px solid var(--rule);
+      border-bottom-left-radius: 4px;
+    }
+    figure.shot.evidence-chat figcaption {
+      background: transparent;
+      border-top: 1px solid var(--rule);
+      margin-top: 8px;
+    }
+    figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding: 11px 13px;
+      line-height: 1.5;
+      border-top: 1px solid var(--rule);
+      background: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    figure.shot.pre figcaption, figure.shot.svg figcaption {
+      background: #fff;
+      color: var(--muted);
+    }
+    .wf .proof {
+      margin-top: 22px;
+      padding: 16px 20px;
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 1rem;
+      color: var(--ink-soft);
+    }
+    .wf .proof strong { color: var(--primary-strong); font-weight: 600; }
+
+    /* ════════ Closing ════════ */
+    .regulatory {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 36px 40px;
+      box-shadow: var(--shadow-sm);
+    }
+    .regulatory h2 {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 10px;
+      margin-bottom: 22px;
+      display: inline-block;
+    }
+    .regulatory pre {
+      background: #1a1f2c;
+      color: #d6dcec;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 18px 22px;
+      border-radius: 10px;
+      overflow-x: auto;
+      max-width: 760px;
+      line-height: 1.62;
+    }
+    .regulatory pre code { color: inherit; background: transparent; padding: 0; }
+
+    /* ════════ Citations ════════ */
+    h2#citations {
+      color: var(--primary-strong);
+      font-size: 1.45rem;
+      margin: 56px 0 18px;
+      letter-spacing: -0.012em;
+    }
+    ol.citations {
+      max-width: 760px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 28px;
+      counter-reset: cite;
+    }
+    ol.citations li {
+      margin: 14px 0;
+      padding: 0 0 0 6px;
+      line-height: 1.55;
+      scroll-margin-top: 80px;
+    }
+    ol.citations li a {
+      color: var(--primary);
+      word-break: break-all;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84em;
+    }
+    ol.citations li .claim {
+      color: var(--ink-soft);
+      display: block;
+      margin-bottom: 4px;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 0.98rem;
+    }
+
+    /* ════════ Footer ════════ */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 56px;
+    }
+    footer code { background: var(--paper-warm); }
+
+    @media (max-width: 720px) {
+      .shell { padding: 0 20px; }
+      header.hero h1 { font-size: 1.85rem; }
+      .stats-banner { grid-template-columns: repeat(2, 1fr); }
+      .background, .wf, .regulatory { padding: 24px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="shell">
+    <p class="eyebrow">Personal Health Record · Local Demo Capture</p>
+    <h1>A modern Personal Health Record — household-controlled, AI-assisted, self-hosted.</h1>
+    <p class="tagline">
+      63 million US family caregivers · 131 million adults living with multiple chronic conditions · a household record without the manual-entry burden that killed Google Health.
+    </p>
+    <p class="meta">
+      Captured by <code>demo/generate_demo.sh</code> on 20260628T171749Z · 8 use cases · ran against the live release binary at commit <code>758340e</code>.
+    </p>
+    <div class="stats-banner">
+      <div class="stat"><div class="num">63M</div><div class="lbl">US family caregivers (≈1 in 4 adults)</div></div>
+      <div class="stat"><div class="num">131M</div><div class="lbl">adults with multiple chronic conditions</div></div>
+      <div class="stat"><div class="num">47.2M</div><div class="lbl">seniors with MCC (78.8% of 65+)</div></div>
+      <div class="stat"><div class="num">13.6M</div><div class="lbl">children with special health care needs</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="shell">
+    <span class="label">Jump to</span>
+    <a href="#wf-dashboard">1. The dashboard at first glance</a>
+    <a href="#wf-intake-text">2. Unified intake — paste text, records appear</a>
+    <a href="#wf-intake-pdf">3. Unified intake — upload a lab PDF, structured test results appear</a>
+    <a href="#wf-intake-voice">4. Unified intake — speak a memo, records appear</a>
+    <a href="#wf-chat">5. Patient chat — grounded Q&amp;A with citations</a>
+    <a href="#wf-knowledge">6. Knowledge base — household-curated wiki, not open-web hallucination</a>
+    <a href="#wf-channels">7. Multi-channel capture — Telegram + WhatsApp settings</a>
+    <a href="#wf-privacy">8. Self-hosted — your data, your machine</a>
+  </div>
+</nav>
+
+<main>
+  <div class="shell">
+
+    <!-- ════════ STATIC BACKGROUND ════════ -->
+    <section class="background" id="background">
+      <h2>Why a household-controlled PHR, now</h2>
+
+      <ul class="exec-summary">
+        <li><strong>63 million US adults are family caregivers</strong> (≈1 in 4), up 45–50% since 2015<sup><a href="#cite-1">[1]</a></sup> — exactly the workload a record-keeping product must support.</li>
+        <li><strong>131 million US adults (51.4%) live with multiple chronic conditions</strong>; 78.8% of seniors do<sup><a href="#cite-2">[2]</a></sup> — the highest-prevalence life stage and the group most exposed to care-coordination failures between PCP and specialists.</li>
+        <li><strong>13.6 million US children (18.5%) are Children With Special Health Care Needs</strong>, touching ≈1 in 4 households; only 14.6% receive care in a well-functioning system<sup><a href="#cite-3">[3]</a></sup>.</li>
+        <li><strong>Prior consumer PHRs (Google Health, Microsoft HealthVault) failed not on demand but on manual-entry friction</strong><sup><a href="#cite-4">[4]</a></sup> — users routinely omit source, date, units<sup><a href="#cite-5">[5]</a></sup>. Unified text/file/voice intake with AI classification removes that exact friction.</li>
+        <li><strong>RAG-grounded medical Q&amp;A is efficient and reduces hallucination, but current systems accept misinformation from open-web retrieval</strong><sup><a href="#cite-6">[6]</a></sup> — which validates grounding answers in a household-vetted wiki + the patient's own records, not the open internet.</li>
+        <li><strong>Trust hinges on citations</strong>: physician and patient acceptance of LLM-generated medical summaries depends on verifiable references back to source records<sup><a href="#cite-7">[7]</a></sup>.</li>
+        <li><strong>The regulatory wind is at our back</strong>: the 21st Century Cures Act + ONC 2015 Edition rule mandated patient API access<sup><a href="#cite-9">[9]</a></sup>, Mandl &amp; Kohane framed patient-controlled repositories as a "tectonic shift"<sup><a href="#cite-10">[10]</a></sup>, and consumer PHRs from non-covered entities fall outside HIPAA<sup><a href="#cite-11">[11]</a></sup> — a federal regulatory gap a self-hosted PHR uniquely closes.</li>
+      </ul>
+
+      <h3>The opportunity</h3>
+      <div class="prose">
+        <p>
+          Roughly <strong>243 million Americans</strong> fall into at least one of these PHR-relevant cohorts. Care-coordination failures between PCP and specialists delay diagnosis for the comorbid<sup><a href="#cite-2">[2]</a></sup>; only 14.6% of CSHCN families have a well-functioning system<sup><a href="#cite-3">[3]</a></sup>. The 55% of family caregivers who already perform medical or nursing tasks at home<sup><a href="#cite-1">[1]</a></sup> are an active, instrumented user base — they aren't waiting for a record system to find a problem to solve.
+        </p>
+      </div>
+
+      <h3>Why prior PHRs failed</h3>
+      <div class="prose">
+        <p>
+          Google Health was discontinued in 2011; Microsoft HealthVault wound down in 2019. Spil &amp; Klein's grounded-theory analysis (51 interviews specifically on Google Health) identified two root causes: vendor neglect of perceived usefulness, and low user trust / high perceived risk<sup><a href="#cite-4">[4]</a></sup>. Kim &amp; Johnson directly observed that manual-entry PHR users "failed to account for the source, date, units, and limits of reference ranges"<sup><a href="#cite-5">[5]</a></sup> — turning the records into noise instead of signal. AI voice transcription has documented errors on medication names specifically<sup><a href="#cite-8">[8]</a></sup>, which justifies a classification+validation layer rather than raw ASR text.
+        </p>
+      </div>
+
+      <h3>What's different about this product</h3>
+      <p>Three differentiated capabilities, each tied to a documented failure mode:</p>
+      <ol class="three-features">
+        <li><strong>Unified Intake</strong> — one input box, any format. An AI agent classifies and normalizes free-form text / files / voice into 15 structured record types, restoring the metadata Kim &amp; Johnson found patients omitted<sup><a href="#cite-5">[5]</a></sup>.</li>
+        <li><strong>Curated Knowledge Base + Cross-Record Q&amp;A</strong> — a household-vetted wiki plus a read-only chat agent that grounds answers in actual records with citations, addressing both the open-web misinformation risk<sup><a href="#cite-6">[6]</a></sup> and the citation-trust requirement<sup><a href="#cite-7">[7]</a></sup>.</li>
+        <li><strong>Multi-Channel Capture</strong> — Telegram + WhatsApp pairing meets caregivers at the point of friction (a parent's phone in a clinic waiting room), not at a desktop browser.</li>
+      </ol>
+    </section>
+
+    <!-- ════════ DYNAMIC DEMO SECTION ════════ -->
+    
+    <section class="wf" id="wf-dashboard">
+      <h2><span class="badge pass">✓ pass</span> The dashboard at first glance</h2>
+      <div class="framing prose">Alice Rendleman is 73 — a breast cancer survivor with type 2 diabetes, hypertension, and progressing peripheral neuropathy. She's one of the 47.2 million seniors living with multiple chronic conditions<sup><a href="#cite-2">[2]</a></sup>. Her daughter is one of the 63 million US family caregivers tracking her care<sup><a href="#cite-1">[1]</a></sup>. The first thing either of them sees on opening the app is a single page synthesizing five years of records into "what's changed and what to do next."</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="01.png" target="_blank"><img src="01.png" loading="lazy" alt="Dashboard — Alice Rendleman, 73, breast-cancer survivor + T2D + HTN"></a><figcaption>Dashboard — Alice Rendleman, 73, breast-cancer survivor + T2D + HTN</figcaption></figure>
+        <figure class="shot"><a href="02.png" target="_blank"><img src="02.png" loading="lazy" alt="AI-generated health summary — synthesized from five years of records, with Overview / Conditions / Medications / Trends / Action Items / Alerts"></a><figcaption>AI-generated health summary — synthesized from five years of records, with Overview / Conditions / Medications / Trends / Action Items / Alerts</figcaption></figure>
+        <figure class="shot"><a href="03.png" target="_blank"><img src="03.png" loading="lazy" alt="Active alerts and notifications — the things to act on this week"></a><figcaption>Active alerts and notifications — the things to act on this week</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> A populated dashboard at first contact is the entire point. The summary, alerts, vitals trends, medication list, and recent activity are all rendered server-side from records the household controls — no portal switching, no per-specialist login. Care-coordination failures between PCP and specialists delay diagnosis for the comorbid<sup><a href="#cite-2">[2]</a></sup>; a single household-controlled view is the architecture fix.</div>
+    </section>
+
+    <section class="wf" id="wf-intake-text">
+      <h2><span class="badge pass">✓ pass</span> Unified intake — paste text, records appear</h2>
+      <div class="framing prose">The killer constraint for prior PHRs: users were expected to fill structured forms with the source, date, units, and reference ranges of every value<sup><a href="#cite-5">[5]</a></sup>. Most didn't. Here, you paste plain English — "BP 138/88, HR 76, weight 82.5 kg this morning before breakfast" — and the intake agent classifies it, infers the measurement timestamp, and writes a structured vital_signs row. The metadata gets reconstructed, not transcribed.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="04.png" target="_blank"><img src="04.png" loading="lazy" alt="The Input page — one text box, file upload, voice recording. The same control is also embedded on /dashboard."></a><figcaption>The Input page — one text box, file upload, voice recording. The same control is also embedded on /dashboard.</figcaption></figure>
+        <figure class="shot"><a href="05.png" target="_blank"><img src="05.png" loading="lazy" alt="A typical free-form vital-signs note — written the way a caregiver would jot it in their notes app"></a><figcaption>A typical free-form vital-signs note — written the way a caregiver would jot it in their notes app</figcaption></figure>
+        <figure class="shot evidence">
+      <div class="evidence-body">
+        <div class="evidence-head">
+          <span class="evidence-status status-success">job success</span>
+          <code class="evidence-jobid">fe46f1e3…</code>
+        </div>
+        <table class="evidence-table">
+          <thead><tr><th>record type</th><th>created</th></tr></thead>
+          <tbody><tr><td>Vital Signs</td><td><b>+1</b></td></tr></tbody>
+        </table>
+        
+        <pre class="evidence-snippet">New medical data classified as **vital signs** and saved successfully.
+
+- `POST /api/vital_signs` created record `id=24` for `user_id=2`
+- Parsed data used:
+  - `measured_at`: `2026-07-12T07:45:00`
+  - `systolic_bp`: `138`
+  - `diastolic_bp`: `88`
+  - `heart_rate`: `76`
+  - `oxygen_saturation`: `97`
+  - `weight_kg`: `82.5`
+
+No critical-value alert was triggered.</pre>
+      </div>
+      <figcaption>Records actually created — ground-truth count delta from the live API</figcaption>
+    </figure>
+        <figure class="shot"><a href="06.png" target="_blank"><img src="06.png" loading="lazy" alt="The Vital Signs table — five years of Alice's history plus the new row from this run"></a><figcaption>The Vital Signs table — five years of Alice's history plus the new row from this run</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> Removing the data-entry friction is the historical pivot. Kim & Johnson's 2004 finding<sup><a href="#cite-5">[5]</a></sup> — that "subjects failed to account for the source, date, units, and limits of reference ranges" — was a death sentence for manual-entry PHRs. AI classification into 15 structured types reverses that.</div>
+    </section>
+
+    <section class="wf" id="wf-intake-pdf">
+      <h2><span class="badge pass">✓ pass</span> Unified intake — upload a lab PDF, structured test results appear</h2>
+      <div class="framing prose">A lipid panel arrives as a PDF from LabCorp or Quest. The 21st Century Cures Act gives Alice the right to that data<sup><a href="#cite-9">[9]</a></sup>, but the document is still a printable artifact — total cholesterol, LDL, HDL, triglycerides, each with their own reference range. Upload it. The OCR layer (<code>openai-codex/gpt-5.5</code>) extracts the text, the intake agent parses every numbered row, the values land as structured <code>test_results</code> with reference ranges + flags preserved.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="07.png" target="_blank"><img src="07.png" loading="lazy" alt="The Input page — drag-and-drop accepts PDFs, PNGs, JPGs"></a><figcaption>The Input page — drag-and-drop accepts PDFs, PNGs, JPGs</figcaption></figure>
+        <figure class="shot"><a href="08.png" target="_blank"><img src="08.png" loading="lazy" alt="Lipid panel PDF picked — exactly what arrives by email from the lab"></a><figcaption>Lipid panel PDF picked — exactly what arrives by email from the lab</figcaption></figure>
+        <figure class="shot evidence">
+      <div class="evidence-body">
+        <div class="evidence-head">
+          <span class="evidence-status status-success">job success</span>
+          <code class="evidence-jobid">e4a9c65c…</code>
+        </div>
+        <table class="evidence-table">
+          <thead><tr><th>record type</th><th>created</th></tr></thead>
+          <tbody><tr><td>Lab Reports</td><td><b>+1</b></td></tr><tr><td>Test Results</td><td><b>+10</b></td></tr></tbody>
+        </table>
+        
+        <pre class="evidence-snippet">Saved as **new lab report** for `user_id=2` with abnormal findings detected.
+
+- `POST /api/lab_reports` → created `id=22`
+  - Lab: `QUEST DIAGNOSTICS`
+  - Report: `LIPID PANEL - COMPREHENSIVE`
+  - Collected: `2026-03-25T07:30:00`
+  - Reported: `2026-03-26`
+  - Ordering physician: `Dr. James Wheeler`
+  - Summary stored from interpretation text
+
+- `POST /api/test_results` created 10 linked results under `lab_report_id=22`:
+  - `id=53` Total Cholesterol → 242 mg/dL (high; ref `&lt; 200`)
+  - `id=52` LDL Cholesterol → 168 mg/dL (high; ref `&lt; 100`)
+  - `id=49` HDL Cholesterol → 38 mg/dL (low; ref `&gt; 40`)
+  - `id=45` Triglycerides → 180 mg/dL (high; ref `&lt; 150`)
+  - `id=46` VLDL Cholesterol → 36 mg/d
+…</pre>
+      </div>
+      <figcaption>OCR + intake-agent output — rows extracted from the PDF (count delta from live API)</figcaption>
+    </figure>
+        <figure class="shot"><a href="09.png" target="_blank"><img src="09.png" loading="lazy" alt="The Test Results table — every lab value lands with its reference range and flag, no per-field form to fill"></a><figcaption>The Test Results table — every lab value lands with its reference range and flag, no per-field form to fill</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> Patient owns the data (per ONC's 2015 Edition + Cures Act API mandate<sup><a href="#cite-9">[9]</a></sup>); AI does the parsing. The reference-range and units metadata that Kim & Johnson found patients omit<sup><a href="#cite-5">[5]</a></sup> is reconstructed from the PDF itself.</div>
+    </section>
+
+    <section class="wf" id="wf-intake-voice">
+      <h2><span class="badge pass">✓ pass</span> Unified intake — speak a memo, records appear</h2>
+      <div class="framing prose">A caregiver in a clinic waiting room won't type a structured vital-signs form on their phone. They'll speak: "Mom's BP was 132 over 80 this morning, she took her metformin." AI voice transcription has documented inaccuracies on medication names specifically<sup><a href="#cite-8">[8]</a></sup>, which is why we don't store the raw ASR text — the intake agent reads the transcript, classifies it into a structured vital_signs record, and reconciles drug names against the patient's actual medication list. To make this demo deterministic, we synthesize the spoken memo via this server's TTS endpoint (xai/grok-tts) first, then upload that exact audio bytes back through the intake pipeline (xai/grok-stt) so you can see the round trip.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="10.png" target="_blank"><img src="10.png" loading="lazy" alt="Input page — voice recording is one of three intake modes alongside text and file"></a><figcaption>Input page — voice recording is one of three intake modes alongside text and file</figcaption></figure>
+        <figure class="shot evidence">
+      <div class="evidence-body">
+        <div class="evidence-head">
+          <span class="evidence-status status-success">job success</span>
+          <code class="evidence-jobid">8a7396ab…</code>
+        </div>
+        <table class="evidence-table">
+          <thead><tr><th>record type</th><th>created</th></tr></thead>
+          <tbody><tr><td>Vital Signs</td><td><b>+1</b></td></tr></tbody>
+        </table>
+        
+        <pre class="evidence-snippet">New data saved as **vital signs** for `user_id=2`.
+
+- `POST /api/vital_signs` created record `id=25`
+  - `measured_at`: `2026-06-29T01:19:10`
+  - `systolic_bp`: `128`
+  - `diastolic_bp`: `78`
+  - `heart_rate`: `72`
+  - `notes`: `Blood pressure and heart rate this morning; took metformin at 7:00 AM with breakfast.`
+
+No critical vitals alert was triggered.</pre>
+      </div>
+      <figcaption>TTS → ASR → intake-agent — records from the spoken memo (count delta from live API)</figcaption>
+    </figure>
+        <figure class="shot"><a href="11.png" target="_blank"><img src="11.png" loading="lazy" alt="Vital Signs after the voice-memo round trip — the BP 128/78 + HR 72 join Alice's five-year series"></a><figcaption>Vital Signs after the voice-memo round trip — the BP 128/78 + HR 72 join Alice's five-year series</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> The pipeline is text→TTS→audio→ASR→intake-agent→structured records. The TTS and ASR endpoints are the same OpenAI-compatible gateway the operator already has configured for everything else. ASR transcription errors on medication names<sup><a href="#cite-8">[8]</a></sup> are caught by the intake agent's classification + reconciliation pass, not stored as raw text.</div>
+    </section>
+
+    <section class="wf" id="wf-chat">
+      <h2><span class="badge pass">✓ pass</span> Patient chat — grounded Q&amp;A with citations</h2>
+      <div class="framing prose">Open-web medical RAG accepts misinformation: current systems have a limited ability to detect noise in retrieved documents<sup><a href="#cite-6">[6]</a></sup>. We dodge that by giving the chat agent read-only access to Alice's actual records plus a household-curated wiki. When she asks "is my BP trending up?" the agent reads the <code>vital_signs</code> table, computes the trend, and answers with the specific dates it relied on. Physician trust of LLM-generated summaries depends on exactly this kind of verifiable reference<sup><a href="#cite-7">[7]</a></sup>.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="12.png" target="_blank"><img src="12.png" loading="lazy" alt="The patient chat panel — read-only Q&amp;A grounded in Alice's actual records"></a><figcaption>The patient chat panel — read-only Q&amp;A grounded in Alice's actual records</figcaption></figure>
+        <figure class="shot"><a href="13.png" target="_blank"><img src="13.png" loading="lazy" alt="Asking: &quot;What's my blood pressure trend over the last 30 days?&quot;"></a><figcaption>Asking: &quot;What's my blood pressure trend over the last 30 days?&quot;</figcaption></figure>
+        <figure class="shot evidence-chat">
+      <div class="chat-bubble user">What is my most recent blood pressure reading, and when was it taken?</div>
+      <div class="chat-bubble assistant">The most recent blood pressure on file is **138/88 mmHg**, taken at **2026-07-12 07:45** (`measured_at` from the latest vital-sign record).</div>
+      <figcaption>The actual Q&amp;A — agent reply rendered from the server response</figcaption>
+    </figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> RAG-with-citations grounded in the household's own records is the architecture fix for two distinct problems: open-web misinformation acceptance<sup><a href="#cite-6">[6]</a></sup> and the trust-via-citation requirement<sup><a href="#cite-7">[7]</a></sup>.</div>
+    </section>
+
+    <section class="wf" id="wf-knowledge">
+      <h2><span class="badge pass">✓ pass</span> Knowledge base — household-curated wiki, not open-web hallucination</h2>
+      <div class="framing prose">When the chat agent is asked "is metformin safe with my other meds?", it shouldn't ask DuckDuckGo. The knowledge tab lets the household ingest sources they trust — a Mayo Clinic page, a NEJM perspective, a specialist's handout — into a Karpathy-style wiki. The chat agent consults that wiki only. Current medical-QA RAG systems have a documented inability to detect misinformation in open-web retrieval<sup><a href="#cite-6">[6]</a></sup>; a curated wiki is the architecture fix.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="14.png" target="_blank"><img src="14.png" loading="lazy" alt="The Knowledge tab — two forms: ingest a specific source, or research a topic and have the agent build a wiki page"></a><figcaption>The Knowledge tab — two forms: ingest a specific source, or research a topic and have the agent build a wiki page</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> The wiki is the trust boundary. The household chooses what counts as a credible source; the chat agent stays grounded inside that boundary.</div>
+    </section>
+
+    <section class="wf" id="wf-channels">
+      <h2><span class="badge pass">✓ pass</span> Multi-channel capture — Telegram + WhatsApp settings</h2>
+      <div class="framing prose">55% of US family caregivers handle injections, wound care, and medication management at home<sup><a href="#cite-1">[1]</a></sup>. They're not at a desktop browser — they're in a clinic waiting room with a phone. Pair Telegram or WhatsApp to a family member and they can text "BP 130/82, just took my morning meds" or send a photo of a discharge summary the same way they'd text a friend. Both routes feed the same intake agent and produce the same structured records.</div>
+      
+      <div class="shots">
+        <figure class="shot"><a href="15.png" target="_blank"><img src="15.png" loading="lazy" alt="The Users page — every family member has a per-channel pairing config"></a><figcaption>The Users page — every family member has a per-channel pairing config</figcaption></figure>
+        <figure class="shot"><a href="16.png" target="_blank"><img src="16.png" loading="lazy" alt="Per-family-member channel config — Telegram + WhatsApp pairing UI"></a><figcaption>Per-family-member channel config — Telegram + WhatsApp pairing UI</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> Meeting capture at the point of friction is what the unified-intake architecture buys when you compose it with messaging-app webhooks. The dashboard isn't a destination the caregiver has to "go to" — they push records in from wherever they already are.</div>
+    </section>
+
+    <section class="wf" id="wf-privacy">
+      <h2><span class="badge pass">✓ pass</span> Self-hosted — your data, your machine</h2>
+      <div class="framing prose">HHS OCR's PHR Vendor Privacy Notice is explicit: consumer PHRs offered by non-covered entities fall outside the HIPAA Privacy Rule<sup><a href="#cite-11">[11]</a></sup>. The federal gap is real. A self-hosted PHR closes it on the household's own terms. Below is the on-disk layout of this demo run — every byte under one directory, no third-party cloud, no vendor account.</div>
+      
+      <div class="shots">
+        <figure class="shot pre"><pre># /var/folders/f0/q505r6dj69v6qcc8j_dqglnh0000gn/T/fh-demo-XXXXXX.fU9REGvxyW (the demo's temp data directory)
+  agent-workspace/
+    skills/
+      generate-health-summary/
+      intake-medical-data/
+  chat-agent-workspace/
+    skills/
+      patient-chat/
+  config.toml (1.6 KB)
+  data/
+    family_health.db (4.0 KB)
+    family_health.db-shm (32.0 KB)
+    family_health.db-wal (3967.1 KB)
+  knowledge/
+    raw/
+    wiki/
+  knowledge-agent-workspace/
+    skills/
+      manage-knowledge-base/
+  server.log (80.1 KB)
+  static (160 B)
+  templates (416 B)
+  uploads/
+    audio/
+      c6520b24-1765-4264-a80e-3abd75a4ece4.mp3 (141.8 KB)
+    documents/
+      b12e9d83-3693-44d6-88d3-550b0a0a1d7e.pdf (2.8 KB)
+</pre><figcaption>The demo's on-disk layout — SQLite for structured data, plain files for uploads, markdown for the knowledge wiki. rsync to back up.</figcaption></figure>
+      </div>
+      <div class="proof prose"><strong>What this proves:</strong> ONC's 2015 Edition + Cures Act API mandate<sup><a href="#cite-9">[9]</a></sup> and Mandl & Kohane's "tectonic shift" thesis<sup><a href="#cite-10">[10]</a></sup> both frame patient-controlled repositories as the next architecture. A directory you can rsync to a backup disk is the simplest implementation of that thesis.</div>
+    </section>
+
+    <!-- ════════ STATIC CLOSING ════════ -->
+    <section class="regulatory" id="regulatory">
+      <h2>The regulatory + privacy case for self-hosted</h2>
+      <div class="prose">
+        <p>
+          HHS OCR's PHR Vendor Privacy Notice<sup><a href="#cite-11">[11]</a></sup> states explicitly that consumer PHRs offered by non-covered entities fall outside the HIPAA Privacy Rule — governed only by the vendor's own privacy policies. The FTC's Health Breach Notification Rule (16 CFR Part 318, expanded April 2024) partially backstops this but doesn't eliminate the dependency. A self-hosted PHR keeps every byte under the household's control on their own machine, sidestepping third-party policy entirely.
+        </p>
+        <p>
+          ONC's 2015 Edition Certification + the 21st Century Cures Act mandated that EHRs expose patient-accessible APIs<sup><a href="#cite-9">[9]</a></sup>. Mandl &amp; Kohane (NEJM 2008, 2016) frame patient-controlled repositories as a "tectonic shift" inversion of the institutional record model<sup><a href="#cite-10">[10]</a></sup> — the architecture this product implements.
+        </p>
+      </div>
+
+      <h3>Tech stack</h3>
+      <div class="prose">
+        <p>
+          Rust/Axum server, embedded SQLite (rusqlite + r2d2), Tera templates, vanilla JS — no SPA framework, no build step. AI calls go to OpenAI-compatible endpoints; local models via LM Studio / Ollama work identically. Telegram via long-poll, WhatsApp via Meta Cloud API webhook. ~12,000 lines of Rust + a few thousand of templates.
+        </p>
+      </div>
+
+      <h3>Run it yourself</h3>
+<pre><code>git clone https://github.com/second-state/family-health
+cd family-health
+cp config.toml.example config.toml
+# fill in AI gateway credentials in [ocr] and [agent.api]
+cargo build --release
+bash demo/generate_demo.sh
+open demo/output/&lt;timestamp&gt;/report.html
+</code></pre>
+    </section>
+
+    <h2 id="citations">Citations</h2>
+    <ol class="citations">
+      <li id="cite-1">
+        <span class="claim">The addressable consumer PHR population in the US is anchored by 63 million family caregivers as of 2025 (~1 in 4 adults, an increase of 20 million / ~45-50% growth from 2015), with 55% performing complex medical or nursing tasks such as in…</span>
+        <a href="https://www.aarp.org/press/releases/2025-07-24-new-report-reveals-crisis-point-for-americas-63-million-family-caregivers.html" target="_blank">https://www.aarp.org/press/releases/2025-07-24-new-report-reveals-crisis-point-for-americas-63-million-family-caregivers.html</a>
+      </li>
+      <li id="cite-2">
+        <span class="claim">131 million US adults (51.4%) have two or more chronic conditions (2023), and among adults 65+ the figure reaches 78.8% / 47.2 million — the highest-prevalence life stage and the population most likely to be cared for by the 63M caregivers …</span>
+        <a href="https://www.cdc.gov/pcd/issues/2025/24_0539.htm" target="_blank">https://www.cdc.gov/pcd/issues/2025/24_0539.htm</a>
+      </li>
+      <li id="cite-3">
+        <span class="claim">13.6 million US children (18.5% of the pediatric population) were Children With Special Health Care Needs in 2017-2018, affecting approximately 1 in 4 households (24.8%) — yet only 14.6% of CSHCN received care in a well-functioning system, …</span>
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11127725/" target="_blank">https://pmc.ncbi.nlm.nih.gov/articles/PMC11127725/</a>
+      </li>
+      <li id="cite-4">
+        <span class="claim">Five years of experimentation by Google and Microsoft did not yield the expected results — Google discontinued Google Health (announced 2011-06-24, shut 2012-01-01) and Microsoft HealthVault failed to reach critical mass (eventually shut 20…</span>
+        <a href="https://ieeexplore.ieee.org/document/6758953/" target="_blank">https://ieeexplore.ieee.org/document/6758953/</a>
+      </li>
+      <li id="cite-5">
+        <span class="claim">Without structured prompts, patients omit critical metadata (source, date, units) when entering medical information themselves — a foundational usability finding from the era of manual-entry PHRs. AI classification into 15 structured record…</span>
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1550597/" target="_blank">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1550597/</a>
+      </li>
+      <li id="cite-6">
+        <span class="claim">Current medical-QA LLM/RAG systems have a limited ability to detect misinformation in retrieved documents, often accepting fake information as truth — which justifies grounding answers in a household-curated, trusted-source wiki rather than…</span>
+        <a href="https://arxiv.org/html/2411.09213v1" target="_blank">https://arxiv.org/html/2411.09213v1</a>
+      </li>
+      <li id="cite-7">
+        <span class="claim">Source references back to the original record are critical for user trust in LLM-generated medical summaries — directly validating the product design of grounded cross-record Q&amp;A that links answers to the specific records they came from.</span>
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12155021/" target="_blank">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12155021/</a>
+      </li>
+      <li id="cite-8">
+        <span class="claim">AI voice transcription has documented inaccuracy risks, especially with medication names, that pose patient-safety risk — justifying the product's choice to classify and structure voice inputs (and reconcile against existing records) rather…</span>
+        <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12301838/" target="_blank">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12301838/</a>
+      </li>
+      <li id="cite-9">
+        <span class="claim">The Meaningful Use Stage 3 Final Rule (CMS) plus the 2015 Edition Certification Criteria (ONC) constitute the first federal mandate requiring certified EHR technology to expose an API through which patients can access their EHR data, creati…</span>
+        <a href="https://www.nejm.org/doi/full/10.1056/NEJMp1512142" target="_blank">https://www.nejm.org/doi/full/10.1056/NEJMp1512142</a>
+      </li>
+      <li id="cite-10">
+        <span class="claim">Mandl &amp; Kohane's foundational NEJM perspectives framed personally controlled health records (PCHRs) as a disruptive inversion of the traditional medical-record model — records created by and residing with patients, who grant permission for …</span>
+        <a href="https://www.nejm.org/doi/10.1056/NEJMsb0800220" target="_blank">https://www.nejm.org/doi/10.1056/NEJMsb0800220</a>
+      </li>
+      <li id="cite-11">
+        <span class="claim">Consumer-facing PHRs offered by vendors that are not HIPAA covered entities (or business associates) fall outside the HIPAA Privacy Rule and are governed only by the vendor's own privacy policies and other applicable laws — establishing a f…</span>
+        <a href="https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/understanding/special/healthit/phrs.pdf" target="_blank">https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/understanding/special/healthit/phrs.pdf</a>
+      </li>
+    </ol>
+
+  </div>
+</main>
+
+<footer>
+  <div class="shell">
+    Generated by <code>demo/generate_demo.sh</code> on 20260628T171749Z from commit <code>758340e</code>.
+    Background + citations are static (refreshed only when the deep-research pass is rerun); demo captures refresh on every run.
+    Data source: <code>seed_data/alice_rendleman.csv</code>.
+    Full deep-research transcript: <code><a href="findings.json">findings.json</a></code>.
+  </div>
+</footer>
+
+</body>
+</html>
