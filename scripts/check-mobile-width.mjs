@@ -39,14 +39,20 @@ async function waitForChrome() {
 }
 
 async function main() {
+  let chromeLog = '';
   const chrome = spawn(chromePath, [
     '--headless=new',
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
     '--disable-gpu',
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${userDataDir}`,
     '--window-size=375,812',
     'about:blank',
-  ], { stdio: 'ignore' });
+  ], { stdio: ['ignore', 'ignore', 'pipe'] });
+  chrome.stderr.on('data', (chunk) => {
+    chromeLog += chunk.toString();
+  });
 
   try {
     await waitForChrome();
@@ -86,6 +92,12 @@ async function main() {
       throw new Error(`Horizontal overflow: scrollWidth ${value.scrollWidth} > clientWidth ${value.clientWidth}`);
     }
     ws.close();
+  } catch (error) {
+    if (chromeLog.trim()) {
+      console.error('Chrome stderr:');
+      console.error(chromeLog.trim());
+    }
+    throw error;
   } finally {
     chrome.kill('SIGTERM');
   }
