@@ -15,6 +15,7 @@ const writings = defineCollection({
     category: z.string().default('tutorial'),
     date: z.coerce.date(),
     cta: z.string().url().default('https://models.bytefuture.ai/intro.html'),
+    cover: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

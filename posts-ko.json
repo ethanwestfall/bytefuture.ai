@@ -1,12 +1,5 @@
 [
   {
-    "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6이 Token Station에 추가되었습니다: coding agent route에서 바로 테스트하기",
-    "summary": "Token Station은 GPT-5.6을 OpenAI-compatible API, Codex, Copilot 같은 coding-agent route에서 지원합니다. 하나의 endpoint로 Sol, Terra, Luna, Claude Fable 5를 실제 workflow에서 비교할 수 있습니다.",
-    "category": "model-launches",
-    "date": "2026-07-13"
-  },
-  {
     "slug": "use-any-model-in-claude-code-through-token-station",
     "title": "Token Station을 통해 Claude Code에서 어떤 모델이든 사용하기",
     "summary": "Claude Code는 Token Station을 통해 어떤 모델이든 사용할 수 있다. ~/.claude/settings.json에 저장하는 방법과 ANTHROPIC_* 환경 변수를 임시로 export하는 방법, base URL, token, Opus/Sonnet/Haiku/subagent 모델 설정, pong 검증 명령을 다룬다.",

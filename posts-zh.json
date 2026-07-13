@@ -1,12 +1,5 @@
 [
   {
-    "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6 已接入 Token Station：在你的 coding agent 路由里直接试用",
-    "summary": "Token Station 现在支持 GPT-5.6，覆盖 OpenAI-compatible API、Codex 和 Copilot 等 coding-agent 路由。用一个 endpoint 比较 Sol、Terra、Luna 和 Claude Fable 5 在真实工作流里的表现。",
-    "category": "model-launches",
-    "date": "2026-07-13"
-  },
-  {
     "slug": "use-token-station-in-cc-switch-for-claude-desktop",
     "title": "在 CC Switch 里用 Token Station 配置 Claude Desktop",
     "summary": "先了解 CC Switch 如何集中管理不同 AI 工具的 Provider，再用 Token Station 配置 Claude Desktop：添加 Provider，填写 Token Station API key，开启 model mapping 和本地路由。Claude Code 推荐使用专门的 Token Station 配置方式。",
