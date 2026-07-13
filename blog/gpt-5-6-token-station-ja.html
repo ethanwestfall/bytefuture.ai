@@ -41,11 +41,11 @@
   </script>
 
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>GPT-5.6 が Token Station に登場：OpenAI、Codex、Copilot ルートをまたぐ 1 つのモデルファミリー — ByteFuture Writings</title>
-  <meta name="description" content="Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで利用可能にしました。Sol、Terra、Luna バリアント、長文コンテキストの価格階層、prompt cache の会計にも対応します。" />
+  <title>GPT-5.6 が Token Station に登場：Claude Fable 5 と比較しながら OpenAI、Codex、Copilot ルートで使う — ByteFuture Writings</title>
+  <meta name="description" content="Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで提供します。この記事では、coding agent 向けに GPT-5.6 と Claude Fable 5 を価格、context、cache 会計、route coverage で比較します。" />
   <link rel="canonical" href="https://bytefuture.ai/blog/gpt-5-6-token-station-ja.html" />
-  <meta property="og:title" content="GPT-5.6 が Token Station に登場：OpenAI、Codex、Copilot ルートをまたぐ 1 つのモデルファミリー — ByteFuture Writings" />
-  <meta property="og:description" content="Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで利用可能にしました。Sol、Terra、Luna バリアント、長文コンテキストの価格階層、prompt cache の会計にも対応します。" />
+  <meta property="og:title" content="GPT-5.6 が Token Station に登場：Claude Fable 5 と比較しながら OpenAI、Codex、Copilot ルートで使う — ByteFuture Writings" />
+  <meta property="og:description" content="Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで提供します。この記事では、coding agent 向けに GPT-5.6 と Claude Fable 5 を価格、context、cache 会計、route coverage で比較します。" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://bytefuture.ai/blog/gpt-5-6-token-station-ja.html" />
   <meta property="og:locale" content="ja_JP" />
@@ -339,7 +339,7 @@
         <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
       </div>
       <!-- ▼ EDIT: post title ▼ -->
-      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 が Token Station に登場：OpenAI、Codex、Copilot ルートをまたぐ 1 つのモデルファミリー</h1>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 が Token Station に登場：Claude Fable 5 と比較しながら OpenAI、Codex、Copilot ルートで使う</h1>
       <!-- ▲ EDIT ▲ -->
     </header>
 
@@ -399,6 +399,24 @@
   <p>これは agent workload で重要です。長い coding session は短い chatbot prompt ではありません。Coding agent は、リポジトリ文脈、テスト出力、diff、計画状態を繰り返し送ることがあります。Prompt caching は繰り返し文脈のコストを下げられますが、そのためには cache write と cached read を別々に扱う必要があります。</p>
   <p>今回の更新では、GPT-5.6 の <code>cache_write_tokens</code> usage を正規化し、cache write を通常 input tokens と二重計上せず、cache creation の bucket で課金するようにしています。</p>
   <p>ユーザーにとっての実用的な意味は明確です。Token Station は新しい GPT-5.6 ファミリーを公開しつつ、実際の agent run で重要な課金の細部を保ちます。</p>
+  <h2 id="gpt-5-6-vs-claude-fable-5-coding-agent-ではどう選ぶか">GPT-5.6 vs Claude Fable 5：coding agent ではどう選ぶか</h2>
+  <p>長時間動く coding agent の比較対象として、Claude Fable 5 は自然な相手です。どちらのモデルファミリーも Token Station から利用でき、大きな context window を持ち、agent が repository state を繰り返し送るときに重要な prompt-cache economics を持っています。</p>
+  <p>最初に見るべき違いは価格です。</p>
+  <ul>
+<li>GPT-5.6 Sol / <code>openai/gpt-5.6</code>: 272K input tokens までは input $5/M、output $30/M、cached input $0.50/M、cache write $6.25/M。</li>
+<li>GPT-5.6 Terra: 272K input tokens までは input $2.50/M、output $15/M。</li>
+<li>GPT-5.6 Luna: 272K input tokens までは input $1/M、output $6/M。</li>
+<li>Claude Fable 5: input $10/M、output $50/M、cache read $1/M、prompt-cache write $12.50/M、1-hour cache write $20/M。</li>
+</ul>
+  <p>272K input tokens を超えると、GPT-5.6 は long-context tier に入ります。Sol は input と cached input が 2 倍になり、output は $45/M になります。Terra は input $5/M、output $22.50/M、Luna は input $2/M、output $9/M になります。Claude Fable 5 は Token Station 上で 1M context window と通常の $10/$50 pricing で設定されています。</p>
+  <p>短くまとめると、次のように選べます。</p>
+  <ul>
+<li>OpenAI-native のモデルファミリー、複数の価格 tier、direct API、Codex route、Copilot route が必要なら GPT-5.6。</li>
+<li>Coding-agent iteration loop を安く回したいなら、まず GPT-5.6 Terra または Luna。</li>
+<li>Anthropic の long-running-agent 向け挙動を重視し、$10/$50 の高い価格を許容できるなら Claude Fable 5。</li>
+<li>モデルブランドより workflow が重要なら、Token Station 内で planning、patching、test repair、PR review、長い repo-context session を実際に比較するのがよいです。</li>
+</ul>
+  <p>Token Station の route name が役立つのはこのためです。<code>openai/gpt-5.6-sol</code>、<code>openai-codex/gpt-5.6-terra</code>、<code>github-copilot/gpt-5.6-luna</code>、<code>anthropic/claude-fable-5</code> を比較するために agent を書き換える必要はありません。モデル選択を明示し、残りの stack を安定させられます。</p>
   <h2 id="azure-の位置づけ">Azure の位置づけ</h2>
   <p>この更新には、Azure OpenAI GPT-5.6 preview のコメント付きテンプレートと、<code>azure_api_version = &amp;quot;v1&amp;quot;</code> による Azure の <code>/openai/v1</code> surface 対応も含まれます。</p>
   <p>これらのテンプレートは、推測の価格では有効化されていません。統合時点では Azure GPT-5.6 meters がまだ公開されていなかったため、operator は自分の Azure deployment でモデルが公開された時点で価格を入力する必要があります。</p>

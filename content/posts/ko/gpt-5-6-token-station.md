@@ -1,7 +1,7 @@
 ---
 slug: gpt-5-6-token-station
-title: "GPT-5.6이 Token Station에 추가되었습니다: OpenAI, Codex, Copilot 경로를 아우르는 하나의 모델 패밀리"
-summary: "Token Station은 이제 GPT-5.6을 OpenAI, OpenAI Codex, GitHub Copilot 경로에서 제공합니다. Sol, Terra, Luna 변형과 장문 컨텍스트 가격 구간, prompt cache 회계도 포함됩니다."
+title: "GPT-5.6이 Token Station에 추가되었습니다: Claude Fable 5와 비교하며 OpenAI, Codex, Copilot 경로에서 사용하기"
+summary: "Token Station은 이제 GPT-5.6을 OpenAI, OpenAI Codex, GitHub Copilot 경로에서 제공합니다. 이 글은 coding agent 관점에서 GPT-5.6과 Claude Fable 5를 가격, context, cache accounting, route coverage로 비교합니다."
 category: model-launches
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
@@ -88,6 +88,28 @@ Token Station의 GPT-5.6 지원에는 모델 패밀리에 공개된 가격 구�
 이번 업데이트는 GPT-5.6 `cache_write_tokens` usage를 정규화하여 cache write를 ordinary input tokens로 이중 과금하지 않고 cache-creation bucket에서 처리합니다.
 
 사용자 입장에서 핵심은 간단합니다. Token Station은 새로운 GPT-5.6 패밀리를 노출하면서 실제 agent run에서 중요한 billing detail을 유지합니다.
+
+## GPT-5.6 vs Claude Fable 5: coding agent에서는 어떻게 고를까
+
+장시간 실행되는 coding agent에서 Claude Fable 5는 GPT-5.6의 자연스러운 비교 대상입니다. 두 모델 패밀리 모두 Token Station에서 사용할 수 있고, 큰 context window를 지원하며, agent가 repository state를 반복해서 보낼 때 중요한 prompt-cache economics를 갖고 있습니다.
+
+실용적인 차이는 가격에서 시작합니다.
+
+- GPT-5.6 Sol / `openai/gpt-5.6`: 272K input tokens까지 input $5/M, output $30/M, cached input $0.50/M, cache write $6.25/M.
+- GPT-5.6 Terra: 272K input tokens까지 input $2.50/M, output $15/M.
+- GPT-5.6 Luna: 272K input tokens까지 input $1/M, output $6/M.
+- Claude Fable 5: input $10/M, output $50/M, cache read $1/M, prompt-cache write $12.50/M, 1-hour cache write $20/M.
+
+272K input tokens를 넘으면 GPT-5.6은 long-context tier를 사용합니다. Sol은 input과 cached input 가격이 2배가 되고 output은 $45/M로 올라갑니다. Terra는 input $5/M, output $22.50/M, Luna는 input $2/M, output $9/M가 됩니다. Claude Fable 5는 Token Station에서 1M context window와 일반 $10/$50 pricing으로 설정되어 있습니다.
+
+간단히 정리하면 다음과 같습니다.
+
+- OpenAI-native 모델 패밀리, 여러 가격 tier, direct API, Codex route, Copilot route가 필요하면 GPT-5.6을 사용하세요.
+- 더 저렴한 coding-agent iteration loop를 먼저 돌리고 싶다면 GPT-5.6 Terra 또는 Luna를 사용하세요.
+- Anthropic의 long-running-agent behavior가 필요하고 더 높은 $10/$50 가격을 감수할 수 있다면 Claude Fable 5를 사용하세요.
+- 모델 브랜드보다 workflow가 중요하다면 Token Station 안에서 planning, patching, test repair, PR review, 긴 repo-context session을 직접 비교하세요.
+
+Token Station route name이 유용한 이유도 여기에 있습니다. `openai/gpt-5.6-sol`, `openai-codex/gpt-5.6-terra`, `github-copilot/gpt-5.6-luna`, `anthropic/claude-fable-5`를 비교하기 위해 agent를 다시 작성할 필요가 없습니다. 모델 선택을 명시적으로 유지하고 나머지 stack은 안정적으로 둘 수 있습니다.
 
 ## Azure는 어떻게 다뤄지는가
 

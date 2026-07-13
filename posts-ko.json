@@ -1,8 +1,8 @@
 [
   {
     "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6이 Token Station에 추가되었습니다: OpenAI, Codex, Copilot 경로를 아우르는 하나의 모델 패밀리",
-    "summary": "Token Station은 이제 GPT-5.6을 OpenAI, OpenAI Codex, GitHub Copilot 경로에서 제공합니다. Sol, Terra, Luna 변형과 장문 컨텍스트 가격 구간, prompt cache 회계도 포함됩니다.",
+    "title": "GPT-5.6이 Token Station에 추가되었습니다: Claude Fable 5와 비교하며 OpenAI, Codex, Copilot 경로에서 사용하기",
+    "summary": "Token Station은 이제 GPT-5.6을 OpenAI, OpenAI Codex, GitHub Copilot 경로에서 제공합니다. 이 글은 coding agent 관점에서 GPT-5.6과 Claude Fable 5를 가격, context, cache accounting, route coverage로 비교합니다.",
     "category": "model-launches",
     "date": "2026-07-13"
   },

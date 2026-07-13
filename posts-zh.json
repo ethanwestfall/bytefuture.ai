@@ -1,8 +1,8 @@
 [
   {
     "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6 已接入 Token Station：一个模型家族，覆盖 OpenAI、Codex 和 Copilot 路由",
-    "summary": "Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由，包括 Sol、Terra、Luna 变体、长上下文价格阶梯和 prompt cache 计费。",
+    "title": "GPT-5.6 已接入 Token Station：和 Claude Fable 5 一起比较 OpenAI、Codex、Copilot 路由",
+    "summary": "Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由。本文同时比较 GPT-5.6 和 Claude Fable 5 在 coding agent 场景下的价格、上下文、cache 计费和路由覆盖。",
     "category": "model-launches",
     "date": "2026-07-13"
   },

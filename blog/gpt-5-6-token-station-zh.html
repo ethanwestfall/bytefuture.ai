@@ -41,11 +41,11 @@
   </script>
 
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>GPT-5.6 已接入 Token Station：一个模型家族，覆盖 OpenAI、Codex 和 Copilot 路由 — ByteFuture Writings</title>
-  <meta name="description" content="Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由，包括 Sol、Terra、Luna 变体、长上下文价格阶梯和 prompt cache 计费。" />
+  <title>GPT-5.6 已接入 Token Station：和 Claude Fable 5 一起比较 OpenAI、Codex、Copilot 路由 — ByteFuture Writings</title>
+  <meta name="description" content="Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由。本文同时比较 GPT-5.6 和 Claude Fable 5 在 coding agent 场景下的价格、上下文、cache 计费和路由覆盖。" />
   <link rel="canonical" href="https://bytefuture.ai/blog/gpt-5-6-token-station-zh.html" />
-  <meta property="og:title" content="GPT-5.6 已接入 Token Station：一个模型家族，覆盖 OpenAI、Codex 和 Copilot 路由 — ByteFuture Writings" />
-  <meta property="og:description" content="Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由，包括 Sol、Terra、Luna 变体、长上下文价格阶梯和 prompt cache 计费。" />
+  <meta property="og:title" content="GPT-5.6 已接入 Token Station：和 Claude Fable 5 一起比较 OpenAI、Codex、Copilot 路由 — ByteFuture Writings" />
+  <meta property="og:description" content="Token Station 现在支持 GPT-5.6，并覆盖 OpenAI、OpenAI Codex 和 GitHub Copilot 路由。本文同时比较 GPT-5.6 和 Claude Fable 5 在 coding agent 场景下的价格、上下文、cache 计费和路由覆盖。" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://bytefuture.ai/blog/gpt-5-6-token-station-zh.html" />
   <meta property="og:locale" content="zh_CN" />
@@ -339,7 +339,7 @@
         <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
       </div>
       <!-- ▼ EDIT: post title ▼ -->
-      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 已接入 Token Station：一个模型家族，覆盖 OpenAI、Codex 和 Copilot 路由</h1>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 已接入 Token Station：和 Claude Fable 5 一起比较 OpenAI、Codex、Copilot 路由</h1>
       <!-- ▲ EDIT ▲ -->
     </header>
 
@@ -399,6 +399,24 @@
   <p>这对 agent 工作负载很重要，因为长时间 coding session 不是短聊天。Coding agent 可能反复发送代码库上下文、测试输出、diff 和规划状态。Prompt caching 可以降低重复上下文成本，但前提是 cache write 和 cached read 被分开计费。</p>
   <p>这次更新规范化了 GPT-5.6 的 <code>cache_write_tokens</code> 用法，让 cache write 进入 cache-creation 计费桶，而不是被重复算作普通 input tokens。</p>
   <p>对用户来说，实际含义很简单：Token Station 可以暴露新的 GPT-5.6 家族，同时保留真实 agent 运行里重要的计费细节。</p>
+  <h2 id="gpt-5-6-vs-claude-fable-5-coding-agent-怎么选">GPT-5.6 vs Claude Fable 5：coding agent 怎么选</h2>
+  <p>Claude Fable 5 是 GPT-5.6 在长时间 coding agent 场景里的直接对比对象。两个模型家族都可以通过 Token Station 使用，都支持很大的上下文窗口，也都涉及 prompt cache 计费；而 agent 反复发送 repo 状态时，这些细节会直接影响成本。</p>
+  <p>最直接的差异是价格：</p>
+  <ul>
+<li>GPT-5.6 Sol / <code>openai/gpt-5.6</code>：272K input tokens 以内，input $5/M，output $30/M，cached input $0.50/M，cache write $6.25/M。</li>
+<li>GPT-5.6 Terra：272K input tokens 以内，input $2.50/M，output $15/M。</li>
+<li>GPT-5.6 Luna：272K input tokens 以内，input $1/M，output $6/M。</li>
+<li>Claude Fable 5：input $10/M，output $50/M，cache read $1/M，prompt-cache write $12.50/M，1 小时 cache write $20/M。</li>
+</ul>
+  <p>超过 272K input tokens 后，GPT-5.6 会进入长上下文价格阶梯：Sol 的 input 和 cached input 变成 2 倍，output 变成 $45/M；Terra 变成 input $5/M、output $22.50/M；Luna 变成 input $2/M、output $9/M。Claude Fable 5 在 Token Station 中配置为 1M context window，并使用常规 $10/$50 价格。</p>
+  <p>简化一下选择逻辑：</p>
+  <ul>
+<li>如果你想要 OpenAI-native 模型家族、多档价格、直接 API、Codex route 和 Copilot route，选 GPT-5.6。</li>
+<li>如果你想先用更便宜的 coding-agent iteration loop，先试 GPT-5.6 Terra 或 Luna。</li>
+<li>如果你明确想要 Anthropic 针对 long-running agents 的行为，并且能接受更高的 $10/$50 价格，试 Claude Fable 5。</li>
+<li>如果你的重点不是模型品牌，而是 workflow：planning、patching、test repair、PR review、长 repo context session，就应该在 Token Station 里直接比较两边的实际表现。</li>
+</ul>
+  <p>这也是 Token Station route name 有价值的地方。你不需要重写 agent，就可以比较 <code>openai/gpt-5.6-sol</code>、<code>openai-codex/gpt-5.6-terra</code>、<code>github-copilot/gpt-5.6-luna</code> 和 <code>anthropic/claude-fable-5</code>。模型选择保持显式，agent stack 保持稳定。</p>
   <h2 id="azure-的位置">Azure 的位置</h2>
   <p>这次更新也加入了 Azure OpenAI GPT-5.6 preview 的注释模板，并通过 <code>azure_api_version = &amp;quot;v1&amp;quot;</code> 支持 Azure 的 <code>/openai/v1</code> surface。</p>
   <p>这些模板没有用猜测的价格启用。集成时 Azure GPT-5.6 meters 还没有发布，所以 operator 需要在自己的 Azure deployment 暴露模型后补齐价格。</p>

@@ -1,7 +1,7 @@
 ---
 slug: gpt-5-6-token-station
-title: "GPT-5.6 is now on Token Station: one model family across OpenAI, Codex, and Copilot routes"
-summary: "Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes, including Sol, Terra, and Luna variants, with long-context pricing tiers and prompt-cache accounting support."
+title: "GPT-5.6 is now on Token Station: compare it with Claude Fable 5 across OpenAI, Codex, and Copilot routes"
+summary: "Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes. This article compares GPT-5.6 with Claude Fable 5 for coding agents, including price, context, cache accounting, and route coverage."
 category: model-launches
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
@@ -88,6 +88,28 @@ That matters for agent workloads because long coding sessions are not short chat
 This update normalizes GPT-5.6 `cache_write_tokens` usage so cache writes are charged in the cache-creation bucket without double-counting them as ordinary input tokens.
 
 For users, the practical takeaway is straightforward: Token Station can expose the new GPT-5.6 family while preserving the billing details that matter in real agent runs.
+
+## GPT-5.6 vs Claude Fable 5 for coding agents
+
+Claude Fable 5 is the obvious comparison point for long-running coding agents. Both model families are available through Token Station, both support very large context windows, and both expose prompt-cache economics that matter when an agent keeps sending repository state.
+
+The practical difference starts with price:
+
+- GPT-5.6 Sol / `openai/gpt-5.6`: $5/M input, $30/M output, $0.50/M cached input, and $6.25/M cache writes up to 272K input tokens.
+- GPT-5.6 Terra: $2.50/M input and $15/M output up to 272K input tokens.
+- GPT-5.6 Luna: $1/M input and $6/M output up to 272K input tokens.
+- Claude Fable 5: $10/M input, $50/M output, $1/M cache reads, $12.50/M prompt-cache writes, and $20/M one-hour cache writes.
+
+Above 272K input tokens, GPT-5.6 uses a long-context tier: Sol doubles input and cached-input prices and moves output to $45/M; Terra moves to $5/M input and $22.50/M output; Luna moves to $2/M input and $9/M output. Claude Fable 5 is configured with a 1M context window and regular $10/$50 pricing in Token Station.
+
+So the short version is:
+
+- Use GPT-5.6 when you want an OpenAI-native model family with multiple cost tiers, direct API access, Codex routes, and Copilot routes.
+- Use GPT-5.6 Terra or Luna when you want cheaper iteration loops for coding agents before spending on the flagship tier.
+- Use Claude Fable 5 when you specifically want Anthropic's long-running-agent behavior and are willing to pay the higher $10/$50 rate.
+- Compare both inside Token Station when the workflow matters more than the model brand: planning, patching, test repair, PR review, and long repo-context sessions may favor different routes.
+
+This is also why Token Station route names are useful. You do not need to rewrite your agent to compare `openai/gpt-5.6-sol`, `openai-codex/gpt-5.6-terra`, `github-copilot/gpt-5.6-luna`, and `anthropic/claude-fable-5`. You can make the model choice explicit and keep the rest of the stack stable.
 
 ## Where Azure fits
 

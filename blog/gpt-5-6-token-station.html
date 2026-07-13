@@ -41,11 +41,11 @@
   </script>
 
   <!-- ▼ EDIT: title, description, og/canonical (use the same slug as the filename) ▼ -->
-  <title>GPT-5.6 is now on Token Station: one model family across OpenAI, Codex, and Copilot routes — ByteFuture Writings</title>
-  <meta name="description" content="Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes, including Sol, Terra, and Luna variants, with long-context pricing tiers and prompt-cache accounting support." />
+  <title>GPT-5.6 is now on Token Station: compare it with Claude Fable 5 across OpenAI, Codex, and Copilot routes — ByteFuture Writings</title>
+  <meta name="description" content="Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes. This article compares GPT-5.6 with Claude Fable 5 for coding agents, including price, context, cache accounting, and route coverage." />
   <link rel="canonical" href="https://bytefuture.ai/blog/gpt-5-6-token-station.html" />
-  <meta property="og:title" content="GPT-5.6 is now on Token Station: one model family across OpenAI, Codex, and Copilot routes — ByteFuture Writings" />
-  <meta property="og:description" content="Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes, including Sol, Terra, and Luna variants, with long-context pricing tiers and prompt-cache accounting support." />
+  <meta property="og:title" content="GPT-5.6 is now on Token Station: compare it with Claude Fable 5 across OpenAI, Codex, and Copilot routes — ByteFuture Writings" />
+  <meta property="og:description" content="Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes. This article compares GPT-5.6 with Claude Fable 5 for coding agents, including price, context, cache accounting, and route coverage." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://bytefuture.ai/blog/gpt-5-6-token-station.html" />
   <meta property="og:locale" content="en_US" />
@@ -339,7 +339,7 @@
         <span id="view-count" style="font-size:13px; color:#a1a1aa; font-family:'Space Grotesk',sans-serif;"></span>
       </div>
       <!-- ▼ EDIT: post title ▼ -->
-      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 is now on Token Station: one model family across OpenAI, Codex, and Copilot routes</h1>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-0.02em; line-height:1.15; margin:0;">GPT-5.6 is now on Token Station: compare it with Claude Fable 5 across OpenAI, Codex, and Copilot routes</h1>
       <!-- ▲ EDIT ▲ -->
     </header>
 
@@ -399,6 +399,24 @@
   <p>That matters for agent workloads because long coding sessions are not short chatbot prompts. A coding agent may repeatedly send repository context, test output, diffs, and planning state. Prompt caching can reduce repeated-context cost, but only if cache writes and cached reads are accounted for separately.</p>
   <p>This update normalizes GPT-5.6 <code>cache_write_tokens</code> usage so cache writes are charged in the cache-creation bucket without double-counting them as ordinary input tokens.</p>
   <p>For users, the practical takeaway is straightforward: Token Station can expose the new GPT-5.6 family while preserving the billing details that matter in real agent runs.</p>
+  <h2 id="gpt-5-6-vs-claude-fable-5-for-coding-agents">GPT-5.6 vs Claude Fable 5 for coding agents</h2>
+  <p>Claude Fable 5 is the obvious comparison point for long-running coding agents. Both model families are available through Token Station, both support very large context windows, and both expose prompt-cache economics that matter when an agent keeps sending repository state.</p>
+  <p>The practical difference starts with price:</p>
+  <ul>
+<li>GPT-5.6 Sol / <code>openai/gpt-5.6</code>: $5/M input, $30/M output, $0.50/M cached input, and $6.25/M cache writes up to 272K input tokens.</li>
+<li>GPT-5.6 Terra: $2.50/M input and $15/M output up to 272K input tokens.</li>
+<li>GPT-5.6 Luna: $1/M input and $6/M output up to 272K input tokens.</li>
+<li>Claude Fable 5: $10/M input, $50/M output, $1/M cache reads, $12.50/M prompt-cache writes, and $20/M one-hour cache writes.</li>
+</ul>
+  <p>Above 272K input tokens, GPT-5.6 uses a long-context tier: Sol doubles input and cached-input prices and moves output to $45/M; Terra moves to $5/M input and $22.50/M output; Luna moves to $2/M input and $9/M output. Claude Fable 5 is configured with a 1M context window and regular $10/$50 pricing in Token Station.</p>
+  <p>So the short version is:</p>
+  <ul>
+<li>Use GPT-5.6 when you want an OpenAI-native model family with multiple cost tiers, direct API access, Codex routes, and Copilot routes.</li>
+<li>Use GPT-5.6 Terra or Luna when you want cheaper iteration loops for coding agents before spending on the flagship tier.</li>
+<li>Use Claude Fable 5 when you specifically want Anthropic&#x27;s long-running-agent behavior and are willing to pay the higher $10/$50 rate.</li>
+<li>Compare both inside Token Station when the workflow matters more than the model brand: planning, patching, test repair, PR review, and long repo-context sessions may favor different routes.</li>
+</ul>
+  <p>This is also why Token Station route names are useful. You do not need to rewrite your agent to compare <code>openai/gpt-5.6-sol</code>, <code>openai-codex/gpt-5.6-terra</code>, <code>github-copilot/gpt-5.6-luna</code>, and <code>anthropic/claude-fable-5</code>. You can make the model choice explicit and keep the rest of the stack stable.</p>
   <h2 id="where-azure-fits">Where Azure fits</h2>
   <p>The update also includes commented Azure OpenAI GPT-5.6 preview templates and support for Azure&#x27;s <code>/openai/v1</code> surface through <code>azure_api_version = &amp;quot;v1&amp;quot;</code>.</p>
   <p>Those templates are intentionally not enabled with guessed pricing. Azure GPT-5.6 meters were not published at the time of the integration, so operators must fill in pricing when their Azure deployment exposes the model.</p>

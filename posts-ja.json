@@ -1,8 +1,8 @@
 [
   {
     "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6 が Token Station に登場：OpenAI、Codex、Copilot ルートをまたぐ 1 つのモデルファミリー",
-    "summary": "Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで利用可能にしました。Sol、Terra、Luna バリアント、長文コンテキストの価格階層、prompt cache の会計にも対応します。",
+    "title": "GPT-5.6 が Token Station に登場：Claude Fable 5 と比較しながら OpenAI、Codex、Copilot ルートで使う",
+    "summary": "Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで提供します。この記事では、coding agent 向けに GPT-5.6 と Claude Fable 5 を価格、context、cache 会計、route coverage で比較します。",
     "category": "model-launches",
     "date": "2026-07-13"
   },
