@@ -6,6 +6,7 @@ summary: "Token Station은 GPT-5.6을 OpenAI-compatible API, Codex, Copilot 같�
 category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
+cover: blog/gpt-5-6-token-station-cover.png
 ---
 
 GPT-5.6을 이제 Token Station에서 사용할 수 있습니다.

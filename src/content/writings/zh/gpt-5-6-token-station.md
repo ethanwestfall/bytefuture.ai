@@ -6,6 +6,7 @@ summary: "Token Station 现在支持 GPT-5.6，覆盖 OpenAI-compatible API、Co
 category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
+cover: blog/gpt-5-6-token-station-cover.png
 ---
 
 GPT-5.6 已经接入 Token Station。
