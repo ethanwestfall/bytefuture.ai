@@ -1,0 +1,23 @@
+{
+  "name": "bytefuture-ai-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/sync-legacy-public.mjs && astro dev",
+    "prebuild": "node scripts/sync-legacy-public.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:legacy-links": "node scripts/check-legacy-links.mjs",
+    "check:mobile": "node scripts/check-mobile-width.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "astro": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "ws": "latest"
+  }
+}

@@ -1,0 +1,206 @@
+---
+slug: "try-kimi-k2-7-code-in-your-coding-agent"
+lang: "ko"
+title: "Kimi K2.7 Code: 시도해 볼 만큼 저렴하고, 어쩌면 일을 나눌 만큼 괜찮을지도"
+summary: "Moonshot의 새로운 1T 오픈웨이트 코딩 모델은 100만 토큰당 0.95/4달러다. Claude Code, Codex, OpenClaw에서 SOTA 모델과 짝지어 일상적인 작업을 맡겨 보자."
+category: "tutorial"
+date: "2026-06-13"
+cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/kimi-k2-7-code-cover.png"
+draft: false
+---
+
+<p>어제 Moonshot AI가 Hugging Face에 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code</a>를 공개했습니다. 1조 파라미터의 Mixture-of-Experts 코딩 모델(활성 32B)로, 256K 컨텍스트 윈도를 갖추고 Modified MIT 라이선스로 가중치가 공개됩니다.</p>
+
+  <p>저희 <a href="/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html">Claude Fable 5 글</a>을 읽으셨다면, 이번에는 그 논리가 정반대로 작동한다는 것을 아실 겁니다. Fable 5는 성능이 입증되어 있었고, 위험은 가격이었습니다. K2.7 Code는 가격이 미미하고, 성능이야말로 미결의 문제입니다. 이 모델은 공개된 지 하루밖에 안 되었고, 제3자의 벤치마크도 아직 없으며, Moonshot 자신의 수치마저 이 모델을 프런티어 뒤에 둡니다. 두 상황 모두 결국 같은 태도로 귀결됩니다. 이미 쓰고 있는 코딩 환경 안에서 저렴하고 언제든 되돌릴 수 있는 실험을 돌려 보는 것입니다.</p>
+
+  <p>이 실험을 단순한 교체 이상으로 흥미롭게 만드는 점이 하나 있습니다. <strong>입력 100만 토큰당 0.95달러, 출력 100만 토큰당 4.00달러</strong>로, K2.7 Code는 입력에서 Claude Fable 5의 약 10분의 1, 출력에서는 12분의 1 비용입니다. 이는 다른 역할을 맡길 만큼 저렴하다는 뜻입니다. 여러분의 SOTA 모델과 나란히 일하며, 비싼 모델이 어려운 부분을 맡는 동안 일상적인 팬아웃 작업을 가져가는 것이죠.</p>
+
+  <p>K2.7 Code는 <a href="https://models.bytefuture.ai">Token Station</a>에서 <code>kimi/kimi-k2.7-code</code>로 이용할 수 있으며, Moonshot의 정가 그대로 추가 마진 없이 제공됩니다. <a href="https://models.bytefuture.ai/signup">1달러의 가입 크레딧</a>이면 상당히 오래 쓸 수 있습니다.</p>
+
+  <h2 id="what-we-know">우리가 아는 것(그리고 모르는 것)</h2>
+
+  <p><a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">모델 카드</a>에서:</p>
+
+  <ul>
+    <li><strong>코딩 에이전트를 위해 만들어졌다.</strong> Kimi K2.6의 코딩 특화 후속 모델로, 장기 소프트웨어 엔지니어링에 맞춰 조정되었습니다. 인터리브된 사고, 다단계 도구 호출, MCP 지원, 그리고 턴을 넘어 유지되는 추론이 특징입니다.</li>
+    <li><strong>사고 토큰이 K2.6보다 약 30% 적으면서</strong> 코딩 점수는 더 높은데, 이는 출력 토큰당 과금될 때 중요합니다.</li>
+    <li><strong>총 파라미터 1T, 활성 32B</strong>, 384개의 전문가, INT4 네이티브 지원, 그리고 이미지 입력을 위한 400M 파라미터 비전 인코더를 갖추고 있습니다.</li>
+    <li><strong>오픈 웨이트, Modified MIT.</strong> 전체를 내려받아 vLLM이나 SGLang으로 직접 서빙할 수 있습니다.</li>
+  </ul>
+
+  <p>그리고 솔직한 부분입니다. Moonshot은 프런티어와의 비교를 직접 공개했고, 거기서 K2.7 Code는 뒤집니다.</p>
+
+  <figure>
+    <img src="kimi-k2-7-code-benchmarks.png" alt="Moonshot가 자체 보고한 벤치마크의 그룹 막대 차트: Kimi K2.7 Code는 Kimi Code Bench v2에서 62.0으로, GPT-5.5의 69.0 및 Claude Opus 4.8의 67.4와 비교됨; ProgramBench에서 53.6으로 69.1 및 63.8과 비교됨; MCP Atlas에서 76.0으로 79.4 및 81.3과 비교됨" />
+    <figcaption>Moonshot가 직접 공개한 수치. K2.7 Code는 세 항목 모두에서 프런티어에 뒤처집니다. 출처: <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Kimi K2.7 Code 모델 카드</a>, 2026년 6월.</figcaption>
+  </figure>
+
+  <p>자사 모델이 지는 벤치마크를 공개하는 벤더는 그 수치가 정직하다는 좋은 신호이며, 격차도 민망한 수준은 아닙니다. Moonshot의 코딩 벤치에서 GPT-5.5에 약 7점 뒤지고, 도구 사용에서는 더 가깝습니다. 직전의 Kimi(K2.6)는 현재 Artificial Analysis Intelligence Index에서 가장 뛰어난 오픈 웨이트 모델입니다. 아직 아무도 모르는 것은 K2.7 Code가 <em>여러분의</em> 코드베이스에서, <em>여러분의</em> 환경에서, 긴 에이전트 세션 동안 어떻게 행동하느냐입니다. 이 실험이 풀어낼 미지수가 바로 그것입니다.</p>
+
+  <p>저희 Grok Build 글과 같은 취지로 한 가지 분명히 해 둡니다. <strong>모델</strong>로서의 K2.7 Code는 Moonshot 자체 코딩 환경인 <em>Kimi Code CLI</em>에 맞춰 최적화되어 있습니다. 그 CLI가 필요하지는 않습니다. 이 모델은 OpenAI 호환 및 Anthropic 호환 API를 구사하며, Token Station이 기존 환경이 보내는 무엇이든 변환해 줍니다.</p>
+
+  <h2 id="the-price">가격: 프런티어 옆에서는 반올림 오차 수준</h2>
+
+  <p>아래 모델들은 모두 각 제공사의 정가 그대로 Token Station에서 이용할 수 있습니다.</p>
+
+  <table>
+    <tr><th>모델</th><th>입력 / 1M</th><th>출력 / 1M</th><th>컨텍스트</th></tr>
+    <tr><td><code>kimi/kimi-k2.7-code</code></td><td><strong>$0.95</strong></td><td><strong>$4.00</strong></td><td>256K</td></tr>
+    <tr><td><code>xai/grok-build-0.1</code></td><td>$1.00</td><td>$2.00</td><td>256K</td></tr>
+    <tr><td><code>anthropic/claude-sonnet-4-6</code></td><td>$3.00</td><td>$15.00</td><td>1M</td></tr>
+    <tr><td><code>anthropic/claude-opus-4-8</code></td><td>$5.00</td><td>$25.00</td><td>1M</td></tr>
+    <tr><td><code>openai/gpt-5.5</code></td><td>$5.00</td><td>$30.00</td><td>1M</td></tr>
+    <tr><td><code>anthropic/claude-fable-5</code></td><td>$10.00</td><td>$50.00</td><td>1M</td></tr>
+  </table>
+
+  <p>K2.7 Code 가격으로 치면 1달러의 가입 크레딧으로 약 100만 개의 입력 토큰 또는 25만 개의 출력 토큰을 살 수 있습니다. 같은 크레딧으로 Fable 5라면 프롬프트 몇 번 분량이었지만, 여기서는 제대로 된 평가를 할 수 있습니다. 이 실험의 하방 위험은 반올림하면 0입니다. 게다가 첫 충전 시 최대 50달러의 보너스 크레딧이 더해지며, K2.7 Code 가격이면 몇 주치 분량입니다.</p>
+
+  <h2 id="share-the-work">진짜 실험: 일을 나누기</h2>
+
+  <p>코딩 에이전트는 이미 작업을 계층으로 나눕니다. 계획과 어려운 추론이 일어나는 메인 루프가 있고, 팬아웃이 있습니다. 파일을 읽고, 검색을 돌리고, 테스트를 실행하고, 결과를 요약하는 서브에이전트들이죠. 팬아웃은 토큰의 대부분을 소모하지만 필요한 영민함은 가장 적습니다.</p>
+
+  <p>바로 그 분담에서 100만당 4달러짜리 모델이 100만당 50달러짜리 모델 옆에 자리를 얻습니다. Fable 5나 Opus 4.8을 운전석에 두고, 일상적인 작업은 K2.7 Code에 넘기세요. Moonshot의 수치가 실제로도 유지된다면, 위임된 작업의 품질 저하는 작고, 위임된 토큰마다 비용 절감은 10배가 넘습니다.</p>
+
+  <h2 id="what-you-need">필요한 것</h2>
+
+  <ul>
+    <li>Token Station 계정(<a href="https://models.bytefuture.ai/signup">무료 가입</a>. 1달러 크레딧, 카드 불필요, Moonshot 계정도 불필요)</li>
+    <li>여러분의 Token Station API 키(<code>gw-</code>로 시작)</li>
+    <li>설치된 Claude Code, Codex 또는 OpenClaw</li>
+  </ul>
+
+  <h2 id="claude-code-setup">Claude Code 설정: 2단계 분담</h2>
+
+  <p>Claude Code는 모델 계층을 환경 변수로 노출하므로, 일을 나누는 실험을 돌리기에 가장 깔끔한 곳입니다. Opus 자리는 Claude Fable 5를 위해 남겨 두고, 나머지는 전부 주력 모델에 맡기세요.</p>
+
+  <pre><code># Token Station endpoint + auth
+export ANTHROPIC_BASE_URL="https://models.bytefuture.ai"
+export ANTHROPIC_AUTH_TOKEN="gw-YOUR_TOKEN_STATION_KEY"
+
+# Top tier: Fable 5 takes the genuinely hard problems
+export ANTHROPIC_DEFAULT_OPUS_MODEL="anthropic/claude-fable-5"
+
+# Everything else runs on the workhorse
+export ANTHROPIC_DEFAULT_SONNET_MODEL="kimi/kimi-k2.7-code"
+export ANTHROPIC_DEFAULT_HAIKU_MODEL="kimi/kimi-k2.7-code"
+export CLAUDE_CODE_SUBAGENT_MODEL="kimi/kimi-k2.7-code"
+
+claude</code></pre>
+
+  <p>이제 평범한 세션이 처음부터 끝까지 K2.7 Code로 돌아갑니다. 메인 루프, 모든 서브에이전트, 모든 백그라운드 검색이 출력 100만당 50달러가 아니라 4달러로 과금됩니다. 어떤 문제가 정말로 프런티어급 판단을 요구할 때는 <code>/model opus</code>로 승격하면 Fable 5가 넘겨받고, 어려운 부분이 끝나면 다시 내려옵니다. 비싼 모델은 그 가격에 걸맞은 역할, 즉 필요할 때 불러오는 전문가가 됩니다.</p>
+
+  <p>Fable 5의 가격이 부담스럽다면 Opus 자리의 <code>anthropic/claude-fable-5</code>를 <code>anthropic/claude-opus-4-8</code>로 바꾸세요. 이 승격 패턴은 어떤 계층에서도 작동합니다.</p>
+
+  <h2 id="codex-setup">Codex 설정</h2>
+
+  <p>Codex는 세션당 모델 하나만 돌리지만, <a href="https://developers.openai.com/codex/config-reference">profiles</a>를 쓰면 호출 단위로 동일한 분담을 할 수 있습니다. 주력 모델을 기본값으로 두고, Fable 5를 위한 이름 붙은 승격 프로필을 따로 마련해 두세요.</p>
+
+  <pre><code>mkdir -p ~/.codex
+cat &gt; ~/.codex/config.toml &lt;&lt;'EOF'
+# Default: the workhorse
+model = "kimi/kimi-k2.7-code"
+model_provider = "token_station"
+
+[model_providers.token_station]
+name = "token_station"
+base_url = "https://models.bytefuture.ai/v1"
+env_key = "TOKEN_STATION_API_KEY"
+wire_api = "responses"
+
+# Escalation: Fable 5 on demand
+[profiles.deep]
+model = "anthropic/claude-fable-5"
+EOF
+
+export TOKEN_STATION_API_KEY="gw-YOUR_TOKEN_STATION_KEY"
+
+codex                  # routine work on K2.7 Code
+codex --profile deep   # hard problems on Fable 5</code></pre>
+
+  <p>평소에는 그냥 <code>codex</code>를 실행해 주력 모델 요금만 냅니다. 어떤 작업이 프런티어 모델을 쓸 만할 때만 <code>codex --profile deep</code>이 그 호출에 한해 Fable 5를 불러옵니다. 설정의 다른 부분은 전혀 움직이지 않습니다.</p>
+
+  <h2 id="openclaw-setup">OpenClaw 설정</h2>
+
+  <p>OpenClaw는 이 분담을 일급 설정으로 만듭니다. <code>agents.defaults.subagents.model</code>이 달리 지정하지 않는 한 서브에이전트는 호출자의 모델을 상속하므로(<a href="https://docs.openclaw.ai/tools/subagents">문서</a>), Fable 5가 운전석에 앉은 채 생성되는 모든 서브에이전트를 K2.7 Code로 돌릴 수 있습니다.</p>
+
+  <pre><code>{
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "token-station": {
+        "baseUrl": "https://models.bytefuture.ai/v1",
+        "apiKey": "${TOKEN_STATION_API_KEY}",
+        "api": "anthropic-messages",
+        "models": [
+          {
+            "id": "anthropic/claude-fable-5",
+            "name": "Claude Fable 5 (Token Station)",
+            "contextWindow": 1000000,
+            "maxTokens": 128000
+          },
+          {
+            "id": "kimi/kimi-k2.7-code",
+            "name": "Kimi K2.7 Code (Token Station)",
+            "contextWindow": 256000,
+            "maxTokens": 32768
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": { "primary": "token-station/anthropic/claude-fable-5" },
+      "subagents": { "model": "token-station/kimi/kimi-k2.7-code" }
+    }
+  }
+}</code></pre>
+
+  <p>메인 에이전트는 프런티어급 판단을 유지하고, 병렬 팬아웃(토큰을 소모하는 부분)은 주력 모델 요금으로 과금됩니다. 전체를 대신 K2.7 Code로 돌리려면 <code>agents.defaults.model.primary</code>를 그쪽으로 가리키게 하면 됩니다. 어느 쪽이든 두 모델은 같은 키 뒤에 있습니다.</p>
+
+  <h2 id="quirks">알아 두면 좋은 특징들</h2>
+
+  <ul>
+    <li><strong>사고는 항상 켜져 있다.</strong> K2.7 Code는 답하기 전에 추론하고 그 추론을 턴을 넘어 이어 갑니다. 이를 끌 수는 없습니다. 출력 청구서에 추론 토큰을 감안해 두세요. K2.6 대비 30% 줄어든 덕분에 부담은 덜합니다.</li>
+    <li><strong>256K 컨텍스트.</strong> 넉넉하지만, 프런티어 Claude 및 GPT 모델의 1M 윈도의 4분의 1입니다. 긴 에이전트 세션은 더 일찍 압축됩니다.</li>
+    <li><strong>홈팀 환경이 있다.</strong> Moonshot은 Kimi Code CLI에 맞춰 조정하므로, 다른 곳에서는 가끔 거친 부분이 나타날 수 있습니다. Token Station의 도구 및 파라미터 이름 변환이 프로토콜 수준의 불일치를 처리합니다.</li>
+    <li><strong>나가는 길은 양방향이다.</strong> 실험이 실패하면 설정을 삭제하면 됩니다. 성공하면, 가중치는 <a href="https://huggingface.co/moonshotai/Kimi-K2.7-Code">Hugging Face</a>에 Modified MIT로 공개되어 있어, 결국 똑같은 모델을 자체 하드웨어에서 서빙할 수 있습니다. 자체 호스팅으로 졸업할 수 있는 클라우드 실험은 하이브리드 추론 이야기를 축소해 놓은 것입니다.</li>
+  </ul>
+
+  <h2 id="try-it">실험을 돌려 보기</h2>
+
+  <p>여러분의 비싼 모델에게는 과한 작업을 K2.7 Code에 맡기세요. 서브에이전트 검색, 테스트 실행, 보일러플레이트, 요약 같은 것들입니다. 한 주 동안 어디서 버티고 어디서 헛발질하는지 지켜본 뒤, 그에 맞춰 분담을 정하세요. 같은 Token Station 키로 <code>anthropic/claude-fable-5</code>, <code>anthropic/claude-opus-4-8</code>, <code>kimi/kimi-k2.7-code</code>를 나란히 돌릴 수 있으니, 비교는 처음부터 내장되어 있습니다.</p>
+
+  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>에서 가입하고(1달러 무료 크레딧, 카드 불필요, 첫 충전 시 최대 50달러 보너스), 공개된 지 하루밖에 안 된 오픈 웨이트 모델이 10분의 1 가격으로 여러분 에이전트 작업량의 절반을 감당할 수 있는지 직접 확인해 보세요.</p>
+
+  <hr />
+
+  <!-- Share -->
+  <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+    <span style="font-family:'Space Grotesk',sans-serif; font-size:14px; color:#71717a;">이 글 공유하기</span>
+    <a href="#" onclick="gtag('event','share_click',{label:'x'});window.open('https://x.com/intent/tweet?text='+encodeURIComponent(document.title)+'&url='+encodeURIComponent(location.href),'_blank','width=550,height=420');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Post
+    </a>
+    <a href="#" onclick="gtag('event','share_click',{label:'linkedin'});window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+      LinkedIn
+    </a>
+    <a href="#" onclick="gtag('event','share_click',{label:'facebook'});window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank','width=550,height=550');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <a href="#" onclick="gtag('event','share_click',{label:'hackernews'});window.open('https://news.ycombinator.com/submitlink?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
+      Hacker News
+    </a>
+    <a href="#" onclick="gtag('event','share_click',{label:'reddit'});window.open('https://www.reddit.com/submit?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'_blank');return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.745-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+      Reddit
+    </a>
+    <a href="#" onclick="gtag('event','share_click',{label:'copy_link'});var b=this;navigator.clipboard.writeText(location.href).then(function(){var s=b.querySelector('.share-label');s.textContent='복사됨!';setTimeout(function(){s.textContent='링크 복사';},1500);});return false;" style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:1px solid #e4e4e7; border-radius:50px; text-decoration:none; color:#18181b; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#18181b'" onmouseout="this.style.borderColor='#e4e4e7'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+      <span class="share-label">링크 복사</span>
+    </a>
+  </div>
