@@ -70,7 +70,7 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     html, body { max-width: 100%; overflow-x: clip; }
     body { background:#faf9f5; color:#18181b; font-family: Georgia, serif; margin:0; }
     a { color:#2563EB; overflow-wrap:anywhere; }
-    nav { height:72px; display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:0 24px; font-family:system-ui,sans-serif; }
+    body > nav { height:72px; display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:0 24px; font-family:system-ui,sans-serif; }
     .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:#18181b; font-weight:700; }
     .nav-actions { display:flex; align-items:center; gap:16px; }
     .page-grid { display:grid; grid-template-columns:200px minmax(0,1fr) 200px; gap:48px; max-width:1200px; margin:0 auto; padding:0 24px; align-items:start; }
@@ -92,7 +92,7 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .prose table { display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; }
     footer { max-width:1200px; margin:0 auto; padding:48px 24px; display:flex; justify-content:space-between; gap:24px; font-family:system-ui,sans-serif; color:#71717a; }
     @media (max-width:1024px){ .page-grid{grid-template-columns:1fr; max-width:760px;} .sidebar-left,.sidebar-right{display:none;} }
-    @media (max-width:640px){ nav{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
+    @media (max-width:640px){ body > nav{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
   </style>
 </head>
 <body>
