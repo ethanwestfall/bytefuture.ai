@@ -1,5 +1,12 @@
 [
   {
+    "slug": "gpt-5-6-token-station",
+    "title": "GPT-5.6 is now on Token Station: try it in your coding agent routes",
+    "summary": "Token Station now supports GPT-5.6 across OpenAI-compatible API and coding-agent routes, including Codex and Copilot surfaces. Use one endpoint to compare Sol, Terra, Luna, and Claude Fable 5 in real workflows.",
+    "category": "model-launches",
+    "date": "2026-07-13"
+  },
+  {
     "slug": "use-any-model-in-claude-code-through-token-station",
     "title": "Use any model in Claude Code through Token Station",
     "summary": "Claude Code can run through Token Station with either a persistent ~/.claude/settings.json file or temporary ANTHROPIC_* environment variables. Set the base URL, token, Opus/Sonnet/Haiku model aliases, and subagent model, then verify with a one-line pong check.",
