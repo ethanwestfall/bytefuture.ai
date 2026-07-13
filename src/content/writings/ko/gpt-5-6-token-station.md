@@ -1,5 +1,6 @@
 ---
 slug: gpt-5-6-token-station
+lang: ko
 title: "GPT-5.6이 Token Station에 추가되었습니다: Claude Fable 5와 비교하며 OpenAI, Codex, Copilot 경로에서 사용하기"
 summary: "Token Station은 이제 GPT-5.6을 OpenAI, OpenAI Codex, GitHub Copilot 경로에서 제공합니다. 이 글은 coding agent 관점에서 GPT-5.6과 Claude Fable 5를 가격, context, cache accounting, route coverage로 비교합니다."
 category: model-launches
@@ -51,7 +52,7 @@ endpoint는 간단합니다.
 
 ```bash
 curl https://models.bytefuture.ai/v1/chat/completions \
-  -H "Authorization: Bearer DEMO_TOKEN" \
+  -H "Authorization: Bearer ${TOKEN_STATION_API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "openai/gpt-5.6-sol",

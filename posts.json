@@ -1,8 +1,8 @@
 [
   {
     "slug": "gpt-5-6-token-station",
-    "title": "GPT-5.6 is now on Token Station: compare it with Claude Fable 5 across OpenAI, Codex, and Copilot routes",
-    "summary": "Token Station now exposes GPT-5.6 across OpenAI, OpenAI Codex, and GitHub Copilot routes. This article compares GPT-5.6 with Claude Fable 5 for coding agents, including price, context, cache accounting, and route coverage.",
+    "title": "GPT-5.6 on Token Station: one model family, three coding-agent routes",
+    "summary": "GPT-5.6 is available on Token Station across direct OpenAI-compatible API, OpenAI Codex, and GitHub Copilot routes. Here is how to choose between Sol, Terra, Luna, and Claude Fable 5 for coding-agent work.",
     "category": "model-launches",
     "date": "2026-07-13"
   },
