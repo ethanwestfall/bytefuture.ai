@@ -1,0 +1,123 @@
+---
+export interface Props {
+  title: string;
+  summary: string;
+  slug: string;
+  lang: 'en' | 'zh' | 'ja' | 'ko';
+  category: string;
+  date: Date;
+  cta: string;
+  draft?: boolean;
+}
+
+const { title, summary, slug, lang, category, date, cta, draft = false } = Astro.props;
+const suffix = lang === 'en' ? '' : `-${lang}`;
+const url = `https://bytefuture.ai/blog/${slug}${suffix}.html`;
+const locale = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }[lang];
+const htmlLang = { en: 'en', zh: 'zh-Hans', ja: 'ja', ko: 'ko' }[lang];
+const writings = { en: 'Writings', zh: '文章', ja: '記事', ko: '글' }[lang];
+const all = { en: '← All writings', zh: '← 所有文章', ja: '← すべての記事', ko: '← 모든 글' }[lang];
+const recent = { en: 'Recent', zh: '最近', ja: '最近の記事', ko: '최근 글' }[lang];
+const topics = { en: 'Topics', zh: '主题', ja: 'トピック', ko: '주제' }[lang];
+const share = { en: 'Share this post', zh: '分享这篇文章', ja: 'この記事をシェア', ko: '이 글 공유하기' }[lang];
+const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : 'en-US', { dateStyle: 'long' }).format(date);
+---
+<!DOCTYPE html>
+<html lang={htmlLang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {draft && <meta name="robots" content="noindex" />}
+  <script>
+  (function () {
+    var LANGS = ['en', 'zh', 'ja', 'ko'];
+    var path = location.pathname, slash = path.lastIndexOf('/');
+    var dir = path.slice(0, slash + 1), file = path.slice(slash + 1) || 'index.html';
+    var m = file.match(/^(.*?)(?:-(zh|ja|ko))?\.html$/i);
+    var base = m ? m[1] : file.replace(/\.html$/i, '');
+    var cur = (m && m[2]) ? m[2] : 'en';
+    function target(l) { return dir + base + (l === 'en' ? '' : '-' + l) + '.html' + location.search + location.hash; }
+    function cookie() { var h = document.cookie.match(/(?:^|;\s*)bf_lang=([^;]+)/); return h ? decodeURIComponent(h[1]) : ''; }
+    window.bfLang = { cur: cur, pick: function (l) { if (LANGS.indexOf(l) === -1) return; document.cookie = 'bf_lang=' + l + ';path=/;max-age=31536000;samesite=lax'; if (l !== cur) location.href = target(l); } };
+    var pref = cookie();
+    if (LANGS.indexOf(pref) === -1) { pref = 'en'; var navs = navigator.languages || [navigator.language || '']; for (var i = 0; i < navs.length; i++) { var c = (navs[i] || '').slice(0, 2).toLowerCase(); if (c === 'zh' || c === 'ja' || c === 'ko' || c === 'en') { pref = c; break; } } }
+    if (pref !== cur) { location.replace(target(pref)); }
+    document.addEventListener('DOMContentLoaded', function () { var s = document.querySelector('select[data-bf-lang]'); if (s) s.value = cur; });
+  })();
+  </script>
+  <title>{title} — ByteFuture {writings}</title>
+  <meta name="description" content={summary} />
+  <link rel="canonical" href={url} />
+  <meta property="og:title" content={`${title} — ByteFuture ${writings}`} />
+  <meta property="og:description" content={summary} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={url} />
+  <meta property="og:locale" content={locale} />
+  <link rel="alternate" hreflang="en" href={`https://bytefuture.ai/blog/${slug}.html`} />
+  <link rel="alternate" hreflang="zh-Hans" href={`https://bytefuture.ai/blog/${slug}-zh.html`} />
+  <link rel="alternate" hreflang="ja" href={`https://bytefuture.ai/blog/${slug}-ja.html`} />
+  <link rel="alternate" hreflang="ko" href={`https://bytefuture.ai/blog/${slug}-ko.html`} />
+  <link rel="alternate" hreflang="x-default" href={`https://bytefuture.ai/blog/${slug}.html`} />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQ0EX9QGK6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KQ0EX9QGK6');
+  </script>
+  <style>
+    * { box-sizing: border-box; } body { background:#faf9f5; color:#18181b; font-family: Georgia, serif; margin:0; } a { color:#2563EB; }
+    nav { height:72px; display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:0 24px; font-family:system-ui,sans-serif; }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:#18181b; font-weight:700; }
+    .nav-actions { display:flex; align-items:center; gap:16px; }
+    .page-grid { display:grid; grid-template-columns:200px 1fr 200px; gap:48px; max-width:1200px; margin:0 auto; padding:0 24px; align-items:start; }
+    .page-grid > * { min-width:0; }
+    .sidebar-left,.sidebar-right { position:sticky; top:120px; padding-top:80px; font-family:system-ui,sans-serif; }
+    .sidebar-left a,.toc a { display:block; font-size:13px; color:#71717a; text-decoration:none; padding:4px 0; line-height:1.5; }
+    .sidebar-left h4 { font-size:13px; margin:24px 0 8px; }
+    .article-header { padding:80px 0 40px; }
+    .prose { font-size:18px; line-height:1.8; }
+    .prose h2 { font-family:system-ui,sans-serif; font-size:28px; margin:56px 0 16px; scroll-margin-top:120px; }
+    .prose p,.prose ul,.prose ol { color:#27272a; margin:0 0 24px; }
+    .prose pre { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:20px 24px; overflow-x:auto; margin:32px 0; max-width:100%; }
+    .prose pre code { white-space:pre-wrap; overflow-wrap:anywhere; }
+    .prose img { width:100%; max-width:100%; height:auto; }
+    footer { max-width:1200px; margin:0 auto; padding:48px 24px; display:flex; justify-content:space-between; gap:24px; font-family:system-ui,sans-serif; color:#71717a; }
+    @media (max-width:1024px){ .page-grid{grid-template-columns:1fr; max-width:760px;} .sidebar-left,.sidebar-right{display:none;} }
+    @media (max-width:640px){ nav{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="brand"><span>ByteFuture</span></a>
+    <div class="nav-actions">
+      <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ko">한국어</option></select>
+      <a href="/blog/" class="nav-hide-sm">{writings}</a>
+      <a href="https://models.bytefuture.ai/intro.html">Token Station</a>
+    </div>
+  </nav>
+  <div class="page-grid">
+    <aside class="sidebar-left"><a href="/blog/">{all}</a><h4>{recent}</h4><div id="recent-posts"></div><h4>{topics}</h4><div id="topics-list"></div></aside>
+    <main>
+      <header class="article-header"><div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;"><span>{category}</span><time>{dateText}</time></div><h1>{title}</h1></header>
+      <article class="prose"><slot /></article>
+      <hr />
+      <p style="font-family:system-ui,sans-serif;color:#71717a;">{share}</p>
+    </main>
+    <aside class="sidebar-right"><nav class="toc" id="toc"></nav></aside>
+  </div>
+  <footer><div>© ByteFuture</div><div>Hybrid AI inference for AI agents.</div></footer>
+  <script>
+    (function(){
+      var toc=document.getElementById('toc'); if(toc){ document.querySelectorAll('.prose h2[id]').forEach(function(h){ var a=document.createElement('a'); a.href='#'+h.id; a.textContent=h.textContent; toc.appendChild(a); }); }
+      var postsFile = (window.bfLang && window.bfLang.cur && window.bfLang.cur !== 'en') ? '/posts-' + window.bfLang.cur + '.json' : '/posts.json';
+      fetch(postsFile).then(function(r){return r.json()}).then(function(posts){
+        var recent=document.getElementById('recent-posts'); var topics=document.getElementById('topics-list');
+        if(recent){ posts.slice(0,5).forEach(function(p){ var a=document.createElement('a'); a.href='/blog/'+p.slug+((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?'-'+window.bfLang.cur:'')+'.html'; a.textContent=p.title; recent.appendChild(a); }); }
+        if(topics){ Array.from(new Set(posts.map(function(p){return p.category}))).forEach(function(c){ var a=document.createElement('a'); a.href='/blog/?cat='+encodeURIComponent(c); a.textContent=c; topics.appendChild(a); }); }
+      }).catch(function(){});
+    })();
+  </script>
+  <script data-goatcounter="https://bytefuture.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
