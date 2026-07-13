@@ -23,13 +23,6 @@ coding-agent チームにとって重要なのは、新しい OpenAI モデル�
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
 
-OpenAI Codex ルート：
-
-- `openai-codex/gpt-5.6`
-- `openai-codex/gpt-5.6-sol`
-- `openai-codex/gpt-5.6-terra`
-- `openai-codex/gpt-5.6-luna`
-
 GitHub Copilot catalog で公開されているルート：
 
 - `github-copilot/gpt-5.6-sol`

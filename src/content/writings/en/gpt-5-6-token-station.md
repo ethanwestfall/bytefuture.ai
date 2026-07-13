@@ -23,13 +23,6 @@ Token Station exposes the GPT-5.6 family through direct OpenAI-compatible routes
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
 
-It also exposes OpenAI Codex routes:
-
-- `openai-codex/gpt-5.6`
-- `openai-codex/gpt-5.6-sol`
-- `openai-codex/gpt-5.6-terra`
-- `openai-codex/gpt-5.6-luna`
-
 And GitHub Copilot routes where the supported catalog publishes availability:
 
 - `github-copilot/gpt-5.6-sol`

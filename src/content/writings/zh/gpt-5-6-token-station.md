@@ -23,13 +23,6 @@ Token Station 暴露直接 OpenAI-compatible GPT-5.6 route：
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
 
-也暴露 OpenAI Codex route：
-
-- `openai-codex/gpt-5.6`
-- `openai-codex/gpt-5.6-sol`
-- `openai-codex/gpt-5.6-terra`
-- `openai-codex/gpt-5.6-luna`
-
 以及 GitHub Copilot 已发布支持的 route：
 
 - `github-copilot/gpt-5.6-sol`
