@@ -26,13 +26,39 @@ function rmrf(target) {
   fs.rmSync(target, { recursive: true, force: true });
 }
 
+function migratedBlogHtmlNames() {
+  const contentRoot = path.join(root, 'src/content/writings');
+  const names = new Set();
+  if (!fs.existsSync(contentRoot)) return names;
+  for (const lang of fs.readdirSync(contentRoot)) {
+    const dir = path.join(contentRoot, lang);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith('.md')) continue;
+      const slug = path.basename(file, '.md');
+      const suffix = lang === 'en' ? '' : `-${lang}`;
+      names.add(`${slug}${suffix}.html`);
+    }
+  }
+  return names;
+}
+
+const migratedBlogHtml = migratedBlogHtmlNames();
+
+function shouldSkip(src, name) {
+  if (skip.has(name)) return true;
+  const rel = path.relative(root, src).replaceAll(path.sep, '/');
+  return rel.startsWith('blog/') && migratedBlogHtml.has(name);
+}
+
 function copyRecursive(src, dest) {
   const stat = fs.statSync(src);
   if (stat.isDirectory()) {
     fs.mkdirSync(dest, { recursive: true });
     for (const name of fs.readdirSync(src)) {
-      if (skip.has(name)) continue;
-      copyRecursive(path.join(src, name), path.join(dest, name));
+      const child = path.join(src, name);
+      if (shouldSkip(child, name)) continue;
+      copyRecursive(child, path.join(dest, name));
     }
   } else {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
@@ -49,4 +75,4 @@ for (const name of copyNames) {
   copyRecursive(src, path.join(publicDir, name));
 }
 
-console.log(`Synced legacy static assets into ${path.relative(root, publicDir)}/`);
+console.log(`Synced legacy static assets into ${path.relative(root, publicDir)}/; skipped ${migratedBlogHtml.size} migrated blog HTML files.`);
