@@ -51,7 +51,7 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 8770 > /tmp/bytefuture-preview.log 2>&1 &
           echo $! > /tmp/bytefuture-preview.pid
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:8770/blog/astro-framework-test.html >/dev/null; then
+            if curl -fsS http://127.0.0.1:8770/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html >/dev/null; then
               exit 0
             fi
             sleep 1
@@ -63,9 +63,10 @@ jobs:
         run: |
           set -euo pipefail
           for url in \
-            http://127.0.0.1:8770/blog/astro-framework-test.html \
-            http://127.0.0.1:8770/blog/astro-framework-test-zh.html \
             http://127.0.0.1:8770/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html \
+            http://127.0.0.1:8770/blog/try-claude-fable-5-in-codex-openclaw-and-pi-zh.html \
+            http://127.0.0.1:8770/blog/american-open-models-catching-up-nemotron-gpt55.html \
+            http://127.0.0.1:8770/blog/use-token-station-in-cc-switch-for-claude-desktop-zh.html \
             http://127.0.0.1:8770/posts.json; do
             code=$(curl -fsS -o /tmp/bytefuture-url-check.out -w '%{http_code}' "$url")
             test "$code" = "200"
@@ -75,7 +76,7 @@ jobs:
       - name: Check 375px mobile width
         env:
           CHROME_PATH: google-chrome-stable
-        run: npm run check:mobile -- http://127.0.0.1:8770/blog/astro-framework-test.html
+        run: npm run check:mobile -- http://127.0.0.1:8770/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html
 
       - name: Stop preview server
         if: always()

@@ -27,12 +27,15 @@ function putJson(path) {
   });
 }
 
-async function waitForChrome() {
-  for (let i = 0; i < 30; i += 1) {
+async function waitForChrome(chrome) {
+  for (let i = 0; i < 120; i += 1) {
+    if (chrome.exitCode !== null) {
+      throw new Error(`Chrome exited before CDP became ready with code ${chrome.exitCode}`);
+    }
     try {
       return await getJson('/json/version');
     } catch {
-      await new Promise((resolve) => setTimeout(resolve, 250));
+      await new Promise((resolve) => setTimeout(resolve, 500));
     }
   }
   throw new Error('Chrome CDP did not become ready');
@@ -55,7 +58,7 @@ async function main() {
   });
 
   try {
-    await waitForChrome();
+    await waitForChrome(chrome);
     const target = await putJson(`/json/new?${encodeURIComponent(url)}`);
     const ws = new WebSocket(target.webSocketDebuggerUrl);
     let id = 0;
