@@ -103,10 +103,8 @@ GPT-5.6 的操作形态不同：OpenAI-native route、Codex 和 Copilot surface�
 
 一个简单起点：
 
-- 想用最强 GPT-5.6 route，用 GPT-5.6 Sol。
-- 想用更便宜的中间 route 跑 implementation loop，用 GPT-5.6 Terra。
-- 想用低成本方式做探索或 subagent fan-out，用 GPT-5.6 Luna。
-- 明确想要 Anthropic 的 long-running-agent 行为，并愿意支付更高价格，用 Claude Fable 5。
+- 想要 OpenAI-native route、Codex 或 Copilot surface，或者给高频步骤用更便宜的 tier，就选 GPT-5.6 家族；Sol、Terra、Luna 按上面说的按任务挑。
+- 明确想要 Anthropic 的 long-running-agent 行为和 1M context，并愿意支付更高价格，就用 Claude Fable 5。
 - 当 workflow fit 比模型品牌更重要时，把它们放在 Token Station 里比较。
 
 ## Azure 和暂不可用的 provider catalog

@@ -103,10 +103,8 @@ GPT-5.6 brings a different operating shape: OpenAI-native routes, Codex and Copi
 
 A simple starting point:
 
-- Use GPT-5.6 Sol when you want the strongest GPT-5.6 route.
-- Use GPT-5.6 Terra when you want a cheaper middle route for implementation loops.
-- Use GPT-5.6 Luna when you want low-cost exploration or subagent fan-out.
-- Use Claude Fable 5 when you specifically want Anthropic's long-running-agent behavior and are willing to pay the higher rate.
+- Reach for the GPT-5.6 family when you want OpenAI-native routes, Codex or Copilot surfaces, or a cheaper tier for high-volume steps. Pick Sol, Terra, or Luna by task, as above.
+- Reach for Claude Fable 5 when you specifically want Anthropic's long-running-agent behavior and its 1M context, and are willing to pay the higher rate.
 - Compare them inside Token Station when workflow fit matters more than model-brand loyalty.
 
 ## Azure and unavailable provider catalogs

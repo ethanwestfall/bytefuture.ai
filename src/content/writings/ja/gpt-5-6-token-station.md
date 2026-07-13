@@ -101,10 +101,8 @@ GPT-5.6 は別の運用形を持ちます。OpenAI-native route、Codex/Copilot 
 
 まずはこう選べます。
 
-- 最強の GPT-5.6 route が必要なら Sol。
-- implementation loop の中間 route なら Terra。
-- exploration や subagent fan-out の low-cost route なら Luna。
-- Anthropic の long-running-agent behavior を重視し、高い価格を許容するなら Claude Fable 5。
+- OpenAI-native route、Codex や Copilot surface、あるいは高頻度な step に安い tier が欲しいなら GPT-5.6 ファミリー。Sol、Terra、Luna は上記のとおりタスクごとに選ぶ。
+- Anthropic の long-running-agent behavior と 1M context を重視し、高い価格を許容するなら Claude Fable 5。
 - workflow fit が model brand より重要なら Token Station 内で比較する。
 
 ## Azure と未対応 catalog
