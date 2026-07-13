@@ -3,14 +3,14 @@ slug: gpt-5-6-token-station
 lang: zh
 title: "GPT-5.6 已接入 Token Station：在你的 coding agent 路由里直接试用"
 summary: "Token Station 现在支持 GPT-5.6，覆盖 OpenAI-compatible API、Codex 和 Copilot 等 coding-agent 路由。用一个 endpoint 比较 Sol、Terra、Luna 和 Claude Fable 5 在真实工作流里的表现。"
-category: model-launches
+category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
 ---
 
 GPT-5.6 已经接入 Token Station。
 
-对 coding-agent 团队来说，重点不只是 OpenAI 又有了一个新模型家族。重点是 GPT-5.6 可以通过开发者已经在用的 route 来测试：直接的 OpenAI-compatible API、OpenAI Codex 风格工作流，以及 GitHub Copilot 已发布支持的 route。
+对 coding-agent 团队来说，真正的价值在于 GPT-5.6 可以通过开发者已经在用的 route 来测试：直接的 OpenAI-compatible API、OpenAI Codex 风格工作流，以及 GitHub Copilot 已发布支持的 route。
 
 这让 GPT-5.6 不只是一个发布新闻，而是一个可以路由、比较、逐步采用的模型选择，并且不需要重建你的 agent stack。
 
@@ -29,19 +29,9 @@ Token Station 暴露直接 OpenAI-compatible GPT-5.6 route：
 - `github-copilot/gpt-5.6-terra`
 - `github-copilot/gpt-5.6-luna`
 
+OpenAI Codex 风格的工作流使用的就是上面这些 `openai/` route，所以不需要单独配置一个 Codex route。
+
 结果很简单：你可以从匹配工作流的 surface 测试同一个模型家族，而不是把每个 provider interface 都当成一个单独集成项目。
-
-## 为什么这对 AI coding agent 重要
-
-Coding agent 不是一次 API 调用。真实 session 可能包括规划、搜索代码库、生成 patch、修测试、代码审查和子任务分发。这些步骤不一定需要同一个模型 tier。
-
-一个实用 routing pattern 是：
-
-- 用更便宜的 route 做探索、triage 和反复迭代。
-- 在困难推理、高风险 patch 和最终审查时切到更强 route。
-- 保持 endpoint 稳定，让 harness、agent 和评测脚本不用每次比较模型都重写。
-
-这就是 Token Station 的价值：模型选择变成 route name，而不是新的集成项目。
 
 ## 用一个 endpoint 试 GPT-5.6
 
@@ -59,14 +49,6 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-想试 Codex route，只改 model：
-
-```json
-{
-  "model": "openai-codex/gpt-5.6-terra"
-}
-```
-
 想试 Copilot route：
 
 ```json
@@ -79,13 +61,21 @@ curl https://models.bytefuture.ai/v1/chat/completions \
 
 ## GPT-5.6 Sol、Terra 和 Luna
 
+Coding agent 不是一次 API 调用。真实 session 可能包括规划、搜索代码库、生成 patch、修测试、代码审查和子任务分发。这些步骤不一定需要同一个模型 tier。
+
 三个命名变体给团队一个实用测试阶梯：
 
-- **GPT-5.6 Sol** — 用于最难 coding-agent 步骤的旗舰 route。
-- **GPT-5.6 Terra** — 用于反复实现和 debugging loop 的中间 route。
-- **GPT-5.6 Luna** — 用于探索、triage 和 subtask fan-out 的低成本 route。
+- **GPT-5.6 Sol**：用于最难 coding-agent 步骤的旗舰 route。
+- **GPT-5.6 Terra**：用于反复实现和 debugging loop 的中间 route。
+- **GPT-5.6 Luna**：用于探索、triage 和 subtask fan-out 的低成本 route。
 
-这很重要，因为 agent 工作负载并不均匀。全仓库计划、微妙的失败测试和样板文件修改，不应该默认使用同一个成本 tier。
+一个实用 routing pattern 是：
+
+- 用更便宜的 route 做探索、triage 和反复迭代。
+- 在困难推理、高风险 patch 和最终审查时切到更强 route。
+- 保持 endpoint 稳定，让 harness、agent 和评测脚本不用每次比较模型都重写。
+
+agent 工作负载并不均匀。全仓库计划、微妙的失败测试和样板文件修改，不应该默认使用同一个成本 tier。模型选择变成 route name，而不是新的集成项目。
 
 ## 价格和 cache 计费
 
@@ -130,7 +120,7 @@ GMI Cloud 和 AWS Bedrock OpenAI catalog 没有添加，因为它们当时的公
 
 如果你已经使用 Token Station，GPT-5.6 现在就是另一个可以放进 coding-agent workflow 测试的 route family。
 
-先用直接 OpenAI route 做简单 API 检查；用 Codex route 跑终端 coding task；如果 workflow 依赖 GitHub Copilot 的 supported model catalog，就试 Copilot route。
+先用直接 OpenAI route 做简单 API 检查；在 Codex 里配置同一个 `openai/` route 跑终端 coding task；如果 workflow 依赖 GitHub Copilot 的 supported model catalog，就试 Copilot route。
 
 Token Station 让你在一个地方比较这些 route，而不用为每次模型发布重写 agent stack。
 

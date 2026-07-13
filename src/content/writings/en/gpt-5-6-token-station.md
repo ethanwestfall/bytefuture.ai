@@ -3,14 +3,14 @@ slug: gpt-5-6-token-station
 lang: en
 title: "GPT-5.6 is now on Token Station: try it in your coding agent routes"
 summary: "Token Station now supports GPT-5.6 across OpenAI-compatible API and coding-agent routes, including Codex and Copilot surfaces. Use one endpoint to compare Sol, Terra, Luna, and Claude Fable 5 in real workflows."
-category: model-launches
+category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
 ---
 
 GPT-5.6 is now available on Token Station.
 
-For coding-agent teams, the important part is not just that a new OpenAI model family exists. The important part is that GPT-5.6 can be tested through the routes developers already use: a direct OpenAI-compatible API, OpenAI Codex-style workflows, and GitHub Copilot routes where the supported catalog exposes the model.
+For coding-agent teams, what matters is that GPT-5.6 can be tested through the routes developers already use: a direct OpenAI-compatible API, OpenAI Codex-style workflows, and GitHub Copilot routes where the supported catalog exposes the model.
 
 That turns GPT-5.6 from a launch announcement into something you can actually route, compare, and adopt without rebuilding your agent stack.
 
@@ -29,19 +29,9 @@ And GitHub Copilot routes where the supported catalog publishes availability:
 - `github-copilot/gpt-5.6-terra`
 - `github-copilot/gpt-5.6-luna`
 
+OpenAI Codex-style workflows use these same `openai/` routes, so there is no separate Codex route to set up.
+
 The result is simple: you can test the same model family from the surface that matches your workflow instead of treating each provider interface as a separate integration project.
-
-## Why this matters for AI coding agents
-
-A coding agent is not one API call. A real session may include planning, repository search, patch generation, test repair, code review, and delegated subtasks. Those steps do not all need the same model tier.
-
-A practical routing pattern looks like this:
-
-- Use a cheaper route for exploration, triage, and repeated iteration.
-- Move to a stronger route for hard reasoning, risky patches, and final review.
-- Keep the endpoint stable so your harness, agent, and evaluation scripts do not need to change every time you compare a model.
-
-That is where Token Station helps. Model choice becomes a route name, not a new integration project.
 
 ## Try GPT-5.6 from one endpoint
 
@@ -59,14 +49,6 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-To try Codex routing, change the model:
-
-```json
-{
-  "model": "openai-codex/gpt-5.6-terra"
-}
-```
-
 To try a Copilot route, use:
 
 ```json
@@ -79,13 +61,21 @@ Your application still talks to the same endpoint. The route changes; the integr
 
 ## GPT-5.6 Sol, Terra, and Luna
 
+A coding agent is not one API call. A real session may include planning, repository search, patch generation, test repair, code review, and delegated subtasks. Those steps do not all need the same model tier.
+
 The three named variants give teams a useful testing ladder:
 
-- **GPT-5.6 Sol** — the flagship route for the hardest coding-agent steps.
-- **GPT-5.6 Terra** — a middle route for repeated implementation and debugging loops.
-- **GPT-5.6 Luna** — a lower-cost route for exploration, triage, and subtask fan-out.
+- **GPT-5.6 Sol**: the flagship route for the hardest coding-agent steps.
+- **GPT-5.6 Terra**: a middle route for repeated implementation and debugging loops.
+- **GPT-5.6 Luna**: a lower-cost route for exploration, triage, and subtask fan-out.
 
-That matters because agent workloads are uneven. A repository-wide plan, a subtle failing test, and a boilerplate file edit should not automatically use the same cost tier.
+A practical routing pattern looks like this:
+
+- Use a cheaper route for exploration, triage, and repeated iteration.
+- Move to a stronger route for hard reasoning, risky patches, and final review.
+- Keep the endpoint stable so your harness, agent, and evaluation scripts do not need to change every time you compare a model.
+
+Agent workloads are uneven. A repository-wide plan, a subtle failing test, and a boilerplate file edit should not automatically use the same cost tier. Model choice becomes a route name, not a new integration project.
 
 ## Pricing and cache accounting
 
@@ -130,7 +120,7 @@ GMI Cloud and AWS Bedrock OpenAI catalogs were not added because their public ca
 
 If you already use Token Station, GPT-5.6 is now another route family you can test in your coding-agent workflow.
 
-Start with the direct OpenAI route for a simple API check. Try the Codex route for terminal coding tasks. Try the Copilot route if your workflow depends on GitHub Copilot's supported model catalog.
+Start with the direct OpenAI route for a simple API check. Use the same `openai/` route in your Codex setup for terminal coding tasks. Try the Copilot route if your workflow depends on GitHub Copilot's supported model catalog.
 
 Token Station gives you one place to compare those routes without rewriting your agent stack for every model launch.
 

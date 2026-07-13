@@ -3,14 +3,14 @@ slug: gpt-5-6-token-station
 lang: ja
 title: "GPT-5.6 が Token Station に登場：coding agent のルートでそのまま試す"
 summary: "Token Station は GPT-5.6 を OpenAI-compatible API、Codex、Copilot などの coding-agent ルートでサポートしました。1 つの endpoint から Sol、Terra、Luna、Claude Fable 5 を実際の workflow で比較できます。"
-category: model-launches
+category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
 ---
 
 GPT-5.6 が Token Station で使えるようになりました。
 
-coding-agent チームにとって重要なのは、新しい OpenAI モデルファミリーが増えたことだけではありません。重要なのは、GPT-5.6 を開発者がすでに使っているルートで試せることです。直接の OpenAI-compatible API、OpenAI Codex スタイルの workflow、そして対応 catalog が公開している GitHub Copilot ルートです。
+coding-agent チームにとって重要なのは、GPT-5.6 を開発者がすでに使っているルートで試せることです。直接の OpenAI-compatible API、OpenAI Codex スタイルの workflow、そして対応 catalog が公開している GitHub Copilot ルートです。
 
 つまり GPT-5.6 は単なる発表ではなく、agent stack を作り直さずに route して、比較して、採用を判断できる選択肢になります。
 
@@ -29,19 +29,9 @@ GitHub Copilot catalog で公開されているルート：
 - `github-copilot/gpt-5.6-terra`
 - `github-copilot/gpt-5.6-luna`
 
+OpenAI Codex スタイルの workflow は上記と同じ `openai/` ルートを使うため、別途 Codex 専用ルートを設定する必要はありません。
+
 同じモデルファミリーを、自分の workflow に合う surface から試せます。
-
-## AI coding agent にとって重要な理由
-
-coding agent は 1 回の API call ではありません。計画、repository search、patch generation、test repair、code review、delegated subtasks などが続きます。すべての step が同じ model tier を必要とするわけではありません。
-
-実用的な routing はこうです。
-
-- 探索、triage、反復には安い route を使う。
-- 難しい reasoning、高リスク patch、final review では強い route に上げる。
-- endpoint を安定させ、harness、agent、evaluation scripts を毎回書き換えない。
-
-Token Station ではモデル選択が route name になります。新しい integration project ではありません。
 
 ## 1 つの endpoint から GPT-5.6 を試す
 
@@ -57,14 +47,6 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-Codex ルートを試すには model だけを変えます。
-
-```json
-{
-  "model": "openai-codex/gpt-5.6-terra"
-}
-```
-
 Copilot ルートなら：
 
 ```json
@@ -77,11 +59,21 @@ endpoint は同じです。変えるのは route だけです。
 
 ## GPT-5.6 Sol、Terra、Luna
 
-- **GPT-5.6 Sol** — 最も難しい coding-agent step に使う flagship route。
-- **GPT-5.6 Terra** — implementation や debugging loop に使う middle route。
-- **GPT-5.6 Luna** — exploration、triage、subtask fan-out に使う lower-cost route。
+coding agent は 1 回の API call ではありません。計画、repository search、patch generation、test repair、code review、delegated subtasks などが続きます。すべての step が同じ model tier を必要とするわけではありません。
 
-agent workload は均一ではないので、この tier 差は重要です。
+3 つの named variant はチームに実用的なテストの階段を与えます。
+
+- **GPT-5.6 Sol**：最も難しい coding-agent step に使う flagship route。
+- **GPT-5.6 Terra**：implementation や debugging loop に使う middle route。
+- **GPT-5.6 Luna**：exploration、triage、subtask fan-out に使う lower-cost route。
+
+実用的な routing はこうです。
+
+- 探索、triage、反復には安い route を使う。
+- 難しい reasoning、高リスク patch、final review では強い route に上げる。
+- endpoint を安定させ、harness、agent、evaluation scripts を毎回書き換えない。
+
+agent workload は均一ではありません。全 repository の計画、微妙な失敗テスト、boilerplate の編集を同じ cost tier で動かす必要はありません。モデル選択は route name になり、新しい integration project ではなくなります。
 
 ## Pricing と cache accounting
 
@@ -126,6 +118,6 @@ GMI Cloud と AWS Bedrock OpenAI catalog は、公開 catalog に GPT-5.6 がな
 
 Token Station を使っているなら、GPT-5.6 は coding-agent workflow に追加できる新しい route family です。
 
-direct OpenAI route で API check を行い、Codex route で terminal coding task を試し、GitHub Copilot catalog に依存する workflow なら Copilot route を試せます。
+direct OpenAI route で API check を行い、Codex では同じ `openai/` ルートを設定して terminal coding task を試し、GitHub Copilot catalog に依存する workflow なら Copilot route を試せます。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)
