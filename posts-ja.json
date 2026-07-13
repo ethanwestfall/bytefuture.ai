@@ -1,5 +1,12 @@
 [
   {
+    "slug": "gpt-5-6-token-station",
+    "title": "GPT-5.6 が Token Station に登場：OpenAI、Codex、Copilot ルートをまたぐ 1 つのモデルファミリー",
+    "summary": "Token Station は GPT-5.6 を OpenAI、OpenAI Codex、GitHub Copilot ルートで利用可能にしました。Sol、Terra、Luna バリアント、長文コンテキストの価格階層、prompt cache の会計にも対応します。",
+    "category": "model-launches",
+    "date": "2026-07-13"
+  },
+  {
     "slug": "use-any-model-in-claude-code-through-token-station",
     "title": "Token Station 経由で Claude Code に任意のモデルを使う",
     "summary": "Claude Code は Token Station 経由で任意のモデルを使える。~/.claude/settings.json に保存する方法と、ANTHROPIC_* 環境変数を一時的に export する方法を示し、base URL、Token、Opus/Sonnet/Haiku/subagent のモデル設定を pong コマンドで検証する。",
