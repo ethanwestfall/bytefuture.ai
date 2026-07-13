@@ -5,8 +5,10 @@ Static site for **ByteFuture**, served from GitHub Pages (`.nojekyll`, `CNAME` �
 Layout:
 
 - `index.html` — ByteFuture home: company intro, the hybrid-inference thesis, the two products, and a "Writings" teaser.
-- `blog/` — the **Writings** section (listing + articles). Rules below.
-- `posts.json` — content manifest for Writings (repo root; the site fetches it at `/posts.json`).
+- `src/content/writings/<lang>/<slug>.md` — the article sources (Astro content collection); the build generates `/blog/<slug>[-lang].html`. See **Authoring model — Astro** below.
+- `blog/` — the **Writings** section listing pages + article assets/covers (the listing `index*.html` are still hand-maintained static files).
+- `posts.json` (+ `posts-{zh,ja,ko}.json`) — the Writings manifest served at `/posts.json`, **generated at build** from the collection by `src/pages/posts*.json.ts` (the root `posts*.json` files are stale legacy, no longer served).
+- `sitemap.xml` — hand-maintained (no Astro sitemap integration); new articles need manual `<url>` entries.
 - `CNAME`, `.nojekyll` — GitHub Pages config.
 
 ## HARD RULE — NEVER touch analytics or ads tracking
@@ -152,7 +154,20 @@ The `blog/` folder is the **ByteFuture Writings** section. It contains:
 - `blog/<slug>.html` — one file per published article.
 - cover images and article assets, also under `blog/`.
 
-The post index is driven by `posts.json` (repo root); `blog/index.html` fetches it at `/posts.json` and renders the cards. The **HARD RULE above applies to every page under `blog/`.**
+The post index is driven by `posts.json`; `blog/index.html` fetches it at `/posts.json` and renders the cards. The **HARD RULE above applies to every page under `blog/`.**
+
+### Authoring model — Astro (current, authoritative)
+
+The site is now built with **Astro** (`astro.config.mjs`, `output: 'static'`, `format: 'file'`). Articles are authored as **Markdown in a content collection**, not as hand-written HTML. This section is authoritative and supersedes the older per-file HTML instructions further down (the `cp blog/post-template.html`, "fill every `▼ EDIT ▼` marker", "copy the redirect script / GA / hreflang / view-counter verbatim into each page" steps): those describe the pre-Astro static pages and are kept only as reference for the legacy files still on disk.
+
+What changed, and where things live now:
+
+- **One Markdown file per language per article:** `src/content/writings/<lang>/<slug>.md` where `<lang>` ∈ `en | zh | ja | ko`. Frontmatter fields (validated by `src/content.config.ts`): `slug`, `lang`, `title`, `summary`, `category`, `date` (`YYYY-MM-DD`), `cta` (URL, defaults to Token Station intro), `cover` (optional, repo-root-relative), `draft` (optional bool). The article body is Markdown/HTML below the frontmatter.
+- **URLs are generated, unchanged:** `src/pages/blog/[...slug].astro` emits `/blog/<slug>.html` for `en` and `/blog/<slug>-<lang>.html` for the others (the `-zh/-ja/-ko` suffix is derived from `lang`, so you never hand-name files).
+- **Chrome is centralized — do NOT copy it per article.** `src/layouts/WritingLayout.astro` injects, for every article automatically: the viewport meta, the i18n redirect script + `bf_lang` cookie logic, `canonical` / `og:locale` / all four `hreflang` alternates, the **GA4 tag** (`G-KQ0EX9QGK6`), the nav + language `<select>`, the footer, the **GoatCounter** view counter, and the `.prose` / mobile CSS. The HARD RULE still protects the GA and GoatCounter snippets — they now live in the layout, so never strip them there.
+- **The manifests are generated, not hand-edited:** `src/pages/posts.json.ts` (+ `posts-zh/ja/ko.json.ts`) build `/posts.json` etc. from the collection via `src/lib/posts-manifest.ts` (drops drafts, filters by `lang`, sorts newest-first). Add/rename/retire an article by adding/renaming/removing its Markdown files — the manifests follow. The stale root `posts*.json` files are legacy and are no longer served (this is why `scripts/sync-legacy-public.mjs` stopped copying them).
+- **Still hand-maintained static files** (copied verbatim into `public/` by `scripts/sync-legacy-public.mjs`): the listing pages `blog/index.html` + `index-{zh,ja,ko}.html`, the home `index*.html`, and **`sitemap.xml`**. Consequences that still bind (see the rules below): the **category closed set** is enforced in those listing files, and **`sitemap.xml` entries are added by hand** — there is no `@astrojs/sitemap` integration.
+- **Build & verify:** `npm run build` (runs `sync-legacy-public.mjs` then `astro build` into `dist/`); `npm run check:legacy-links` and `npm run check:mobile -- <url>` for the checks.
 
 ### Branding (non-negotiable)
 
@@ -258,7 +273,7 @@ Root-level `posts.json` is a JSON array. Each object:
 
 Rules:
 
-- **Categories are a closed set.** They must match the filter pills in `blog/index.html` (`#cat-filter` `data-cat`) **and** the `validCats` map in its posts engine. To add a category, update all three.
+- **Categories are a closed set** (`engineering`, `product`, `research`, `tutorial`) and it's the `category` frontmatter field. This still binds under Astro: the value must match, in each `blog/index*.html` listing, the filter pills (`#cat-filter` `data-cat`), the `validCats` map, **and** the `CAT_LABELS` table (all four languages) in its posts engine. On top of that, `WritingLayout.astro` prints the raw `category` string in the article header and uses it as the Topics-link label + `?cat=` param — so an off-list value leaks as untranslated literal text (e.g. `model-launches`), can't be filtered, and its Topics link dead-ends to **All**. To add a genuinely new category, update the pills + `validCats` + `CAT_LABELS` (×4 langs) in every `index*.html`; otherwise pick one of the four.
 - **The hero is automatic: the newest post by `date` always leads.** On the **All** tab the most recent post renders in the hero and is pulled out of the grid; the rest follow newest-first. There is no manual `featured` flag (the engine ignores it) — to put an article on top, give it the latest `date`.
 - Dates are real publish dates; newest sorts first.
 
