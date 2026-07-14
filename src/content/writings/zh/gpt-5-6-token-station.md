@@ -103,14 +103,6 @@ GPT-5.6 的操作形态不同：OpenAI-native route、Codex 风格 surface，以
 - 明确想要 Anthropic 的 long-running-agent 行为和 1M context，并愿意支付更高价格，就用 Claude Fable 5。
 - 当 workflow fit 比模型品牌更重要时，把它们放在 Token Station 里比较。
 
-## Azure 和暂不可用的 provider catalog
-
-这次集成也包含 Azure OpenAI GPT-5.6 preview 模板注释，并通过 `azure_api_version = "v1"` 支持 Azure 的 `/openai/v1` surface。
-
-这些模板没有用猜测价格直接启用。集成时 Azure GPT-5.6 meter 还没有发布，所以 operator 应该在自己的 Azure deployment 暴露模型后再填入价格。
-
-GMI Cloud 和 AWS Bedrock OpenAI catalog 没有添加，因为它们当时的公开 catalog 没有列出 GPT-5.6。Token Station 应该让 model routing 更容易，而不是假装每个 surface 第一天都支持每个模型。
-
 ## 通过 Token Station 试 GPT-5.6
 
 如果你已经使用 Token Station，GPT-5.6 现在就是另一个可以放进 coding-agent workflow 测试的 route family。
