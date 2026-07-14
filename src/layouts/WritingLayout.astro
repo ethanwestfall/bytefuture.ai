@@ -73,6 +73,9 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     gtag('js', new Date());
     gtag('config', 'G-KQ0EX9QGK6');
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style is:global>
     * { box-sizing: border-box; }
     html, body { max-width: 100%; overflow-x: clip; }
@@ -104,6 +107,7 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .prose figure { margin:32px 0; max-width:100%; overflow:hidden; }
     .prose img { display:block; width:100%; max-width:100%; height:auto; object-fit:contain; }
     .prose pre { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:20px 24px; overflow-x:auto; margin:32px 0; max-width:100%; }
+    .prose pre, .prose code { font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:0.9em; }
     .code-wrap { position:relative; margin:32px 0; }
     .code-wrap > pre { margin:0; }
     .copy-btn { position:absolute; top:10px; right:10px; z-index:1; display:inline-flex; align-items:center; gap:5px; border:1px solid #e4e4e7; background:#faf9f5; color:#52525b; border-radius:7px; padding:5px 10px; font-family:system-ui,sans-serif; font-size:12px; font-weight:500; cursor:pointer; transition:color .12s, border-color .12s; }
