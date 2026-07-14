@@ -70,9 +70,17 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     html, body { max-width: 100%; overflow-x: clip; }
     body { background:#faf9f5; color:#18181b; font-family: Georgia, serif; margin:0; }
     a { color:#2563EB; overflow-wrap:anywhere; }
-    body > nav { height:72px; display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:0 24px; font-family:system-ui,sans-serif; }
-    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; color:#18181b; font-weight:700; }
-    .nav-actions { display:flex; align-items:center; gap:16px; }
+    body > nav { border-bottom:1px solid #e7e4da; background:#faf9f5; font-family:system-ui,sans-serif; }
+    .nav-inner { height:64px; display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto; padding:0 24px; }
+    .brand { display:flex; align-items:center; gap:9px; text-decoration:none; color:#18181b; font-weight:700; font-size:19px; letter-spacing:-0.02em; }
+    .brand svg { display:block; flex:none; }
+    .nav-actions { display:flex; align-items:center; gap:20px; }
+    .nav-actions a { color:#52525b; text-decoration:none; font-weight:500; font-size:15px; }
+    .nav-actions a:hover { color:#18181b; }
+    .nav-actions select { border:1px solid #e4e4e7; border-radius:8px; padding:6px 8px; background:#fff; color:#18181b; font:inherit; font-size:14px; cursor:pointer; }
+    .nav-actions select:hover { border-color:#2563EB; }
+    .nav-actions .nav-cta { background:#2563EB; color:#faf9f5; padding:9px 16px; border-radius:9px; font-weight:600; font-size:14px; }
+    .nav-actions .nav-cta:hover { background:#1d4ed8; color:#faf9f5; }
     .page-grid { display:grid; grid-template-columns:200px minmax(0,1fr) 200px; gap:48px; max-width:1200px; margin:0 auto; padding:0 24px; align-items:start; }
     .page-grid > * { min-width:0; }
     main, article, .prose { min-width:0; max-width:100%; }
@@ -95,16 +103,18 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .prose tbody td:first-child,.prose td:first-child { white-space:normal; }
     footer { max-width:1200px; margin:0 auto; padding:48px 24px; display:flex; justify-content:space-between; gap:24px; font-family:system-ui,sans-serif; color:#71717a; }
     @media (max-width:1024px){ .page-grid{grid-template-columns:1fr; max-width:760px;} .sidebar-left,.sidebar-right{display:none;} }
-    @media (max-width:640px){ body > nav{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
+    @media (max-width:640px){ .nav-inner{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
   </style>
 </head>
 <body>
   <nav>
-    <a href="/" class="brand"><span>ByteFuture</span></a>
+    <div class="nav-inner">
+    <a href="/" class="brand"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>ByteFuture</span></a>
     <div class="nav-actions">
       <select data-bf-lang aria-label="Language" onchange="bfLang.pick(this.value)"><option value="en">EN</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ko">한국어</option></select>
       <a href="/blog/" class="nav-hide-sm">{writings}</a>
-      <a href="https://models.bytefuture.ai/intro.html">Token Station</a>
+      <a href="https://models.bytefuture.ai/intro.html" class="nav-cta">Token Station</a>
+    </div>
     </div>
   </nav>
   <div class="page-grid">
