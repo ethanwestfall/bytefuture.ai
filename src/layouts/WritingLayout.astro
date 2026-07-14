@@ -20,6 +20,11 @@ const all = { en: '← All writings', zh: '← 所有文章', ja: '← すべて
 const recent = { en: 'Recent', zh: '最近', ja: '最近の記事', ko: '최근 글' }[lang];
 const topics = { en: 'Topics', zh: '主题', ja: 'トピック', ko: '주제' }[lang];
 const share = { en: 'Share this post', zh: '分享这篇文章', ja: 'この記事をシェア', ko: '이 글 공유하기' }[lang];
+const copyLink = { en: 'Copy link', zh: '复制链接', ja: 'リンクをコピー', ko: '링크 복사' }[lang];
+const copied = { en: 'Copied!', zh: '已复制！', ja: 'コピーしました！', ko: '복사됨!' }[lang];
+const copyCode = { en: 'Copy', zh: '复制', ja: 'コピー', ko: '복사' }[lang];
+const shareX = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+const shareLI = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : 'en-US', { dateStyle: 'long' }).format(date);
 ---
 <!DOCTYPE html>
@@ -96,6 +101,16 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .prose figure { margin:32px 0; max-width:100%; overflow:hidden; }
     .prose img { display:block; width:100%; max-width:100%; height:auto; object-fit:contain; }
     .prose pre { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:20px 24px; overflow-x:auto; margin:32px 0; max-width:100%; }
+    .code-wrap { position:relative; margin:32px 0; }
+    .code-wrap > pre { margin:0; }
+    .copy-btn { position:absolute; top:10px; right:10px; z-index:1; display:inline-flex; align-items:center; gap:5px; border:1px solid #e4e4e7; background:#faf9f5; color:#52525b; border-radius:7px; padding:5px 10px; font-family:system-ui,sans-serif; font-size:12px; font-weight:500; cursor:pointer; transition:color .12s, border-color .12s; }
+    .copy-btn:hover { color:#2563EB; border-color:#2563EB; }
+    .copy-btn.copied { color:#0D9488; border-color:#0D9488; }
+    .share { display:flex; align-items:center; flex-wrap:wrap; gap:10px; font-family:system-ui,sans-serif; margin:8px 0 8px; }
+    .share-label { color:#71717a; font-size:15px; margin-right:2px; }
+    .share-btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #e4e4e7; background:#fff; color:#52525b; border-radius:8px; padding:7px 14px; font-size:14px; font-weight:500; text-decoration:none; cursor:pointer; }
+    .share-btn:hover { border-color:#2563EB; color:#2563EB; }
+    .share-btn.copied { border-color:#0D9488; color:#0D9488; }
     .prose code { white-space:pre-wrap; overflow-wrap:anywhere; }
     .prose table { display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:32px 0; font-family:system-ui,sans-serif; font-size:15px; }
     .prose th,.prose td { border:1px solid #e4e4e7; padding:10px 14px; text-align:left; vertical-align:top; white-space:nowrap; }
@@ -123,7 +138,12 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
       <header class="article-header"><div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;"><span>{category}</span><time>{dateText}</time></div><h1>{title}</h1></header>
       <article class="prose"><slot /></article>
       <hr />
-      <p style="font-family:system-ui,sans-serif;color:#71717a;">{share}</p>
+      <div class="share">
+        <span class="share-label">{share}</span>
+        <button type="button" class="share-btn" id="copy-link" data-copy={copyLink} data-copied={copied}>{copyLink}</button>
+        <a class="share-btn" href={shareX} target="_blank" rel="noopener" onclick="gtag('event','share_click',{label:'x'})">X</a>
+        <a class="share-btn" href={shareLI} target="_blank" rel="noopener" onclick="gtag('event','share_click',{label:'linkedin'})">LinkedIn</a>
+      </div>
     </main>
     <aside class="sidebar-right"><nav class="toc" id="toc"></nav></aside>
   </div>
@@ -137,6 +157,35 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
         if(recent){ posts.slice(0,5).forEach(function(p){ var a=document.createElement('a'); a.href='/blog/'+p.slug+((window.bfLang&&window.bfLang.cur&&window.bfLang.cur!=='en')?'-'+window.bfLang.cur:'')+'.html'; a.textContent=p.title; recent.appendChild(a); }); }
         if(topics){ Array.from(new Set(posts.map(function(p){return p.category}))).forEach(function(c){ var a=document.createElement('a'); a.href='/blog/?cat='+encodeURIComponent(c); a.textContent=c; topics.appendChild(a); }); }
       }).catch(function(){});
+    })();
+  </script>
+  <script define:vars={{ copyCode, copied }}>
+    (function(){
+      // Copy button on every code block (wrapped so the button stays pinned).
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrap=document.createElement('div'); wrap.className='code-wrap';
+        pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+        var btn=document.createElement('button');
+        btn.type='button'; btn.className='copy-btn'; btn.textContent=copyCode;
+        btn.addEventListener('click', function(){
+          var code=pre.querySelector('code'); var text=code?code.innerText:pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent=copied; btn.classList.add('copied');
+            if(window.gtag) gtag('event','copy_code',{});
+            setTimeout(function(){ btn.textContent=copyCode; btn.classList.remove('copied'); }, 1600);
+          });
+        });
+        wrap.appendChild(btn);
+      });
+      // Copy-link share button.
+      var cl=document.getElementById('copy-link');
+      if(cl){ cl.addEventListener('click', function(){
+        navigator.clipboard.writeText(location.href).then(function(){
+          cl.textContent=cl.getAttribute('data-copied'); cl.classList.add('copied');
+          if(window.gtag) gtag('event','share_click',{label:'copy'});
+          setTimeout(function(){ cl.textContent=cl.getAttribute('data-copy'); cl.classList.remove('copied'); }, 1600);
+        });
+      }); }
     })();
   </script>
   <script data-goatcounter="https://bytefuture.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
