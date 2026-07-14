@@ -2,7 +2,7 @@
 slug: gpt-5-6-token-station
 lang: zh
 title: "GPT-5.6 已接入 Token Station：在你的 coding agent 路由里直接试用"
-summary: "Token Station 现在支持 GPT-5.6，覆盖 OpenAI-compatible API、Codex 和 Copilot 等 coding-agent 路由。用一个 endpoint 比较 Sol、Terra、Luna 和 Claude Fable 5 在真实工作流里的表现。"
+summary: "Token Station 现在支持 GPT-5.6，覆盖 OpenAI-compatible API 和 Codex 风格的 coding-agent 路由。用一个 endpoint 比较 Sol、Terra、Luna 和 Claude Fable 5 在真实工作流里的表现。"
 category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
@@ -11,7 +11,7 @@ cover: blog/gpt-5-6-token-station-cover.png
 
 GPT-5.6 已经接入 Token Station。
 
-对 coding-agent 团队来说，真正的价值在于 GPT-5.6 可以通过开发者已经在用的 route 来测试：直接的 OpenAI-compatible API、OpenAI Codex 风格工作流，以及 GitHub Copilot 已发布支持的 route。
+对 coding-agent 团队来说，真正的价值在于 GPT-5.6 可以通过开发者已经在用的 route 来测试：直接的 OpenAI-compatible API 和 OpenAI Codex 风格工作流。
 
 这让 GPT-5.6 不只是一个发布新闻，而是一个可以路由、比较、逐步采用的模型选择，并且不需要重建你的 agent stack。
 
@@ -23,12 +23,6 @@ Token Station 暴露直接 OpenAI-compatible GPT-5.6 route：
 - `openai/gpt-5.6-sol`
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
-
-以及 GitHub Copilot 已发布支持的 route：
-
-- `github-copilot/gpt-5.6-sol`
-- `github-copilot/gpt-5.6-terra`
-- `github-copilot/gpt-5.6-luna`
 
 OpenAI Codex 风格的工作流使用的就是上面这些 `openai/` route，所以不需要单独配置一个 Codex route。
 
@@ -50,11 +44,11 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-想试 Copilot route：
+想切换变体，只改 `model` 字段：
 
 ```json
 {
-  "model": "github-copilot/gpt-5.6-luna"
+  "model": "openai/gpt-5.6-terra"
 }
 ```
 
@@ -99,11 +93,11 @@ Token Station 里的实用价格框架：
 
 Claude Fable 5 仍然是 long-running coding agent 的自然对比对象。它在 Token Station 中配置为 1M context window，并且价格是更高的 $10/$50 profile。
 
-GPT-5.6 的操作形态不同：OpenAI-native route、Codex 和 Copilot surface，以及同一模型家族里的多个价格 tier。
+GPT-5.6 的操作形态不同：OpenAI-native route、Codex 风格 surface，以及同一模型家族里的多个价格 tier。
 
 一个简单起点：
 
-- 想要 OpenAI-native route、Codex 或 Copilot surface，或者给高频步骤用更便宜的 tier，就选 GPT-5.6 家族；Sol、Terra、Luna 按上面说的按任务挑。
+- 想要 OpenAI-native route、Codex 风格 surface，或者给高频步骤用更便宜的 tier，就选 GPT-5.6 家族；Sol、Terra、Luna 按上面说的按任务挑。
 - 明确想要 Anthropic 的 long-running-agent 行为和 1M context，并愿意支付更高价格，就用 Claude Fable 5。
 - 当 workflow fit 比模型品牌更重要时，把它们放在 Token Station 里比较。
 
@@ -119,7 +113,7 @@ GMI Cloud 和 AWS Bedrock OpenAI catalog 没有添加，因为它们当时的公
 
 如果你已经使用 Token Station，GPT-5.6 现在就是另一个可以放进 coding-agent workflow 测试的 route family。
 
-先用直接 OpenAI route 做简单 API 检查；在 Codex 里配置同一个 `openai/` route 跑终端 coding task；如果 workflow 依赖 GitHub Copilot 的 supported model catalog，就试 Copilot route。
+先用直接 OpenAI route 做简单 API 检查；在 Codex 里配置同一个 `openai/` route 跑终端 coding task。
 
 Token Station 让你在一个地方比较这些 route，而不用为每次模型发布重写 agent stack。
 

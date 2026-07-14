@@ -2,7 +2,7 @@
 slug: gpt-5-6-token-station
 lang: en
 title: "GPT-5.6 is now on Token Station: try it in your coding agent routes"
-summary: "Token Station now supports GPT-5.6 across OpenAI-compatible API and coding-agent routes, including Codex and Copilot surfaces. Use one endpoint to compare Sol, Terra, Luna, and Claude Fable 5 in real workflows."
+summary: "Token Station now supports GPT-5.6 across the OpenAI-compatible API and Codex-style coding-agent routes. Use one endpoint to compare Sol, Terra, Luna, and Claude Fable 5 in real workflows."
 category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
@@ -11,7 +11,7 @@ cover: blog/gpt-5-6-token-station-cover.png
 
 GPT-5.6 is now available on Token Station.
 
-For coding-agent teams, what matters is that GPT-5.6 can be tested through the routes developers already use: a direct OpenAI-compatible API, OpenAI Codex-style workflows, and GitHub Copilot routes where the supported catalog exposes the model.
+For coding-agent teams, what matters is that GPT-5.6 can be tested through the routes developers already use: a direct OpenAI-compatible API and OpenAI Codex-style workflows.
 
 That turns GPT-5.6 from a launch announcement into something you can actually route, compare, and adopt without rebuilding your agent stack.
 
@@ -23,12 +23,6 @@ Token Station exposes the GPT-5.6 family through direct OpenAI-compatible routes
 - `openai/gpt-5.6-sol`
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
-
-And GitHub Copilot routes where the supported catalog publishes availability:
-
-- `github-copilot/gpt-5.6-sol`
-- `github-copilot/gpt-5.6-terra`
-- `github-copilot/gpt-5.6-luna`
 
 OpenAI Codex-style workflows use these same `openai/` routes, so there is no separate Codex route to set up.
 
@@ -50,11 +44,11 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-To try a Copilot route, use:
+To switch variants, change only the `model` field:
 
 ```json
 {
-  "model": "github-copilot/gpt-5.6-luna"
+  "model": "openai/gpt-5.6-terra"
 }
 ```
 
@@ -99,11 +93,11 @@ Above 272K input tokens, GPT-5.6 uses a long-context tier: Sol doubles input and
 
 Claude Fable 5 is still a natural comparison point for long-running coding agents. It is configured in Token Station with a 1M context window and a higher $10/$50 price profile.
 
-GPT-5.6 brings a different operating shape: OpenAI-native routes, Codex and Copilot surfaces, and multiple price tiers in the same family.
+GPT-5.6 brings a different operating shape: OpenAI-native routes, Codex-style surfaces, and multiple price tiers in the same family.
 
 A simple starting point:
 
-- Reach for the GPT-5.6 family when you want OpenAI-native routes, Codex or Copilot surfaces, or a cheaper tier for high-volume steps. Pick Sol, Terra, or Luna by task, as above.
+- Reach for the GPT-5.6 family when you want OpenAI-native routes, Codex-style surfaces, or a cheaper tier for high-volume steps. Pick Sol, Terra, or Luna by task, as above.
 - Reach for Claude Fable 5 when you specifically want Anthropic's long-running-agent behavior and its 1M context, and are willing to pay the higher rate.
 - Compare them inside Token Station when workflow fit matters more than model-brand loyalty.
 
@@ -119,7 +113,7 @@ GMI Cloud and AWS Bedrock OpenAI catalogs were not added because their public ca
 
 If you already use Token Station, GPT-5.6 is now another route family you can test in your coding-agent workflow.
 
-Start with the direct OpenAI route for a simple API check. Use the same `openai/` route in your Codex setup for terminal coding tasks. Try the Copilot route if your workflow depends on GitHub Copilot's supported model catalog.
+Start with the direct OpenAI route for a simple API check. Use the same `openai/` route in your Codex setup for terminal coding tasks.
 
 Token Station gives you one place to compare those routes without rewriting your agent stack for every model launch.
 
