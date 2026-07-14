@@ -2,7 +2,7 @@
 slug: gpt-5-6-token-station
 lang: ko
 title: "GPT-5.6이 Token Station에 추가되었습니다: coding agent route에서 바로 테스트하기"
-summary: "Token Station은 GPT-5.6을 OpenAI-compatible API, Codex, Copilot 같은 coding-agent route에서 지원합니다. 하나의 endpoint로 Sol, Terra, Luna, Claude Fable 5를 실제 workflow에서 비교할 수 있습니다."
+summary: "Token Station은 GPT-5.6을 OpenAI-compatible API와 Codex 스타일 coding-agent route에서 지원합니다. 하나의 endpoint로 Sol, Terra, Luna, Claude Fable 5를 실제 workflow에서 비교할 수 있습니다."
 category: product
 date: 2026-07-13
 cta: https://models.bytefuture.ai/intro.html
@@ -11,7 +11,7 @@ cover: blog/gpt-5-6-token-station-cover.png
 
 GPT-5.6을 이제 Token Station에서 사용할 수 있습니다.
 
-coding-agent 팀에게 중요한 점은 GPT-5.6을 개발자가 이미 쓰는 route에서 테스트할 수 있다는 것입니다. 직접 OpenAI-compatible API, OpenAI Codex 스타일 workflow, 그리고 지원 catalog가 공개한 GitHub Copilot route입니다.
+coding-agent 팀에게 중요한 점은 GPT-5.6을 개발자가 이미 쓰는 route에서 테스트할 수 있다는 것입니다. 직접 OpenAI-compatible API와 OpenAI Codex 스타일 workflow입니다.
 
 즉 GPT-5.6은 단순한 출시 소식이 아니라, agent stack을 다시 만들지 않고 route하고 비교하고 도입을 판단할 수 있는 선택지가 됩니다.
 
@@ -23,12 +23,6 @@ coding-agent 팀에게 중요한 점은 GPT-5.6을 개발자가 이미 쓰는 ro
 - `openai/gpt-5.6-sol`
 - `openai/gpt-5.6-terra`
 - `openai/gpt-5.6-luna`
-
-GitHub Copilot catalog가 공개한 route:
-
-- `github-copilot/gpt-5.6-sol`
-- `github-copilot/gpt-5.6-terra`
-- `github-copilot/gpt-5.6-luna`
 
 OpenAI Codex 스타일 workflow는 위의 `openai/` route를 그대로 사용하므로, 별도의 Codex route를 설정할 필요가 없습니다.
 
@@ -48,11 +42,11 @@ curl https://models.bytefuture.ai/v1/chat/completions \
   }'
 ```
 
-Copilot route는 다음처럼 사용합니다.
+variant를 바꾸려면 `model` 필드만 변경합니다.
 
 ```json
 {
-  "model": "github-copilot/gpt-5.6-luna"
+  "model": "openai/gpt-5.6-terra"
 }
 ```
 
@@ -97,11 +91,11 @@ Token Station은 GPT-5.6 `cache_write_tokens`를 cache-creation bucket으로 정
 
 Claude Fable 5는 long-running coding agent의 자연스러운 비교 대상입니다. Token Station에서는 1M context window와 더 높은 $10/$50 price profile로 설정되어 있습니다.
 
-GPT-5.6은 다른 운영 형태를 제공합니다. OpenAI-native route, Codex/Copilot surface, 그리고 같은 family 안의 여러 price tier입니다.
+GPT-5.6은 다른 운영 형태를 제공합니다. OpenAI-native route, Codex 스타일 surface, 그리고 같은 family 안의 여러 price tier입니다.
 
 시작점은 간단합니다.
 
-- OpenAI-native route, Codex나 Copilot surface, 또는 high-volume step에 더 저렴한 tier가 필요하면 GPT-5.6 패밀리를 선택합니다. Sol, Terra, Luna는 위에서 설명한 대로 작업별로 고릅니다.
+- OpenAI-native route, Codex 스타일 surface, 또는 high-volume step에 더 저렴한 tier가 필요하면 GPT-5.6 패밀리를 선택합니다. Sol, Terra, Luna는 위에서 설명한 대로 작업별로 고릅니다.
 - Anthropic의 long-running-agent behavior와 1M context가 필요하고 더 높은 가격을 감수한다면 Claude Fable 5를 사용합니다.
 - workflow fit이 model brand보다 중요하면 Token Station 안에서 비교합니다.
 
@@ -117,6 +111,6 @@ GMI Cloud와 AWS Bedrock OpenAI catalog는 당시 공개 catalog에 GPT-5.6이 �
 
 이미 Token Station을 사용하고 있다면 GPT-5.6은 coding-agent workflow에 추가할 수 있는 새로운 route family입니다.
 
-direct OpenAI route로 API check를 하고, Codex에서는 같은 `openai/` route를 설정해 terminal coding task를 테스트하고, GitHub Copilot catalog에 의존하는 workflow라면 Copilot route를 시험할 수 있습니다.
+direct OpenAI route로 API check를 하고, Codex에서는 같은 `openai/` route를 설정해 terminal coding task를 테스트할 수 있습니다.
 
 [Token Station 사용해 보기](https://models.bytefuture.ai/intro.html)
