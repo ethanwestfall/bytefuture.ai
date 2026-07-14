@@ -54,7 +54,7 @@ Every reader-facing page ships in **four languages**: English (default), Simplif
 
 - `file.html` — **English, the canonical / default version** (`x-default`). English has **no** suffix.
 - `file-zh.html` (Simplified Chinese) · `file-ja.html` (Japanese) · `file-ko.html` (Korean).
-- Applies to every page: home (`index.html` → `index-zh.html` …), listing (`blog/index.html` → `blog/index-zh.html` …), template (`blog/post-template.html` → `blog/post-template-zh.html` …), and every article (`blog/<slug>.html` → `blog/<slug>-zh.html` …). The base name is the slug; the language is the suffix.
+- Applies to every page: home (`index.html` → `index-zh.html` …), listing (`blog/index.html` → `blog/index-zh.html` …), and every article (`<slug>.md` in `en/` → `zh/` `ja/` `ko/`, built to `/blog/<slug>[-lang].html`). The base name is the slug; the language is the suffix (derived by the layout for articles).
 
 | Lang | suffix | `<html lang>` | `og:locale` | nav word ("Writings") |
 |---|---|---|---|---|
@@ -72,9 +72,11 @@ Every reader-facing page ships in **four languages**: English (default), Simplif
 
 **Ship the toggle + redirect block only when all four versions of a page exist** — the script redirects to `-zh/-ja/-ko` URLs and would 404 on a missing one. Create and delete the four together; a page with no translations yet omits the i18n block and stays English.
 
-### The three pieces every page carries (copy verbatim from `blog/post-template.html`)
+### The three pieces every page carries (emitted by `WritingLayout.astro` — you don't hand-copy them)
 
-**(a) Redirect script** — first thing in `<head>`, right after the viewport meta. It is identical on every page (it figures everything out from the filename); copy it verbatim from the template, defines `window.bfLang` and auto-redirects.
+`WritingLayout.astro` renders all three on every article automatically; the descriptions below are for reference (what the layout emits), not steps to copy into a file.
+
+**(a) Redirect script** — first thing in `<head>`, right after the viewport meta. Identical on every page (it derives everything from the filename), defines `window.bfLang`, and auto-redirects.
 
 **(b) hreflang alternates** — in `<head>`, **identical in all four versions**. Only `<html lang>`, `og:locale`, `canonical`, and `og:url` differ per version, and `canonical` / `og:url` point to the page's **own** language URL:
 
@@ -103,7 +105,7 @@ Every reader-facing page ships in **four languages**: English (default), Simplif
 
 Translate **prose and visible chrome only**: titles, descriptions, headings, body text, the category pill, dates, sidebar headings, the share heading, the Copy link / Copied! labels.
 
-**Keep byte-for-byte:** every code / config / `pre` block and `<code>` (model IDs, env vars, URLs); the GA tag and **every `gtag(...)` / `onclick`** (the HARD RULE applies in all languages); the GoatCounter scripts; SVGs; CSS; element IDs/classes (the engine + counter depend on them); and `POST_*` placeholders in the template. Keep proper nouns in Latin: **ByteFuture, Token Station, Olares, Claude Code, Codex, OpenClaw**, model names (GLM-5.2, Kimi K2.7), company names (Anthropic, JPMorgan), benchmark names (SWE-bench).
+**Keep byte-for-byte:** every code / config / `pre` block and `<code>` (model IDs, env vars, URLs); the GA tag and **every `gtag(...)` / `onclick`** (the HARD RULE applies in all languages); the GoatCounter scripts; SVGs; CSS; element IDs/classes (the engine + counter depend on them). Keep proper nouns in Latin: **ByteFuture, Token Station, Olares, Claude Code, Codex, OpenClaw**, model names (GLM-5.2, Kimi K2.7), company names (Anthropic, JPMorgan), benchmark names (SWE-bench).
 
 The **no-em-dash / no-AI-voice** rule governs English. CJK uses its own punctuation (。、：「」（）); never import `—`. The title suffix localizes the *section word* only: `— ByteFuture 文章 / 記事 / 글` (keep `ByteFuture` Latin; the leading `—` is brand chrome, allowed).
 
@@ -126,39 +128,38 @@ Dates: write them naturally per language (`2026年6月15日`, `2026년 6월 15�
 
 ### Listing & posts data
 
-The listing is data-driven, so each `blog/index-<lang>.html` reads a **per-language manifest**: `posts-zh.json`, `posts-ja.json`, `posts-ko.json` (repo root), each with the **same slugs / categories / dates / covers** as `posts.json` but **translated `title` and `summary`**. The listing engine builds same-language card links (`/blog/<slug>-<lang>.html`). Keep all four manifests in lockstep: same set of slugs, added and removed together.
+The listing is data-driven, so each `blog/index-<lang>.html` reads a **per-language manifest** at `/posts-zh.json`, `/posts-ja.json`, `/posts-ko.json`. These are **generated at build** by `src/pages/posts-<lang>.json.ts` from each article's frontmatter (same slugs / categories / dates / covers as `/posts.json`, with that language's translated `title` / `summary`). The listing engine builds same-language card links (`/blog/<slug>-<lang>.html`). The four manifests stay in lockstep automatically because they come from the same Markdown files.
 
 ### Sync, sitemap, counters
 
-- Language variants are **not** separate posts. The `posts.json` ↔ files sync check excludes `-(zh|ja|ko)` and the template variants (the command below is already updated).
+- Language variants are **not** separate posts — the `zh/ja/ko` Markdown files share the English slug and produce the `-<lang>.html` URLs; they need no separate registration.
 - **Sitemap:** every translation gets its own `<url>` entry (priority `0.6`; English stays `0.7`).
 - **View counts** key on `location.pathname`, so each language URL counts separately. That is expected.
 
 ### Publishing a translated set
 
 Publish or change an article in all four languages **together**:
-1. English `blog/<slug>.html` per the single-language checklist below, with the i18n block in place and `POST_SLUG` filled into the hreflang lines.
-2. `cp blog/post-template-zh.html blog/<slug>-zh.html` (and `-ja`, `-ko`); set `<html lang>`, `canonical` / `og:url` to the `-<lang>` URL and `og:locale`; translate body + chrome.
-3. Add translated `title` / `summary` to `posts-zh.json` / `-ja` / `-ko`.
-4. Add the three translation URLs to `sitemap.xml`.
-5. Verify each at 375px (no sideways scroll), and confirm the toggle switches and the cookie sticks.
+1. English `src/content/writings/en/<slug>.md` per the checklist above.
+2. Create `src/content/writings/{zh,ja,ko}/<slug>.md` with the **same slug**; set `lang` in the frontmatter and translate the `title` / `summary` / body. `WritingLayout` derives the `-<lang>` URL, `<html lang>`, `og:locale`, canonical, and hreflang from `lang` — you don't hand-write any of that.
+3. The per-language manifests (`/posts-zh.json` etc.) pick up the translated `title` / `summary` from each file's frontmatter automatically.
+4. Add the four language URLs to `sitemap.xml`.
+5. Verify each at 375px (no sideways scroll) and confirm the language selector switches and the cookie sticks.
 
 ---
 
 ## Writings section (`blog/`)
 
-The `blog/` folder is the **ByteFuture Writings** section. It contains:
+The **ByteFuture Writings** section spans two places (see **Authoring model — Astro** below):
 
-- `blog/index.html` — the Writings listing (post index, filters, featured card).
-- `blog/post-template.html` — the starting point for every new article. **Never publish this file itself**; copy it.
-- `blog/<slug>.html` — one file per published article.
-- cover images and article assets, also under `blog/`.
+- `src/content/writings/<lang>/<slug>.md` — the article sources; Astro's `WritingLayout` renders each to `/blog/<slug>[-lang].html`. **This is where you add/edit articles.**
+- `blog/index.html` + `index-{zh,ja,ko}.html` — the Writings listing pages (post index, filters, featured card), still hand-maintained static files that fetch `/posts*.json`.
+- `blog/` also holds cover images and article assets (and `blog/asset-sources/` for generated-image HTML).
 
-The post index is driven by `posts.json`; `blog/index.html` fetches it at `/posts.json` and renders the cards. The **HARD RULE above applies to every page under `blog/`.**
+The post index is driven by `posts.json`, **generated at build** from the article frontmatter; `blog/index.html` fetches it at `/posts.json` and renders the cards. The **HARD RULE above applies to every Writings page.**
 
 ### Authoring model — Astro (current, authoritative)
 
-The site is now built with **Astro** (`astro.config.mjs`, `output: 'static'`, `format: 'file'`). Articles are authored as **Markdown in a content collection**, not as hand-written HTML. This section is authoritative and supersedes the older per-file HTML instructions further down (the `cp blog/post-template.html`, "fill every `▼ EDIT ▼` marker", "copy the redirect script / GA / hreflang / view-counter verbatim into each page" steps): those describe the pre-Astro static pages and are kept only as reference for the legacy files still on disk.
+The site is now built with **Astro** (`astro.config.mjs`, `output: 'static'`, `format: 'file'`). Articles are authored as **Markdown in a content collection**, not as hand-written HTML. This section is authoritative. The old per-file HTML flow (copying a `post-template.html`, filling `▼ EDIT ▼` markers, pasting the redirect script / GA / hreflang / view-counter into each page) is gone — those template and legacy article HTML files have been deleted; only the listing pages (`blog/index*.html`) remain as hand-maintained static files.
 
 What changed, and where things live now:
 
@@ -211,7 +212,7 @@ Favicon (same mark, in `<head>`):
 | Nav / UI | `DM Sans` |
 | Code / labels | `JetBrains Mono` |
 
-Article prose uses the `.prose` styles already in `blog/post-template.html` (h2/h3, blockquote, `pre`/`code`, tables, figures). Don't reinvent them.
+Article prose uses the `.prose` styles in `src/layouts/WritingLayout.astro` (h2/h3, blockquote, `pre`/`code` with copy button, tables, figures). Don't reinvent them.
 
 **List markers — keep `list-style: revert`.** Every page loads Tailwind via CDN, whose Preflight reset sets `ul, ol { list-style: none }`, which kills the bullets/numbers in article lists. The `.prose ul, .prose ol` rule counteracts this with `list-style: revert` (reverts to the browser default: `disc` for `<ul>`, `decimal` for `<ol>`). **Never drop that declaration** when copying or editing `.prose` CSS, and confirm any new page's `.prose ul, .prose ol` rule still carries it — without it, `<li>` bullets silently disappear even though indentation looks correct. To verify, the computed `list-style-type` on a `.prose li` must be `disc`/`decimal`, not `none`.
 
@@ -238,33 +239,27 @@ When editing an existing article for any reason, fix style violations you touch.
   --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.html"
 ```
 
-(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory; the `posts.json` sync check's `blog/*.html` glob intentionally does not descend into it.
+(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory and holds no published pages.
 
 ### Publishing a new article
 
-1. **Copy the template:** `cp blog/post-template.html blog/<slug>.html`.
-   `<slug>` is lowercase-kebab-case and is the **single source of truth**: it must equal the filename (minus `.html`) **and** the `slug` in `posts.json`.
-2. **Fill every `▼ EDIT ▼` marker** in `blog/<slug>.html`:
-   - `<title>` + `og:title` (keep the `— ByteFuture Writings` suffix).
-   - `meta[name=description]` + `og:description`.
-   - `canonical` + `og:url` → replace `POST_SLUG` with the real slug.
-   - Header category pill text + `<time>`.
-   - `<h1>` title and the article body.
-3. **Leave the nav, footer, favicon, the GA `<script>`, the view-counter span + scripts, and the share-button row exactly as the template ships them.** (The share buttons fire `share_click` GA events; the HARD RULE protects those too.)
-4. **Register it in `posts.json`** (see schema below). The article will not appear in the listing until it's there.
-5. **Cover image (optional):** drop the file in `blog/` and set `"cover": "blog/<file>"` in `posts.json` (root-relative — see Linking).
-6. **Mobile check:** verify the article at ~375px width per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
-7. **Sitemap:** add a `<url>` entry for the article to `sitemap.xml` (root), with `lastmod` = the publish date and `priority` 0.7.
+1. **Create the Markdown file(s):** `src/content/writings/<lang>/<slug>.md`. `<slug>` is lowercase-kebab-case and is the **single source of truth** (the filename minus `.md`, the frontmatter `slug`, and the built `/blog/<slug>[-lang].html` all share it). English lives in `en/`; each translation is the **same slug** in `zh/` `ja/` `ko/`.
+2. **Fill the frontmatter** (validated by `src/content.config.ts`): `slug`, `lang`, `title`, `summary`, `category` (closed set, see below), `date` (`YYYY-MM-DD`), optional `cover` (root-relative, e.g. `blog/<file>.png`) and `cta`. Then write the article body below it. **No page chrome goes in the body** — `WritingLayout` supplies the `<title>`/OG tags, canonical, hreflang, nav, footer, GA tag, view counter, and the share row automatically. Do not paste a share row, GA snippet, or counter into the Markdown.
+3. **The listing updates itself:** `/posts.json` (+ per-language manifests) is generated from the frontmatter at build, so there is no `posts.json` to hand-edit and no 1:1 file/registry sync to maintain. Category/title/summary/date on the card come straight from the frontmatter.
+4. **Cover image (optional):** drop the file in `blog/` and set `cover: blog/<file>.png` in the frontmatter.
+5. **Mobile check:** verify the built article at ~375px per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
+6. **Sitemap:** `sitemap.xml` is hand-maintained (no Astro sitemap integration) — add a `<url>` for each language URL (English `priority` 0.7, translations 0.6), `lastmod` = publish date.
+7. **Build & ship:** `npm run build`; a push to `main` deploys via GitHub Actions.
 
-> Keep `posts.json` and the article files in strict 1:1 sync — see **[Keep `posts.json` and articles in sync](#keep-postsjson-and-articles-in-sync-required)** below. Never register a post whose file doesn't exist, and never publish a file you haven't registered.
+Publish an article in **all four languages together** (create the four Markdown files with the same slug; add all four sitemap URLs). A slug with no translations yet stays English-only; the language selector still works and simply has no target for the missing languages, so ship the set together.
 
-### `posts.json` schema (the listing contract)
+### Frontmatter / manifest schema (the listing contract)
 
-Root-level `posts.json` is a JSON array. Each object:
+`/posts*.json` is generated from each article's frontmatter, so these are the **frontmatter** fields (validated by `src/content.config.ts`) and also the shape of each manifest entry:
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| `slug` | string | ✅ | Matches the `blog/<slug>.html` filename exactly. |
+| `slug` | string | ✅ | Equals the `<slug>.md` filename and the built `/blog/<slug>[-lang].html`. |
 | `title` | string | ✅ | Card + featured heading. |
 | `summary` | string | ✅ | 1–2 sentences; shown on the card. |
 | `category` | string | ✅ | One of `engineering`, `product`, `research`, `tutorial`. |
@@ -277,29 +272,16 @@ Rules:
 - **The hero is automatic: the newest post by `date` always leads.** On the **All** tab the most recent post renders in the hero and is pulled out of the grid; the rest follow newest-first. There is no manual `featured` flag (the engine ignores it) — to put an article on top, give it the latest `date`.
 - Dates are real publish dates; newest sorts first.
 
-### Keep `posts.json` and articles in sync (required)
+### Article ↔ listing consistency (automatic under Astro)
 
-`posts.json` and the article files in `blog/` must stay in **strict 1:1 correspondence**. This is what keeps the listing free of dead links and keeps every published article discoverable.
+`/posts.json` is **generated from the article frontmatter**, so there is no separate registry to keep in 1:1 sync and no hand-maintained `posts.json` — an article's card and its page read the **same** file. What still matters:
 
-- **Every** `posts.json` entry MUST have a matching `blog/<slug>.html` file, and **every** article file MUST have a matching `posts.json` entry. `blog/index.html` and `blog/post-template.html` are infrastructure, **not** articles — never list them. **Language variants (`<slug>-zh.html`, `-ja`, `-ko`) and the translated listing/template (`index-*`, `post-template-*`) are not separate posts either** — they share the English slug and are excluded from the sync check; their translated titles/summaries live in `posts-<lang>.json` (see the i18n section).
-- `slug` is the join key: it equals the filename minus `.html`. Exactly one entry per slug, one file per slug.
-- **Add together, remove together.** Never publish an article without registering it, and never register an entry whose file doesn't exist — no "draft" or "coming soon" placeholders in `posts.json`. An entry with no file 404s from the listing, and if it has the newest date it lands in the hero.
-- **Metadata must stay in sync with the article content, not just the filename.** The entry's `title`, `summary`, `category`, and `date` must accurately reflect what the article currently says — the cards on the listing and home page are built from `posts.json`, not from the article. Whenever you edit an article in a way that changes its title, framing, key claims, or terminology (e.g. renaming a "benchmark" to a "mini benchmark", adding a major offer or result), update the `posts.json` entry in the **same change**. A card that promises something the article no longer says is a sync violation just like a missing file.
-- A cover referenced by an entry (`"cover": "blog/<file>"`) must exist in `blog/`.
+- **Frontmatter is the card.** `title`, `summary`, `category`, and `date` on the listing/home card come straight from the article's frontmatter. Keep them truthful to what the body actually says: when you change an article's title, framing, or key claims (e.g. renaming a "benchmark" to a "mini benchmark", adding a major offer or result), edit the frontmatter in the **same change**. A card that promises something the body no longer says is the violation to avoid.
+- **`slug` is the join key.** It equals the filename minus `.md` and is identical across the four language files. One slug per article.
+- **No drafts in production.** Set `draft: true` to keep a file out of the build/listing; don't ship half-written frontmatter.
+- A `cover` referenced in frontmatter (`cover: blog/<file>.png`) must exist in `blog/`.
 
-**Verify before every commit** — run from the repo root; this should print only `in sync`:
-
-```sh
-# slugs registered in posts.json
-jq -r '.[].slug' posts.json | sort > /tmp/ts_entries
-# article files on disk (excluding the listing, template, and -zh/-ja/-ko language variants)
-ls blog/*.html | sed 's#blog/##; s#\.html$##' | grep -vxE 'index|post-template|.*-(zh|ja|ko)' | sort > /tmp/ts_files
-diff /tmp/ts_entries /tmp/ts_files && echo "in sync"
-```
-
-A line only in `ts_entries` = registered but missing its file (broken link). A line only in `ts_files` = published but unregistered (invisible). Both are violations — fix one side until `diff` is clean.
-
-The script only verifies slug ↔ file existence. The **metadata-content sync** (title/summary/category/date matching what the article actually says) can't be checked mechanically — when an article changes, re-read its `posts.json` entry and confirm it still describes the article truthfully.
+`npm run check:legacy-links` guards that every already-published `/blog/*.html` URL still exists in the build.
 
 ### Linking & engine invariants
 
