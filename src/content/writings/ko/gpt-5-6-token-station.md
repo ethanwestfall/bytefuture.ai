@@ -78,12 +78,14 @@ coding agent는 repository context를 반복해서 보냅니다. file summaries,
 
 Token Station은 GPT-5.6 `cache_write_tokens`를 cache-creation bucket으로 정규화해 ordinary input tokens와 이중 계산되지 않게 합니다.
 
-실용적인 가격 프레임:
+실용적인 가격 프레임 (GPT-5.6 가격은 272K input tokens 이내 기준):
 
-- GPT-5.6 Sol / `openai/gpt-5.6`: $5/M input, $30/M output, $0.50/M cached input, $6.25/M cache writes up to 272K input tokens.
-- GPT-5.6 Terra: $2.50/M input, $15/M output up to 272K.
-- GPT-5.6 Luna: $1/M input, $6/M output up to 272K.
-- Claude Fable 5: $10/M input, $50/M output, $1/M cache reads, $12.50/M prompt-cache writes, $20/M one-hour cache writes.
+| 모델 | Input | Output | Cached input | Cache writes |
+|---|---|---|---|---|
+| GPT-5.6 Sol (`openai/gpt-5.6`) | $5/M | $30/M | $0.50/M | $6.25/M |
+| GPT-5.6 Terra | $2.50/M | $15/M | - | - |
+| GPT-5.6 Luna | $1/M | $6/M | - | - |
+| Claude Fable 5 | $10/M | $50/M | $1/M cache reads | $12.50/M prompt-cache, $20/M one-hour |
 
 272K input tokens를 넘으면 GPT-5.6은 long-context tier를 사용합니다. Sol은 input과 cached-input이 두 배가 되고 output은 $45/M, Terra는 $5/M input과 $22.50/M output, Luna는 $2/M input과 $9/M output입니다.
 

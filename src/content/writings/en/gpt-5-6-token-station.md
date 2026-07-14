@@ -80,12 +80,14 @@ For coding agents, cache accounting matters because repository context repeats. 
 
 Token Station normalizes GPT-5.6 `cache_write_tokens` usage so cache writes are charged in the cache-creation bucket without double-counting them as ordinary input tokens.
 
-A practical price frame inside Token Station:
+A practical price frame inside Token Station (GPT-5.6 rates are for up to 272K input tokens):
 
-- GPT-5.6 Sol / `openai/gpt-5.6`: $5/M input, $30/M output, $0.50/M cached input, and $6.25/M cache writes up to 272K input tokens.
-- GPT-5.6 Terra: $2.50/M input and $15/M output up to 272K input tokens.
-- GPT-5.6 Luna: $1/M input and $6/M output up to 272K input tokens.
-- Claude Fable 5: $10/M input, $50/M output, $1/M cache reads, $12.50/M prompt-cache writes, and $20/M one-hour cache writes.
+| Model | Input | Output | Cached input | Cache writes |
+|---|---|---|---|---|
+| GPT-5.6 Sol (`openai/gpt-5.6`) | $5/M | $30/M | $0.50/M | $6.25/M |
+| GPT-5.6 Terra | $2.50/M | $15/M | - | - |
+| GPT-5.6 Luna | $1/M | $6/M | - | - |
+| Claude Fable 5 | $10/M | $50/M | $1/M cache reads | $12.50/M prompt-cache, $20/M 1-hour |
 
 Above 272K input tokens, GPT-5.6 uses a long-context tier: Sol doubles input and cached-input prices and moves output to $45/M; Terra moves to $5/M input and $22.50/M output; Luna moves to $2/M input and $9/M output.
 

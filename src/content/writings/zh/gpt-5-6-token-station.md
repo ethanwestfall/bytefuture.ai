@@ -80,12 +80,14 @@ Token Station 暴露 GPT-5.6 的关键价格类别：input、output、cached inp
 
 Token Station 会规范 GPT-5.6 的 `cache_write_tokens` 用法，让 cache write 进入 cache-creation bucket，而不是被重复算成普通 input tokens。
 
-Token Station 里的实用价格框架：
+Token Station 里的实用价格框架（GPT-5.6 价格适用于 272K input tokens 以内）：
 
-- GPT-5.6 Sol / `openai/gpt-5.6`：$5/M input、$30/M output、$0.50/M cached input、$6.25/M cache writes，适用于 272K input tokens 以内。
-- GPT-5.6 Terra：$2.50/M input、$15/M output，适用于 272K input tokens 以内。
-- GPT-5.6 Luna：$1/M input、$6/M output，适用于 272K input tokens 以内。
-- Claude Fable 5：$10/M input、$50/M output、$1/M cache reads、$12.50/M prompt-cache writes、$20/M one-hour cache writes。
+| 模型 | Input | Output | Cached input | Cache writes |
+|---|---|---|---|---|
+| GPT-5.6 Sol（`openai/gpt-5.6`） | $5/M | $30/M | $0.50/M | $6.25/M |
+| GPT-5.6 Terra | $2.50/M | $15/M | - | - |
+| GPT-5.6 Luna | $1/M | $6/M | - | - |
+| Claude Fable 5 | $10/M | $50/M | $1/M cache reads | $12.50/M prompt-cache、$20/M one-hour |
 
 超过 272K input tokens 后，GPT-5.6 使用 long-context tier：Sol 的 input 和 cached-input 价格翻倍，output 变为 $45/M；Terra 变为 $5/M input 和 $22.50/M output；Luna 变为 $2/M input 和 $9/M output。
 
