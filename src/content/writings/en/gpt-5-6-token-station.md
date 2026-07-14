@@ -103,14 +103,6 @@ A simple starting point:
 - Reach for Claude Fable 5 when you specifically want Anthropic's long-running-agent behavior and its 1M context, and are willing to pay the higher rate.
 - Compare them inside Token Station when workflow fit matters more than model-brand loyalty.
 
-## Azure and unavailable provider catalogs
-
-The integration also includes commented Azure OpenAI GPT-5.6 preview templates and support for Azure's `/openai/v1` surface through `azure_api_version = "v1"`.
-
-Those templates are intentionally not enabled with guessed prices. Azure GPT-5.6 meters were not published at the time of integration, so operators should fill in pricing when their Azure deployment exposes the model.
-
-GMI Cloud and AWS Bedrock OpenAI catalogs were not added because their public catalogs did not list GPT-5.6 support at the time. Token Station should make model routing easier, not pretend every surface supports every model on day one.
-
 ## Try GPT-5.6 through Token Station
 
 If you already use Token Station, GPT-5.6 is now another route family you can test in your coding-agent workflow.

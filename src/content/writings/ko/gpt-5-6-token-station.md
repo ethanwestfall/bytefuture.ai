@@ -101,14 +101,6 @@ GPT-5.6은 다른 운영 형태를 제공합니다. OpenAI-native route, Codex �
 - Anthropic의 long-running-agent behavior와 1M context가 필요하고 더 높은 가격을 감수한다면 Claude Fable 5를 사용합니다.
 - workflow fit이 model brand보다 중요하면 Token Station 안에서 비교합니다.
 
-## Azure와 아직 지원하지 않는 catalog
-
-Azure OpenAI GPT-5.6 preview template과 `azure_api_version = "v1"` 기반 `/openai/v1` surface support도 포함됩니다.
-
-하지만 Azure pricing은 추측으로 활성화하지 않았습니다. 통합 시점에는 Azure GPT-5.6 meter가 공개되지 않았기 때문에, operator가 자신의 Azure deployment에서 모델을 노출할 때 pricing을 채워야 합니다.
-
-GMI Cloud와 AWS Bedrock OpenAI catalog는 당시 공개 catalog에 GPT-5.6이 없었기 때문에 추가하지 않았습니다.
-
 ## Token Station에서 GPT-5.6 테스트하기
 
 이미 Token Station을 사용하고 있다면 GPT-5.6은 coding-agent workflow에 추가할 수 있는 새로운 route family입니다.
