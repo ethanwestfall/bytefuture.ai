@@ -111,6 +111,21 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bytefuture.ai/blog/kimi-k3-token-station-zh.html</loc>
+    <lastmod>2026-07-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/kimi-k3-token-station-ja.html</loc>
+    <lastmod>2026-07-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/kimi-k3-token-station-ko.html</loc>
+    <lastmod>2026-07-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://bytefuture.ai/blog/run-any-model-in-openclaw-through-token-station.html</loc>
     <lastmod>2026-07-20</lastmod>
     <priority>0.7</priority>
