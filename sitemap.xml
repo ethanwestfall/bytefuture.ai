@@ -245,4 +245,24 @@
     <lastmod>2026-06-08</lastmod>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/qwen-3-8-max-token-station.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/qwen-3-8-max-token-station-zh.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/qwen-3-8-max-token-station-ja.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bytefuture.ai/blog/qwen-3-8-max-token-station-ko.html</loc>
+    <lastmod>2026-07-28</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
