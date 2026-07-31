@@ -6,6 +6,7 @@ summary: "Alibaba 只是预览了 Qwen 3.8-Max（2.4T 参数、稀疏 MoE、多�
 category: product
 date: 2026-07-28
 cta: https://models.bytefuture.ai/intro.html
+cover: "blog/qwen-3-8-max-token-station-cover.png"
 ---
 
 Alibaba 在 2026 年 7 月 19 日的世界人工智能大会（WAIC）上预览了 Qwen 3.8-Max：2.4 万亿参数、稀疏 Mixture-of-Experts、原生多模态，号称仅次于 [Claude Fable 5](/blog/try-claude-fable-5-in-codex-openclaw-and-pi-zh.html)。但它目前还没有 benchmark 表、没有 model card，上下文窗口也没确认。

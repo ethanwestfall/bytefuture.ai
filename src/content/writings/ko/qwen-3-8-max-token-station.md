@@ -6,6 +6,7 @@ summary: "Alibaba는 Qwen 3.8-Max(2.4조 파라미터, 희소 MoE, 멀티모달)
 category: product
 date: 2026-07-28
 cta: https://models.bytefuture.ai/intro.html
+cover: "blog/qwen-3-8-max-token-station-cover.png"
 ---
 
 Alibaba는 2026년 7월 19일 World AI Conference(WAIC)에서 Qwen 3.8-Max를 미리보기로 공개했습니다. 2.4조 파라미터, 희소 Mixture-of-Experts, 네이티브 멀티모달, 그리고 [Claude Fable 5](/blog/try-claude-fable-5-in-codex-openclaw-and-pi-ko.html) 다음가는 성능이라는 주장입니다. 다만 벤치마크 표도, 모델 카드도, 확정된 컨텍스트 윈도도 아직 없습니다.

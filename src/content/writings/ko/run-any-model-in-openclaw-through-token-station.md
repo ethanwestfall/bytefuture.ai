@@ -6,6 +6,7 @@ summary: "OpenClaw는 온보딩 위저드와 CLI를 통해 커스텀 프로바�
 category: "tutorial"
 date: "2026-07-20"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-openclaw-through-token-station-cover.png"
 draft: false
 ---
 

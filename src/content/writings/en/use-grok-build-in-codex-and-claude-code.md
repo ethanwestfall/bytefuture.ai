@@ -6,7 +6,7 @@ summary: "xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
-cover: "blog/claude-code-grok-build.png"
+cover: "blog/use-grok-build-in-codex-and-claude-code-cover.png"
 draft: false
 ---
 

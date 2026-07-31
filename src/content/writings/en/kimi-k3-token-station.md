@@ -6,6 +6,7 @@ summary: "Moonshot's Kimi K3 has 2.8 trillion parameters and a 1M-token context 
 category: "tutorial"
 date: "2026-07-25"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/kimi-k3-token-station-cover.png"
 draft: false
 ---
 

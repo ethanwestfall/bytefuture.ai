@@ -6,6 +6,7 @@ summary: "OpenAI의 Codex는 OpenAI 모델뿐 아니라 어떤 모델이든 실�
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-codex-through-token-station-cover.png"
 draft: false
 ---
 

@@ -6,6 +6,7 @@ summary: "Alibaba は Qwen 3.8-Max（2.4 兆パラメータ、スパース MoE�
 category: product
 date: 2026-07-28
 cta: https://models.bytefuture.ai/intro.html
+cover: "blog/qwen-3-8-max-token-station-cover.png"
 ---
 
 Alibaba は 2026 年 7 月 19 日の World AI Conference（WAIC）で Qwen 3.8-Max をプレビューしました。2.4 兆パラメータ、スパース Mixture-of-Experts、ネイティブマルチモーダル、そして [Claude Fable 5](/blog/try-claude-fable-5-in-codex-openclaw-and-pi-ja.html) に次ぐ性能という主張です。ただし、ベンチマーク表もモデルカードも、確定したコンテキストウィンドウもまだ公開されていません。
