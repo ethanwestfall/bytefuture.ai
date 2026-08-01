@@ -2,59 +2,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="_cover.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap');
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { width:1200px; height:630px; background:#faf9f5; font-family:'Space Grotesk',sans-serif; overflow:hidden; position:relative; }
+  h1 { font-size: 66px; line-height: 1.08; max-width: 600px; }
 
-  .grid {
-    position:absolute; inset:0;
-    background-image: radial-gradient(rgba(24,24,27,0.07) 1.2px, transparent 1.2px);
-    background-size: 28px 28px;
-  }
-  .wash {
-    position:absolute; top:-220px; right:-160px; width:680px; height:680px; border-radius:50%;
-    background: radial-gradient(circle, rgba(13,148,136,0.16) 0%, rgba(37,99,235,0.08) 45%, transparent 70%);
-  }
-
-  .content { position:absolute; inset:0; padding:64px 72px; display:flex; flex-direction:column; }
-
-  .kicker {
-    font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:600;
-    letter-spacing:0.16em; text-transform:uppercase; color:#0D9488; margin-bottom:24px;
-  }
-
-  h1 { font-size:66px; font-weight:700; letter-spacing:-0.035em; line-height:1.08; color:#18181b; max-width:600px; }
-  h1 .sub { display:block; font-family:'Source Serif 4',serif; font-style:italic; font-weight:400; font-size:34px; letter-spacing:-0.01em; color:#52525b; margin-top:22px; }
-
-  .rows { position:absolute; right:48px; top:130px; width:430px; }
+  /* Checkmark scorecard, upper right. */
+  .rows { position: absolute; right: 48px; top: 130px; width: 430px; }
   .row {
-    display:flex; align-items:center; gap:14px; background:#ffffff; border:1.5px solid #e4e4e7;
-    border-radius:14px; padding:16px 22px; margin-bottom:14px;
+    display: flex; align-items: center; gap: 14px; background: #ffffff; border: 1.5px solid var(--line);
+    border-radius: 14px; padding: 16px 22px; margin-bottom: 14px;
   }
-  .row.accent { background:#f0fdfa; border-color:#0D9488; }
+  .row.accent { background: var(--accent-bg); border-color: var(--accent); }
   .row .dot {
-    width:26px; height:26px; border-radius:50%; background:#c7d6f7; color:#2563EB;
-    display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;
+    width: 26px; height: 26px; border-radius: 50%; background: #c7d6f7; color: #2563EB;
+    display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
   }
-  .row.accent .dot { background:#0D9488; color:#ffffff; }
-  .row .name { font-size:22px; font-weight:600; color:#18181b; flex:1; }
-  .row.accent .name { color:#0D9488; }
+  .row.accent .dot { background: var(--accent); color: #ffffff; }
+  .row .name { font-size: 22px; font-weight: 600; color: var(--ink); flex: 1; }
+  .row.accent .name { color: var(--accent); }
   .row .badge {
-    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
-    color:#0D9488; white-space:nowrap;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); white-space: nowrap;
   }
-
-  .bottom { margin-top:auto; display:flex; align-items:flex-end; justify-content:space-between; }
-  .chips { display:flex; gap:14px; align-items:center; }
-  .chip {
-    background:#ffffff; border:1.5px solid #e4e4e7; border-radius:50px; padding:13px 26px;
-    font-size:22px; font-weight:600; color:#18181b;
-  }
-  .chip.accent { border-color:rgba(13,148,136,0.40); color:#0D9488; background:#f0fdfa; }
-
-  .brand { display:flex; align-items:center; gap:13px; }
-  .brand span { font-size:23px; font-weight:600; color:#52525b; }
 </style>
 </head>
 <body>
@@ -79,15 +48,7 @@
         <div class="chip">3 models</div>
         <div class="chip accent">all passed</div>
       </div>
-      <div class="brand">
-        <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
-          <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
-          <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
-          <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
-          <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-        <span>ByteFuture</span>
-      </div>
+      <div class="brand"><span>ByteFuture</span></div>
     </div>
   </div>
 </body>

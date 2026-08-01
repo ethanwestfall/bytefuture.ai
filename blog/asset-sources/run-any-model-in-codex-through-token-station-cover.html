@@ -2,66 +2,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="_cover.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap');
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { width:1200px; height:630px; background:#faf9f5; font-family:'Space Grotesk',sans-serif; overflow:hidden; position:relative; }
-
-  .grid {
-    position:absolute; inset:0;
-    background-image: radial-gradient(rgba(24,24,27,0.07) 1.2px, transparent 1.2px);
-    background-size: 28px 28px;
+  /* ~/.codex/config.toml card, upper right, highlighting the one line that matters. */
+  .card {
+    position: absolute; top: 96px; right: 48px; transform: rotate(-4deg);
+    background: var(--ink); color: var(--paper); border-radius: 16px; padding: 26px 30px;
+    box-shadow: 0 18px 44px rgba(13, 148, 136, 0.28); width: 430px;
   }
-  .wash {
-    position:absolute; top:-220px; right:-160px; width:680px; height:680px; border-radius:50%;
-    background: radial-gradient(circle, rgba(13,148,136,0.16) 0%, rgba(37,99,235,0.08) 45%, transparent 70%);
+  .card::before {
+    content: ''; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 18px; border-radius: 50%; background: var(--paper); border: 4px solid var(--ink);
   }
-
-  .content { position:absolute; inset:0; padding:64px 72px; display:flex; flex-direction:column; }
-
-  .kicker {
-    font-family:'JetBrains Mono',monospace; font-size:17px; font-weight:600;
-    letter-spacing:0.16em; text-transform:uppercase; color:#0D9488; margin-bottom:24px;
-  }
-
-  h1 { font-size:88px; font-weight:700; letter-spacing:-0.035em; line-height:1.02; color:#18181b; max-width:640px; }
-  h1 .sub { display:block; font-family:'Source Serif 4',serif; font-style:italic; font-weight:400; font-size:34px; letter-spacing:-0.01em; color:#52525b; margin-top:22px; }
-
-  /* config card */
-  .tag {
-    position:absolute; top:96px; right:48px; transform:rotate(-4deg);
-    background:#18181b; color:#faf9f5; border-radius:16px; padding:26px 30px;
-    box-shadow: 0 18px 44px rgba(13,148,136,0.28); width:430px;
-  }
-  .tag::before {
-    content:''; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
-    width:18px; height:18px; border-radius:50%; background:#faf9f5; border:4px solid #18181b;
-  }
-  .tag .path { font-family:'JetBrains Mono',monospace; font-size:13px; color:#7d8590; margin-bottom:16px; }
-  .tag .line { font-family:'JetBrains Mono',monospace; font-size:17px; margin-bottom:10px; }
-  .tag .line .k { color:#7d8590; }
-  .tag .line .v { color:#ffffff; }
-  .tag .hl { background:rgba(13,148,136,0.20); border-radius:8px; padding:8px 10px; margin:4px -10px 10px; }
-  .tag .hl .v { color:#2dd4bf; }
-  .tag .check { font-family:'JetBrains Mono',monospace; font-size:13px; color:#2dd4bf; margin-top:6px; }
-
-  .bottom { margin-top:auto; display:flex; align-items:flex-end; justify-content:space-between; }
-  .chips { display:flex; gap:14px; align-items:center; }
-  .chip {
-    background:#ffffff; border:1.5px solid #e4e4e7; border-radius:50px; padding:13px 26px;
-    font-size:22px; font-weight:600; color:#18181b;
-  }
-  .chip.accent { border-color:rgba(13,148,136,0.40); color:#0D9488; background:#f0fdfa; }
-
-  .brand { display:flex; align-items:center; gap:13px; }
-  .brand span { font-size:23px; font-weight:600; color:#52525b; }
+  .card .path { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7d8590; margin-bottom: 16px; }
+  .card .line { font-family: 'JetBrains Mono', monospace; font-size: 17px; margin-bottom: 10px; }
+  .card .line .k { color: #7d8590; }
+  .card .line .v { color: #ffffff; }
+  .card .hl { background: rgba(13, 148, 136, 0.20); border-radius: 8px; padding: 8px 10px; margin: 4px -10px 10px; }
+  .card .hl .v { color: #2dd4bf; }
+  .card .check { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #2dd4bf; margin-top: 6px; }
 </style>
 </head>
 <body>
   <div class="grid"></div>
   <div class="wash"></div>
 
-  <div class="tag">
+  <div class="card">
     <div class="path">~/.codex/config.toml</div>
     <div class="line"><span class="k">model_provider = </span><span class="v">"token_station"</span></div>
     <div class="hl line" style="margin-bottom:0;"><span class="k">wire_api = </span><span class="v">"responses"</span></div>
@@ -80,15 +46,7 @@
         <div class="chip">Responses API</div>
         <div class="chip accent">on Token Station</div>
       </div>
-      <div class="brand">
-        <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
-          <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
-          <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
-          <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
-          <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-        <span>ByteFuture</span>
-      </div>
+      <div class="brand"><span>ByteFuture</span></div>
     </div>
   </div>
 </body>
