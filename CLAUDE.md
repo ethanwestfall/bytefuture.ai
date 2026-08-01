@@ -230,7 +230,18 @@ Applies to everything reader-facing on the whole site, the home page included: a
 
 When editing an existing article for any reason, fix style violations you touch. A dedicated sweep should rewrite each em-dash by hand; a blind find-and-replace produces broken sentences.
 
-**Images.** The rule covers text in images ByteFuture generates: cover images, charts, diagrams. Two kinds of article images are exempt as factual captures: screenshots (terminal output, product UI) and third-party figures reproduced with attribution (e.g. Artificial Analysis charts). Generated images are produced from HTML files in `blog/asset-sources/` (one per image, named after the output PNG), rendered with headless Chrome:
+**Images.** The rule covers text in images ByteFuture generates: cover images, charts, diagrams. Two kinds of article images are exempt as factual captures: screenshots (terminal output, product UI) and third-party figures reproduced with attribution (e.g. Artificial Analysis charts).
+
+**HARD RULE — every cover image ships pre-rendered, with its text burnt in.** A cover is a flat PNG committed to `blog/`. The words are pixels in that file. Nothing about a cover is assembled when a reader loads the page, when a card is drawn, or when a link preview is fetched.
+
+That forbids, without limitation:
+
+- Rendering a cover from a template at request time, or from a shared template that takes a slug/params and produces the image on the fly.
+- Live HTML, SVG, or canvas standing in for a cover, and text layered over a background image with CSS or JS at view time.
+- Any generated-at-view-time OG image (`/og/<slug>.png` handlers, on-demand image services, third-party card generators).
+- Fonts, colours, or copy resolved at view time. A cover must look identical with no network, no fonts available, and no JS.
+
+The listing cards and `og:image` therefore point at a committed PNG and nothing else. The single output artifact is the PNG; anything used to produce it is authoring-time only and never reaches a reader. Generated images are produced from HTML files in `blog/asset-sources/` — **one source file per output image, named after it** — rendered once with headless Chrome:
 
 ```sh
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
@@ -239,9 +250,11 @@ When editing an existing article for any reason, fix style violations you touch.
   --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.html"
 ```
 
-(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory and holds no published pages.
+(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. Re-rendering is a manual step an author runs, never part of `npm run build` — the build copies the finished PNG and nothing more. `blog/asset-sources/` is not an article directory and holds no published pages.
 
 **Cover sources share one stylesheet.** `blog/asset-sources/_cover.css` holds the frame every cover has in common — the 1200×630 canvas, the dot grid and radial washes, `.kicker` / `h1` / `h1 .sub` type, the `.chip` row, the reusable `.price-tag`, and the `.brand` lockup (the ByteFuture mark is a data URI there, defined once so it cannot drift). A cover file is a `<link rel="stylesheet" href="_cover.css">` plus a short `<style>` block for its own motif and the copy itself, usually 40–60 lines. Put anything reused by two or more covers in the shared file; keep one-off motifs local. The accent is teal by default; a cover that leads with blue overrides `--accent`, `--accent-soft`, `--accent-bg`, and the `--wash-*` stops in its own block rather than hardcoding hexes. Charts and other one-off images do not use this stylesheet.
+
+This stylesheet is authoring-time only and does not soften the hard rule above: it is read once by headless Chrome when an author re-renders, and the burnt-in PNG is what ships. It is not a template, takes no parameters, and produces no image by itself. Each source file still carries its own copy verbatim, so the words in a cover are readable in the diff of the file named after it. Editing `_cover.css` changes nothing on the site until each affected cover is re-rendered and its PNG committed.
 
 ### Publishing a new article
 
@@ -295,7 +308,7 @@ Rules:
 ### SEO / meta
 
 - `canonical` and `og:url`: `https://bytefuture.ai/blog/<slug>.html`.
-- `og:image`: emitted by `WritingLayout` from the `cover` frontmatter, as an **absolute** `https://bytefuture.ai/...` URL, with `og:image:width` 1200 / `og:image:height` 630 and `og:image:alt` set to the title. All four language versions share the one English-language cover. An article with no `cover` emits no `og:image`, and its `twitter:card` drops from `summary_large_image` to `summary`.
+- `og:image`: emitted by `WritingLayout` from the `cover` frontmatter, as an **absolute** `https://bytefuture.ai/...` URL, with `og:image:width` 1200 / `og:image:height` 630 and `og:image:alt` set to the title. It points at the committed PNG in `blog/`, never at a generated-on-demand image — see the hard rule under **Images**. All four language versions share the one English-language cover. An article with no `cover` emits no `og:image`, and its `twitter:card` drops from `summary_large_image` to `summary`.
 - Listing canonical: `https://bytefuture.ai/blog/`.
 
 ### View counter (every article)
