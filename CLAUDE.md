@@ -241,12 +241,14 @@ When editing an existing article for any reason, fix style violations you touch.
 
 (Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory and holds no published pages.
 
+**Cover sources share one stylesheet.** `blog/asset-sources/_cover.css` holds the frame every cover has in common — the 1200×630 canvas, the dot grid and radial washes, `.kicker` / `h1` / `h1 .sub` type, the `.chip` row, the reusable `.price-tag`, and the `.brand` lockup (the ByteFuture mark is a data URI there, defined once so it cannot drift). A cover file is a `<link rel="stylesheet" href="_cover.css">` plus a short `<style>` block for its own motif and the copy itself, usually 40–60 lines. Put anything reused by two or more covers in the shared file; keep one-off motifs local. The accent is teal by default; a cover that leads with blue overrides `--accent`, `--accent-soft`, `--accent-bg`, and the `--wash-*` stops in its own block rather than hardcoding hexes. Charts and other one-off images do not use this stylesheet.
+
 ### Publishing a new article
 
 1. **Create the Markdown file(s):** `src/content/writings/<lang>/<slug>.md`. `<slug>` is lowercase-kebab-case and is the **single source of truth** (the filename minus `.md`, the frontmatter `slug`, and the built `/blog/<slug>[-lang].html` all share it). English lives in `en/`; each translation is the **same slug** in `zh/` `ja/` `ko/`.
 2. **Fill the frontmatter** (validated by `src/content.config.ts`): `slug`, `lang`, `title`, `summary`, `category` (closed set, see below), `date` (`YYYY-MM-DD`), optional `cover` (root-relative, e.g. `blog/<file>.png`) and `cta`. Then write the article body below it. **No page chrome goes in the body** — `WritingLayout` supplies the `<title>`/OG tags, canonical, hreflang, nav, footer, GA tag, view counter, and the share row automatically. Do not paste a share row, GA snippet, or counter into the Markdown.
 3. **The listing updates itself:** `/posts.json` (+ per-language manifests) is generated from the frontmatter at build, so there is no `posts.json` to hand-edit and no 1:1 file/registry sync to maintain. Category/title/summary/date on the card come straight from the frontmatter.
-4. **Cover image (optional):** drop the file in `blog/` and set `cover: blog/<file>.png` in the frontmatter.
+4. **Cover image (optional):** drop the file in `blog/` and set `cover: blog/<file>.png` in the frontmatter. It becomes the listing card thumbnail **and** the article's `og:image`, so make it 1200×630.
 5. **Mobile check:** verify the built article at ~375px per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
 6. **Sitemap:** `sitemap.xml` is hand-maintained (no Astro sitemap integration) — add a `<url>` for each language URL (English `priority` 0.7, translations 0.6), `lastmod` = publish date.
 7. **Build & ship:** `npm run build`; a push to `main` deploys via GitHub Actions.
@@ -264,7 +266,7 @@ Publish an article in **all four languages together** (create the four Markdown 
 | `summary` | string | ✅ | 1–2 sentences; shown on the card. |
 | `category` | string | ✅ | One of `engineering`, `product`, `research`, `tutorial`. |
 | `date` | string | ✅ | `YYYY-MM-DD`. Sorting + display derive from this. |
-| `cover` | string | optional | Repo-root-relative, e.g. `blog/foo.png`. Omit for an auto gradient cover. |
+| `cover` | string | optional | Repo-root-relative, e.g. `blog/foo.png`. Drives the listing card **and** `og:image`. 1200×630. Omit for an auto gradient card and a text-only link preview. |
 
 Rules:
 
@@ -293,7 +295,7 @@ Rules:
 ### SEO / meta
 
 - `canonical` and `og:url`: `https://bytefuture.ai/blog/<slug>.html`.
-- `og:image`: an **absolute** `https://bytefuture.ai/...` URL.
+- `og:image`: emitted by `WritingLayout` from the `cover` frontmatter, as an **absolute** `https://bytefuture.ai/...` URL, with `og:image:width` 1200 / `og:image:height` 630 and `og:image:alt` set to the title. All four language versions share the one English-language cover. An article with no `cover` emits no `og:image`, and its `twitter:card` drops from `summary_large_image` to `summary`.
 - Listing canonical: `https://bytefuture.ai/blog/`.
 
 ### View counter (every article)
