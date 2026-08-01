@@ -264,9 +264,11 @@ Authoring an SVG cover:
 
 Rendering needs network access the first time so the webfonts resolve; check the PNG after rendering rather than trusting the SVG preview. To make a source fully self-contained, convert its text to paths — the PNG is identical either way, since the text is burnt in regardless.
 
+Each cover source is standalone: no shared stylesheet, no include, no parameters. Everything the image needs is in the one file, so the words are readable in the diff of the file named after the PNG, and re-rendering one cover cannot disturb another. Repeat the frame (dot grid pattern, washes, chip pills, the ByteFuture mark) in each file rather than factoring it out.
+
 To change an image's text, edit its SVG and re-render; keep the source and the PNG in the same commit. Re-rendering is a manual step an author runs, never part of `npm run build` — the build copies the finished PNG and nothing more. `blog/asset-sources/` is not an article directory and holds no published pages.
 
-**Legacy HTML sources.** The cover sources in `blog/asset-sources/` are currently `.html` rendered the same way, sharing `_cover.css` for the common frame. They are legacy and are to be migrated to SVG. Until a given cover is migrated, edit and re-render it as it stands; do not add new `.html` sources.
+All 11 cover sources are SVG. The two `*-benchmarks.html` chart sources are the last HTML holdouts; move them to SVG when they are next touched, and add no new HTML sources.
 
 ### Publishing a new article
 

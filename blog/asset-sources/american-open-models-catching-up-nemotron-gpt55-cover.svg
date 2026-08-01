@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <title>american-open-models-catching-up-nemotron-gpt55-cover</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Source+Serif+4:ital,opsz,wght@1,8..60,400&amp;display=swap');
+  </style>
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1.2" fill="rgb(24,24,27)" fill-opacity="0.07"/>
+    </pattern>
+    <radialGradient id="wash1" gradientUnits="userSpaceOnUse" cx="1020" cy="120" r="480.83">
+      <stop offset="0" stop-color="rgb(13,148,136)" stop-opacity="0.16"/>
+      <stop offset="0.45" stop-color="rgb(37,99,235)" stop-opacity="0.08"/>
+      <stop offset="0.7" stop-color="rgb(0,0,0)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#faf9f5"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#grid)"/>
+  <rect x="680" y="-220" width="680" height="680" fill="url(#wash1)"/>
+  <svg x="666" y="180" width="470" height="300" viewBox="0 0 470 300" fill="none" opacity="0.97">
+    <line x1="6" y1="272" x2="464" y2="272" stroke="#d4d4d8" stroke-width="2"></line>
+    <rect x="34" y="206" width="52" height="66" rx="6" fill="#2563EB" fill-opacity="0.16"></rect>
+    <rect x="108" y="176" width="52" height="96" rx="6" fill="#2563EB" fill-opacity="0.20"></rect>
+    <rect x="182" y="142" width="52" height="130" rx="6" fill="#2563EB" fill-opacity="0.24"></rect>
+    <rect x="256" y="104" width="52" height="168" rx="6" fill="#2563EB" fill-opacity="0.30"></rect>
+    <rect x="330" y="34" width="52" height="238" rx="6" fill="#0D9488"></rect>
+    <circle cx="356" cy="20" r="7" fill="#0D9488"></circle>
+  </svg>
+  <text x="72" y="81" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="600" letter-spacing="2.72px" fill="rgb(13, 148, 136)">NVIDIA · NEMOTRON-3 ULTRA · OPEN WEIGHTS</text>
+  <text x="72" y="178" font-family="'Space Grotesk', sans-serif" font-size="80" font-weight="700" letter-spacing="-2.8px" fill="rgb(24, 24, 27)">America's</text>
+  <text x="72" y="258" font-family="'Space Grotesk', sans-serif" font-size="80" font-weight="700" letter-spacing="-2.8px" fill="rgb(24, 24, 27)">strongest</text>
+  <text x="445.2" y="258" font-family="'Space Grotesk', sans-serif" font-size="80" font-weight="700" letter-spacing="-2.8px" fill="rgb(13, 148, 136)">open</text>
+  <text x="72" y="338" font-family="'Space Grotesk', sans-serif" font-size="80" font-weight="700" letter-spacing="-2.8px" fill="rgb(13, 148, 136)">model</text>
+  <text x="293.77" y="338" font-family="'Space Grotesk', sans-serif" font-size="80" font-weight="700" letter-spacing="-2.8px" fill="rgb(24, 24, 27)">.</text>
+  <text x="72" y="407" font-family="'Source Serif 4', serif" font-size="38" font-weight="400" font-style="italic" letter-spacing="-0.38px" fill="rgb(82, 82, 91)">47.7 on the AA Index, ahead of every US open</text>
+  <text x="72" y="452.59" font-family="'Source Serif 4', serif" font-size="38" font-weight="400" font-style="italic" letter-spacing="-0.38px" fill="rgb(82, 82, 91)">rival. Free to run for now.</text>
+  <rect x="72.5" y="510.5" width="198.47" height="55" rx="27.5" fill="rgb(255, 255, 255)" stroke="rgb(228, 228, 231)" stroke-width="1"/>
+  <text x="99" y="546" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="600" fill="rgb(24, 24, 27)">Open weights</text>
+  <rect x="285.97" y="510.5" width="191.81" height="55" rx="27.5" fill="rgb(255, 255, 255)" stroke="rgb(228, 228, 231)" stroke-width="1"/>
+  <text x="312.47" y="546" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="600" fill="rgb(24, 24, 27)">AA Index 47.7</text>
+  <rect x="492.78" y="510.5" width="183.22" height="55" rx="27.5" fill="rgb(240, 253, 250)" stroke="rgba(13, 148, 136, 0.4)" stroke-width="1"/>
+  <text x="519.28" y="546" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="600" fill="rgb(13, 148, 136)">free for now</text>
+  <svg x="949.08" y="526" width="40" height="40" viewBox="0 0 32 32" fill="none">
+    <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"></rect>
+    <circle cx="12" cy="16" r="3.4" fill="#2563EB"></circle>
+    <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"></circle>
+    <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"></path>
+  </svg>
+  <text x="1002.08" y="554" font-family="'Space Grotesk', sans-serif" font-size="23" font-weight="600" fill="rgb(82, 82, 91)">ByteFuture</text>
+</svg>
