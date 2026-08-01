@@ -237,24 +237,36 @@ When editing an existing article for any reason, fix style violations you touch.
 That forbids, without limitation:
 
 - Rendering a cover from a template at request time, or from a shared template that takes a slug/params and produces the image on the fly.
-- Live HTML, SVG, or canvas standing in for a cover, and text layered over a background image with CSS or JS at view time.
+- Shipping the SVG itself as the cover, or any live HTML or canvas standing in for one, and text layered over a background image with CSS or JS at view time. SVG is the authoring source; the reader only ever gets the rasterized PNG.
 - Any generated-at-view-time OG image (`/og/<slug>.png` handlers, on-demand image services, third-party card generators).
 - Fonts, colours, or copy resolved at view time. A cover must look identical with no network, no fonts available, and no JS.
 
-The listing cards and `og:image` therefore point at a committed PNG and nothing else. The single output artifact is the PNG; anything used to produce it is authoring-time only and never reaches a reader. Generated images are produced from HTML files in `blog/asset-sources/` — **one source file per output image, named after it** — rendered once with headless Chrome:
+The listing cards and `og:image` therefore point at a committed PNG and nothing else. The single output artifact is the PNG; anything used to produce it is authoring-time only and never reaches a reader.
+
+**Generate the PNG from an SVG.** Every generated image has exactly one source, an **SVG** in `blog/asset-sources/` named after the output PNG (`<name>.svg` → `blog/<name>.png`). Rasterize it once with headless Chrome, which burns the text into the pixels:
 
 ```sh
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
   --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=6000 \
   --window-size=1200,630 \
-  --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.html"
+  --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.svg"
 ```
 
-(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. Re-rendering is a manual step an author runs, never part of `npm run build` — the build copies the finished PNG and nothing more. `blog/asset-sources/` is not an article directory and holds no published pages.
+Match `--window-size` to the SVG's `width`/`height`: covers are 1200×630, charts vary. Commit the PNG; it is what the site serves.
 
-**Cover sources share one stylesheet.** `blog/asset-sources/_cover.css` holds the frame every cover has in common — the 1200×630 canvas, the dot grid and radial washes, `.kicker` / `h1` / `h1 .sub` type, the `.chip` row, the reusable `.price-tag`, and the `.brand` lockup (the ByteFuture mark is a data URI there, defined once so it cannot drift). A cover file is a `<link rel="stylesheet" href="_cover.css">` plus a short `<style>` block for its own motif and the copy itself, usually 40–60 lines. Put anything reused by two or more covers in the shared file; keep one-off motifs local. The accent is teal by default; a cover that leads with blue overrides `--accent`, `--accent-soft`, `--accent-bg`, and the `--wash-*` stops in its own block rather than hardcoding hexes. Charts and other one-off images do not use this stylesheet.
+Authoring an SVG cover:
 
-This stylesheet is authoring-time only and does not soften the hard rule above: it is read once by headless Chrome when an author re-renders, and the burnt-in PNG is what ships. It is not a template, takes no parameters, and produces no image by itself. Each source file still carries its own copy verbatim, so the words in a cover are readable in the diff of the file named after it. Editing `_cover.css` changes nothing on the site until each affected cover is re-rendered and its PNG committed.
+- Set `width`, `height`, and a matching `viewBox` on the root `<svg>`, and give it `xmlns="http://www.w3.org/2000/svg"`.
+- Text is native `<text>`, never `<foreignObject>` with HTML inside. SVG does not wrap text, so **each line is its own `<text>` with an explicit `y`** — there is no automatic line breaking to lean on.
+- Style with a `<style>` block and classes. Brand fonts come from the Google Fonts `@import`; inside SVG the `&` in that URL must be written `&amp;`.
+- `letter-spacing` in SVG is a length, so use px (`-2.8px`), not the em values CSS uses.
+- Colours, the dot grid, washes, chips, and the ByteFuture mark are drawn with ordinary SVG shapes and gradients.
+
+Rendering needs network access the first time so the webfonts resolve; check the PNG after rendering rather than trusting the SVG preview. To make a source fully self-contained, convert its text to paths — the PNG is identical either way, since the text is burnt in regardless.
+
+To change an image's text, edit its SVG and re-render; keep the source and the PNG in the same commit. Re-rendering is a manual step an author runs, never part of `npm run build` — the build copies the finished PNG and nothing more. `blog/asset-sources/` is not an article directory and holds no published pages.
+
+**Legacy HTML sources.** The cover sources in `blog/asset-sources/` are currently `.html` rendered the same way, sharing `_cover.css` for the common frame. They are legacy and are to be migrated to SVG. Until a given cover is migrated, edit and re-render it as it stands; do not add new `.html` sources.
 
 ### Publishing a new article
 
