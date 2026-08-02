@@ -230,23 +230,52 @@ Applies to everything reader-facing on the whole site, the home page included: a
 
 When editing an existing article for any reason, fix style violations you touch. A dedicated sweep should rewrite each em-dash by hand; a blind find-and-replace produces broken sentences.
 
-**Images.** The rule covers text in images ByteFuture generates: cover images, charts, diagrams. Two kinds of article images are exempt as factual captures: screenshots (terminal output, product UI) and third-party figures reproduced with attribution (e.g. Artificial Analysis charts). Generated images are produced from HTML files in `blog/asset-sources/` (one per image, named after the output PNG), rendered with headless Chrome:
+**Images.** The rule covers text in images ByteFuture generates: cover images, charts, diagrams. Two kinds of article images are exempt as factual captures: screenshots (terminal output, product UI) and third-party figures reproduced with attribution (e.g. Artificial Analysis charts).
+
+**HARD RULE — every cover image ships pre-rendered, with its text burnt in.** A cover is a flat PNG committed to `blog/`. The words are pixels in that file. Nothing about a cover is assembled when a reader loads the page, when a card is drawn, or when a link preview is fetched.
+
+That forbids, without limitation:
+
+- Rendering a cover from a template at request time, or from a shared template that takes a slug/params and produces the image on the fly.
+- Shipping the SVG itself as the cover, or any live HTML or canvas standing in for one, and text layered over a background image with CSS or JS at view time. SVG is the authoring source; the reader only ever gets the rasterized PNG.
+- Any generated-at-view-time OG image (`/og/<slug>.png` handlers, on-demand image services, third-party card generators).
+- Fonts, colours, or copy resolved at view time. A cover must look identical with no network, no fonts available, and no JS.
+
+The listing cards and `og:image` therefore point at a committed PNG and nothing else. The single output artifact is the PNG; anything used to produce it is authoring-time only and never reaches a reader.
+
+**Generate the PNG from an SVG.** Every generated image has exactly one source, an **SVG** in `blog/asset-sources/` named after the output PNG (`<name>.svg` → `blog/<name>.png`). Rasterize it once with headless Chrome, which burns the text into the pixels:
 
 ```sh
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
   --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=6000 \
   --window-size=1200,630 \
-  --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.html"
+  --screenshot=blog/<name>.png "file://$PWD/blog/asset-sources/<name>.svg"
 ```
 
-(Use the canvas size in the source file's `body` rule: covers are 1200×630, charts vary.) To change an image's text, edit its source HTML and re-render; keep the source and PNG in the same commit. `blog/asset-sources/` is not an article directory and holds no published pages.
+Match `--window-size` to the SVG's `width`/`height`: covers are 1200×630, charts vary. Commit the PNG; it is what the site serves.
+
+Authoring an SVG cover:
+
+- Set `width`, `height`, and a matching `viewBox` on the root `<svg>`, and give it `xmlns="http://www.w3.org/2000/svg"`.
+- Text is native `<text>`, never `<foreignObject>` with HTML inside. SVG does not wrap text, so **each line is its own `<text>` with an explicit `y`** — there is no automatic line breaking to lean on.
+- Style with a `<style>` block and classes. Brand fonts come from the Google Fonts `@import`; inside SVG the `&` in that URL must be written `&amp;`.
+- `letter-spacing` in SVG is a length, so use px (`-2.8px`), not the em values CSS uses.
+- Colours, the dot grid, washes, chips, and the ByteFuture mark are drawn with ordinary SVG shapes and gradients.
+
+Rendering needs network access the first time so the webfonts resolve; check the PNG after rendering rather than trusting the SVG preview. To make a source fully self-contained, convert its text to paths — the PNG is identical either way, since the text is burnt in regardless.
+
+Each cover source is standalone: no shared stylesheet, no include, no parameters. Everything the image needs is in the one file, so the words are readable in the diff of the file named after the PNG, and re-rendering one cover cannot disturb another. Repeat the frame (dot grid pattern, washes, chip pills, the ByteFuture mark) in each file rather than factoring it out.
+
+To change an image's text, edit its SVG and re-render; keep the source and the PNG in the same commit. Re-rendering is a manual step an author runs, never part of `npm run build` — the build copies the finished PNG and nothing more. `blog/asset-sources/` is not an article directory and holds no published pages.
+
+All 11 cover sources are SVG. The two `*-benchmarks.html` chart sources are the last HTML holdouts; move them to SVG when they are next touched, and add no new HTML sources.
 
 ### Publishing a new article
 
 1. **Create the Markdown file(s):** `src/content/writings/<lang>/<slug>.md`. `<slug>` is lowercase-kebab-case and is the **single source of truth** (the filename minus `.md`, the frontmatter `slug`, and the built `/blog/<slug>[-lang].html` all share it). English lives in `en/`; each translation is the **same slug** in `zh/` `ja/` `ko/`.
 2. **Fill the frontmatter** (validated by `src/content.config.ts`): `slug`, `lang`, `title`, `summary`, `category` (closed set, see below), `date` (`YYYY-MM-DD`), optional `cover` (root-relative, e.g. `blog/<file>.png`) and `cta`. Then write the article body below it. **No page chrome goes in the body** — `WritingLayout` supplies the `<title>`/OG tags, canonical, hreflang, nav, footer, GA tag, view counter, and the share row automatically. Do not paste a share row, GA snippet, or counter into the Markdown.
 3. **The listing updates itself:** `/posts.json` (+ per-language manifests) is generated from the frontmatter at build, so there is no `posts.json` to hand-edit and no 1:1 file/registry sync to maintain. Category/title/summary/date on the card come straight from the frontmatter.
-4. **Cover image (optional):** drop the file in `blog/` and set `cover: blog/<file>.png` in the frontmatter.
+4. **Cover image (optional):** drop the file in `blog/` and set `cover: blog/<file>.png` in the frontmatter. It becomes the listing card thumbnail **and** the article's `og:image`, so make it 1200×630.
 5. **Mobile check:** verify the built article at ~375px per the **Mobile optimization** rule — wide tables/code/images must scroll inside their box, never the page.
 6. **Sitemap:** `sitemap.xml` is hand-maintained (no Astro sitemap integration) — add a `<url>` for each language URL (English `priority` 0.7, translations 0.6), `lastmod` = publish date.
 7. **Build & ship:** `npm run build`; a push to `main` deploys via GitHub Actions.
@@ -264,7 +293,7 @@ Publish an article in **all four languages together** (create the four Markdown 
 | `summary` | string | ✅ | 1–2 sentences; shown on the card. |
 | `category` | string | ✅ | One of `engineering`, `product`, `research`, `tutorial`. |
 | `date` | string | ✅ | `YYYY-MM-DD`. Sorting + display derive from this. |
-| `cover` | string | optional | Repo-root-relative, e.g. `blog/foo.png`. Omit for an auto gradient cover. |
+| `cover` | string | optional | Repo-root-relative, e.g. `blog/foo.png`. Drives the listing card **and** `og:image`. 1200×630. Omit for an auto gradient card and a text-only link preview. |
 
 Rules:
 
@@ -293,7 +322,7 @@ Rules:
 ### SEO / meta
 
 - `canonical` and `og:url`: `https://bytefuture.ai/blog/<slug>.html`.
-- `og:image`: an **absolute** `https://bytefuture.ai/...` URL.
+- `og:image`: emitted by `WritingLayout` from the `cover` frontmatter, as an **absolute** `https://bytefuture.ai/...` URL, with `og:image:width` 1200 / `og:image:height` 630 and `og:image:alt` set to the title. It points at the committed PNG in `blog/`, never at a generated-on-demand image — see the hard rule under **Images**. All four language versions share the one English-language cover. An article with no `cover` emits no `og:image`, and its `twitter:card` drops from `summary_large_image` to `summary`.
 - Listing canonical: `https://bytefuture.ai/blog/`.
 
 ### View counter (every article)

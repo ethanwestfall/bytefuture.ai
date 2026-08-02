@@ -6,6 +6,7 @@ summary: "Moonshot 的 Kimi K3 拥有 2.8 万亿参数和 100 万 token 的上�
 category: "tutorial"
 date: "2026-07-25"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/kimi-k3-token-station-cover.png"
 draft: false
 ---
 

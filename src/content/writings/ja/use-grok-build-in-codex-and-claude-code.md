@@ -6,7 +6,7 @@ summary: "xAI の Grok Build モデルは進化が速く、価格は GPT-5.5 や
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
-cover: "blog/claude-code-grok-build.png"
+cover: "blog/use-grok-build-in-codex-and-claude-code-cover.png"
 draft: false
 ---
 

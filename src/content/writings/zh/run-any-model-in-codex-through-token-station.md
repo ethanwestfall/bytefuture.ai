@@ -6,6 +6,7 @@ summary: "OpenAI 的 Codex 可以运行任意模型，不只是 OpenAI 自家的
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-codex-through-token-station-cover.png"
 draft: false
 ---
 

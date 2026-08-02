@@ -6,7 +6,7 @@ summary: "xAI 的 Grok Build 模型迭代很快，价格只有 GPT-5.5 或 Claud
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
-cover: "blog/claude-code-grok-build.png"
+cover: "blog/use-grok-build-in-codex-and-claude-code-cover.png"
 draft: false
 ---
 

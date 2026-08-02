@@ -6,6 +6,7 @@ summary: "OpenAI's Codex can run any model, not just OpenAI's. Since February 20
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-codex-through-token-station-cover.png"
 draft: false
 ---
 
