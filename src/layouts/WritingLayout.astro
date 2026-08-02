@@ -7,12 +7,15 @@ export interface Props {
   category: string;
   date: Date;
   cta: string;
+  cover?: string;
   draft?: boolean;
 }
 
-const { title, summary, slug, lang, category, date, cta, draft = false } = Astro.props;
+const { title, summary, slug, lang, category, date, cta, cover, draft = false } = Astro.props;
 const suffix = lang === 'en' ? '' : `-${lang}`;
 const url = `https://bytefuture.ai/blog/${slug}${suffix}.html`;
+// Covers are repo-root-relative in frontmatter (blog/foo.png); og:image needs an absolute URL.
+const coverUrl = cover ? `https://bytefuture.ai/${cover.replace(/^\/+/, '')}` : undefined;
 const locale = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }[lang];
 const htmlLang = { en: 'en', zh: 'zh-Hans', ja: 'ja', ko: 'ko' }[lang];
 const writings = { en: 'Writings', zh: '文章', ja: '記事', ko: '글' }[lang];
@@ -61,6 +64,15 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
   <meta property="og:type" content="article" />
   <meta property="og:url" content={url} />
   <meta property="og:locale" content={locale} />
+  {coverUrl && (
+    <>
+      <meta property="og:image" content={coverUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={title} />
+    </>
+  )}
+  <meta name="twitter:card" content={coverUrl ? 'summary_large_image' : 'summary'} />
   <link rel="alternate" hreflang="en" href={`https://bytefuture.ai/blog/${slug}.html`} />
   <link rel="alternate" hreflang="zh-Hans" href={`https://bytefuture.ai/blog/${slug}-zh.html`} />
   <link rel="alternate" hreflang="ja" href={`https://bytefuture.ai/blog/${slug}-ja.html`} />

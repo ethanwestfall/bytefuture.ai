@@ -6,6 +6,7 @@ summary: "Moonshot의 Kimi K3는 2.8조 파라미터와 100만 토큰 컨텍스�
 category: "tutorial"
 date: "2026-07-25"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/kimi-k3-token-station-cover.png"
 draft: false
 ---
 

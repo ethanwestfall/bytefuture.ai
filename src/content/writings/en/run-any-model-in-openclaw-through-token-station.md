@@ -6,6 +6,7 @@ summary: "OpenClaw supports custom providers through its onboarding wizard and C
 category: "tutorial"
 date: "2026-07-20"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-openclaw-through-token-station-cover.png"
 draft: false
 ---
 

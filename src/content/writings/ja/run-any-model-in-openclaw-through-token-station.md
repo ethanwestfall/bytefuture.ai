@@ -6,6 +6,7 @@ summary: "OpenClaw はオンボーディングウィザードと CLI からカ�
 category: "tutorial"
 date: "2026-07-20"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-openclaw-through-token-station-cover.png"
 draft: false
 ---
 

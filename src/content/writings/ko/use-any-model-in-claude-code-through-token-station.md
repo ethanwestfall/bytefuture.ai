@@ -6,6 +6,7 @@ summary: "Claude Code는 Token Station을 통해 어떤 모델이든 사용할 �
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/use-any-model-in-claude-code-through-token-station-cover.png"
 draft: false
 ---
 

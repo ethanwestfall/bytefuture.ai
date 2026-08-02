@@ -6,6 +6,7 @@ summary: "Moonshot の Kimi K3 は 2.8 兆パラメータと 100 万トークン
 category: "tutorial"
 date: "2026-07-25"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/kimi-k3-token-station-cover.png"
 draft: false
 ---
 

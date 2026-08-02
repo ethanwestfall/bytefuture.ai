@@ -6,6 +6,7 @@ summary: "Alibaba has only previewed Qwen 3.8-Max (2.4T parameters, sparse MoE, 
 category: product
 date: 2026-07-28
 cta: https://models.bytefuture.ai/intro.html
+cover: "blog/qwen-3-8-max-token-station-cover.png"
 ---
 
 Alibaba previewed Qwen 3.8-Max at the World AI Conference on July 19, 2026: 2.4 trillion parameters, a sparse Mixture-of-Experts, native multimodality, and a claim that it trails only [Claude Fable 5](/blog/try-claude-fable-5-in-codex-openclaw-and-pi.html). What it does not have yet is a benchmark table, a model card, or a confirmed context window.
