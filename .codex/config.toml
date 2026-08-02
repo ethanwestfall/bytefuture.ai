@@ -1,0 +1,8 @@
+# Project-level Codex settings for bytefuture.ai.
+#
+# AGENTS.md is a symlink to CLAUDE.md so both agents read one source of truth.
+# That file is larger than Codex's default project_doc_max_bytes (32 KiB), and
+# silent truncation drops the tail of the instructions (the view-counter and
+# Analytics sections, including the GA4 HARD RULE restatement). Raise the cap so
+# the whole file is always loaded.
+project_doc_max_bytes = 262144
