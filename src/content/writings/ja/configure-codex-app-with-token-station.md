@@ -21,7 +21,7 @@ Codex Appは`config.toml`でカスタムモデルProviderを登録できます�
 
 例では`openai/gpt-5.6-sol`を使います。Token Stationに表示される完全なモデルIDを確認してください。
 
-> 実際のAPI keyを`config.toml`、画像、チャット、リポジトリに記載しないでください。Codexには環境変数から読み込ませます。
+> 実際のAPI keyを`config.toml`、スクリーンショット、チャット、リポジトリに記載しないでください。Codexには環境変数から読み込ませます。
 
 ## Token Station Providerを登録する
 

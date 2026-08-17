@@ -195,7 +195,7 @@ Token Station から完全なモデル ID をコピーし、対応する Sonnet�
 
 ## セキュリティ上の注意
 
-- 実際の API Key をチュートリアルの画像に含めない
+- 実際の API Key をチュートリアルのスクリーンショットに含めない
 - CC Switch の設定や認証情報を Git にコミットしない
 - 漏えいの可能性があれば、すぐに Key を無効化して再発行する
 - CC Switch や Claude Code App の更新前に、動作する Provider をバックアップする
