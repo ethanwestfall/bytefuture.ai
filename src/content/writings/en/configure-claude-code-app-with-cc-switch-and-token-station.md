@@ -108,7 +108,7 @@ Sonnet is normally used for the default general-purpose role, Opus for more dema
 
 ## Enable CC Switch local routing
 
-Enabling the provider is not enough on its own: the mapping is applied by the CC Switch service running on your computer, so that service has to be up.
+This is the step most often skipped, and skipping it is why the app keeps answering from its old service. Enabling the provider is not enough on its own: the mapping is applied by the CC Switch service running on your computer, so that service has to be up.
 
 1. Open **CC Switch Settings → Routing**
 2. Turn on **Show local routing switch on the home page**

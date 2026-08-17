@@ -136,7 +136,7 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 3. 次を送る
 
    ```text
-「Token Station テスト成功」とだけ返信してください
+   「Token Station テスト成功」とだけ返信してください
    ```
 
 4. 正常な応答を確認する

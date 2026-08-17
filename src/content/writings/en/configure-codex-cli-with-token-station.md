@@ -63,7 +63,9 @@ Four details here are easy to get wrong:
 
 The examples use `openai/gpt-5.6-sol`. Use the complete current ID shown by Token Station.
 
-## Configure Windows
+The provider block names the environment variable but does not supply its value. That part depends on your operating system.
+
+## Windows: load the API key
 
 ### Load the key temporarily
 
@@ -107,7 +109,7 @@ To remove it later:
 )
 ```
 
-## Configure macOS and Linux
+## macOS and Linux: load the API key
 
 Set the variable in the terminal that will run Codex CLI:
 
@@ -137,9 +139,9 @@ Open a new terminal after editing, or run `source ~/.zshrc` or `source ~/.bashrc
 
 > A key in a shell configuration file is stored as plaintext. Keep that file out of Git and public sync folders.
 
-## Verify the configuration
+## Verify the connection
 
-Start an interactive session:
+A `config.toml` that parses is not proof that requests reach Token Station. Start an interactive session:
 
 ```bash
 codex
@@ -163,7 +165,7 @@ In PowerShell, use double quotes:
 codex exec "Reply only: Token Station test succeeded"
 ```
 
-After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Match the request time, status, and model under `Recent Activity`.
+After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Check the request time, status, and model under `Recent Activity`.
 
 The setup is complete only when:
 

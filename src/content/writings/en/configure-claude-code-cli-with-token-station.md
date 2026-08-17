@@ -49,7 +49,9 @@ openai/gpt-5.6-sol
 
 Do not shorten it to `gpt-5.6-sol`.
 
-## Configure Windows
+How you load these three variables depends on your operating system.
+
+## Windows: set the environment variables
 
 ### Temporary configuration
 
@@ -99,7 +101,7 @@ To remove the variables later:
 [Environment]::SetEnvironmentVariable("ANTHROPIC_MODEL", $null, "User")
 ```
 
-## Configure macOS and Linux
+## macOS and Linux: set the environment variables
 
 Run these commands in the terminal that will start Claude Code:
 
@@ -149,7 +151,7 @@ claude -p "Reply only: Token Station test succeeded"
 
 After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Check the request time, status, and model under `Recent Activity`.
 
-The connection is complete only when:
+The setup is complete only when:
 
 - Claude Code returns a normal response
 - The matching request appears in Token Station

@@ -40,7 +40,7 @@ env_key = "TOKEN_STATION_API_KEY"
 wire_api = "responses"
 ```
 
-Merge these fields with any existing configuration instead of replacing settings you still need.
+Merge these fields with any existing configuration instead of overwriting settings you still need.
 
 | Field | Purpose |
 | --- | --- |
@@ -60,7 +60,9 @@ model_provider = "token_station"
 
 Keep `base_url` at `/v1`; do not append `/responses`. Keep the provider prefix in the model ID as well.
 
-## Windows: configure the API key
+The provider block names the environment variable but does not supply its value, and a desktop app does not always see what your shell sees. The next three sections cover each operating system.
+
+## Windows: load the API key
 
 Open **Advanced system settings → Environment Variables**. Under User variables, create:
 
@@ -73,7 +75,7 @@ The variable name must exactly match `env_key` in `config.toml`.
 
 Save the variable, then quit the Codex App completely and reopen it. Closing the window often leaves the process running, and a running app will not see the new variable.
 
-## macOS: configure the API key
+## macOS: load the API key
 
 An app launched from the Dock, Finder, or Launchpad usually does not inherit an `export` from the current terminal. Add the key to the current graphical login session:
 
@@ -99,7 +101,7 @@ A variable set with `launchctl setenv` usually lasts only for the current graphi
 launchctl unsetenv TOKEN_STATION_API_KEY
 ```
 
-## Linux: configure the API key
+## Linux: load the API key
 
 Environment inheritance varies by distribution, desktop environment, and installation method. If you start Codex from a terminal, set the variable in that shell:
 
@@ -135,17 +137,19 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 
 ## Verify the complete route
 
+A reply in the app is only half the evidence. Check both ends of the route:
+
 1. Fully quit and reopen the Codex App
 2. Create a new conversation
 3. Send:
 
    ```text
-Reply only: Token Station test succeeded
+   Reply only: Token Station test succeeded
    ```
 
 4. Confirm that the app returns a normal response
 5. Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard)
-6. Match the request time, status, and model under `Recent Activity`
+6. Check the request time, status, and model under `Recent Activity`
 
 The route should be:
 
@@ -157,7 +161,7 @@ Codex App
 → Token Station request log
 ```
 
-The connection is verified only when the app responds and Token Station shows the matching record.
+The setup is complete only when the app responds and Token Station shows the matching record.
 
 ## Troubleshooting
 
