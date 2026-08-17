@@ -106,7 +106,7 @@ openai/gpt-5.6-sol
 
 ## CC Switch のローカルルーティングを有効にする
 
-モデルマッピングは、ローカルで動作する CC Switch サービスによって適用されます。Provider を有効にするだけでは不十分です。
+この手順は最も飛ばされやすく、飛ばすとアプリが以前のサービスから返答し続ける原因になります。Provider を有効にするだけでは不十分で、モデルマッピングはローカルで動作する CC Switch サービスによって適用されるため、そのサービスが起動している必要があります。
 
 1. **CC Switch Settings → Routing** を開く
 2. **Show local routing switch on the home page** を有効にする

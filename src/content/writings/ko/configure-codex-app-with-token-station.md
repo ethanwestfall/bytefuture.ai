@@ -58,6 +58,8 @@ model_provider = "token_station"
 
 `base_url`은 `/v1`까지만 입력하고 `/responses`를 추가하지 마세요. 모델 ID의 제공자 접두사도 유지합니다.
 
+Provider 설정은 환경 변수의 이름만 지정하고 값은 제공하지 않습니다. 게다가 데스크톱 앱이 보는 환경은 터미널이 보는 환경과 같지 않을 수 있습니다. 다음 세 절에서 운영체제별 방법을 다룹니다.
+
 ## Windows: API key 설정
 
 **고급 시스템 설정 → 환경 변수**를 열고 사용자 변수를 만듭니다.
@@ -130,6 +132,8 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 > Shell 설정 파일의 key는 평문으로 저장됩니다. Git이나 공개 동기화 폴더에 포함하지 마세요.
 
 ## 전체 경로 검증
+
+Codex App이 응답하는 것은 증거의 절반일 뿐입니다. 경로의 양쪽 끝을 모두 확인하세요.
 
 1. Codex App을 완전히 종료하고 다시 열기
 2. 새 대화 만들기

@@ -108,7 +108,7 @@ openai/gpt-5.6-sol
 
 ## CC Switch 로컬 라우팅 활성화하기
 
-모델 매핑은 컴퓨터에서 실행되는 CC Switch 서비스가 적용합니다. Provider만 활성화해서는 충분하지 않습니다.
+이 단계는 가장 자주 건너뛰는 단계이고, 건너뛰면 앱이 계속 이전 서비스로 응답하게 됩니다. Provider만 활성화하는 것으로는 부족합니다. 모델 매핑은 컴퓨터에서 실행되는 CC Switch 서비스가 적용하므로 그 서비스가 실행 중이어야 합니다.
 
 1. **CC Switch Settings → Routing** 열기
 2. **Show local routing switch on the home page** 켜기

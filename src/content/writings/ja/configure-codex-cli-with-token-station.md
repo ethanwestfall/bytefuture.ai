@@ -61,6 +61,8 @@ wire_api = "responses"
 
 例は`openai/gpt-5.6-sol`です。Token Stationに表示される現在の完全なIDを使ってください。
 
+Providerの設定は環境変数の名前を宣言するだけで、値そのものは渡しません。そこはOSによって異なります。
+
 ## Windowsでの設定
 
 ### 一時的にkeyを読み込む
@@ -137,7 +139,7 @@ fi
 
 ## 設定を確認する
 
-対話モードを起動します。
+`config.toml`が正しく解析されることは、リクエストがToken Stationに届いている証拠にはなりません。対話モードを起動します。
 
 ```bash
 codex

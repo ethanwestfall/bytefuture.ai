@@ -63,6 +63,8 @@ wire_api = "responses"
 
 本文以 `openai/gpt-5.6-sol` 为例。实际使用时，以 Token Station 当前模型列表为准。
 
+Provider 配置只声明了环境变量的名字，并没有提供它的值。这一步因操作系统而异。
+
 ## Windows 配置
 
 ### 临时加载 API Key
@@ -139,7 +141,7 @@ fi
 
 ## 验证配置
 
-可以先启动交互模式：
+`config.toml` 能被解析，并不等于请求真的到达了 Token Station。可以先启动交互模式：
 
 ```bash
 codex
