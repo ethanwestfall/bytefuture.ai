@@ -74,16 +74,16 @@ model_provider = "token_station"
 Dock, Finder, Launchpad에서 실행한 App은 현재 터미널의 `export`를 보통 상속하지 않습니다. 그래픽 로그인 세션에 변수를 추가합니다.
 
 ```bash
-launchctl setenv TOKEN_STATION_API_KEY '你的真实密钥'
+launchctl setenv TOKEN_STATION_API_KEY '실제 API Key'
 ```
 
 key를 출력하지 않고 존재 여부를 확인합니다.
 
 ```bash
 if [ -n "$(launchctl getenv TOKEN_STATION_API_KEY)" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY가 설정되어 있습니다"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY가 설정되지 않았습니다"
 fi
 ```
 
@@ -100,16 +100,16 @@ launchctl unsetenv TOKEN_STATION_API_KEY
 환경 변수 상속 방식은 배포판, 데스크톱 환경, 설치 방법에 따라 다릅니다. 터미널에서 Codex를 실행한다면 같은 Shell에서 설정하세요.
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='실제 API Key'
 ```
 
 존재 여부를 확인합니다.
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY가 설정되어 있습니다"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY가 설정되지 않았습니다"
 fi
 ```
 
@@ -118,7 +118,7 @@ fi
 GNOME이나 KDE 메뉴에서 실행하고 systemd 사용자 세션을 사용한다면 다음을 시도할 수 있습니다.
 
 ```bash
-systemctl --user set-environment TOKEN_STATION_API_KEY='你的真实密钥'
+systemctl --user set-environment TOKEN_STATION_API_KEY='실제 API Key'
 ```
 
 App을 완전히 종료하고 다시 엽니다. 삭제하려면:
@@ -136,7 +136,7 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 3. 다음 메시지 보내기
 
    ```text
-   请只回复：Token Station 测试成功
+Token Station 테스트 성공이라고만 답하세요
    ```
 
 4. 정상 응답 확인하기
@@ -147,10 +147,10 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 
 ```text
 Codex App
-  → config.toml 中的 token_station provider
+→ config.toml의 token_station provider
   → TOKEN_STATION_API_KEY
   → https://bec.bytefuture.ai/v1/responses
-  → Token Station 调用记录
+→ Token Station 호출 기록
 ```
 
 App 응답과 Token Station의 해당 기록이 모두 있어야 연결이 완료됩니다.
@@ -188,4 +188,3 @@ Token Station이 제공하는 전체 모델 ID와 제공자 접두사를 사용�
 
 - [Token Station](https://models.bytefuture.ai/intro.html)
 - [Token Station 대시보드](https://models.bytefuture.ai/dashboard)
-

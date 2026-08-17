@@ -78,16 +78,16 @@ Save the variable, fully quit the Codex App, and reopen it. Closing the window m
 An App launched from the Dock, Finder, or Launchpad usually does not inherit an `export` from the current terminal. Add the key to the current graphical login session:
 
 ```bash
-launchctl setenv TOKEN_STATION_API_KEY '你的真实密钥'
+launchctl setenv TOKEN_STATION_API_KEY 'YOUR_REAL_API_KEY'
 ```
 
 Check that the variable exists without printing the key:
 
 ```bash
 if [ -n "$(launchctl getenv TOKEN_STATION_API_KEY)" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY is set"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY is not set"
 fi
 ```
 
@@ -104,16 +104,16 @@ launchctl unsetenv TOKEN_STATION_API_KEY
 Environment inheritance varies by distribution, desktop environment, and installation method. If you start Codex from a terminal, set the variable in that shell:
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='YOUR_REAL_API_KEY'
 ```
 
 Check that it exists:
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY is set"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY is not set"
 fi
 ```
 
@@ -122,7 +122,7 @@ Start Codex from the same terminal. To load the key in new terminals, add the `e
 If the App starts from GNOME, KDE, or another desktop menu and the system uses a systemd user session, you can try:
 
 ```bash
-systemctl --user set-environment TOKEN_STATION_API_KEY='你的真实密钥'
+systemctl --user set-environment TOKEN_STATION_API_KEY='YOUR_REAL_API_KEY'
 ```
 
 Fully quit and reopen the App. To clear the variable:
@@ -140,7 +140,7 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 3. Send:
 
    ```text
-   请只回复：Token Station 测试成功
+Reply only: Token Station test succeeded
    ```
 
 4. Confirm that the App returns a normal response
@@ -151,10 +151,10 @@ The route should be:
 
 ```text
 Codex App
-  → config.toml 中的 token_station provider
+→ token_station provider in config.toml
   → TOKEN_STATION_API_KEY
   → https://bec.bytefuture.ai/v1/responses
-  → Token Station 调用记录
+→ Token Station request log
 ```
 
 The connection is verified only when the App responds and Token Station shows the matching record.
@@ -194,4 +194,3 @@ Check that `model_provider` matches the provider block name and that the App rel
 
 - [Token Station](https://models.bytefuture.ai/intro.html)
 - [Token Station dashboard](https://models.bytefuture.ai/dashboard)
-

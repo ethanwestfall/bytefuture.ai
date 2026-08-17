@@ -71,8 +71,8 @@ Base URL 뒤에 `/v1/messages`를 추가하지 마세요. 클라이언트가 요
 
 ```text
 ANTHROPIC_BASE_URL=https://models.bytefuture.ai
-ANTHROPIC_AUTH_TOKEN=<你的 Token Station API Key>
-ANTHROPIC_MODEL=<完整模型 ID>
+ANTHROPIC_AUTH_TOKEN=<Token Station API Key 입력>
+ANTHROPIC_MODEL=<전체 모델 ID 입력>
 ```
 
 일부 템플릿은 `ANTHROPIC_AUTH_TOKEN` 대신 `ANTHROPIC_API_KEY`를 사용합니다. 현재 템플릿에 표시된 필드를 따르고, 출처가 불분명한 여러 인증 필드를 동시에 입력하지 마세요.
@@ -146,7 +146,7 @@ Windows에서는 시스템 트레이를 확인하고 필요하면 Quit을 선택
 Claude Code App에서 새 대화를 시작하고 다음을 전송합니다.
 
 ```text
-请只回复：Token Station 测试成功
+Token Station 테스트 성공이라고만 답하세요
 ```
 
 응답을 받은 후 [Token Station 대시보드](https://models.bytefuture.ai/dashboard)의 `Recent Activity` 또는 요청 로그에서 다음을 확인합니다.

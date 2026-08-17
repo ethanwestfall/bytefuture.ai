@@ -68,7 +68,7 @@ wire_api = "responses"
 PowerShellで実行します。
 
 ```powershell
-$env:TOKEN_STATION_API_KEY = "你的真实密钥"
+$env:TOKEN_STATION_API_KEY = "実際の API Key"
 ```
 
 変数は現在のPowerShellとその子プロセスだけで有効です。
@@ -78,7 +78,7 @@ $env:TOKEN_STATION_API_KEY = "你的真实密钥"
 ```powershell
 [Environment]::SetEnvironmentVariable(
   "TOKEN_STATION_API_KEY",
-  "你的真实密钥",
+  "実際の API Key",
   "User"
 )
 ```
@@ -89,9 +89,9 @@ keyを表示せずに変数を確認します。
 
 ```powershell
 if ([string]::IsNullOrEmpty($env:TOKEN_STATION_API_KEY)) {
-  "TOKEN_STATION_API_KEY 未设置"
+  "TOKEN_STATION_API_KEY は未設定です"
 } else {
-  "TOKEN_STATION_API_KEY 已设置"
+  "TOKEN_STATION_API_KEY は設定済みです"
 }
 ```
 
@@ -110,16 +110,16 @@ if ([string]::IsNullOrEmpty($env:TOKEN_STATION_API_KEY)) {
 Codex CLIを実行するターミナルで設定します。
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='実際の API Key'
 ```
 
 存在を確認します。
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY は設定済みです"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY は未設定です"
 fi
 ```
 
@@ -146,19 +146,19 @@ codex
 起動後に送信します。
 
 ```text
-请只回复：Token Station 测试成功
+「Token Station テスト成功」とだけ返信してください
 ```
 
 非対話リクエストも実行できます。
 
 ```bash
-codex exec '请只回复：Token Station 测试成功'
+codex exec '「Token Station テスト成功」とだけ返信してください'
 ```
 
 PowerShellでは二重引用符を使います。
 
 ```powershell
-codex exec "请只回复：Token Station 测试成功"
+codex exec "「Token Station テスト成功」とだけ返信してください"
 ```
 
 応答後、[Token Stationダッシュボード](https://models.bytefuture.ai/dashboard)の`Recent Activity`で時刻、状態、モデルを照合します。

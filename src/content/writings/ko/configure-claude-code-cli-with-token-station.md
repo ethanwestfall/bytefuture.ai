@@ -55,7 +55,7 @@ PowerShell에서 실행합니다.
 
 ```powershell
 $env:ANTHROPIC_BASE_URL = "https://models.bytefuture.ai"
-$env:ANTHROPIC_AUTH_TOKEN = "你的真实密钥"
+$env:ANTHROPIC_AUTH_TOKEN = "실제 API Key"
 $env:ANTHROPIC_MODEL = "openai/gpt-5.6-sol"
 
 claude
@@ -76,7 +76,7 @@ claude
 
 [Environment]::SetEnvironmentVariable(
   "ANTHROPIC_AUTH_TOKEN",
-  "你的真实密钥",
+  "실제 API Key",
   "User"
 )
 
@@ -103,7 +103,7 @@ Claude Code를 실행할 터미널에서 설정합니다.
 
 ```bash
 export ANTHROPIC_BASE_URL='https://models.bytefuture.ai'
-export ANTHROPIC_AUTH_TOKEN='你的真实密钥'
+export ANTHROPIC_AUTH_TOKEN='실제 API Key'
 export ANTHROPIC_MODEL='openai/gpt-5.6-sol'
 
 claude
@@ -136,13 +136,13 @@ source ~/.bashrc
 Claude Code가 실행된다는 사실만으로 Token Station 사용 여부를 확인할 수는 없습니다. 변수가 설정된 같은 터미널에서 실제 요청을 보내세요.
 
 ```bash
-claude -p '请只回复：Token Station 测试成功'
+claude -p 'Token Station 테스트 성공이라고만 답하세요'
 ```
 
 PowerShell에서는:
 
 ```powershell
-claude -p "请只回复：Token Station 测试成功"
+claude -p "Token Station 테스트 성공이라고만 답하세요"
 ```
 
 응답을 받은 뒤 [Token Station 대시보드](https://models.bytefuture.ai/dashboard)의 `Recent Activity`에서 요청 시간, 상태, 모델을 확인합니다.
@@ -206,4 +206,3 @@ Token Station에 표시되는 전체 모델 ID와 제공자 접두사를 사용�
 - [Token Station](https://models.bytefuture.ai/intro.html)
 - [Token Station 모델 목록](https://models.bytefuture.ai/models)
 - [Token Station 대시보드](https://models.bytefuture.ai/dashboard)
-

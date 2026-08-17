@@ -68,7 +68,7 @@ wire_api = "responses"
 PowerShell에서 실행합니다.
 
 ```powershell
-$env:TOKEN_STATION_API_KEY = "你的真实密钥"
+$env:TOKEN_STATION_API_KEY = "실제 API Key"
 ```
 
 현재 PowerShell과 하위 프로세스에서만 유효합니다.
@@ -78,7 +78,7 @@ $env:TOKEN_STATION_API_KEY = "你的真实密钥"
 ```powershell
 [Environment]::SetEnvironmentVariable(
   "TOKEN_STATION_API_KEY",
-  "你的真实密钥",
+  "실제 API Key",
   "User"
 )
 ```
@@ -89,9 +89,9 @@ key를 출력하지 않고 변수를 확인합니다.
 
 ```powershell
 if ([string]::IsNullOrEmpty($env:TOKEN_STATION_API_KEY)) {
-  "TOKEN_STATION_API_KEY 未设置"
+  "TOKEN_STATION_API_KEY가 설정되지 않았습니다"
 } else {
-  "TOKEN_STATION_API_KEY 已设置"
+  "TOKEN_STATION_API_KEY가 설정되어 있습니다"
 }
 ```
 
@@ -110,16 +110,16 @@ if ([string]::IsNullOrEmpty($env:TOKEN_STATION_API_KEY)) {
 Codex CLI를 실행할 터미널에서 설정합니다.
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='실제 API Key'
 ```
 
 존재 여부를 확인합니다.
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY가 설정되어 있습니다"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY가 설정되지 않았습니다"
 fi
 ```
 
@@ -146,19 +146,19 @@ codex
 실행 후 다음을 보냅니다.
 
 ```text
-请只回复：Token Station 测试成功
+Token Station 테스트 성공이라고만 답하세요
 ```
 
 비대화형 요청도 실행할 수 있습니다.
 
 ```bash
-codex exec '请只回复：Token Station 测试成功'
+codex exec 'Token Station 테스트 성공이라고만 답하세요'
 ```
 
 PowerShell에서는 큰따옴표를 사용합니다.
 
 ```powershell
-codex exec "请只回复：Token Station 测试成功"
+codex exec "Token Station 테스트 성공이라고만 답하세요"
 ```
 
 응답 후 [Token Station 대시보드](https://models.bytefuture.ai/dashboard)의 `Recent Activity`에서 시간, 상태, 모델을 비교하세요.

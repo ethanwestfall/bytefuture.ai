@@ -74,16 +74,16 @@ model_provider = "token_station"
 Dock、Finder、Launchpadから起動したAppは、現在のターミナルの`export`を通常は引き継ぎません。グラフィカルログインセッションに変数を追加します。
 
 ```bash
-launchctl setenv TOKEN_STATION_API_KEY '你的真实密钥'
+launchctl setenv TOKEN_STATION_API_KEY '実際の API Key'
 ```
 
 keyを表示せずに存在を確認します。
 
 ```bash
 if [ -n "$(launchctl getenv TOKEN_STATION_API_KEY)" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY は設定済みです"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY は未設定です"
 fi
 ```
 
@@ -100,16 +100,16 @@ launchctl unsetenv TOKEN_STATION_API_KEY
 環境変数の継承方法はディストリビューション、デスクトップ環境、インストール方法によって異なります。ターミナルから起動する場合は、同じShellで設定します。
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='実際の API Key'
 ```
 
 存在を確認します。
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY は設定済みです"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY は未設定です"
 fi
 ```
 
@@ -118,7 +118,7 @@ fi
 GNOMEやKDEのメニューから起動し、systemdユーザーセッションを使う場合は次を試せます。
 
 ```bash
-systemctl --user set-environment TOKEN_STATION_API_KEY='你的真实密钥'
+systemctl --user set-environment TOKEN_STATION_API_KEY='実際の API Key'
 ```
 
 Appを完全に終了して開き直します。削除するには：
@@ -136,7 +136,7 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 3. 次を送る
 
    ```text
-   请只回复：Token Station 测试成功
+「Token Station テスト成功」とだけ返信してください
    ```
 
 4. 正常な応答を確認する
@@ -147,10 +147,10 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 
 ```text
 Codex App
-  → config.toml 中的 token_station provider
+→ config.toml 内の token_station provider
   → TOKEN_STATION_API_KEY
   → https://bec.bytefuture.ai/v1/responses
-  → Token Station 调用记录
+→ Token Station の呼び出し履歴
 ```
 
 Appの応答とToken Stationの対応する記録がそろえば接続完了です。
@@ -188,4 +188,3 @@ Token Stationが提供する完全なモデルIDを使い、プロバイダー�
 
 - [Token Station](https://models.bytefuture.ai/intro.html)
 - [Token Stationダッシュボード](https://models.bytefuture.ai/dashboard)
-

@@ -14,11 +14,11 @@ draft: false
 핵심은 Agent 수가 아니라 통제 가능한 흐름입니다.
 
 ```text
-目标
-  → 主 Agent 拆解与路由
-  → Subagent 在限定范围内执行
-  → 测试与独立审查
-  → 主 Agent 汇总和验收
+목표
+  → 주 Agent가 작업을 분해하고 라우팅
+  → Subagent가 제한된 범위에서 실행
+  → 테스트와 독립 검토
+  → 주 Agent가 통합하고 최종 승인
 ```
 
 주 Agent는 계획, 의존성, 위험, 라우팅, 충돌 해결, 테스트, 최종 결과를 책임집니다. Subagent에는 특정 모듈 테스트, 제한된 디렉터리 마이그레이션, 읽기 전용 조사처럼 입력과 검증 조건이 분명한 작업을 배정합니다.
@@ -59,13 +59,13 @@ wire_api = "responses"
 환경 변수로 key를 제공합니다.
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='실제 API Key'
 ```
 
 PowerShell:
 
 ```powershell
-$env:TOKEN_STATION_API_KEY = "你的真实密钥"
+$env:TOKEN_STATION_API_KEY = "실제 API Key"
 ```
 
 Provider ID, 환경 변수 이름, `/v1`까지의 Base URL, `wire_api = "responses"`를 일치시키세요. 모델 ID에는 `openai/` 같은 제공자 접두사를 유지합니다.
@@ -83,19 +83,19 @@ max_threads = 4
 max_depth = 1
 
 [agents.researcher]
-description = "只读调查代码与文档，返回证据、文件位置和结论"
+description = "코드와 문서를 읽기 전용으로 조사하고 근거, 파일 위치, 결론을 반환"
 config_file = "agents/researcher.toml"
 
 [agents.implementer]
-description = "在明确文件范围内实现功能，并运行指定测试"
+description = "명확히 지정된 파일 범위에서 기능을 구현하고 지정된 테스트를 실행"
 config_file = "agents/implementer.toml"
 
 [agents.test_writer]
-description = "补充测试和失败场景，不改变产品行为"
+description = "제품 동작을 바꾸지 않고 테스트와 실패 시나리오를 추가"
 config_file = "agents/test-writer.toml"
 
 [agents.security_reviewer]
-description = "只读审查高风险改动，给出可复现场景"
+description = "고위험 변경을 읽기 전용으로 검토하고 재현 가능한 시나리오를 제시"
 config_file = "agents/security-reviewer.toml"
 ```
 
@@ -110,9 +110,9 @@ model_reasoning_effort = "low"
 sandbox_mode = "read-only"
 
 developer_instructions = """
-只调查指定范围。引用文件路径、行号或文档来源。
-不要修改文件，不要扩大任务范围。
-明确区分事实、推断和待验证事项。
+지정된 범위만 조사하세요. 파일 경로, 줄 번호 또는 문서 출처를 인용하세요.
+파일을 수정하거나 작업 범위를 확대하지 마세요.
+사실, 추론, 추가 검증이 필요한 항목을 명확히 구분하세요.
 """
 ```
 
@@ -125,9 +125,9 @@ model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 
 developer_instructions = """
-只修改任务中明确列出的目录和文件。
-先阅读相邻代码和项目指令，再实现最小完整改动。
-运行指定测试，并报告修改文件、测试结果和遗留风险。
+작업에 명시된 디렉터리와 파일만 수정하세요.
+인접 코드와 프로젝트 지침을 먼저 읽고 최소한의 완전한 변경을 구현하세요.
+지정된 테스트를 실행하고 변경 파일, 테스트 결과, 남은 위험을 보고하세요.
 """
 ```
 
@@ -140,9 +140,9 @@ model_reasoning_effort = "high"
 sandbox_mode = "read-only"
 
 developer_instructions = """
-独立审查实现，不沿用实现者的结论。
-只报告可操作、可复现的问题，并给出准确文件位置。
-重点检查权限、数据边界、错误处理和测试缺口。
+구현자의 결론을 그대로 따르지 말고 독립적으로 구현을 검토하세요.
+조치 가능하고 재현 가능한 문제만 보고하며 정확한 파일 위치를 제시하세요.
+권한, 데이터 경계, 오류 처리, 테스트 누락을 중점적으로 확인하세요.
 """
 ```
 
@@ -159,18 +159,18 @@ developer_instructions = """
 프로젝트의 `AGENTS.md`에 짧고 실행 가능한 규칙을 추가합니다.
 
 ```markdown
-当任务复杂、可并行或需要独立复核时，先判断是否需要 Subagent。
+작업이 복잡하거나 병렬화할 수 있거나 독립 검토가 필요하면 먼저 Subagent가 필요한지 판단하세요.
 
-任务路由规则：
-- 简单、机械、低风险工作交给 researcher 或快速角色；
-- 批量代码实现交给 implementer；
-- 外部资料调查交给 researcher，并要求给出来源；
-- 测试补充交给 test_writer；
-- 架构、安全、权限和最终验收由主 Agent 负责；
-- 每个子任务必须包含明确范围、输出和验收标准；
-- 不让两个可写 Agent 同时修改同一文件；
-- Subagent 结果必须通过测试或独立检查；
-- 小任务由主 Agent 直接完成，不为使用 Subagent 而拆分。
+작업 라우팅 규칙:
+- 단순하고 기계적이며 위험이 낮은 작업은 researcher 또는 빠른 역할에 맡기세요.
+- 대량 코드 구현은 implementer에 맡기세요.
+- 외부 자료 조사는 researcher에 맡기고 출처를 요구하세요.
+- 테스트 추가는 test_writer에 맡기세요.
+- 아키텍처, 보안, 권한, 최종 승인은 주 Agent가 담당하세요.
+- 각 하위 작업에는 명확한 범위, 결과물, 승인 기준이 있어야 합니다.
+- 쓰기 권한이 있는 두 Agent가 같은 파일을 동시에 수정하지 않게 하세요.
+- Subagent 결과는 테스트 또는 독립 검토로 검증하세요.
+- 작은 작업은 주 Agent가 직접 처리하고 Subagent 사용만을 위해 분할하지 마세요.
 ```
 
 ## 서드파티 모델 단계별 검증
@@ -182,69 +182,69 @@ OpenAI 호환 API라고 해서 Codex의 모든 동작을 지원하는 것은 아
 이미지 형식, 크기 제한, 오브젝트 스토리지, 단위 테스트를 추가한다면 주 Agent는 다음 작업 그래프를 만들 수 있습니다.
 
 ```text
-主 Agent
-├── Researcher：调查框架上传接口和对象存储 SDK
-├── Implementer：实现上传服务和 API
-├── Test Writer：编写格式、大小和异常场景测试
-└── Security Reviewer：检查路径穿越、MIME 欺骗和资源滥用
+주 Agent
+├── Researcher: 프레임워크 업로드 API와 객체 스토리지 SDK 조사
+├── Implementer: 업로드 서비스와 API 구현
+├── Test Writer: 형식, 크기, 예외 시나리오 테스트 작성
+└── Security Reviewer: 경로 순회, MIME 위조, 리소스 남용 점검
 ```
 
 Researcher:
 
 ```text
-阅读项目使用的 Web 框架和对象存储 SDK 文档。
+프로젝트에서 사용하는 Web 프레임워크와 객체 스토리지 SDK 문서를 읽으세요.
 
-只返回：
-1. 推荐的上传处理方式；
-2. 流式处理与内存限制；
-3. 官方建议的错误处理方式；
-4. 相关接口名称和来源。
+다음 내용만 반환하세요:
+1. 권장 업로드 처리 방식.
+2. 스트리밍 처리와 메모리 제한.
+3. 공식적으로 권장되는 오류 처리 방식.
+4. 관련 API 이름과 출처.
 
-不要修改代码。
+코드를 수정하지 마세요.
 ```
 
 Implementer:
 
 ```text
-在 src/upload 范围内实现上传服务。
+src/upload 범위에서 업로드 서비스를 구현하세요.
 
-要求：
-- 最大文件大小 10 MB；
-- 只允许 JPEG、PNG 和 WebP；
-- 不信任客户端提供的 Content-Type；
-- 使用现有对象存储客户端；
-- 不修改数据库结构；
-- 完成后列出修改文件、测试结果和待验证事项。
+요구 사항:
+- 최대 파일 크기는 10 MB.
+- JPEG, PNG, WebP만 허용.
+- 클라이언트가 제공한 Content-Type을 신뢰하지 않음.
+- 기존 객체 스토리지 클라이언트를 사용.
+- 데이터베이스 구조를 변경하지 않음.
+- 완료 후 변경 파일, 테스트 결과, 추가 검증 항목을 나열.
 ```
 
 Test Writer:
 
 ```text
-为上传功能补充测试。
+업로드 기능 테스트를 추가하세요.
 
-必须覆盖：
-- 合法 JPEG；
-- 超过大小限制；
-- 扩展名和实际内容不一致；
-- 空文件；
-- 存储服务失败；
-- 并发上传时文件名冲突。
+반드시 다음을 포함하세요:
+- 유효한 JPEG.
+- 크기 제한을 초과한 파일.
+- 확장자와 실제 내용이 일치하지 않는 파일.
+- 빈 파일.
+- 스토리지 서비스 실패.
+- 동시 업로드 중 파일 이름 충돌.
 ```
 
 Security Reviewer:
 
 ```text
-只审查上传实现，不修改文件。
+업로드 구현만 검토하고 파일은 수정하지 마세요.
 
-重点检查：
-- 路径穿越；
-- MIME 欺骗；
-- 图片解析漏洞；
-- 未限制的内存占用；
-- 可预测文件名；
-- 错误信息泄露。
+중점 확인 항목:
+- 경로 순회.
+- MIME 위조.
+- 이미지 파서 취약점.
+- 제한되지 않은 메모리 사용.
+- 예측 가능한 파일 이름.
+- 오류 메시지를 통한 정보 유출.
 
-所有结论必须给出文件位置和可复现场景。
+모든 지적에 파일 위치와 재현 가능한 시나리오를 포함하세요.
 ```
 
 마지막으로 주 Agent가 diff, 전체 테스트, 충돌, 보안 결정을 확인합니다.
@@ -258,11 +258,11 @@ API key는 환경 변수나 자격 증명 관리자에 저장합니다. 서드�
 저렴한 모델도 재시도와 재작업 때문에 총비용이 커질 수 있습니다.
 
 ```text
-有效成本 =
-调用成本
-+ 重试成本
-+ 主 Agent 复核成本
-+ 错误修改的修复成本
+실질 비용 =
+호출 비용
++ 재시도 비용
++ 주 Agent 검토 비용
++ 잘못된 변경을 수정하는 비용
 ```
 
 읽기 전용 Researcher부터 시작하고, 빠른 작업 Agent, 쓰기 Agent, 독립 Reviewer 순으로 추가하세요. 실제 성공률, 지연, 재시도, 사람의 재작업 시간을 기록한 뒤 자동 라우팅을 활성화합니다.

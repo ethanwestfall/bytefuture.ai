@@ -71,8 +71,8 @@ If your CC Switch version displays environment variables, use:
 
 ```text
 ANTHROPIC_BASE_URL=https://models.bytefuture.ai
-ANTHROPIC_AUTH_TOKEN=<你的 Token Station API Key>
-ANTHROPIC_MODEL=<完整模型 ID>
+ANTHROPIC_AUTH_TOKEN=<YOUR_TOKEN_STATION_API_KEY>
+ANTHROPIC_MODEL=<FULL_MODEL_ID>
 ```
 
 Some templates use `ANTHROPIC_API_KEY` instead of `ANTHROPIC_AUTH_TOKEN`. Follow the fields shown by your current template. Do not fill several undocumented credential fields at the same time.
@@ -146,7 +146,7 @@ On Windows, check the system tray and choose Quit if necessary. On macOS, use `C
 Start a new conversation in the Claude Code App and send:
 
 ```text
-请只回复：Token Station 测试成功
+Reply only: Token Station test succeeded
 ```
 
 After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard) and check `Recent Activity` or the request log. Confirm that:

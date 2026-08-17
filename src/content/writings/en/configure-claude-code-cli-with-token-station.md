@@ -57,7 +57,7 @@ Run this in PowerShell:
 
 ```powershell
 $env:ANTHROPIC_BASE_URL = "https://models.bytefuture.ai"
-$env:ANTHROPIC_AUTH_TOKEN = "你的真实密钥"
+$env:ANTHROPIC_AUTH_TOKEN = "YOUR_REAL_API_KEY"
 $env:ANTHROPIC_MODEL = "openai/gpt-5.6-sol"
 
 claude
@@ -78,7 +78,7 @@ To make new terminals load the configuration, run:
 
 [Environment]::SetEnvironmentVariable(
   "ANTHROPIC_AUTH_TOKEN",
-  "你的真实密钥",
+  "YOUR_REAL_API_KEY",
   "User"
 )
 
@@ -105,7 +105,7 @@ Run these commands in the terminal that will start Claude Code:
 
 ```bash
 export ANTHROPIC_BASE_URL='https://models.bytefuture.ai'
-export ANTHROPIC_AUTH_TOKEN='你的真实密钥'
+export ANTHROPIC_AUTH_TOKEN='YOUR_REAL_API_KEY'
 export ANTHROPIC_MODEL='openai/gpt-5.6-sol'
 
 claude
@@ -138,13 +138,13 @@ source ~/.bashrc
 Starting Claude Code does not prove that the gateway is in use. Send a real request from the same terminal that contains the variables:
 
 ```bash
-claude -p '请只回复：Token Station 测试成功'
+claude -p 'Reply only: Token Station test succeeded'
 ```
 
 In PowerShell:
 
 ```powershell
-claude -p "请只回复：Token Station 测试成功"
+claude -p "Reply only: Token Station test succeeded"
 ```
 
 After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Check the request time, status, and model under `Recent Activity`.
@@ -208,4 +208,3 @@ The current process may not be using Token Station. Check `ANTHROPIC_BASE_URL`, 
 - [Token Station](https://models.bytefuture.ai/intro.html)
 - [Token Station model list](https://models.bytefuture.ai/models)
 - [Token Station dashboard](https://models.bytefuture.ai/dashboard)
-

@@ -70,7 +70,7 @@ The examples use `openai/gpt-5.6-sol`. Use the complete current ID shown by Toke
 Run in PowerShell:
 
 ```powershell
-$env:TOKEN_STATION_API_KEY = "你的真实密钥"
+$env:TOKEN_STATION_API_KEY = "YOUR_REAL_API_KEY"
 ```
 
 The variable applies only to the current PowerShell process and its child processes, which is useful for an initial test.
@@ -80,7 +80,7 @@ The variable applies only to the current PowerShell process and its child proces
 ```powershell
 [Environment]::SetEnvironmentVariable(
   "TOKEN_STATION_API_KEY",
-  "你的真实密钥",
+  "YOUR_REAL_API_KEY",
   "User"
 )
 ```
@@ -91,9 +91,9 @@ Check that the variable exists without printing the key:
 
 ```powershell
 if ([string]::IsNullOrEmpty($env:TOKEN_STATION_API_KEY)) {
-  "TOKEN_STATION_API_KEY 未设置"
+  "TOKEN_STATION_API_KEY is not set"
 } else {
-  "TOKEN_STATION_API_KEY 已设置"
+  "TOKEN_STATION_API_KEY is set"
 }
 ```
 
@@ -112,16 +112,16 @@ To remove it later:
 Set the variable in the terminal that will run Codex CLI:
 
 ```bash
-export TOKEN_STATION_API_KEY='你的真实密钥'
+export TOKEN_STATION_API_KEY='YOUR_REAL_API_KEY'
 ```
 
 Check that it exists:
 
 ```bash
 if [ -n "${TOKEN_STATION_API_KEY:-}" ]; then
-  echo "TOKEN_STATION_API_KEY 已设置"
+  echo "TOKEN_STATION_API_KEY is set"
 else
-  echo "TOKEN_STATION_API_KEY 未设置"
+  echo "TOKEN_STATION_API_KEY is not set"
 fi
 ```
 
@@ -148,19 +148,19 @@ codex
 Then send:
 
 ```text
-请只回复：Token Station 测试成功
+Reply only: Token Station test succeeded
 ```
 
 You can also run a non-interactive request:
 
 ```bash
-codex exec '请只回复：Token Station 测试成功'
+codex exec 'Reply only: Token Station test succeeded'
 ```
 
 In PowerShell, use double quotes:
 
 ```powershell
-codex exec "请只回复：Token Station 测试成功"
+codex exec "Reply only: Token Station test succeeded"
 ```
 
 After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Match the request time, status, and model under `Recent Activity`.
