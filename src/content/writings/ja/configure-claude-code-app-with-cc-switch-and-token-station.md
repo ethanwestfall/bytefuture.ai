@@ -1,63 +1,71 @@
 ---
 slug: "configure-claude-code-app-with-cc-switch-and-token-station"
 lang: "ja"
-title: "CC SwitchでClaude Code AppにToken Stationを設定する"
-summary: "CC SwitchでToken Station Providerを作成して有効化し、Claude Code Appに設定を再読み込みさせ、実際のリクエストと利用履歴で経路を確認します。"
+title: "CC Switch と Token Station で Claude Code App を設定する"
+summary: "Claude Code App 用の Token Station Provider を作成し、モデルマッピング、CC Switch のローカルルーティング、Claude ルーティングを有効にして、実際のリクエストで経路全体を検証します。"
 category: "tutorial"
 date: "2026-08-17"
 cta: "https://models.bytefuture.ai/intro.html"
 draft: false
 ---
 
-Claude Code Appを公式サービス、Token Station、ほかのモデルサービスの間で切り替えるたびに設定を編集するのは手間がかかります。CC Switchは接続情報を個別のProviderとして保存し、選択した設定を適用できます。
+CC Switch を使うと、複数の Claude Code Provider を保存し、設定ファイルを何度も手作業で変更せずにサービスを切り替えられます。本記事では Claude Code App を Token Station に接続し、Claude の Sonnet、Opus、Haiku ロールを Token Station で利用可能なモデルへ割り当て、CC Switch のローカルサービス経由でリクエストを転送します。
 
-ここではCC SwitchからClaude Code AppにToken Stationを設定し、実際のリクエストで経路を確認します。
+> 本記事は CC Switch の **Claude Code App** パネルを対象としています。Claude Desktop と Claude Code CLI は設定経路が異なるため、それらの手順をこの設定に流用しないでください。
 
-> このガイドはCC SwitchとClaude Code App向けです。Claude Code CLIは起動方法と設定元が異なるため、CLI用の手順を使ってください。
+## 準備するもの
 
-## 事前準備
+- CC Switch と Claude Code App
+- 有効な Token Station API Key
+- 利用するモデルへのアクセス権または利用可能なクレジット
 
-次のものを用意してください。
-
-- CC SwitchとClaude Code App
-- 利用可能なToken Station API key
-- 対象モデルの利用権限または残高
-
-[Token Stationダッシュボード](https://models.bytefuture.ai/dashboard)でAPI keyと完全なモデルIDを確認します。実際のkeyをスクリーンショット、チャット、公開文書に載せないでください。
+[Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)を開き、完全なモデル ID を確認します。API Key をスクリーンショット、チャット、Git リポジトリに含めないでください。
 
 ## 設定の流れ
 
-1. CC SwitchでClaude Code Providerを作成する
-2. Token StationのURL、API key、モデルIDを入力する
-3. Providerを保存して有効にする
-4. Claude Code Appを完全に終了して開き直す
-5. リクエストを送り、Token Stationで記録を確認する
+必要な手順は次のとおりです。
 
-## CC SwitchにToken Stationを追加する
+1. CC Switch で Claude Code Provider を作成する
+2. Token Station の URL と API Key を入力する
+3. **Needs model mapping** を有効にする
+4. Sonnet、Opus、Haiku を Token Station のモデル ID に割り当てる
+5. CC Switch のローカルルーティングと Claude ルーティングを有効にする
+6. Provider を有効にし、Claude Code App を完全に再起動する
+7. リクエストを送信し、Token Station で記録を確認する
 
-CC Switchのバージョンによってボタン名は異なりますが、必要な値は同じです。
+モデルマッピングやローカルルーティングを省略すると、CC Switch に Token Station が現在の Provider と表示されていても、App が以前のサービスを使い続けることがあります。
 
-### 1. Providerを作成する
+## Token Station Provider を追加する
 
-CC Switchを開き、**Claude Code**を選択してProvider管理に移動します。追加、新規Provider、またはプラスボタンをクリックします。
+CC Switch のバージョンによってボタン名は多少異なりますが、必要な設定値は同じです。
 
-わかりやすい名前を付けます。
+### 1. Provider を作成する
+
+CC Switch を開き、**Claude Code** を選択して Provider 管理画面に進みます。Add、New Provider、またはプラスボタンをクリックし、分かりやすい名前を付けます。
 
 ```text
 Token Station
 ```
 
-種類を選ぶ場合はClaude、Anthropic、またはカスタムAnthropic互換サービスを使います。
+Provider の種類や API 形式を求められた場合は、Claude、Anthropic、または **Anthropic Messages（native）** を選択します。
 
 ### 2. 接続情報を入力する
 
-| フィールド | 値 |
+| 項目 | 設定値 |
 | --- | --- |
-| Base URL | `https://models.bytefuture.ai` |
-| API Key / Auth Token | Token Station API key |
-| Model | Token Stationに表示される完全なモデルID |
+| Request URL / Base URL | `https://models.bytefuture.ai` |
+| API Key / Auth Token | Token Station の API Key |
+| API 形式 | Anthropic Messages（native） |
+| Needs model mapping | 有効 |
 
-環境変数を入力する画面では次を使います。
+<figure>
+  <img src="/blog/cc-switch-token-station-provider-settings.png" alt="API Key、リクエスト URL、Anthropic Messages 形式を設定し、モデルマッピングを有効にした CC Switch の Token Station Provider 設定" />
+  <figcaption>Token Station のルート URL と Anthropic Messages の native 形式を使用します。</figcaption>
+</figure>
+
+Base URL に `/v1/messages` を追加しないでください。クライアントがリクエストパスを生成するため、重複すると 404 になることがあります。
+
+環境変数が表示されるバージョンでは、次の値を使います。
 
 ```text
 ANTHROPIC_BASE_URL=https://models.bytefuture.ai
@@ -65,102 +73,138 @@ ANTHROPIC_AUTH_TOKEN=<你的 Token Station API Key>
 ANTHROPIC_MODEL=<完整模型 ID>
 ```
 
-一部のCC Switchテンプレートは`ANTHROPIC_API_KEY`を使います。現在のテンプレートに従い、根拠のない複数の認証変数を同時に設定しないでください。
+一部のテンプレートは `ANTHROPIC_AUTH_TOKEN` ではなく `ANTHROPIC_API_KEY` を使います。現在のテンプレートに表示される項目に従い、不明な認証項目を同時に複数設定しないでください。
 
-Base URLに`/v1/messages`を追加しないでください。クライアントがAnthropic Messages APIのパスを組み立てるため、重複すると404になる場合があります。
+### 3. Needs model mapping を必ず有効にする
 
-モデルIDにはプロバイダー接頭辞を含めます。
+**Needs model mapping** は必ず有効にします。Claude Code App は Sonnet、Opus、Haiku などの Claude ロールでモデルを要求します。CC Switch がこれらのロールを、Token Station が認識する完全なモデル ID に変換する必要があります。
+
+<figure>
+  <img src="/blog/cc-switch-needs-model-mapping.png" alt="Needs model mapping オプションを有効にした CC Switch の Provider フォーム" />
+  <figcaption>Token Station Provider を保存する前に「Needs model mapping」を有効にします。</figcaption>
+</figure>
+
+無効のままだと、マッピングされていない Claude ロール名が送信されてモデル未検出エラーになったり、App が意図しない経路を使い続けたりする可能性があります。
+
+## モデルマッピングを設定する
+
+Token Station Provider のモデルマッピング画面を開き、各 Claude ロールに完全な Token Station モデル ID を割り当てます。最初は次の組み合わせを利用できます。
+
+| Claude ロール | Token Station モデル |
+| --- | --- |
+| Sonnet | `openai/gpt-5.6-terra` |
+| Opus | `openai/gpt-5.6-sol` |
+| Haiku | `openai/gpt-5.6-luna` |
+
+これらは設定例です。利用できるモデルは変わるため、保存前に Token Station で現在のモデル ID とアカウント権限を確認してください。`openai/` のような Provider プレフィックスも含めます。
 
 ```text
 openai/gpt-5.6-sol
 ```
 
-Claude Code Appの表示名で置き換えないでください。
+一般的には Sonnet を標準的な作業、Opus をより複雑な作業、Haiku を高速で軽量な作業に割り当てられます。価格、速度、可用性に応じて変更しても構いません。重要なのは、要求されるすべてのロールが有効な Token Station モデルへ解決されることです。
 
-### 3. 保存して有効化する
+## CC Switch のローカルルーティングを有効にする
 
-保存前に確認します。
+モデルマッピングは、ローカルで動作する CC Switch サービスによって適用されます。Provider を有効にするだけでは不十分です。
 
-- Base URLに余分なパスや空白がない
-- API keyの前後に空白や改行がない
-- モデルIDにプロバイダー接頭辞がある
-- プレースホルダーの記号や説明文を値としてコピーしていない
+1. **CC Switch Settings → Routing** を開く
+2. **Show local routing switch on the home page** を有効にする
+3. ルーティングのマスタースイッチを起動した状態にする
+4. ルーティング対象の **Claude** を有効にする
+5. Claude Code パネルへ戻り、ローカルルーティングのトグルを On にする
 
-保存後、一覧の**Token Station**でEnable、Apply、またはSwitchをクリックし、現在のProviderになったことを確認します。
+<figure>
+  <img src="/blog/cc-switch-local-routing-settings.png" alt="ローカルルーティングが稼働し、Claude ルーティングが有効になっている CC Switch のルーティング設定" />
+  <figcaption>ルーティングサービスを稼働させ、ホーム画面のスイッチと Claude ルーティングを有効にします。</figcaption>
+</figure>
 
-## Claude Code Appを再起動する
+この経路を使う間は CC Switch を起動したままにしてください。CC Switch を終了するとローカルゲートウェイも停止し、この設定では Claude Code App から Token Station に接続できなくなります。
 
-すでに動いているAppは、あとから選択したProviderを通常は読み込みません。
+実際のリクエスト経路は次のとおりです。
 
-### Windows
+```text
+Claude Code App
+  → CC Switch local routing
+  → model mapping
+  → Token Station
+  → selected model
+```
 
-1. Claude Code Appのウィンドウを閉じる
-2. システムトレイにプロセスが残っていないか確認する
-3. 残っていれば終了する
-4. CC Switchで設定を適用してAppを開き直す
+## 保存、有効化、再起動
 
-### macOS
+保存前に、URL に余分なパスがないこと、API Key の前後に空白がないこと、**Needs model mapping** が有効なこと、各モデル ID に Provider プレフィックスが含まれることを確認します。
 
-1. Claude Code Appで`Command + Q`を押す
-2. プロセスが終了したことを確認する
-3. CC Switchで設定を適用してAppを開き直す
+Provider を保存し、**Token Station** を選択して Enable、Apply、または Switch をクリックします。その後、Claude Code App を完全に終了してから再度開きます。ウィンドウを閉じただけでは、古い設定を保持したプロセスが残る場合があります。
 
-ウィンドウを閉じるだけではプロセスが終了しない場合があります。
+Windows ではシステムトレイを確認し、必要なら Quit を選びます。macOS では `Command + Q` を使います。App の再起動時も CC Switch とルーティングサービスを稼働させてください。
 
-## 経路を確認する
+## 経路全体を検証する
 
-Claude Code Appで新しい会話を作成し、次を送ります。
+Claude Code App で新しい会話を開始し、次を送信します。
 
 ```text
 请只回复：Token Station 测试成功
 ```
 
-応答後、[Token Stationダッシュボード](https://models.bytefuture.ai/dashboard)の`Recent Activity`で確認します。
+応答後、[Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)の `Recent Activity` またはリクエストログを開き、次を確認します。
 
-- 新しいリクエストがある
-- 時刻と状態が一致する
-- 記録されたモデルがCC Switchの設定と一致する
+- 送信した時刻に新しいリクエストがある
+- リクエストが正常に完了している
+- 記録されたモデルが CC Switch のロールマッピングと一致する
 
-Appの応答とToken Stationの記録がそろえば、経路が有効です。CC Switchの「現在のProvider」表示だけでは十分ではありません。
+App の応答と一致する Token Station の記録がそろって、初めて経路全体が有効だと確認できます。CC Switch の Current Provider 表示だけでは十分ではありません。
 
-## 元の設定に戻す
+## 元の Provider に戻す
 
-公式Providerを上書きせずに残しておきます。戻す場合は元のProviderを選び、ApplyまたはSwitchをクリックし、Claude Code Appを完全に終了して開き直します。
+公式 Provider は上書きせず残しておきます。戻す場合は元の Provider を選び、Apply または Switch をクリックします。Token Station の経路が不要なら関連するルーティングを無効にし、Claude Code App を完全に終了して再度開きます。
 
 ## トラブルシューティング
 
-### Appが古いProviderを使う
+### App が古い Provider を使い続ける
 
-ウィンドウだけでなくプロセスが終了したことを確認します。Token Station Providerをもう一度適用してAppを起動します。
+App を完全に終了し、Token Station Provider を再適用します。ローカルルーティングと Claude ルーティングがともに有効なことを確認してから App を開きます。
 
-### API keyがないと表示される
+### モデルマッピングが無効になっている
 
-テンプレートが`ANTHROPIC_AUTH_TOKEN`と`ANTHROPIC_API_KEY`のどちらを要求しているか確認します。修正後にProviderを再適用し、Appを再起動します。
+Provider を編集して **Needs model mapping** を有効にし、Sonnet、Opus、Haiku が有効な Token Station モデル ID を参照していることを確認します。保存後、Provider を再適用します。
 
-### 401または403
+### ローカルルーティングが無効になっている
 
-keyが無効、期限切れ、余分な空白を含む、または対象モデルの権限や残高がない可能性があります。
+**Settings → Routing** でルーティングサービスを開始し、Claude ルーティングを有効にします。Claude Code パネルに戻り、ローカルルーティングのスイッチも有効にします。
 
-### 404
+### CC Switch が起動していない
 
-Base URLを`https://models.bytefuture.ai`にし、手動で追加した`/messages`などの重複パスを削除します。
+ローカルゲートウェイは CC Switch の稼働中だけ利用できます。CC Switch を開き、ルーティングを開始してから再試行します。
 
-### モデルがない、または権限がない
+### API Key 不足、または 401 / 403
 
-Token Stationから完全なIDをコピーします。Appの表示名から推測しないでください。
+テンプレートが `ANTHROPIC_AUTH_TOKEN` と `ANTHROPIC_API_KEY` のどちらを要求しているか確認します。Key の有効性、余分な空白、対象モデルへの権限とクレジットも確認してください。
 
-### Appは応答するがToken Stationに記録がない
+### 404 が返る
 
-元のサービスを使っている可能性があります。現在のProvider、再起動、Token Stationのアカウントと時間フィルターを確認します。
+Base URL を `https://models.bytefuture.ai` にし、手作業で追加した `/messages`、`/v1/messages`、その他の重複パスを削除します。
 
-## セキュリティ
+### モデルが見つからない、または権限がない
 
-- 実際のAPI keyをチュートリアルの画像に載せない
-- CC Switchの設定や認証情報をGitにコミットしない
-- 漏えいの可能性があればkeyを直ちに無効化して再発行する
-- CC SwitchやClaude Code Appの更新前に設定をバックアップする
+Token Station から完全なモデル ID をコピーし、対応する Sonnet、Opus、Haiku のマッピングを確認します。App の表示名から ID を推測しないでください。
+
+### App は応答するが Token Station に記録がない
+
+元のサービスを使っている可能性があります。現在の Provider、モデルマッピング、2 つのルーティングスイッチ、App の再起動、Token Station のアカウントと時刻フィルターを順番に確認します。
+
+## セキュリティ上の注意
+
+- 実際の API Key をチュートリアルの画像に含めない
+- CC Switch の設定や認証情報を Git にコミットしない
+- 漏えいの可能性があれば、すぐに Key を無効化して再発行する
+- CC Switch や Claude Code App の更新前に、動作する Provider をバックアップする
+
+## まとめ
+
+この設定には Token Station Provider、**Needs model mapping**、CC Switch のローカルルーティングと Claude ルーティング、Claude Code App の完全な再起動という 4 つの要素が必要です。最後に Token Station のアクティビティログを確認し、実際にどのサービスとモデルがリクエストを処理したかを確かめてください。
 
 ## 参考資料
 
-- [Token Stationダッシュボード](https://models.bytefuture.ai/dashboard)
-- [CC Switchプロジェクト](https://github.com/farion1231/cc-switch)
+- [Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)
+- [CC Switch プロジェクト](https://github.com/farion1231/cc-switch)

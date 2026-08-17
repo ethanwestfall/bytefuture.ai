@@ -1,65 +1,73 @@
 ---
 slug: "configure-claude-code-app-with-cc-switch-and-token-station"
 lang: "zh"
-title: "用 CC Switch 为 Claude Code App 配置 Token Station"
-summary: "介绍如何在 CC Switch 中创建并启用 Token Station Provider，让 Claude Code App 读取新配置，并通过真实请求和控制台记录完成验证。"
+title: "用 CC Switch 和 Token Station 配置 Claude Code App"
+summary: "为 Claude Code App 配置 Token Station Provider，开启模型映射、CC Switch 本地路由和 Claude 路由，再通过真实请求验证完整链路。"
 category: "tutorial"
 date: "2026-08-17"
 cta: "https://models.bytefuture.ai/intro.html"
 draft: false
 ---
 
-当你需要在官方服务、Token Station 和其他模型服务之间切换时，反复修改 Claude Code App 的配置并不方便。CC Switch 可以将每组连接参数保存为独立 Provider，切换时直接应用对应配置。
+CC Switch 可以保存多组 Claude Code Provider，让你在不同服务之间切换，而不必反复手动修改配置文件。本文将 Claude Code App 接入 Token Station，把 Claude 的 Sonnet、Opus 和 Haiku 角色映射到 Token Station 中可用的模型，并通过 CC Switch 的本地服务转发请求。
 
-本文介绍如何通过 CC Switch 为 Claude Code App 配置 Token Station，并用一次真实请求完成端到端验证。
-
-> 本文面向 CC Switch 与 Claude Code App。命令行版 Claude Code CLI 的启动方式和变量来源不同，请使用专门的 CLI 配置方法。
+> 本文针对 CC Switch 中的 **Claude Code App** 面板。Claude Desktop 和 Claude Code CLI 使用不同的配置路径，不要直接套用它们的步骤。
 
 ## 开始之前
 
 请准备：
 
-- 已安装 CC Switch 和 Claude Code App；
-- 一个可用的 Token Station API Key；
-- 目标模型的调用权限或可用额度。
+- 已安装的 CC Switch 和 Claude Code App
+- 有效的 Token Station API Key
+- 目标模型的调用权限或可用额度
 
-打开 [Token Station 控制台](https://models.bytefuture.ai/dashboard)，确认 API Key 和目标模型的完整 ID。不要在截图、聊天记录或公开文档中展示真实密钥。
+打开 [Token Station 控制台](https://models.bytefuture.ai/dashboard)，复制模型的完整 ID。不要在截图、聊天记录或 Git 仓库中暴露真实 API Key。
 
-## 配置流程
+## 完整配置流程
 
-整个过程分为五步：
+整个过程包括：
 
-1. 在 CC Switch 中新建 Claude Code Provider；
-2. 填写 Token Station 地址、API Key 和模型 ID；
-3. 保存并启用该 Provider；
-4. 完全退出并重新打开 Claude Code App；
-5. 发起请求，并在 Token Station 控制台核对记录。
+1. 在 CC Switch 中新建 Claude Code Provider
+2. 填写 Token Station 地址和 API Key
+3. 开启 **需要模型映射（Needs model mapping）**
+4. 将 Sonnet、Opus、Haiku 映射到 Token Station 模型 ID
+5. 开启 CC Switch 本地路由和 Claude 路由
+6. 启用 Provider，并完全重启 Claude Code App
+7. 发起真实请求，在 Token Station 中核对记录
 
-## 在 CC Switch 中添加 Token Station
+如果遗漏模型映射或本地路由，即使 CC Switch 显示 Token Station 是当前 Provider，App 仍可能继续使用原来的服务。
 
-不同版本的 CC Switch 可能使用不同的按钮名称，但核心字段相同。
+## 添加 Token Station Provider
+
+不同版本的 CC Switch 按钮名称可能略有不同，但核心设置一致。
 
 ### 1. 新建 Provider
 
-打开 CC Switch，选择 **Claude Code**，进入 Provider 管理页面。点击“添加”“新增 Provider”或加号按钮，创建一条配置。
-
-配置名称可以填写：
+打开 CC Switch，选择 **Claude Code**，进入 Provider 管理页，然后点击“添加”“新建 Provider”或加号按钮。建议使用容易辨认的名称：
 
 ```text
 Token Station
 ```
 
-如果需要选择类型，使用 Claude、Anthropic 或自定义 Anthropic 兼容服务。
+如果界面要求选择 Provider 类型或 API 格式，请选择 Claude、Anthropic 或 **Anthropic Messages（原生）**。
 
-### 2. 填写连接参数
+### 2. 填写连接设置
 
 | 字段 | 填写内容 |
 | --- | --- |
-| Base URL | `https://models.bytefuture.ai` |
+| 请求地址 / Base URL | `https://models.bytefuture.ai` |
 | API Key / Auth Token | 你的 Token Station API Key |
-| Model | Token Station 显示的完整模型 ID |
+| API 格式 | Anthropic Messages（原生） |
+| 需要模型映射 | 开启 |
 
-如果界面要求填写环境变量，使用：
+<figure>
+  <img src="/blog/cc-switch-token-station-provider-settings.png" alt="CC Switch 中的 Token Station Provider 设置，已填写 API Key、请求地址和 Anthropic Messages 格式，并开启模型映射" />
+  <figcaption>请求地址使用 Token Station 根地址，API 格式选择 Anthropic Messages（原生）。</figcaption>
+</figure>
+
+Base URL 后不要追加 `/v1/messages`。客户端会自动拼接请求路径，重复添加可能返回 404。
+
+如果当前版本以环境变量方式展示配置，请使用：
 
 ```text
 ANTHROPIC_BASE_URL=https://models.bytefuture.ai
@@ -67,105 +75,136 @@ ANTHROPIC_AUTH_TOKEN=<你的 Token Station API Key>
 ANTHROPIC_MODEL=<完整模型 ID>
 ```
 
-部分 CC Switch 模板可能使用 `ANTHROPIC_API_KEY`。这时应按当前模板填写，不要同时设置多个来源不明的密钥字段。
+部分模板使用 `ANTHROPIC_API_KEY` 而不是 `ANTHROPIC_AUTH_TOKEN`。应以当前模板显示的字段为准，不要同时填写多个来源不明的密钥字段。
 
-Base URL 不要手动添加 `/v1/messages`。客户端会根据 Anthropic Messages API 自动拼接请求路径，重复添加可能导致 404。
+### 3. 必须开启“需要模型映射”
 
-模型 ID 必须与 Token Station 显示的值完全一致，包括提供方前缀。例如：
+**需要模型映射（Needs model mapping）** 必须保持开启。Claude Code App 会以 Sonnet、Opus、Haiku 等 Claude 角色请求模型，CC Switch 需要把这些角色转换成 Token Station 能识别的完整模型 ID。
+
+<figure>
+  <img src="/blog/cc-switch-needs-model-mapping.png" alt="CC Switch Provider 表单中已开启需要模型映射选项" />
+  <figcaption>保存 Token Station Provider 前，明确开启“需要模型映射”。</figcaption>
+</figure>
+
+如果关闭该选项，Claude 角色名可能未经映射直接发出，导致“模型不存在”，也可能让 App 继续走非预期的链路。
+
+## 配置模型映射
+
+进入 Token Station Provider 的模型映射区域，把每个 Claude 角色指向一个完整的 Token Station 模型 ID。可以先使用下面这组配置：
+
+| Claude 角色 | Token Station 模型 |
+| --- | --- |
+| Sonnet | `openai/gpt-5.6-terra` |
+| Opus | `openai/gpt-5.6-sol` |
+| Haiku | `openai/gpt-5.6-luna` |
+
+这些 ID 是配置示例。模型供应会变化，保存前应在 Token Station 中确认当前可用的模型 ID 和账号权限。必须保留 `openai/` 这样的提供方前缀：
 
 ```text
 openai/gpt-5.6-sol
 ```
 
-不要使用 Claude Code App 中的展示名称代替完整 ID。
+通常可以让 Sonnet 承担默认通用任务，Opus 处理更复杂的工作，Haiku 处理更快、更轻的任务。你也可以根据价格、速度和模型可用性调整映射。关键是每个会被请求的角色都要解析到有效的 Token Station 模型。
 
-### 3. 保存并启用
+## 开启 CC Switch 本地路由
 
-保存前检查：
+模型映射由本机运行的 CC Switch 服务完成，因此只启用 Provider 还不够。
 
-- Base URL 没有多余路径或空格；
-- API Key 前后没有换行或空格；
-- 模型 ID 包含完整提供方前缀；
-- 示例中的尖括号和说明文字没有被复制进去。
+1. 打开 **CC Switch 设置 → 路由**
+2. 开启 **在主页显示本地路由开关**
+3. 启动并保持路由总开关运行
+4. 在路由启用列表中打开 **Claude**
+5. 回到 Claude Code 面板，把本地路由开关切换为 On
 
-保存后，在 Provider 列表中找到 **Token Station**，点击“启用”“应用”或“切换”。确认 CC Switch 显示它是当前配置。
+<figure>
+  <img src="/blog/cc-switch-local-routing-settings.png" alt="CC Switch 路由设置，本地路由正在运行，并已启用 Claude 路由" />
+  <figcaption>保持路由服务运行，显示主页开关，并明确启用 Claude 路由。</figcaption>
+</figure>
 
-## 重启 Claude Code App
+使用这条链路期间，CC Switch 必须保持运行。退出 CC Switch 会停止本地网关，Claude Code App 也就无法通过该配置访问 Token Station。
 
-已经运行的 App 通常不会自动读取后来切换的配置，因此需要完全退出后再启动。
+实际请求路径是：
 
-### Windows
+```text
+Claude Code App
+  → CC Switch local routing
+  → model mapping
+  → Token Station
+  → selected model
+```
 
-1. 关闭 Claude Code App 窗口；
-2. 检查系统托盘，确认应用没有在后台运行；
-3. 如仍在运行，选择“退出”；
-4. 从 CC Switch 应用配置后重新打开 App。
+## 保存、启用并重启
 
-### macOS
+保存前确认：地址没有多余路径，API Key 前后没有空格，**需要模型映射** 已开启，并且每个模型 ID 都包含提供方前缀。
 
-1. 在 Claude Code App 中按 `Command + Q`；
-2. 确认程序已经退出；
-3. 从 CC Switch 应用配置后重新打开 App。
+保存 Provider，选择 **Token Station**，点击“启用”“应用”或“切换”。然后完全退出 Claude Code App 再重新打开。只关闭窗口可能仍会保留使用旧配置的后台进程。
 
-只关闭窗口不一定会结束进程。切换 Provider 后不重启，是最常见的配置未生效原因。
+Windows 用户应检查系统托盘，必要时选择“退出”；macOS 用户可以使用 `Command + Q`。重新打开 App 时，CC Switch 和路由服务都要保持运行。
 
-## 端到端验证
+## 验证完整链路
 
-在 Claude Code App 中新建会话，发送：
+在 Claude Code App 中新建会话并发送：
 
 ```text
 请只回复：Token Station 测试成功
 ```
 
-收到回复后，打开 [Token Station 控制台](https://models.bytefuture.ai/dashboard)，在 `Recent Activity` 或调用记录页面检查：
+收到回复后，打开 [Token Station 控制台](https://models.bytefuture.ai/dashboard)，进入 `Recent Activity` 或请求记录，确认：
 
-- 是否出现了刚才的请求；
-- 请求时间和状态是否正确；
-- 实际模型是否与 CC Switch 中的配置一致。
+- 对应时间出现了新请求
+- 请求状态为成功
+- 实际记录的模型与 CC Switch 中的角色映射一致
 
-只有 App 正常返回结果，并且控制台出现对应记录，才能证明请求确实经过 Token Station。CC Switch 界面显示“当前配置”本身并不是完整验证。
+App 正常回复，并且 Token Station 出现匹配记录，才能证明整条链路已经生效。仅看到 CC Switch 的“当前 Provider”标签并不足以完成验证。
 
-## 切回原配置
+## 切回原 Provider
 
-建议保留原来的官方 Provider，不要直接覆盖唯一配置。需要恢复时：
-
-1. 在 CC Switch 中选择原 Provider；
-2. 点击“应用”或“切换”；
-3. 完全退出 Claude Code App；
-4. 重新打开 App 并发送测试消息。
+建议保留官方 Provider，不要覆盖唯一配置。需要恢复时，选择原 Provider，点击“应用”或“切换”；如果不再需要 Token Station 路由，可以关闭相应开关；然后完全退出并重新打开 Claude Code App。
 
 ## 常见问题
 
-### 已切换 Provider，但 App 仍使用旧配置
+### App 仍在使用旧 Provider
 
-确认 App 已完全退出，而不是只关闭窗口。重新应用 Token Station Provider，再启动 App。
+完全退出 App，重新应用 Token Station Provider，确认本地路由和 Claude 路由均已开启，再启动 App。
 
-### 提示缺少 API Key
+### 没有开启模型映射
 
-检查 CC Switch 模板要求的是 `ANTHROPIC_AUTH_TOKEN` 还是 `ANTHROPIC_API_KEY`，并确认密钥字段没有留空。修改后重新应用 Provider 并重启 App。
+编辑 Provider，开启 **需要模型映射**，并检查 Sonnet、Opus、Haiku 是否指向有效的 Token Station 模型 ID。保存后重新应用 Provider。
 
-### 返回 401 或 403
+### 本地路由未开启
 
-通常是 API Key 错误、已经失效、含有多余空格，或账户没有目标模型的权限和额度。
+进入 **设置 → 路由**，启动路由服务，开启 Claude 路由，再回到 Claude Code 面板打开本地路由开关。
+
+### CC Switch 没有运行
+
+本地网关只在 CC Switch 运行时存在。重新打开 CC Switch，启动路由服务后再测试。
+
+### 提示缺少 API Key，或返回 401、403
+
+检查模板要求的是 `ANTHROPIC_AUTH_TOKEN` 还是 `ANTHROPIC_API_KEY`。确认密钥有效、没有多余空格，并且账号对目标模型有权限和额度。
 
 ### 返回 404
 
-检查 Base URL 是否为 `https://models.bytefuture.ai`，并确认没有手动添加 `/messages` 或其他重复路径。
+Base URL 应为 `https://models.bytefuture.ai`。删除手动追加的 `/messages`、`/v1/messages` 或其他重复路径。
 
 ### 返回模型不存在或无权限
 
-复制 Token Station 模型列表中的完整 ID，不要根据 App 的展示名称推测模型 ID。
+从 Token Station 复制完整模型 ID，并检查对应的 Sonnet、Opus 或 Haiku 映射。不要根据 App 的展示名称猜测模型 ID。
 
 ### App 有回复，但 Token Station 没有记录
 
-App 可能仍在使用原服务。检查当前 Provider、App 是否在切换后重启，以及控制台账号和筛选时间是否正确。
+请求可能仍在使用原服务。逐项检查当前 Provider、模型映射、两个路由开关、App 是否已重启，以及 Token Station 账号和活动记录的时间筛选。
 
 ## 安全建议
 
-- 不要在教程截图中展示真实 API Key；
-- 不要把 CC Switch 配置文件或密钥提交到 Git；
-- 密钥疑似泄露时，立即在 Token Station 中撤销并重新生成；
-- 升级 CC Switch 或 Claude Code App 前，备份当前可用配置。
+- 不要在教程截图中显示真实 API Key
+- 不要把 CC Switch 配置文件或密钥提交到 Git
+- 密钥疑似泄露时，立即撤销并重新生成
+- 升级 CC Switch 或 Claude Code App 前备份可用 Provider
+
+## 总结
+
+这套配置需要四部分共同生效：Token Station Provider、**需要模型映射**、CC Switch 本地路由与 Claude 路由，以及 Claude Code App 的完全重启。最后应在 Token Station 活动记录中核对请求，确认实际处理请求的服务和模型。
 
 ## 参考资料
 

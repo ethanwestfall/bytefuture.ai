@@ -1,65 +1,73 @@
 ---
 slug: "configure-claude-code-app-with-cc-switch-and-token-station"
 lang: "en"
-title: "Configure Token Station for the Claude Code App with CC Switch"
-summary: "Create and enable a Token Station provider in CC Switch, reload the configuration in the Claude Code App, and verify the route with a real request and the Token Station activity log."
+title: "Configure the Claude Code App with CC Switch and Token Station"
+summary: "Configure a Token Station provider for the Claude Code App, enable model mapping and CC Switch local routing, then verify the complete route with a real request."
 category: "tutorial"
 date: "2026-08-17"
 cta: "https://models.bytefuture.ai/intro.html"
 draft: false
 ---
 
-Switching the Claude Code App between its official service, Token Station, and other model services can require repeated configuration edits. CC Switch stores each connection as a separate provider and applies the selected provider for you.
+CC Switch can store several Claude Code providers and switch between them without repeatedly editing configuration files. This guide connects the Claude Code App to Token Station, maps Claude's Sonnet, Opus, and Haiku roles to models available in Token Station, and routes requests through the local CC Switch service.
 
-This guide configures Token Station for the Claude Code App through CC Switch, then verifies the route with a real request.
-
-> This guide is for CC Switch and the Claude Code App. Claude Code CLI starts differently and may read configuration from different locations, so use the dedicated CLI setup for the command-line tool.
+> This guide is for the **Claude Code App** panel in CC Switch. Claude Desktop and the Claude Code CLI use different configuration paths. Do not apply their instructions to this setup.
 
 ## Before you start
 
-You need:
+Prepare:
 
-- CC Switch and the Claude Code App installed
-- A working Token Station API key
-- Access or available credit for the target model
+- CC Switch and the Claude Code App
+- A valid Token Station API key
+- Access or available credit for the models you plan to use
 
-Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard) and confirm your API key and the complete target model ID. Never expose the key in screenshots, chats, or public documents.
+Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard) and copy the complete model IDs. Keep the API key out of screenshots, chat messages, and version control.
 
 ## Configuration flow
 
-The setup has five steps:
+The complete setup is:
 
 1. Create a Claude Code provider in CC Switch
-2. Enter the Token Station URL, API key, and model ID
-3. Save and enable the provider
-4. Fully quit and reopen the Claude Code App
-5. Send a request and confirm it in Token Station
+2. Enter the Token Station endpoint and API key
+3. Turn on **Needs model mapping**
+4. Map Sonnet, Opus, and Haiku to Token Station model IDs
+5. Enable the CC Switch routing service and Claude routing
+6. Enable the provider and fully restart the Claude Code App
+7. Send a request and verify it in Token Station
 
-## Add Token Station to CC Switch
+Skipping model mapping or local routing can leave the App on its previous service even when CC Switch shows Token Station as the current provider.
 
-Button labels may vary between CC Switch versions, but the required values stay the same.
+## Add the Token Station provider
+
+Button labels can differ slightly between CC Switch releases, but the required settings are the same.
 
 ### 1. Create a provider
 
-Open CC Switch, select **Claude Code**, and enter provider management. Click Add, New Provider, or the plus button.
-
-Use a clear name:
+Open CC Switch, select **Claude Code**, enter provider management, and click Add, New Provider, or the plus button. Give the provider a recognizable name:
 
 ```text
 Token Station
 ```
 
-If CC Switch asks for a provider type, choose Claude, Anthropic, or a custom Anthropic-compatible service.
+If a provider type or API format is required, select Claude, Anthropic, or **Anthropic Messages (native)**.
 
-### 2. Enter the connection values
+### 2. Enter the connection settings
 
 | Field | Value |
 | --- | --- |
-| Base URL | `https://models.bytefuture.ai` |
+| Request URL / Base URL | `https://models.bytefuture.ai` |
 | API Key / Auth Token | Your Token Station API key |
-| Model | Complete model ID shown by Token Station |
+| API format | Anthropic Messages (native) |
+| Needs model mapping | On |
 
-If the interface expects environment variables, use:
+<figure>
+  <img src="/blog/cc-switch-token-station-provider-settings.png" alt="Token Station provider settings in CC Switch with an API key, request URL, Anthropic Messages format, and model mapping enabled" />
+  <figcaption>Use the Token Station root URL and the native Anthropic Messages format.</figcaption>
+</figure>
+
+Do not append `/v1/messages` to the base URL. The client builds the request path, and duplicating it can cause a 404 response.
+
+If your CC Switch version displays environment variables, use:
 
 ```text
 ANTHROPIC_BASE_URL=https://models.bytefuture.ai
@@ -67,105 +75,136 @@ ANTHROPIC_AUTH_TOKEN=<你的 Token Station API Key>
 ANTHROPIC_MODEL=<完整模型 ID>
 ```
 
-Some CC Switch templates use `ANTHROPIC_API_KEY`. Follow the current template instead of setting several undocumented credential fields at once.
+Some templates use `ANTHROPIC_API_KEY` instead of `ANTHROPIC_AUTH_TOKEN`. Follow the fields shown by your current template. Do not fill several undocumented credential fields at the same time.
 
-Do not append `/v1/messages` to the base URL. The client builds the Anthropic Messages API path, and a repeated path can return 404.
+### 3. Turn on Needs model mapping
 
-The model ID must match Token Station exactly, including the provider prefix. For example:
+The **Needs model mapping** switch must be On. The Claude Code App requests models by Claude roles such as Sonnet, Opus, and Haiku. CC Switch must translate those roles into the full model IDs understood by Token Station.
+
+<figure>
+  <img src="/blog/cc-switch-needs-model-mapping.png" alt="CC Switch provider form with the Needs model mapping option enabled" />
+  <figcaption>Enable “Needs model mapping” before saving the Token Station provider.</figcaption>
+</figure>
+
+If this option is disabled, selecting a Claude role can send an unmapped model name and produce a model-not-found error, or the App may continue using an unintended route.
+
+## Configure model mapping
+
+Open the model mapping area for the Token Station provider and assign each Claude role to a complete Token Station model ID. A practical starting point is:
+
+| Claude role | Token Station model |
+| --- | --- |
+| Sonnet | `openai/gpt-5.6-terra` |
+| Opus | `openai/gpt-5.6-sol` |
+| Haiku | `openai/gpt-5.6-luna` |
+
+These IDs are examples. Model availability changes, so confirm the current IDs and your account access in Token Station before saving. Preserve the provider prefix, such as `openai/`:
 
 ```text
 openai/gpt-5.6-sol
 ```
 
-Do not replace it with the display name shown in the Claude Code App.
+Sonnet is normally used for the default general-purpose role, Opus for more demanding work, and Haiku for faster or lighter tasks. You can map them differently according to cost, latency, and model availability. The important point is that every requested role resolves to a valid Token Station model.
 
-### 3. Save and enable the provider
+## Enable CC Switch local routing
 
-Before saving, check that:
+Model mapping is applied by the CC Switch service running on your computer. Enabling the provider alone is not enough.
 
-- The base URL has no extra path or whitespace
-- The API key has no leading or trailing whitespace
-- The model ID includes its provider prefix
-- Placeholder brackets and instructions were not copied as values
+1. Open **CC Switch Settings → Routing**
+2. Turn on **Show local routing switch on the home page**
+3. Start or keep the routing master switch running
+4. Enable **Claude** under routing
+5. Return to the Claude Code panel and turn its local routing toggle On
 
-Save the provider, find **Token Station** in the list, and click Enable, Apply, or Switch. Confirm that CC Switch marks it as the current provider.
+<figure>
+  <img src="/blog/cc-switch-local-routing-settings.png" alt="CC Switch routing settings with local routing running and Claude routing enabled" />
+  <figcaption>Keep the routing service running, expose the home-page switch, and enable Claude routing.</figcaption>
+</figure>
 
-## Restart the Claude Code App
+CC Switch must remain open while this route is in use. Quitting it stops the local gateway and the Claude Code App can no longer reach Token Station through this configuration.
 
-An App process that is already running usually does not load a provider selected later. Fully quit it before reopening.
+The active request path is:
 
-### Windows
+```text
+Claude Code App
+  → CC Switch local routing
+  → model mapping
+  → Token Station
+  → selected model
+```
 
-1. Close the Claude Code App window
-2. Check the system tray for a background process
-3. Select Quit if it is still running
-4. Apply the provider in CC Switch and reopen the App
+## Save, enable, and restart
 
-### macOS
+Before saving, confirm that the URL has no extra path, the API key has no surrounding whitespace, **Needs model mapping** is On, and every model ID includes its provider prefix.
 
-1. Press `Command + Q` in the Claude Code App
-2. Confirm that the process has quit
-3. Apply the provider in CC Switch and reopen the App
+Save the provider, select **Token Station**, and click Enable, Apply, or Switch. Then completely quit the Claude Code App and reopen it. Closing only the window may leave the process running with its old configuration.
 
-Closing a window is not always the same as ending the process. Failure to restart after switching providers is the most common reason an update appears not to work.
+On Windows, check the system tray and choose Quit if necessary. On macOS, use `Command + Q`. Keep CC Switch and its routing service running when you reopen the App.
 
 ## Verify the complete route
 
-Create a conversation in the Claude Code App and send:
+Start a new conversation in the Claude Code App and send:
 
 ```text
 请只回复：Token Station 测试成功
 ```
 
-After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard). Under `Recent Activity`, confirm:
+After the response arrives, open the [Token Station dashboard](https://models.bytefuture.ai/dashboard) and check `Recent Activity` or the request log. Confirm that:
 
-- The new request appears
-- Its time and status match
-- The recorded model matches the CC Switch provider
+- The new request appears at the expected time
+- The request completed successfully
+- The recorded model matches the role mapping in CC Switch
 
-A response in the App plus a matching Token Station record proves that the route is active. A Current Provider label in CC Switch alone does not.
+A response in the App and a matching Token Station record together prove that the complete route is active. The Current Provider label in CC Switch is not sufficient evidence by itself.
 
-## Switch back
+## Switch back to the original provider
 
-Keep the original official provider instead of overwriting your only configuration. To restore it:
-
-1. Select the original provider in CC Switch
-2. Click Apply or Switch
-3. Fully quit the Claude Code App
-4. Reopen it and send a test message
+Keep the official provider instead of overwriting it. To restore it, select the original provider, click Apply or Switch, turn off the Token Station route if it is no longer needed, fully quit the Claude Code App, and reopen it.
 
 ## Troubleshooting
 
 ### The App still uses the old provider
 
-Make sure the App process has ended, not just its window. Apply the Token Station provider again, then start the App.
+Fully quit the App, apply the Token Station provider again, confirm local routing and Claude routing are On, then reopen the App.
 
-### API key is missing
+### Model mapping is disabled
 
-Check whether the current CC Switch template expects `ANTHROPIC_AUTH_TOKEN` or `ANTHROPIC_API_KEY`. After correcting the field, apply the provider again and restart the App.
+Edit the provider, enable **Needs model mapping**, and verify that Sonnet, Opus, and Haiku point to valid Token Station model IDs. Save and reapply the provider.
 
-### 401 or 403 response
+### Local routing is off
 
-The key may be wrong, expired, padded with whitespace, or missing access and available credit for the target model.
+Open **Settings → Routing**, start the routing service, enable Claude routing, and turn on the local routing switch in the Claude Code panel.
 
-### 404 response
+### CC Switch is not running
 
-Use `https://models.bytefuture.ai` as the base URL and remove manually added `/messages` or other repeated paths.
+The local gateway exists only while CC Switch is running. Reopen CC Switch, start routing, and retry the request.
+
+### API key is missing, or the response is 401 or 403
+
+Check whether the template expects `ANTHROPIC_AUTH_TOKEN` or `ANTHROPIC_API_KEY`. Verify that the key is valid, contains no extra whitespace, and has access and credit for the selected model.
+
+### The response is 404
+
+Use `https://models.bytefuture.ai` as the base URL and remove manually appended `/messages`, `/v1/messages`, or other repeated paths.
 
 ### Model not found or access denied
 
-Copy the complete ID from Token Station. Do not infer it from the display name in the App.
+Copy the complete model ID from Token Station and verify the corresponding Sonnet, Opus, or Haiku mapping. Do not infer an ID from the App's display name.
 
 ### The App responds, but Token Station has no record
 
-The App may still use the original service. Check the current provider, confirm that the App restarted after the switch, and verify the Token Station account and time filter.
+The request may still be using the original service. Check the active provider, model mapping, both routing switches, the App restart, the Token Station account, and the activity time filter.
 
 ## Security notes
 
 - Keep real API keys out of tutorial screenshots
-- Do not commit CC Switch configuration or credentials to Git
+- Do not commit CC Switch configuration files or credentials to Git
 - Revoke and replace a key immediately if it may have leaked
-- Back up a working configuration before upgrading CC Switch or the Claude Code App
+- Back up a working provider before upgrading CC Switch or the Claude Code App
+
+## Summary
+
+This setup depends on four parts working together: a Token Station provider, **Needs model mapping**, CC Switch local and Claude routing, and a complete restart of the Claude Code App. Verify the result in the Token Station activity log so you know which service and model handled the request.
 
 ## References
 
