@@ -15,11 +15,11 @@ This guide covers Windows, macOS, and Linux. Two details matter most: do not app
 
 ## Before you start
 
-You need:
+Start with these three things in place:
 
 - Claude Code CLI installed, with `claude --version` returning version information
 - A [Token Station](https://models.bytefuture.ai/intro.html) account and API key
-- Access or available credit for the target model
+- Access to the target model, and credit to spend on it
 
 The examples use `openai/gpt-5.6-sol`. Model IDs can change, so copy the complete ID from the current [Token Station model list](https://models.bytefuture.ai/models).
 
@@ -89,7 +89,7 @@ To make new terminals load the configuration, run:
 )
 ```
 
-Close the current PowerShell window and open a new one before running `claude`. Existing processes do not receive newly saved variables.
+Close the current PowerShell window and open a new one before running `claude`. A process keeps the environment it started with, so an open terminal will never see the variables you just saved.
 
 To remove the variables later:
 

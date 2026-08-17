@@ -19,7 +19,7 @@ Codex App 可以通过 `config.toml` 注册自定义模型提供方。将 provid
 
 - 已安装 Codex App；
 - 一个可用的 [Token Station](https://models.bytefuture.ai/intro.html) 账户和 API Key；
-- 目标模型的调用权限或可用额度。
+- 目标模型的调用权限和可用额度。
 
 本文以 `openai/gpt-5.6-sol` 为例。请以 Token Station 当前显示的完整模型 ID 为准。
 

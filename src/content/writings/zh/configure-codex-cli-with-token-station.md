@@ -19,7 +19,7 @@ Codex CLI 支持通过 `config.toml` 注册自定义模型提供方。配置 Tok
 
 - 已安装 Codex CLI，运行 `codex --version` 可以看到版本信息；
 - 已获取可用的 Token Station API Key；
-- 账户拥有目标模型的调用权限或可用额度。
+- 账户拥有目标模型的调用权限和可用额度。
 
 > 不要在文档、截图、聊天记录或代码仓库中公开真实密钥。
 

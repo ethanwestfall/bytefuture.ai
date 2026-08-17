@@ -19,7 +19,7 @@ CC Switch를 사용하면 여러 Claude Code Provider를 저장하고 설정 파
 
 - CC Switch와 Claude Code App
 - 유효한 Token Station API Key
-- 사용할 모델에 대한 접근 권한 또는 사용 가능한 크레딧
+- 사용할 모델에 대한 접근 권한과 사용 가능한 크레딧
 
 [Token Station 대시보드](https://models.bytefuture.ai/dashboard)를 열고 전체 모델 ID를 확인합니다. API Key를 스크린샷, 채팅 메시지, Git 저장소에 노출하지 마세요.
 

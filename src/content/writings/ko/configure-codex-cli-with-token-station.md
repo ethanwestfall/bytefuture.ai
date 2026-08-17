@@ -17,7 +17,7 @@ Codex CLI는 `config.toml`에서 사용자 지정 모델 Provider를 지원합�
 
 - `codex --version`으로 확인할 수 있는 Codex CLI
 - 사용 가능한 Token Station API key
-- 대상 모델의 사용 권한 또는 잔액
+- 대상 모델의 사용 권한과 잔액
 
 > 실제 API key를 문서, 이미지, 채팅 또는 저장소에 공개하지 마세요.
 

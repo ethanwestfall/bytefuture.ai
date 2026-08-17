@@ -17,7 +17,7 @@ Codex Appは`config.toml`でカスタムモデルProviderを登録できます�
 
 - Codex App
 - [Token Station](https://models.bytefuture.ai/intro.html)のアカウントとAPI key
-- 対象モデルの利用権限または残高
+- 対象モデルの利用権限と残高
 
 例では`openai/gpt-5.6-sol`を使います。Token Stationに表示される完全なモデルIDを確認してください。
 

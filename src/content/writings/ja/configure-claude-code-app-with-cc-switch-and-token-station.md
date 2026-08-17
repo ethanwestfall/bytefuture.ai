@@ -17,7 +17,7 @@ CC Switch を使うと、複数の Claude Code Provider を保存し、設定フ
 
 - CC Switch と Claude Code App
 - 有効な Token Station API Key
-- 利用するモデルへのアクセス権または利用可能なクレジット
+- 利用するモデルへのアクセス権と利用可能なクレジット
 
 [Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)を開き、完全なモデル ID を確認します。API Key をスクリーンショット、チャット、Git リポジトリに含めないでください。
 

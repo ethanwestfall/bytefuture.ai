@@ -11,15 +11,15 @@ draft: false
 
 The Codex App can register a custom model provider in `config.toml`. Point that provider at the Token Station Responses API to use models available through Token Station and bill requests to your Token Station API key.
 
-This guide covers Windows, macOS, and Linux. Desktop apps and terminal programs may inherit environment variables from different sources. On macOS, an App launched from the Dock or Finder usually does not read `~/.zshrc`.
+This guide covers Windows, macOS, and Linux. Desktop apps and terminal programs may inherit environment variables from different sources. On macOS, an app launched from the Dock or Finder usually does not read `~/.zshrc`.
 
 ## Before you start
 
-You need:
+You need three things:
 
 - The Codex App installed
 - A [Token Station](https://models.bytefuture.ai/intro.html) account and API key
-- Access or available credit for the target model
+- Access to the target model, and credit to spend on it
 
 The examples use `openai/gpt-5.6-sol`. Copy the complete current model ID from Token Station.
 
@@ -71,11 +71,11 @@ Open **Advanced system settings → Environment Variables**. Under User variable
 
 The variable name must exactly match `env_key` in `config.toml`.
 
-Save the variable, fully quit the Codex App, and reopen it. Closing the window may not end the process, and a running App does not automatically receive a new variable.
+Save the variable, then quit the Codex App completely and reopen it. Closing the window often leaves the process running, and a running app will not see the new variable.
 
 ## macOS: configure the API key
 
-An App launched from the Dock, Finder, or Launchpad usually does not inherit an `export` from the current terminal. Add the key to the current graphical login session:
+An app launched from the Dock, Finder, or Launchpad usually does not inherit an `export` from the current terminal. Add the key to the current graphical login session:
 
 ```bash
 launchctl setenv TOKEN_STATION_API_KEY 'YOUR_REAL_API_KEY'
@@ -119,13 +119,13 @@ fi
 
 Start Codex from the same terminal. To load the key in new terminals, add the `export` command to `~/.bashrc` or `~/.zshrc`.
 
-If the App starts from GNOME, KDE, or another desktop menu and the system uses a systemd user session, you can try:
+If the app starts from GNOME, KDE, or another desktop menu and the system uses a systemd user session, you can try:
 
 ```bash
 systemctl --user set-environment TOKEN_STATION_API_KEY='YOUR_REAL_API_KEY'
 ```
 
-Fully quit and reopen the App. To clear the variable:
+Fully quit and reopen the app. To clear the variable:
 
 ```bash
 systemctl --user unset-environment TOKEN_STATION_API_KEY
@@ -143,7 +143,7 @@ systemctl --user unset-environment TOKEN_STATION_API_KEY
 Reply only: Token Station test succeeded
    ```
 
-4. Confirm that the App returns a normal response
+4. Confirm that the app returns a normal response
 5. Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard)
 6. Match the request time, status, and model under `Recent Activity`
 
@@ -157,15 +157,15 @@ Codex App
 → Token Station request log
 ```
 
-The connection is verified only when the App responds and Token Station shows the matching record.
+The connection is verified only when the app responds and Token Station shows the matching record.
 
 ## Troubleshooting
 
 ### Codex cannot find the API key
 
-Confirm that the variable name exactly matches `env_key = "TOKEN_STATION_API_KEY"`, then restart the App after setting it.
+Confirm that the variable name exactly matches `env_key = "TOKEN_STATION_API_KEY"`, then restart the app after setting it.
 
-On macOS, an `export` in `~/.zshrc` may not reach an App launched from the Dock. Use `launchctl setenv` and restart the App.
+On macOS, an `export` in `~/.zshrc` may not reach an app launched from the Dock. Use `launchctl setenv` and restart the app.
 
 ### 401 or 403 response
 
@@ -173,7 +173,7 @@ The key may be invalid, contain extra whitespace, lack model access, or have no 
 
 ### 404 response
 
-Check:
+Recheck these two fields:
 
 ```toml
 base_url = "https://bec.bytefuture.ai/v1"
@@ -188,7 +188,7 @@ Use the complete model ID supplied by Token Station and keep its provider prefix
 
 ### Codex responds, but Token Station has no record
 
-Check that `model_provider` matches the provider block name and that the App reloaded the edited `config.toml`. Test again and match the request by time.
+Check that `model_provider` matches the provider block name and that the app reloaded the edited `config.toml`. Test again and match the request by time.
 
 ## References
 
