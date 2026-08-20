@@ -1,8 +1,8 @@
 ---
 slug: "configure-claude-code-app-with-cc-switch-and-token-station"
 lang: "en"
-title: "Configure the Claude Code App with CC Switch and Token Station"
-summary: "Configure a Token Station provider for the Claude Code App, enable model mapping and CC Switch local routing, then verify the complete route with a real request."
+title: "Configure Claude Desktop with CC Switch and Token Station"
+summary: "Learn about and install CC Switch, configure a Token Station provider for Claude Desktop, enable model mapping and local routing, then verify the complete route."
 category: "tutorial"
 date: "2026-08-17"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -10,49 +10,69 @@ cover: "blog/configure-claude-code-app-with-cc-switch-and-token-station-cover.pn
 draft: false
 ---
 
-CC Switch can store several Claude Code providers and switch between them without repeatedly editing configuration files. This guide connects the Claude Code App to Token Station, maps Claude's Sonnet, Opus, and Haiku roles to models available in Token Station, and routes requests through the local CC Switch service.
+This guide explains how to install CC Switch and use it to connect Claude Desktop to Token Station. Once configured, CC Switch maps the Sonnet, Opus, and Haiku roles requested by Claude Desktop to selected models in Token Station.
 
-> This guide is for the **Claude Code App** panel in CC Switch. Claude Desktop and the Claude Code CLI use different configuration paths. Do not apply their instructions to this setup.
+> This guide is for the **Claude Desktop** panel in CC Switch. Claude Desktop and the Claude Code CLI use different configuration paths. Do not apply the Claude Code CLI instructions to this setup.
+
+## Install CC Switch
+
+[CC Switch](https://github.com/farion1231/cc-switch) is a desktop application for managing AI tool providers. It supports tools including Claude Desktop, Claude Code, Codex, and Gemini CLI.
+
+Configuring these tools directly usually requires editing separate configuration files or environment variables. CC Switch brings tools and providers into one graphical interface, where you can save several configurations and switch between them without repeatedly entering API endpoints and keys.
+
+macOS users can install it with Homebrew:
+
+```bash
+brew install --cask cc-switch
+```
+
+Windows and Linux users, as well as macOS users who prefer manual installation, can download the package for their system from [CC Switch Releases](https://github.com/farion1231/cc-switch/releases) and follow the instructions on the release page.
 
 ## Before you start
 
 You need the following in place:
 
-- CC Switch and the Claude Code App
+- CC Switch installed and able to open
+- Claude Desktop installed and able to start
 - A valid Token Station API key
 - Access to the models you plan to use, and credit to spend on them
 
-Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard) and copy the complete model IDs. Keep the API key out of screenshots, chat messages, and version control.
+Open the [Token Station dashboard](https://models.bytefuture.ai/dashboard), copy the API key, and confirm the complete IDs of the models you plan to use. Keep the API key out of screenshots, chat messages, and version control.
 
 ## Configuration flow
 
 The complete setup is:
 
-1. Create a Claude Code provider in CC Switch
+1. Create a Claude Desktop provider in CC Switch
 2. Enter the Token Station endpoint and API key
 3. Turn on **Needs model mapping**
 4. Map Sonnet, Opus, and Haiku to Token Station model IDs
 5. Enable the CC Switch routing service and Claude routing
-6. Enable the provider and fully restart the Claude Code App
+6. Enable the provider and fully restart Claude Desktop
 7. Send a request and verify it in Token Station
 
 Skipping model mapping or local routing can leave the app on its previous service even when CC Switch shows Token Station as the current provider.
 
 ## Add the Token Station provider
 
-Button labels can differ slightly between CC Switch releases, but the required settings are the same.
-
 ### 1. Create a provider
 
-Open CC Switch, select **Claude Code**, enter provider management, and click Add, New Provider, or the plus button. Give the provider a recognizable name:
+Open CC Switch, select **Claude Desktop** in the top toolbar, enter provider management, and click Add, New Provider, or the plus button.
+
+<figure>
+  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="Claude Desktop is selected in the CC Switch top toolbar, and the Claude Desktop Official provider is visible" />
+  <figcaption>Select Claude Desktop in the CC Switch top toolbar.</figcaption>
+</figure>
+
+### 2. Enter the connection settings
+
+Give the provider a recognizable name:
 
 ```text
 Token Station
 ```
 
 If a provider type or API format is required, select Claude, Anthropic, or **Anthropic Messages (native)**.
-
-### 2. Enter the connection settings
 
 | Field | Value |
 | --- | --- |
@@ -80,7 +100,7 @@ Some templates use `ANTHROPIC_API_KEY` instead of `ANTHROPIC_AUTH_TOKEN`. Follow
 
 ### 3. Turn on Needs model mapping
 
-The **Needs model mapping** switch must be On. The Claude Code App requests models by Claude roles such as Sonnet, Opus, and Haiku. CC Switch must translate those roles into the full model IDs understood by Token Station.
+The **Needs model mapping** switch must be On. Claude Desktop requests models by Claude roles such as Sonnet, Opus, and Haiku. CC Switch must translate those roles into the full model IDs understood by Token Station.
 
 <figure>
   <img src="/blog/cc-switch-needs-model-mapping.png" alt="CC Switch provider form with the Needs model mapping option enabled" />
@@ -115,36 +135,63 @@ This is the step most often skipped, and skipping it is why the app keeps answer
 2. Turn on **Show local routing switch on the home page**
 3. Start or keep the routing master switch running
 4. Enable **Claude** under routing
-5. Return to the Claude Code panel and turn its local routing toggle On
+5. Return to the Claude Desktop panel and turn its local routing toggle On
 
 <figure>
   <img src="/blog/cc-switch-local-routing-settings.png" alt="CC Switch routing settings with local routing running and Claude routing enabled" />
   <figcaption>Keep the routing service running, expose the home-page switch, and enable Claude routing.</figcaption>
 </figure>
 
-CC Switch must remain open while this route is in use. Quitting it stops the local gateway and the Claude Code App can no longer reach Token Station through this configuration.
-
-The active request path is:
-
-```text
-Claude Code App
-  → CC Switch local routing
-  → model mapping
-  → Token Station
-  → selected model
-```
+CC Switch must remain open while this route is in use. Quitting it stops the local gateway and Claude Desktop can no longer reach Token Station through this configuration.
 
 ## Save, enable, and restart
 
 Before saving, confirm that the URL has no extra path, the API key has no surrounding whitespace, **Needs model mapping** is On, and every model ID includes its provider prefix.
 
-Save the provider, select **Token Station**, and click Enable, Apply, or Switch. Then completely quit the Claude Code App and reopen it. Closing only the window may leave the process running with its old configuration.
+Save the provider, select **Token Station**, and click Enable, Apply, or Switch. Then completely quit Claude Desktop and reopen it. Closing only the window may leave the process running with its old configuration.
 
-On Windows, check the system tray and choose Quit if necessary. On macOS, use `Command + Q`. Keep CC Switch and its routing service running when you reopen the app.
+On Windows, check the system tray and choose Quit if necessary. On macOS, use `Command + Q`. Keep CC Switch and its routing service running when you reopen Claude Desktop.
+
+## Use Claude Desktop without an Anthropic account
+
+After configuring CC Switch, you can connect Claude Desktop to its local gateway through the third-party inference feature without first signing in to an Anthropic account. The steps below use Claude Desktop for Windows. Menu locations may differ slightly on other systems or versions.
+
+### 1. Enable Developer Mode
+
+Open the menu in the upper-left corner of Claude Desktop, then select **Help → Troubleshooting → Enable Developer Mode**.
+
+<figure>
+  <img src="/blog/claude-desktop-enable-developer-mode.png" alt="The Claude Desktop Help menu is open, with Troubleshooting expanded and Enable Developer Mode selected" />
+  <figcaption>Select Enable Developer Mode under Help → Troubleshooting.</figcaption>
+</figure>
+
+The **Developer** entry should now appear in the main menu. If it does not appear immediately, completely quit Claude Desktop and reopen it.
+
+### 2. Open the third-party inference settings
+
+From the upper-left menu, select **Developer → Configure Third-Party Inference...**.
+
+<figure>
+  <img src="/blog/claude-desktop-configure-third-party-inference.png" alt="Configure Third-Party Inference is selected in the Claude Desktop Developer menu" />
+  <figcaption>Open the third-party inference settings from the Developer menu.</figcaption>
+</figure>
+
+### 3. Apply the CC Switch configuration
+
+On the settings page, confirm that **CC Switch** appears in the upper-right corner and that Connection is set to **Gateway**. If the provider and local routing were configured correctly, CC Switch automatically fills the Gateway base URL, API key, and authentication scheme.
+
+Do not enter or change anything on this page. Click **Apply locally** at the bottom.
+
+<figure>
+  <img src="/blog/claude-desktop-apply-cc-switch-locally.png" alt="The Claude Desktop third-party inference page contains local Gateway settings supplied by CC Switch and an Apply locally button" />
+  <figcaption>After confirming that CC Switch supplied the settings, leave the generated Gateway fields unchanged and click Apply locally.</figcaption>
+</figure>
+
+Claude Desktop will now send inference requests through the CC Switch local gateway. Keep CC Switch and local routing running while you use it. Treat the Gateway API key as sensitive even when CC Switch generated it automatically. Do not publish screenshots that reveal it or share it with anyone.
 
 ## Verify the complete route
 
-Start a new conversation in the Claude Code App and send:
+Start a new conversation in Claude Desktop and send:
 
 ```text
 Reply only: Token Station test succeeded
@@ -160,7 +207,7 @@ A response in the app and a matching Token Station record together prove that th
 
 ## Switch back to the original provider
 
-Keep the official provider instead of overwriting it. To restore it, select the original provider, click Apply or Switch, turn off the Token Station route if it is no longer needed, fully quit the Claude Code App, and reopen it.
+Keep the official provider instead of overwriting it. To restore it, select the original provider, click Apply or Switch, turn off the Token Station route if it is no longer needed, fully quit Claude Desktop, and reopen it.
 
 ## Troubleshooting
 
@@ -174,7 +221,7 @@ Edit the provider, enable **Needs model mapping**, and verify that Sonnet, Opus,
 
 ### Local routing is off
 
-Open **Settings → Routing**, start the routing service, enable Claude routing, and turn on the local routing switch in the Claude Code panel.
+Open **Settings → Routing**, start the routing service, enable Claude routing, and turn on the local routing switch in the Claude Desktop panel.
 
 ### CC Switch is not running
 
@@ -201,11 +248,11 @@ The request may still be using the original service. Check the active provider, 
 - Keep real API keys out of tutorial screenshots
 - Do not commit CC Switch configuration files or credentials to Git
 - Revoke and replace a key immediately if it may have leaked
-- Back up a working provider before upgrading CC Switch or the Claude Code App
+- Back up a working provider before upgrading CC Switch or Claude Desktop
 
 ## Summary
 
-This setup depends on four parts working together: a Token Station provider, **Needs model mapping**, CC Switch local and Claude routing, and a complete restart of the Claude Code App. Verify the result in the Token Station activity log so you know which service and model handled the request.
+This setup depends on four parts working together: a Token Station provider, **Needs model mapping**, CC Switch local and Claude routing, and a complete restart of Claude Desktop. Verify the result in the Token Station activity log so you know which service and model handled the request.
 
 ## References
 
