@@ -14,60 +14,19 @@ draft: false
 
 > 本記事は CC Switch の **Claude Desktop** パネルを対象としています。Claude Desktop と Claude Code CLI は設定経路が異なるため、Claude Code CLI の手順をこの設定に流用しないでください。
 
-## CC Switch とは
-
-[CC Switch](https://github.com/farion1231/cc-switch) は、Claude Desktop、Claude Code、Codex、Gemini CLI などの AI ツールで使う Provider を管理するデスクトップアプリです。
-
-通常はツールごとに設定ファイルや環境変数を変更する必要があります。CC Switch ではそれらを一つの画面で管理し、複数の Provider を保存して、URL や認証情報を何度も入力せずに切り替えられます。
-
-本記事の構成では、CC Switch が次の処理を担います。
-
-1. Token Station の URL と API Key を保存する
-2. Claude の Sonnet、Opus、Haiku ロールを Token Station のモデルに割り当てる
-3. ローカルルーティングサービスを実行し、Claude Desktop のリクエストを Token Station へ転送する
-
-リクエスト経路は次のとおりです。
-
-```text
-Claude Desktop
-  → CC Switch local routing
-  → model mapping
-  → Token Station
-  → selected model
-```
-
-モデルマッピングと転送はローカルルーティングサービスが行うため、この構成を使う間は CC Switch を起動したままにしてください。
-
 ## CC Switch をインストールする
 
-### macOS
+[CC Switch](https://github.com/farion1231/cc-switch) は、AI ツールの Provider を管理するデスクトップアプリです。Claude Desktop、Claude Code、Codex、Gemini CLI などに対応しています。
 
-[Homebrew](https://brew.sh/) をインストール済みの場合は、次を実行します。
+これらのツールを直接設定する場合、通常はツールごとに設定ファイルや環境変数を変更する必要があります。CC Switch はツールと Provider を一つの画面にまとめ、複数の設定を保存して、API URL や Key を何度も入力せずに切り替えられるようにします。
+
+macOS では Homebrew からインストールできます。
 
 ```bash
 brew install --cask cc-switch
 ```
 
-インストール後、アプリケーションフォルダまたは Launchpad から CC Switch を開きます。[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) から macOS 用インストーラーをダウンロードすることもできます。
-
-### Windows
-
-[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) を開き、最新リリースの Windows 用インストーラーをダウンロードします。インストーラーを実行し、スタートメニューから CC Switch を開きます。初回起動時にセキュリティ確認が表示された場合は、ダウンロード元を確認してから続行してください。
-
-### Linux
-
-[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) で利用中のディストリビューションに合うパッケージを選び、リリースページの手順に従ってインストールします。提供される形式はバージョンによって変わる可能性があるため、最新リリースのファイルと説明を確認してください。
-
-### インストールを確認する
-
-CC Switch を起動し、メイン画面に **Claude Desktop**、Claude Code、Codex、Gemini CLI などの入口が表示されることを確認します。
-
-本記事では **Claude Desktop** を選択します。Claude Code は設定の書き込み先と経路が異なるため、選択しないでください。
-
-<figure>
-  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="CC Switch のツールバーで Claude Desktop が選択され、Claude Desktop Official Provider が表示されている画面" />
-  <figcaption>CC Switch のツールバーで Claude Desktop アイコンを選択します。選択後は Claude Desktop Official などの Provider が表示されます。</figcaption>
-</figure>
+Windows、Linux、または手動でインストールする macOS ユーザーは、[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) から使用中のシステムに合うパッケージをダウンロードし、リリースページの手順に従ってインストールしてください。
 
 ## 準備するもの
 
@@ -94,19 +53,24 @@ CC Switch を起動し、メイン画面に **Claude Desktop**、Claude Code、C
 
 ## Token Station Provider を追加する
 
-CC Switch のバージョンによってボタン名は多少異なりますが、必要な設定値は同じです。
-
 ### 1. Provider を作成する
 
-CC Switch を開き、**Claude Desktop** を選択して Provider 管理画面に進みます。Add、New Provider、またはプラスボタンをクリックし、分かりやすい名前を付けます。
+CC Switch を開き、上部ツールバーの **Claude Desktop** を選択して Provider 管理画面に進みます。Add、New Provider、またはプラスボタンをクリックします。
+
+<figure>
+  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="CC Switch の上部ツールバーで Claude Desktop が選択され、Claude Desktop Official Provider が表示されている画面" />
+  <figcaption>CC Switch の上部ツールバーで Claude Desktop を選択します。</figcaption>
+</figure>
+
+### 2. 接続情報を入力する
+
+分かりやすい Provider 名を付けます。
 
 ```text
 Token Station
 ```
 
 Provider の種類や API 形式を求められた場合は、Claude、Anthropic、または **Anthropic Messages（native）** を選択します。
-
-### 2. 接続情報を入力する
 
 | 項目 | 設定値 |
 | --- | --- |
@@ -177,16 +141,6 @@ openai/gpt-5.6-sol
 </figure>
 
 この経路を使う間は CC Switch を起動したままにしてください。CC Switch を終了するとローカルゲートウェイも停止し、この設定では Claude Desktop から Token Station に接続できなくなります。
-
-実際のリクエスト経路は次のとおりです。
-
-```text
-Claude Desktop
-  → CC Switch local routing
-  → model mapping
-  → Token Station
-  → selected model
-```
 
 ## 保存、有効化、再起動
 

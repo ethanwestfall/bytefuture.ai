@@ -14,60 +14,19 @@ This guide explains how to install CC Switch and use it to connect Claude Deskto
 
 > This guide is for the **Claude Desktop** panel in CC Switch. Claude Desktop and the Claude Code CLI use different configuration paths. Do not apply the Claude Code CLI instructions to this setup.
 
-## What is CC Switch?
-
-[CC Switch](https://github.com/farion1231/cc-switch) is a desktop application for managing providers used by AI tools, including Claude Desktop, Claude Code, Codex, and Gemini CLI.
-
-Without it, changing providers often means editing separate configuration files or environment variables for each tool. CC Switch puts those settings in one graphical interface, where you can save several providers and switch between them without repeatedly entering endpoints and credentials.
-
-In this setup, CC Switch does three things:
-
-1. Stores the Token Station endpoint and API key
-2. Maps Claude's Sonnet, Opus, and Haiku roles to Token Station models
-3. Runs a local routing service that forwards Claude Desktop requests to Token Station
-
-The complete request path is:
-
-```text
-Claude Desktop
-  → CC Switch local routing
-  → model mapping
-  → Token Station
-  → selected model
-```
-
-Because the local routing service performs the mapping and forwarding, CC Switch must remain running while you use this setup.
-
 ## Install CC Switch
 
-### macOS
+[CC Switch](https://github.com/farion1231/cc-switch) is a desktop application for managing AI tool providers. It supports tools including Claude Desktop, Claude Code, Codex, and Gemini CLI.
 
-If you have [Homebrew](https://brew.sh/) installed, run:
+Configuring these tools directly usually requires editing separate configuration files or environment variables. CC Switch brings tools and providers into one graphical interface, where you can save several configurations and switch between them without repeatedly entering API endpoints and keys.
+
+macOS users can install it with Homebrew:
 
 ```bash
 brew install --cask cc-switch
 ```
 
-Open CC Switch from Applications or Launchpad when installation finishes. You can also download the macOS installer from [CC Switch Releases](https://github.com/farion1231/cc-switch/releases).
-
-### Windows
-
-Open [CC Switch Releases](https://github.com/farion1231/cc-switch/releases) and download the Windows installer from the latest release. Run the installer, then open CC Switch from the Start menu. If Windows shows a security prompt on first launch, verify the download source before continuing.
-
-### Linux
-
-Open [CC Switch Releases](https://github.com/farion1231/cc-switch/releases), choose the package for your distribution, and follow the instructions on the release page. Available package formats may change between releases, so use the files and instructions provided with the current release.
-
-### Confirm the installation
-
-Open CC Switch and confirm that its main window shows tool entries such as **Claude Desktop**, Claude Code, Codex, and Gemini CLI.
-
-For this guide, select **Claude Desktop**. Do not select Claude Code, because the two entries write different settings and use different configuration paths.
-
-<figure>
-  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="The Claude Desktop entry is selected in the CC Switch toolbar, and the Claude Desktop Official provider is visible" />
-  <figcaption>Select the Claude Desktop icon in the CC Switch toolbar. The panel then shows Claude Desktop providers such as Claude Desktop Official.</figcaption>
-</figure>
+Windows and Linux users, as well as macOS users who prefer manual installation, can download the package for their system from [CC Switch Releases](https://github.com/farion1231/cc-switch/releases) and follow the instructions on the release page.
 
 ## Before you start
 
@@ -96,19 +55,24 @@ Skipping model mapping or local routing can leave the app on its previous servic
 
 ## Add the Token Station provider
 
-Button labels can differ slightly between CC Switch releases, but the required settings are the same.
-
 ### 1. Create a provider
 
-Open CC Switch, select **Claude Desktop**, enter provider management, and click Add, New Provider, or the plus button. Give the provider a recognizable name:
+Open CC Switch, select **Claude Desktop** in the top toolbar, enter provider management, and click Add, New Provider, or the plus button.
+
+<figure>
+  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="Claude Desktop is selected in the CC Switch top toolbar, and the Claude Desktop Official provider is visible" />
+  <figcaption>Select Claude Desktop in the CC Switch top toolbar.</figcaption>
+</figure>
+
+### 2. Enter the connection settings
+
+Give the provider a recognizable name:
 
 ```text
 Token Station
 ```
 
 If a provider type or API format is required, select Claude, Anthropic, or **Anthropic Messages (native)**.
-
-### 2. Enter the connection settings
 
 | Field | Value |
 | --- | --- |
@@ -179,16 +143,6 @@ This is the step most often skipped, and skipping it is why the app keeps answer
 </figure>
 
 CC Switch must remain open while this route is in use. Quitting it stops the local gateway and Claude Desktop can no longer reach Token Station through this configuration.
-
-The active request path is:
-
-```text
-Claude Desktop
-  → CC Switch local routing
-  → model mapping
-  → Token Station
-  → selected model
-```
 
 ## Save, enable, and restart
 
