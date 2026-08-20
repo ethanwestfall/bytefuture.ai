@@ -1,8 +1,8 @@
 ---
 slug: "configure-claude-code-app-with-cc-switch-and-token-station"
 lang: "ja"
-title: "CC Switch と Token Station で Claude Code App を設定する"
-summary: "Claude Code App 用の Token Station Provider を作成し、モデルマッピング、CC Switch のローカルルーティング、Claude ルーティングを有効にして、実際のリクエストで経路全体を検証します。"
+title: "CC Switch と Token Station で Claude Desktop を設定する"
+summary: "CC Switch の概要とインストール方法を確認し、Claude Desktop 用の Token Station Provider、モデルマッピング、ローカルルーティングを設定して経路全体を検証します。"
 category: "tutorial"
 date: "2026-08-17"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -10,28 +10,84 @@ cover: "blog/configure-claude-code-app-with-cc-switch-and-token-station-cover.pn
 draft: false
 ---
 
-CC Switch を使うと、複数の Claude Code Provider を保存し、設定ファイルを何度も手作業で変更せずにサービスを切り替えられます。本記事では Claude Code App を Token Station に接続し、Claude の Sonnet、Opus、Haiku ロールを Token Station で利用可能なモデルへ割り当て、CC Switch のローカルサービス経由でリクエストを転送します。
+本記事では CC Switch をインストールし、Claude Desktop を Token Station に接続する方法を説明します。設定後は、Claude Desktop が要求する Sonnet、Opus、Haiku ロールを CC Switch が Token Station の指定モデルへ割り当てます。
 
-> 本記事は CC Switch の **Claude Code App** パネルを対象としています。Claude Desktop と Claude Code CLI は設定経路が異なるため、それらの手順をこの設定に流用しないでください。
+> 本記事は CC Switch の **Claude Desktop** パネルを対象としています。Claude Desktop と Claude Code CLI は設定経路が異なるため、Claude Code CLI の手順をこの設定に流用しないでください。
+
+## CC Switch とは
+
+[CC Switch](https://github.com/farion1231/cc-switch) は、Claude Desktop、Claude Code、Codex、Gemini CLI などの AI ツールで使う Provider を管理するデスクトップアプリです。
+
+通常はツールごとに設定ファイルや環境変数を変更する必要があります。CC Switch ではそれらを一つの画面で管理し、複数の Provider を保存して、URL や認証情報を何度も入力せずに切り替えられます。
+
+本記事の構成では、CC Switch が次の処理を担います。
+
+1. Token Station の URL と API Key を保存する
+2. Claude の Sonnet、Opus、Haiku ロールを Token Station のモデルに割り当てる
+3. ローカルルーティングサービスを実行し、Claude Desktop のリクエストを Token Station へ転送する
+
+リクエスト経路は次のとおりです。
+
+```text
+Claude Desktop
+  → CC Switch local routing
+  → model mapping
+  → Token Station
+  → selected model
+```
+
+モデルマッピングと転送はローカルルーティングサービスが行うため、この構成を使う間は CC Switch を起動したままにしてください。
+
+## CC Switch をインストールする
+
+### macOS
+
+[Homebrew](https://brew.sh/) をインストール済みの場合は、次を実行します。
+
+```bash
+brew install --cask cc-switch
+```
+
+インストール後、アプリケーションフォルダまたは Launchpad から CC Switch を開きます。[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) から macOS 用インストーラーをダウンロードすることもできます。
+
+### Windows
+
+[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) を開き、最新リリースの Windows 用インストーラーをダウンロードします。インストーラーを実行し、スタートメニューから CC Switch を開きます。初回起動時にセキュリティ確認が表示された場合は、ダウンロード元を確認してから続行してください。
+
+### Linux
+
+[CC Switch Releases](https://github.com/farion1231/cc-switch/releases) で利用中のディストリビューションに合うパッケージを選び、リリースページの手順に従ってインストールします。提供される形式はバージョンによって変わる可能性があるため、最新リリースのファイルと説明を確認してください。
+
+### インストールを確認する
+
+CC Switch を起動し、メイン画面に **Claude Desktop**、Claude Code、Codex、Gemini CLI などの入口が表示されることを確認します。
+
+本記事では **Claude Desktop** を選択します。Claude Code は設定の書き込み先と経路が異なるため、選択しないでください。
+
+<figure>
+  <img src="/blog/cc-switch-claude-desktop-entry.png" alt="CC Switch のツールバーで Claude Desktop が選択され、Claude Desktop Official Provider が表示されている画面" />
+  <figcaption>CC Switch のツールバーで Claude Desktop アイコンを選択します。選択後は Claude Desktop Official などの Provider が表示されます。</figcaption>
+</figure>
 
 ## 準備するもの
 
-- CC Switch と Claude Code App
+- インストール済みで起動できる CC Switch
+- インストール済みで起動できる Claude Desktop
 - 有効な Token Station API Key
 - 利用するモデルへのアクセス権と利用可能なクレジット
 
-[Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)を開き、完全なモデル ID を確認します。API Key をスクリーンショット、チャット、Git リポジトリに含めないでください。
+[Token Station ダッシュボード](https://models.bytefuture.ai/dashboard)を開き、API Key をコピーして、利用するモデルの完全な ID を確認します。API Key をスクリーンショット、チャット、Git リポジトリに含めないでください。
 
 ## 設定の流れ
 
 必要な手順は次のとおりです。
 
-1. CC Switch で Claude Code Provider を作成する
+1. CC Switch で Claude Desktop Provider を作成する
 2. Token Station の URL と API Key を入力する
 3. **Needs model mapping** を有効にする
 4. Sonnet、Opus、Haiku を Token Station のモデル ID に割り当てる
 5. CC Switch のローカルルーティングと Claude ルーティングを有効にする
-6. Provider を有効にし、Claude Code App を完全に再起動する
+6. Provider を有効にし、Claude Desktop を完全に再起動する
 7. リクエストを送信し、Token Station で記録を確認する
 
 モデルマッピングやローカルルーティングを省略すると、CC Switch に Token Station が現在の Provider と表示されていても、App が以前のサービスを使い続けることがあります。
@@ -42,7 +98,7 @@ CC Switch のバージョンによってボタン名は多少異なりますが�
 
 ### 1. Provider を作成する
 
-CC Switch を開き、**Claude Code** を選択して Provider 管理画面に進みます。Add、New Provider、またはプラスボタンをクリックし、分かりやすい名前を付けます。
+CC Switch を開き、**Claude Desktop** を選択して Provider 管理画面に進みます。Add、New Provider、またはプラスボタンをクリックし、分かりやすい名前を付けます。
 
 ```text
 Token Station
@@ -78,7 +134,7 @@ ANTHROPIC_MODEL=<完全なモデル ID>
 
 ### 3. Needs model mapping を必ず有効にする
 
-**Needs model mapping** は必ず有効にします。Claude Code App は Sonnet、Opus、Haiku などの Claude ロールでモデルを要求します。CC Switch がこれらのロールを、Token Station が認識する完全なモデル ID に変換する必要があります。
+**Needs model mapping** は必ず有効にします。Claude Desktop は Sonnet、Opus、Haiku などの Claude ロールでモデルを要求します。CC Switch がこれらのロールを、Token Station が認識する完全なモデル ID に変換する必要があります。
 
 <figure>
   <img src="/blog/cc-switch-needs-model-mapping.png" alt="Needs model mapping オプションを有効にした CC Switch の Provider フォーム" />
@@ -113,19 +169,19 @@ openai/gpt-5.6-sol
 2. **Show local routing switch on the home page** を有効にする
 3. ルーティングのマスタースイッチを起動した状態にする
 4. ルーティング対象の **Claude** を有効にする
-5. Claude Code パネルへ戻り、ローカルルーティングのトグルを On にする
+5. Claude Desktop パネルへ戻り、ローカルルーティングのトグルを On にする
 
 <figure>
   <img src="/blog/cc-switch-local-routing-settings.png" alt="ローカルルーティングが稼働し、Claude ルーティングが有効になっている CC Switch のルーティング設定" />
   <figcaption>ルーティングサービスを稼働させ、ホーム画面のスイッチと Claude ルーティングを有効にします。</figcaption>
 </figure>
 
-この経路を使う間は CC Switch を起動したままにしてください。CC Switch を終了するとローカルゲートウェイも停止し、この設定では Claude Code App から Token Station に接続できなくなります。
+この経路を使う間は CC Switch を起動したままにしてください。CC Switch を終了するとローカルゲートウェイも停止し、この設定では Claude Desktop から Token Station に接続できなくなります。
 
 実際のリクエスト経路は次のとおりです。
 
 ```text
-Claude Code App
+Claude Desktop
   → CC Switch local routing
   → model mapping
   → Token Station
@@ -136,13 +192,50 @@ Claude Code App
 
 保存前に、URL に余分なパスがないこと、API Key の前後に空白がないこと、**Needs model mapping** が有効なこと、各モデル ID に Provider プレフィックスが含まれることを確認します。
 
-Provider を保存し、**Token Station** を選択して Enable、Apply、または Switch をクリックします。その後、Claude Code App を完全に終了してから再度開きます。ウィンドウを閉じただけでは、古い設定を保持したプロセスが残る場合があります。
+Provider を保存し、**Token Station** を選択して Enable、Apply、または Switch をクリックします。その後、Claude Desktop を完全に終了してから再度開きます。ウィンドウを閉じただけでは、古い設定を保持したプロセスが残る場合があります。
 
-Windows ではシステムトレイを確認し、必要なら Quit を選びます。macOS では `Command + Q` を使います。App の再起動時も CC Switch とルーティングサービスを稼働させてください。
+Windows ではシステムトレイを確認し、必要なら Quit を選びます。macOS では `Command + Q` を使います。Claude Desktop の再起動時も CC Switch とルーティングサービスを稼働させてください。
+
+## Anthropic アカウントなしで Claude Desktop を使う
+
+CC Switch の設定後は、Anthropic アカウントにログインせず、Claude Desktop のサードパーティ推論機能からローカルゲートウェイへ接続できます。以下は Windows 版の手順です。OS やバージョンによってメニュー位置が多少異なる場合があります。
+
+### 1. Developer Mode を有効にする
+
+Claude Desktop 左上のメニューを開き、**Help → Troubleshooting → Enable Developer Mode** を選択します。
+
+<figure>
+  <img src="/blog/claude-desktop-enable-developer-mode.png" alt="Claude Desktop の Help メニューで Troubleshooting を開き、Enable Developer Mode を選択している画面" />
+  <figcaption>Help → Troubleshooting から Enable Developer Mode を選択します。</figcaption>
+</figure>
+
+有効にすると、メインメニューに **Developer** が表示されます。すぐに表示されない場合は、Claude Desktop を完全に終了して再度開いてください。
+
+### 2. サードパーティ推論設定を開く
+
+左上のメニューから **Developer → Configure Third-Party Inference...** を選択します。
+
+<figure>
+  <img src="/blog/claude-desktop-configure-third-party-inference.png" alt="Claude Desktop の Developer メニューで Configure Third-Party Inference を選択している画面" />
+  <figcaption>Developer メニューからサードパーティ推論設定を開きます。</figcaption>
+</figure>
+
+### 3. CC Switch の設定を適用する
+
+設定画面の右上に **CC Switch** と表示され、Connection が **Gateway** になっていることを確認します。Provider とローカルルーティングが正しく設定されていれば、Gateway base URL、API Key、認証方式は CC Switch によって自動入力されます。
+
+この画面では何も入力、変更せず、下部の **Apply locally** をクリックします。
+
+<figure>
+  <img src="/blog/claude-desktop-apply-cc-switch-locally.png" alt="CC Switch がローカル Gateway 情報を入力した Claude Desktop のサードパーティ推論設定画面と Apply locally ボタン" />
+  <figcaption>設定元が CC Switch であることを確認し、自動生成された Gateway 情報を変更せずに Apply locally をクリックします。</figcaption>
+</figure>
+
+適用後、Claude Desktop は CC Switch のローカルゲートウェイ経由で推論リクエストを送信します。利用中は CC Switch とローカルルーティングを稼働させてください。自動生成された Gateway API Key も機密情報です。表示された状態のスクリーンショットを公開したり、第三者に共有したりしないでください。
 
 ## 経路全体を検証する
 
-Claude Code App で新しい会話を開始し、次を送信します。
+Claude Desktop で新しい会話を開始し、次を送信します。
 
 ```text
 「Token Station テスト成功」とだけ返信してください
@@ -158,7 +251,7 @@ App の応答と一致する Token Station の記録がそろって、初めて�
 
 ## 元の Provider に戻す
 
-公式 Provider は上書きせず残しておきます。戻す場合は元の Provider を選び、Apply または Switch をクリックします。Token Station の経路が不要なら関連するルーティングを無効にし、Claude Code App を完全に終了して再度開きます。
+公式 Provider は上書きせず残しておきます。戻す場合は元の Provider を選び、Apply または Switch をクリックします。Token Station の経路が不要なら関連するルーティングを無効にし、Claude Desktop を完全に終了して再度開きます。
 
 ## トラブルシューティング
 
@@ -172,7 +265,7 @@ Provider を編集して **Needs model mapping** を有効にし、Sonnet、Opus
 
 ### ローカルルーティングが無効になっている
 
-**Settings → Routing** でルーティングサービスを開始し、Claude ルーティングを有効にします。Claude Code パネルに戻り、ローカルルーティングのスイッチも有効にします。
+**Settings → Routing** でルーティングサービスを開始し、Claude ルーティングを有効にします。Claude Desktop パネルに戻り、ローカルルーティングのスイッチも有効にします。
 
 ### CC Switch が起動していない
 
@@ -199,11 +292,11 @@ Token Station から完全なモデル ID をコピーし、対応する Sonnet�
 - 実際の API Key をチュートリアルのスクリーンショットに含めない
 - CC Switch の設定や認証情報を Git にコミットしない
 - 漏えいの可能性があれば、すぐに Key を無効化して再発行する
-- CC Switch や Claude Code App の更新前に、動作する Provider をバックアップする
+- CC Switch や Claude Desktop の更新前に、動作する Provider をバックアップする
 
 ## まとめ
 
-この設定には Token Station Provider、**Needs model mapping**、CC Switch のローカルルーティングと Claude ルーティング、Claude Code App の完全な再起動という 4 つの要素が必要です。最後に Token Station のアクティビティログを確認し、実際にどのサービスとモデルがリクエストを処理したかを確かめてください。
+この設定には Token Station Provider、**Needs model mapping**、CC Switch のローカルルーティングと Claude ルーティング、Claude Desktop の完全な再起動という 4 つの要素が必要です。最後に Token Station のアクティビティログを確認し、実際にどのサービスとモデルがリクエストを処理したかを確かめてください。
 
 ## 参考資料
 
