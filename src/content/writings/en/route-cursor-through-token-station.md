@@ -2,15 +2,15 @@
 slug: "route-cursor-through-token-station"
 lang: "en"
 title: "Route Cursor through Token Station: Claude Sonnet 5 and Haiku"
-summary: "Cursor supports custom OpenAI-compatible providers through Settings, Models. Point it at Token Station and Claude Sonnet 5 and Haiku show up as selectable models with full Agent-mode support: real file edits, not just chat, plus cost-tiered subagents."
+summary: "Cursor supports custom OpenAI-compatible providers through Settings, Models. Point it at Token Station and Claude Sonnet 5 and Haiku show up as selectable models with full Agent-mode support: real file edits, not just chat, plus scoped subagents for delegated research and verification."
 category: "tutorial"
-date: "2026-08-18"
+date: "2026-08-21"
 cta: "https://models.bytefuture.ai/intro.html"
 cover: "blog/route-cursor-through-token-station-cover.png"
 draft: false
 ---
 
-Cursor supports custom OpenAI-compatible providers through Settings → Models. Point it at Token Station's endpoint and you can add Claude Sonnet 5 and Haiku as selectable models, each billed through your own Token Station key. Unlike some other model families available through Token Station, these two fully support Cursor's Agent mode: real file edits, not just chat. This walks through the setup end to end, including two gotchas we hit doing it ourselves, and finishes with an actual coding session: Sonnet 5 implementing a real feature in an open-source project, delegating research and verification to Haiku-backed subagents.
+Cursor supports custom OpenAI-compatible providers through Settings → Models. Point it at Token Station's endpoint and you can add Claude Sonnet 5 and Haiku as selectable models, each billed through your own Token Station key. Unlike some other model families available through Token Station, these two fully support Cursor's Agent mode: real file edits, not just chat. This walks through the setup end to end, including a naming gotcha we hit doing it ourselves, and finishes with an actual coding session: Sonnet 5 implementing a real feature in an open-source project, delegating research and verification to two purpose-built subagents.
 
 ## What you need before starting
 
@@ -31,8 +31,6 @@ Open **Settings → Cursor Settings → Models**, scroll to **API Keys**, and se
   </video>
   <figcaption>Registering Token Station as a custom OpenAI-compatible provider in Cursor's Models settings.</figcaption>
 </figure>
-
-**Known bug worth knowing about**: in current Cursor builds (3.15.x), these two fields sometimes don't accept keyboard input on click. If typing does nothing, click elsewhere in the panel first, then press **Tab** repeatedly until focus lands on the field. Typing and **Ctrl+V** paste both work once it's Tab-focused. This is an acknowledged regression, not something specific to your setup.
 
 Don't rely on a "Verify" button to confirm the key and URL are correct. It isn't always present, and even when it is, it doesn't cover every path. The reliable check is Step 2: add a model and actually send it a message.
 
@@ -59,18 +57,16 @@ To confirm it's actually working end to end, not just accepted by Cursor: open a
 | Model | Good for |
 |---|---|
 | `anthropic/claude-sonnet-5` | Main coding model: planning, implementation, and Agent-mode file edits. |
-| `anthropic/claude-haiku-4-5` | Lower-cost route for subagents: exploration, triage, and verification. |
+| `anthropic/claude-haiku-4-5` | A cheaper model to switch the main chat to directly for lighter, single-turn questions. See Step 3 for why it isn't a cost-tier for subagents yet. |
 
-## Step 3: Define Haiku-backed subagents
+## Step 3: Define scoped subagents
 
-Cursor supports subagents: markdown files with YAML frontmatter, defined per-project in `.cursor/agents/` or globally in `~/.cursor/agents/`, each with its own `model` field. That lets you point specific, narrowly-scoped delegations at a cheaper model than whatever your main chat is using.
+Cursor supports subagents: markdown files with YAML frontmatter, defined per-project in `.cursor/agents/` or globally in `~/.cursor/agents/`. Two useful roles for a coding session: a read-only researcher, and a test verifier that runs after a change.
 
-Two useful roles for a coding session, both on Haiku:
-
-**`.cursor/agents/explore.md`**
+**`.cursor/agents/bill-the-explorer.md`**
 ```markdown
 ---
-name: explore
+name: bill-the-explorer
 description: Searches and reads the codebase to answer questions about existing code. Use proactively before implementing anything unfamiliar.
 model: anthropic/claude-haiku-4-5
 readonly: true
@@ -80,10 +76,10 @@ You are a fast, read-only research agent. Find and summarize relevant
 files, functions, and patterns. Never edit files or run mutating commands.
 ```
 
-**`.cursor/agents/test-runner.md`**
+**`.cursor/agents/jill-the-test-runner.md`**
 ```markdown
 ---
-name: test-runner
+name: jill-the-test-runner
 description: Runs the test suite and reports pass/fail results with failure details. Use proactively after any code change.
 model: anthropic/claude-haiku-4-5
 ---
@@ -92,43 +88,62 @@ You run the project's test command, capture output, and report which
 tests passed or failed and why. Do not modify source files.
 ```
 
+**Name your subagents something that won't collide with one of Cursor's own built-in agents.** We first tried `explore`, and Cursor silently routed to its own built-in agent of the same name instead of ours, with no error to explain why nothing we specified was taking effect. `bill-the-explorer` and `jill-the-test-runner` avoid the collision.
+
 <figure>
   <video controls preload="metadata" playsinline>
     <source src="/blog/route-cursor-through-token-station/subagents.mp4" type="video/mp4">
   </video>
-  <figcaption>Creating the explore and test-runner subagents, both backed by anthropic/claude-haiku-4-5.</figcaption>
+  <figcaption>Creating the bill-the-explorer and jill-the-test-runner subagents.</figcaption>
 </figure>
 
-`readonly: true` on `explore` blocks file edits and state-changing shell commands, which fits a pure research role. `test-runner` needs to actually execute the test command, so it's left without that restriction, with its instructions telling it not to touch source files.
+`readonly: true` on `bill-the-explorer` blocks file edits and state-changing shell commands, which fits a pure research role. `jill-the-test-runner` needs to actually execute the test command, so it's left without that restriction, with its instructions telling it not to touch source files.
 
-Two ways to trigger a subagent in chat: automatic delegation, where the main agent reads the `description` field and decides on its own when to hand off, or explicit invocation with `/explore` or `/test-runner`.
+**About that `model:` line.** It's valid, documented Cursor syntax, and we set both subagents to `anthropic/claude-haiku-4-5` expecting a cost-tier split from the main conversation. It didn't happen. Asked directly why, the agent running the session gave a precise answer: the Task tool it calls to run a subagent only accepts a `model` parameter from a fixed allowlist, currently `inherit` or Cursor's own `composer-2.5-fast`, and doesn't read the `model:` frontmatter from a custom agent file at all. With no valid custom value to pass, it defaults to `inherit`, meaning every subagent runs on whatever model the parent conversation is using, Sonnet 5 in this setup, not Haiku. `name`, `description`, and `readonly` are honored and do their job; `model` currently isn't, for any custom model, not just Haiku. This matches multiple independent reports on Cursor's own community forum, so it's a known, current limitation rather than something specific to this setup.
+
+That leaves subagents genuinely useful for scoping delegated work by role and permission, a read-only researcher versus a test-runner that only reports, invoked automatically (the main agent reads each `description` and decides when to hand off) or explicitly with `/bill-the-explorer` or `/jill-the-test-runner`. It just doesn't currently give you a cheaper model for that delegated work.
 
 If you create these files by asking the agent in chat to write them rather than doing it from a terminal, and the sidebar still shows no subagents afterward, reload the window (**Ctrl+Shift+P → "Reload Window"**): Cursor doesn't always rescan `.cursor/agents/` live.
 
 ## Step 4: Watch it implement a real feature
 
-With the provider, models, and subagents in place, Sonnet 5 can run an actual coding session end to end: research, implementation, and verification, delegating the cheaper steps to Haiku along the way.
+With the provider, models, and subagents in place, Sonnet 5 can run an actual coding session end to end: research, implementation, and verification, delegating the read-only and verification steps along the way.
 
 We used [httpie](https://github.com/httpie/httpie), a real, moderately sized, well-tested open-source project, as the target. httpie's `--meta`/`-m` flag prints the request's elapsed time; it doesn't yet show the effective URL reached after following any redirects. That's a small, well-scoped, genuinely useful feature, the kind of task that needs a look at existing code before touching anything.
 
-The prompt we used, in Cursor's Agent mode with `anthropic/claude-sonnet-5` selected:
+Explicit invocation turned out to be the reliable way to trigger delegation. Asking in plain prose to "use the explore subagent" didn't actually hand off; the main agent just narrated doing so while working under its own context. Naming the subagent with a leading slash, as its own message, is what worked:
 
-> Add the effective URL (the URL actually reached after following any redirects) to HTTPie's `--meta` output, next to the existing elapsed time. Look at how elapsed time is computed and displayed first, then add a test that confirms it works for both a redirected and a non-redirected request.
+**Message 1**, to delegate research:
+```
+/bill-the-explorer find how elapsed time is computed and displayed in HTTPie's --meta output, and identify where to add the effective URL, the URL actually reached after following any redirects, alongside it.
+```
+
+**Message 2**, back to the main agent, once research comes back:
+```
+Using what bill-the-explorer found, add the effective URL next to the existing elapsed time in HTTPie's --meta output. Add a test that confirms it works for both a redirected and a non-redirected request.
+```
+
+**Message 3**, to delegate verification:
+```
+/jill-the-test-runner verify the new effective-URL test passes, along with the rest of the test suite. Report any failures separately from the two known pre-existing Big5 charset-detection failures in tests/test_encoding.py, which are unrelated to this change.
+```
 
 <figure>
   <video controls preload="metadata" playsinline>
     <source src="/blog/route-cursor-through-token-station/demo-httpie.mp4" type="video/mp4">
   </video>
-  <figcaption>Sonnet 5 delegating research to the explore subagent, implementing the change itself, then delegating verification to test-runner, all through Token Station.</figcaption>
+  <figcaption>Sonnet 5 delegating research to bill-the-explorer, implementing the change itself, then delegating verification to jill-the-test-runner, all through Token Station.</figcaption>
 </figure>
 
-Watch the [Token Station dashboard](https://models.bytefuture.ai/dashboard) during a session like this: you'll see `anthropic/claude-sonnet-5` billed for the planning and implementation steps, and `anthropic/claude-haiku-4-5` billed separately for the `explore` and `test-runner` delegations, the cost-tier split actually working, not just configured.
+Because subagent model routing isn't honored yet, the whole session bills as `anthropic/claude-sonnet-5` on the [Token Station dashboard](https://models.bytefuture.ai/dashboard), research and verification included, not the cost-tiered split we set out to show. What the video does show: `bill-the-explorer` running strictly read-only and reporting back before any code changes, and `jill-the-test-runner` running afterward to verify, distinct scoped roles doing distinct jobs in sequence, just not yet at distinct prices.
 
 ## What works today
 
-Chat and Agent mode both work with Sonnet 5 and Haiku through Token Station in Cursor: real replies, real file edits, correctly billed to your Token Station key, visible on the dashboard. That includes subagent delegation, as shown above.
+Chat and Agent mode both work with Sonnet 5 and Haiku through Token Station in Cursor: real replies, real file edits, correctly billed to your Token Station key, visible on the dashboard.
 
-That isn't true of every model family yet. Earlier testing with Token Station's GPT-5.6 routes (Sol, Terra, Luna) found that Agent mode could read and discuss code but consistently failed to apply actual file edits, a tool-call response format issue on Token Station's side rather than a hard Cursor limitation. Support for those routes is in progress. If you want a coding agent that reliably edits files in Cursor today, route it through `anthropic/claude-sonnet-5` and `anthropic/claude-haiku-4-5` rather than the GPT-5.6 family.
+Subagents work for scoping and permissions, `name`, `description`, and `readonly` are all honored, and both automatic and explicit (`/name`) invocation trigger real delegation. Subagent-level model routing does not currently work for custom models: Cursor's Task tool only accepts `inherit` or its own `composer-2.5-fast`, so every subagent runs on the parent conversation's model regardless of what `model:` specifies in its frontmatter. That's a Cursor platform limitation, confirmed directly by the agent itself and matching independent reports elsewhere, not something specific to Token Station or to Haiku.
+
+Earlier testing with Token Station's GPT-5.6 routes (Sol, Terra, Luna) found that Agent mode could read and discuss code but consistently failed to apply actual file edits, a tool-call response format issue on Token Station's side rather than a hard Cursor limitation. Support for those routes is in progress. If you want a coding agent that reliably edits files in Cursor today, route it through `anthropic/claude-sonnet-5` and `anthropic/claude-haiku-4-5` rather than the GPT-5.6 family.
 
 Token Station's xAI route, `xai/grok-4.6`, is also supported in Cursor through the same custom-provider setup, if you'd rather try Grok for the main coding role.
 
