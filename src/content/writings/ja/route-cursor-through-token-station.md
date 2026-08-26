@@ -4,13 +4,15 @@ lang: "ja"
 title: "Cursor を Token Station に接続する：Claude Sonnet 5 と Haiku"
 summary: "Cursor は Settings の Models パネルからカスタム OpenAI 互換プロバイダーに対応している。Token Station を指定すれば Claude Sonnet 5 と Haiku が選択可能なモデルとして現れ、Agent モードも完全にサポートする。チャットだけでなく実際のファイル編集ができ、調査と検証を任せる専用のサブエージェントも使える。"
 category: "tutorial"
-date: "2026-08-21"
+date: "2026-08-26"
 cta: "https://models.bytefuture.ai/intro.html"
 cover: "blog/route-cursor-through-token-station-cover.png"
 draft: false
 ---
 
 Cursor は Settings → Models からカスタム OpenAI 互換プロバイダーに対応している。Token Station のエンドポイントを指定すれば、Claude Sonnet 5 と Haiku を選択可能なモデルとして追加でき、すべて自分の Token Station キーで課金される。Token Station 上の他のいくつかのモデルファミリーと違い、この二つは Cursor の Agent モードを完全にサポートする。チャットだけでなく、実際のファイル編集ができるということだ。ここでは設定を最初から最後まで説明する。実際にやってみて遭遇した命名上の落とし穴も含めて、最後には実際のコーディングセッションまで見せる。Sonnet 5 がオープンソースプロジェクトで実際の機能を実装し、調査と検証を二つの専用サブエージェントに委任する様子だ。
+
+設定に入る前に、Cursor に直接課金するのではなく、なぜわざわざ Token Station 経由で Cursor をルーティングするのかをはっきりさせておく価値がある。具体的な理由は三つある。Cursor の Pro プランは一部のモデル（Grok 4.6、Grok 4.5、Composer 2.5）を共通の月次利用枠にまとめており、それ以外のモデルは別の枠からそれぞれのモデル自身の API 価格で課金される。しかし、どちらの枠も実際に何にいくら使ったのかをモデルごと、リクエストごとに内訳として見せてはくれない。Token Station のキーはその両方を回避する。BYOK のリクエストは Token Station のエンドポイントに直接送られ、Cursor 自身の課金には一切触れず、プロバイダーの実際のレートでマークアップなしに、自分のダッシュボードにそのまま表示される。第二に、Cursor が使っている複数のコーディングツールの一つに過ぎない場合（たとえば Claude Code や Codex、OpenClaw も併用しているような場合）、同じ Token Station キーと同じモデル ID がそれらすべてで使える。ツールごとに別々のキーを用意し、別々にチャージし、別々に請求を突き合わせる代わりに、追跡すべきアカウントも残高も一つで済む。第三に、Token Station のカタログは 300 モデル、30 以上のプロバイダーを超えており、Cursor が自社の枠に詰め込んでいる範囲をはるかに超えている。
 
 ## 始める前に必要なもの
 
@@ -145,7 +147,7 @@ Chat モードと Agent モードのどちらでも、Sonnet 5 と Haiku は Tok
 
 以前 Token Station の GPT-5.6 ルート(Sol、Terra、Luna)をテストしたところ、Agent モードでコードを読み議論することはできたが、実際のファイル編集を適用することには一貫して失敗した。これは Cursor 側の硬い制限ではなく、Token Station 側のツール呼び出しレスポンス形式の問題だった。これらのルートへの対応は現在進行中だ。今すぐ Cursor で確実にファイルを編集できるコーディングエージェントが必要なら、GPT-5.6 系ではなく `anthropic/claude-sonnet-5` と `anthropic/claude-haiku-4-5` を使ってほしい。
 
-Token Station の xAI ルート `xai/grok-4.6` も、同じカスタムプロバイダーの設定で Cursor から使える。メインのコーディング役に Grok を試したい場合はこちらだ。
+Token Station の xAI ルート `xai/grok-4.6` も、同じカスタムプロバイダーの設定で Cursor から使える。メインのコーディング役に Grok を試したい場合はこちらだ。その設定については姉妹編の記事、[Cursor で Grok 4.6 を動かす](/blog/route-cursor-through-token-station-grok-4-6-ja.html)を参照してほしい。
 
 ## はじめよう
 

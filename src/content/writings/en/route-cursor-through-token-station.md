@@ -4,13 +4,15 @@ lang: "en"
 title: "Route Cursor through Token Station: Claude Sonnet 5 and Haiku"
 summary: "Cursor supports custom OpenAI-compatible providers through Settings, Models. Point it at Token Station and Claude Sonnet 5 and Haiku show up as selectable models with full Agent-mode support: real file edits, not just chat, plus scoped subagents for delegated research and verification."
 category: "tutorial"
-date: "2026-08-21"
+date: "2026-08-26"
 cta: "https://models.bytefuture.ai/intro.html"
 cover: "blog/route-cursor-through-token-station-cover.png"
 draft: false
 ---
 
 Cursor supports custom OpenAI-compatible providers through Settings → Models. Point it at Token Station's endpoint and you can add Claude Sonnet 5 and Haiku as selectable models, each billed through your own Token Station key. Unlike some other model families available through Token Station, these two fully support Cursor's Agent mode: real file edits, not just chat. This walks through the setup end to end, including a naming gotcha we hit doing it ourselves, and finishes with an actual coding session: Sonnet 5 implementing a real feature in an open-source project, delegating research and verification to two purpose-built subagents.
+
+Before the setup, it's worth being explicit about why to route Cursor through Token Station at all, rather than paying Cursor directly. Three concrete reasons stand out. Cursor's Pro plan bundles a handful of models (Grok 4.6, Grok 4.5, Composer 2.5) into a shared monthly usage pool and meters everything else from a separate pool at each model's own API price, but neither pool gives you a per-model, per-request breakdown of what you actually spent. A Token Station key sidesteps both: BYOK requests go straight to Token Station's endpoint, never touch Cursor's own billing, and land on your own dashboard priced at the provider's real rate, with zero markup. Second, if Cursor is one of several coding tools you use (alongside Claude Code, Codex, or OpenClaw, say), the same Token Station key and the same model IDs work in all of them: one account and one balance to track, instead of separate keys, separate top-ups, and separate invoices per tool. Third, Token Station's catalog runs past 300 models across 30+ providers, well beyond whatever Cursor happens to bundle into its own pools.
 
 ## What you need before starting
 
@@ -145,7 +147,7 @@ Subagents work for scoping and permissions, `name`, `description`, and `readonly
 
 Earlier testing with Token Station's GPT-5.6 routes (Sol, Terra, Luna) found that Agent mode could read and discuss code but consistently failed to apply actual file edits, a tool-call response format issue on Token Station's side rather than a hard Cursor limitation. Support for those routes is in progress. If you want a coding agent that reliably edits files in Cursor today, route it through `anthropic/claude-sonnet-5` and `anthropic/claude-haiku-4-5` rather than the GPT-5.6 family.
 
-Token Station's xAI route, `xai/grok-4.6`, is also supported in Cursor through the same custom-provider setup, if you'd rather try Grok for the main coding role.
+Token Station's xAI route, `xai/grok-4.6`, is also supported in Cursor through the same custom-provider setup, if you'd rather try Grok for the main coding role. See the [companion article on running Grok 4.6 in Cursor](/blog/route-cursor-through-token-station-grok-4-6.html) for that setup specifically.
 
 ## Get started
 

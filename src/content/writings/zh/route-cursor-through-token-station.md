@@ -4,13 +4,15 @@ lang: "zh"
 title: "在 Cursor 中接入 Token Station：Claude Sonnet 5 和 Haiku"
 summary: "Cursor 在设置里的 Models 面板支持自定义 OpenAI 兼容 provider。把它指向 Token Station，Claude Sonnet 5 和 Haiku 就会作为可选模型出现，并且完整支持 Agent 模式：真正的文件编辑，不只是聊天，还带有用于委派研究和验证的专门 subagent。"
 category: "tutorial"
-date: "2026-08-21"
+date: "2026-08-26"
 cta: "https://models.bytefuture.ai/intro.html"
 cover: "blog/route-cursor-through-token-station-cover.png"
 draft: false
 ---
 
 Cursor 在 Settings → Models 里支持自定义 OpenAI 兼容 provider。把它指向 Token Station 的端点，就能把 Claude Sonnet 5 和 Haiku 添加为可选模型，全部通过你自己的 Token Station key 计费。和 Token Station 上的其他一些模型家族不同，这两个模型完整支持 Cursor 的 Agent 模式：真正的文件编辑，不只是聊天。下面是完整的配置流程，包括我们自己踩过的一个命名坑，最后还会跑一次真实的编码会话：Sonnet 5 在一个开源项目里实现一个真实功能，把研究和验证工作委派给两个专门定制的 subagent。
+
+在开始配置之前，有必要说清楚为什么要通过 Token Station 来路由 Cursor，而不是直接付费给 Cursor。有三个具体的理由。Cursor 的 Pro 计划把一部分模型（Grok 4.6、Grok 4.5、Composer 2.5）打包进一个共享的月度用量池，其余模型则从另一个池子里按各自的 API 价格计费，但这两个池子都不会给你一份按模型、按请求拆分的实际花费明细。Token Station 的 key 会绕开这两个池子：BYOK 请求直接发往 Token Station 的端点，完全不经过 Cursor 自己的计费，会按 provider 的真实费率、零加价，显示在你自己的控制台里。第二，如果 Cursor 只是你使用的多个编码工具之一（比如同时还用 Claude Code、Codex 或 OpenClaw），同一个 Token Station key 和同一批模型 ID 在所有这些工具里都能用：只需要一个账户、一个余额去追踪，而不必给每个工具单独准备 key、单独充值、单独对账。第三，Token Station 的模型目录已经超过 300 个模型、来自 30 多家 provider，远远超出 Cursor 自己打包进那些用量池里的范围。
 
 ## 开始之前需要准备什么
 
@@ -145,7 +147,7 @@ subagent 在角色划分和权限控制上是能用的，`name`、`description` 
 
 早些时候对 Token Station 的 GPT-5.6 路由（Sol、Terra、Luna）的测试发现，Agent 模式下它们能读取和讨论代码，但始终无法真正应用文件编辑，这是 Token Station 一侧的工具调用响应格式问题，而不是 Cursor 的硬性限制。对这几个路由的支持正在推进中。如果你现在就需要一个能在 Cursor 里可靠编辑文件的编码 agent，请使用 `anthropic/claude-sonnet-5` 和 `anthropic/claude-haiku-4-5`，而不是 GPT-5.6 系列。
 
-Token Station 的 xAI 路由 `xai/grok-4.6`，也可以通过同样的自定义 provider 设置在 Cursor 里使用，如果你想让 Grok 来担任主力编码模型的话。
+Token Station 的 xAI 路由 `xai/grok-4.6`，也可以通过同样的自定义 provider 设置在 Cursor 里使用，如果你想让 Grok 来担任主力编码模型的话。具体配置见姐妹篇文章：[在 Cursor 中运行 Grok 4.6](/blog/route-cursor-through-token-station-grok-4-6-zh.html)。
 
 ## 开始使用
 
