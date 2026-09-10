@@ -12,7 +12,7 @@ draft: false
 
 Cursor supports custom OpenAI-compatible providers through Settings → Models. Point it at Token Station's endpoint and you can add OpenAI's GPT-6 Astra and the GPT-5.6 family (Sol, Terra, Luna) as selectable models, each billed through your own Token Station key.
 
-This wasn't possible in practice until recently. Our [earlier Cursor setup with Claude Sonnet 5 and Haiku](/blog/route-cursor-through-token-station.html) documented that Token Station's GPT-5.6 routes could read and discuss code in Cursor's Agent mode but consistently failed to apply actual file edits, a tool-call response format gap on Token Station's side. The specific gap: OpenAI's models represent a file edit as an `ApplyPatch` tool call, a different response shape than Cursor's Agent mode was reading correctly before. Token Station keys can now carry a small adapter that rewrites that response into the shape Cursor expects, scoped specifically to Cursor talking to OpenAI and OpenAI-Codex models: other tools and other providers routed through the same key are unaffected. This walks through the setup end to end, including attaching that adapter, and confirms it works.
+This wasn't possible in practice until recently. Earlier testing (alongside our [Cursor setup with Claude Sonnet 5 and Haiku](/blog/route-cursor-through-token-station.html)) found that Token Station's GPT-5.6 routes could read and discuss code in Cursor's Agent mode but consistently failed to apply actual file edits, a tool-call response format gap on Token Station's side. The specific gap: OpenAI's models represent a file edit as an `ApplyPatch` tool call, a different response shape than Cursor's Agent mode was reading correctly before. Token Station keys can now carry a small adapter that rewrites that response into the shape Cursor expects, scoped specifically to Cursor talking to OpenAI and OpenAI-Codex models: other tools and other providers routed through the same key are unaffected. This walks through the setup end to end, including attaching that adapter, and confirms it works.
 
 Before the setup, it's worth being explicit about why to route Cursor through Token Station at all, rather than paying Cursor directly. Three concrete reasons stand out. Cursor's Pro plan bundles a handful of models (Grok 4.6, Grok 4.5, Composer 2.5) into a shared monthly usage pool and meters everything else from a separate pool at each model's own API price, but neither pool gives you a per-model, per-request breakdown of what you actually spent. A Token Station key sidesteps both: BYOK requests go straight to Token Station's endpoint, never touch Cursor's own billing, and land on your own dashboard priced at the provider's real rate, with zero markup. Second, if Cursor is one of several coding tools you use (alongside Claude Code, Codex, or OpenClaw, say), the same Token Station key and the same model IDs work in all of them: one account and one balance to track, instead of separate keys, separate top-ups, and separate invoices per tool. Third, Token Station's catalog runs past 300 models across 30+ providers, well beyond whatever Cursor happens to bundle into its own pools.
 
@@ -35,7 +35,12 @@ In the Token Station dashboard, open **API Keys** and click **Create new key**. 
 
 Back on **API Keys**, find the key you just created and click **Edit**. Under **WASM middleware**, it starts as "No WASM middleware assigned." Open the **Select WASM module** dropdown and choose **Cursor ↔ OpenAI adapter**, the entry that reformats OpenAI tool-call responses into the shape Cursor's Agent mode expects. Click **Save changes**. You'll see a confirmation banner ("WASM middleware installed and validated"), and the key's row in the **Active keys** table now lists the adapter under the **WASM** column.
 
-This is the step that's actually new. Without it attached, everything else in this article still works exactly as before, and Agent-mode file edits against OpenAI models still fail the way our earlier Claude article documented.
+<figure>
+  <img src="/blog/route-cursor-through-token-station/openai-adapter-confirmed.png" alt="Token Station API Keys page showing a confirmation banner reading WASM middleware installed and validated, and the Cursor key's row listing the adapter under the WASM column" />
+  <figcaption>Token Station's API Keys page after attaching the adapter: the confirmation banner, and the key's row listing it under the WASM column.</figcaption>
+</figure>
+
+This is the step that's actually new. Without it attached, everything else in this article still works exactly as before, but Agent-mode file edits against OpenAI models fail the same way earlier testing found: Agent mode reads and discusses code fine, but never actually changes a file.
 
 ## Step 2: Register Token Station as a custom provider
 
@@ -61,7 +66,7 @@ Still in Models settings, scroll to the bottom of the model list to the custom-m
 
 ```
 openai/gpt-6-astra
-openai/gpt-5.6
+openai/gpt-5.6-sol
 openai/gpt-5.6-terra
 openai/gpt-5.6-luna
 ```
@@ -71,7 +76,7 @@ openai/gpt-5.6-luna
 | Model | Cost (input/output per M) | Good for |
 |---|---|---|
 | `openai/gpt-6-astra` | $10 / $50 | The hardest, longest agentic sessions: multi-file refactors and long Agent-mode runs where fewer correction rounds matter more than per-token cost. |
-| `openai/gpt-5.6` (Sol) | $5 / $30 | A flagship default for most coding-agent steps at half Astra's price. |
+| `openai/gpt-5.6-sol` | $5 / $30 | A flagship default for most coding-agent steps at half Astra's price. |
 | `openai/gpt-5.6-terra` | $2.50 / $15 | Repeated implementation and debugging loops. |
 | `openai/gpt-5.6-luna` | $1 / $6 | Switching the main chat to directly for lighter, single-turn questions, exploration, or triage. |
 
@@ -95,7 +100,7 @@ Token Station's dashboard confirms the same thing from the billing side:
   <figcaption>Token Station's Recent Activity, showing openai/gpt-5.6-luna requests billed correctly during testing.</figcaption>
 </figure>
 
-All four routes, `openai/gpt-6-astra`, `openai/gpt-5.6`, `openai/gpt-5.6-terra`, and `openai/gpt-5.6-luna`, are confirmed working end to end this way: real file edits, correctly billed, through the same adapter attached in Step 1.
+All four routes, `openai/gpt-6-astra`, `openai/gpt-5.6-sol`, `openai/gpt-5.6-terra`, and `openai/gpt-5.6-luna`, are confirmed working end to end this way: real file edits, correctly billed, through the same adapter attached in Step 1.
 
 ## Step 5: Define scoped subagents
 
@@ -162,7 +167,7 @@ Using what bill-the-explorer found, add the effective URL next to the existing e
 
 ## What works today
 
-Agent-mode file edits are confirmed working for all four OpenAI routes, `openai/gpt-6-astra`, `openai/gpt-5.6`, `openai/gpt-5.6-terra`, and `openai/gpt-5.6-luna`, through Token Station in Cursor: real edits applied to real files, correctly billed to your Token Station key, visible on the dashboard. This is new: the same routes previously could discuss code in Agent mode but not edit it, and the fix is the adapter attached to your Token Station key in Step 1.
+Agent-mode file edits are confirmed working for all four OpenAI routes, `openai/gpt-6-astra`, `openai/gpt-5.6-sol`, `openai/gpt-5.6-terra`, and `openai/gpt-5.6-luna`, through Token Station in Cursor: real edits applied to real files, correctly billed to your Token Station key, visible on the dashboard. This is new: the same routes previously could discuss code in Agent mode but not edit it, and the fix is the adapter attached to your Token Station key in Step 1.
 
 Subagents work for scoping and permissions: `name`, `description`, and `readonly` are all honored, and both automatic and explicit (`/name`) invocation trigger real delegation. Subagent-level model routing does not currently work for custom models, regardless of provider: Cursor's Task tool only accepts `inherit` or its own `composer-2.5-fast`, so every subagent runs on the parent conversation's model. That's the same Cursor platform limitation documented in our Claude and Grok setups, not something specific to OpenAI's models.
 

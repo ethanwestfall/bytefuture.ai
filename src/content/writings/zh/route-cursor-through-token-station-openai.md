@@ -12,7 +12,7 @@ draft: false
 
 Cursor 在 Settings → Models 里支持自定义 OpenAI 兼容 provider。把它指向 Token Station 的端点，就能把 OpenAI 的 GPT-6 Astra 和 GPT-5.6 系列（Sol、Terra、Luna）添加为可选模型，全部通过你自己的 Token Station key 计费。
 
-这在最近之前实际上是做不到的。我们[Claude Sonnet 5 和 Haiku 版的 Cursor 配置](/blog/route-cursor-through-token-station-zh.html)那篇记录过，Token Station 的 GPT-5.6 路由在 Cursor 的 Agent 模式下能读取和讨论代码，但始终无法真正应用文件编辑，这是 Token Station 一侧的工具调用响应格式问题。具体的差距是这样的：OpenAI 的模型把文件编辑表示为一次 `ApplyPatch` 工具调用，这种响应形状和 Cursor 的 Agent 模式此前能正确读取的形状不一样。现在，Token Station 的 key 可以挂载一个小型 adapter，把这种响应重写成 Cursor 期望的形状，专门作用于 Cursor 与 OpenAI、OpenAI-Codex 模型对话的场景：通过同一个 key 路由的其他工具和其他 provider 不受影响。下面完整走一遍这套配置流程，包括接入这个 adapter，并确认它确实有效。
+这在最近之前实际上是做不到的。早期测试（和我们[Claude Sonnet 5 和 Haiku 版的 Cursor 配置](/blog/route-cursor-through-token-station-zh.html)同期）发现，Token Station 的 GPT-5.6 路由在 Cursor 的 Agent 模式下能读取和讨论代码，但始终无法真正应用文件编辑，这是 Token Station 一侧的工具调用响应格式问题。具体的差距是这样的：OpenAI 的模型把文件编辑表示为一次 `ApplyPatch` 工具调用，这种响应形状和 Cursor 的 Agent 模式此前能正确读取的形状不一样。现在，Token Station 的 key 可以挂载一个小型 adapter，把这种响应重写成 Cursor 期望的形状，专门作用于 Cursor 与 OpenAI、OpenAI-Codex 模型对话的场景：通过同一个 key 路由的其他工具和其他 provider 不受影响。下面完整走一遍这套配置流程，包括接入这个 adapter，并确认它确实有效。
 
 在开始配置之前，有必要说清楚为什么要通过 Token Station 来路由 Cursor，而不是直接付费给 Cursor。有三个具体的理由。Cursor 的 Pro 计划把一部分模型（Grok 4.6、Grok 4.5、Composer 2.5）打包进一个共享的月度用量池，其余模型则从另一个池子里按各自的 API 价格计费，但这两个池子都不会给你一份按模型、按请求拆分的实际花费明细。Token Station 的 key 会绕开这两个池子：BYOK 请求直接发往 Token Station 的端点，完全不经过 Cursor 自己的计费，会按 provider 的真实费率、零加价，显示在你自己的控制台里。第二，如果 Cursor 只是你使用的多个编码工具之一（比如同时还用 Claude Code、Codex 或 OpenClaw），同一个 Token Station key 和同一批模型 ID 在所有这些工具里都能用：只需要一个账户、一个余额去追踪，而不必给每个工具单独准备 key、单独充值、单独对账。第三，Token Station 的模型目录已经超过 300 个模型、来自 30 多家 provider，远远超出 Cursor 自己打包进那些用量池里的范围。
 
@@ -35,7 +35,12 @@ Cursor 在 Settings → Models 里支持自定义 OpenAI 兼容 provider。把�
 
 回到 **API Keys**，找到你刚创建的这个密钥，点击 **Edit**。在 **WASM middleware** 下，它一开始显示为"No WASM middleware assigned."。打开 **Select WASM module** 下拉菜单，选择 **Cursor ↔ OpenAI adapter**，这一项会把 OpenAI 的工具调用响应重新格式化成 Cursor 的 Agent 模式期望的形状。点击 **Save changes**。你会看到一条确认提示（"WASM middleware installed and validated"），这个密钥在 **Active keys** 表格里对应的那一行，现在会在 **WASM** 列里列出这个 adapter。
 
-这一步才是真正新增的内容。如果不接入它，这篇文章里其他的一切依然会照常工作，但针对 OpenAI 模型的 Agent 模式文件编辑，仍然会像我们之前那篇 Claude 文章记录的那样失败。
+<figure>
+  <img src="/blog/route-cursor-through-token-station/openai-adapter-confirmed.png" alt="Token Station 的 API Keys 页面，显示确认提示 WASM middleware installed and validated，Cursor 密钥所在行的 WASM 列里列出了这个 adapter" />
+  <figcaption>接入 adapter 后的 Token Station API Keys 页面：确认提示，以及密钥那一行在 WASM 列里列出的 adapter。</figcaption>
+</figure>
+
+这一步才是真正新增的内容。如果不接入它，这篇文章里其他的一切依然会照常工作，但针对 OpenAI 模型的 Agent 模式文件编辑，仍然会像早期测试发现的那样失败：Agent 模式能正常读取和讨论代码，但从来不会真正改动文件。
 
 ## 步骤 2：将 Token Station 注册为自定义 provider
 
@@ -61,7 +66,7 @@ Cursor 在 Settings → Models 里支持自定义 OpenAI 兼容 provider。把�
 
 ```
 openai/gpt-6-astra
-openai/gpt-5.6
+openai/gpt-5.6-sol
 openai/gpt-5.6-terra
 openai/gpt-5.6-luna
 ```
@@ -71,7 +76,7 @@ openai/gpt-5.6-luna
 | 模型 | 费用（输入/输出，每百万 token） | 适用场景 |
 |---|---|---|
 | `openai/gpt-6-astra` | $10 / $50 | 最难、耗时最长的 agentic 会话：多文件重构和长时间的 Agent 模式运行，这类场景里减少纠错轮数比省 token 更重要。 |
-| `openai/gpt-5.6`（Sol） | $5 / $30 | 大多数编码 agent 步骤的旗舰默认选择，价格只有 Astra 的一半。 |
+| `openai/gpt-5.6-sol` | $5 / $30 | 大多数编码 agent 步骤的旗舰默认选择，价格只有 Astra 的一半。 |
 | `openai/gpt-5.6-terra` | $2.50 / $15 | 反复的实现和调试循环。 |
 | `openai/gpt-5.6-luna` | $1 / $6 | 直接切换主对话来处理较轻量的单轮问题、探索或分类。 |
 
@@ -95,7 +100,7 @@ Token Station 的控制台从计费这一侧也确认了同样的事情：
   <figcaption>Token Station 的 Recent Activity，显示测试期间 openai/gpt-5.6-luna 请求被正确计费。</figcaption>
 </figure>
 
-全部四个路由，`openai/gpt-6-astra`、`openai/gpt-5.6`、`openai/gpt-5.6-terra` 和 `openai/gpt-5.6-luna`，都通过这种方式确认了端到端可用：真实的文件编辑，正确计费，都经过步骤 1 里接入的那同一个 adapter。
+全部四个路由，`openai/gpt-6-astra`、`openai/gpt-5.6-sol`、`openai/gpt-5.6-terra` 和 `openai/gpt-5.6-luna`，都通过这种方式确认了端到端可用：真实的文件编辑，正确计费，都经过步骤 1 里接入的那同一个 adapter。
 
 ## 步骤 5：定义范围明确的 subagent
 
@@ -162,7 +167,7 @@ Using what bill-the-explorer found, add the effective URL next to the existing e
 
 ## 目前能用的
 
-Agent 模式下的文件编辑，在全部四个 OpenAI 路由 `openai/gpt-6-astra`、`openai/gpt-5.6`、`openai/gpt-5.6-terra` 和 `openai/gpt-5.6-luna` 上，通过 Token Station 在 Cursor 里都已确认可用：真实的编辑应用到真实的文件上，正确计入你的 Token Station 密钥，并显示在控制台里。这是新出现的能力：同样这些路由此前在 Agent 模式下只能讨论代码，不能编辑，而修复方式就是步骤 1 里接入你的 Token Station 密钥的那个 adapter。
+Agent 模式下的文件编辑，在全部四个 OpenAI 路由 `openai/gpt-6-astra`、`openai/gpt-5.6-sol`、`openai/gpt-5.6-terra` 和 `openai/gpt-5.6-luna` 上，通过 Token Station 在 Cursor 里都已确认可用：真实的编辑应用到真实的文件上，正确计入你的 Token Station 密钥，并显示在控制台里。这是新出现的能力：同样这些路由此前在 Agent 模式下只能讨论代码，不能编辑，而修复方式就是步骤 1 里接入你的 Token Station 密钥的那个 adapter。
 
 subagent 在划分范围和权限方面是能用的：`name`、`description` 和 `readonly` 都会被正确识别，自动调用和显式调用（`/name`）都会触发真正的委派。subagent 层面的模型路由目前对自定义模型不起作用，不管是哪个 provider 都一样：Cursor 的 Task 工具只接受 `inherit` 或它自己的 `composer-2.5-fast`，所以每个 subagent 都运行在主对话所用的模型上。这和我们 Claude、Grok 配置里记录的是同一个 Cursor 平台限制，不是 OpenAI 模型特有的问题。
 

@@ -12,7 +12,7 @@ draft: false
 
 Cursor は Settings → Models からカスタム OpenAI 互換プロバイダーに対応している。Token Station のエンドポイントを指定すれば、OpenAI の GPT-6 Astra と GPT-5.6 ファミリー（Sol、Terra、Luna）を選択可能なモデルとして追加でき、すべて自分の Token Station キーで課金される。
 
-これは最近まで実際にはできなかった。私たちの[Claude Sonnet 5 と Haiku のセットアップ](/blog/route-cursor-through-token-station-ja.html)で記録したとおり、Token Station の GPT-5.6 ルートは Cursor の Agent モードでコードを読み議論することはできたが、実際のファイル編集を適用することには一貫して失敗していた。これは Token Station 側のツール呼び出しレスポンス形式のギャップだった。具体的なギャップはこうだ。OpenAI のモデルはファイル編集を `ApplyPatch` というツール呼び出しとして表現するが、これは Cursor の Agent モードがそれまで正しく読み取れていたものとは異なるレスポンス形状だ。Token Station のキーには今、小さなアダプターを取り付けられるようになった。これがそのレスポンスを Cursor が期待する形に書き換える。これは Cursor が OpenAI と OpenAI-Codex のモデルと話す場面に限定されており、同じキーを経由する他のツールや他のプロバイダーには影響しない。ここでは、そのアダプターを接続することも含めて、設定を最初から最後まで説明し、実際に動作することを確認する。
+これは最近まで実際にはできなかった。以前のテスト(私たちの[Claude Sonnet 5 と Haiku のセットアップ](/blog/route-cursor-through-token-station-ja.html)と同時期に行ったもの)で分かったのは、Token Station の GPT-5.6 ルートは Cursor の Agent モードでコードを読み議論することはできたが、実際のファイル編集を適用することには一貫して失敗していたということだ。これは Token Station 側のツール呼び出しレスポンス形式のギャップだった。具体的なギャップはこうだ。OpenAI のモデルはファイル編集を `ApplyPatch` というツール呼び出しとして表現するが、これは Cursor の Agent モードがそれまで正しく読み取れていたものとは異なるレスポンス形状だ。Token Station のキーには今、小さなアダプターを取り付けられるようになった。これがそのレスポンスを Cursor が期待する形に書き換える。これは Cursor が OpenAI と OpenAI-Codex のモデルと話す場面に限定されており、同じキーを経由する他のツールや他のプロバイダーには影響しない。ここでは、そのアダプターを接続することも含めて、設定を最初から最後まで説明し、実際に動作することを確認する。
 
 設定に入る前に、Cursor に直接課金するのではなく、なぜわざわざ Token Station 経由で Cursor をルーティングするのかをはっきりさせておく価値がある。具体的な理由は三つある。Cursor の Pro プランは一部のモデル（Grok 4.6、Grok 4.5、Composer 2.5）を共通の月次利用枠にまとめており、それ以外のモデルは別の枠からそれぞれのモデル自身の API 価格で課金される。しかし、どちらの枠も実際に何にいくら使ったのかをモデルごと、リクエストごとに内訳として見せてはくれない。Token Station のキーはその両方を回避する。BYOK のリクエストは Token Station のエンドポイントに直接送られ、Cursor 自身の課金には一切触れず、プロバイダーの実際のレートでマークアップなしに、自分のダッシュボードにそのまま表示される。第二に、Cursor が使っている複数のコーディングツールの一つに過ぎない場合（たとえば Claude Code や Codex、OpenClaw も併用しているような場合）、同じ Token Station キーと同じモデル ID がそれらすべてで使える。ツールごとに別々のキーを用意し、別々にチャージし、別々に請求を突き合わせる代わりに、追跡すべきアカウントも残高も一つで済む。第三に、Token Station のカタログは 300 モデル、30 以上のプロバイダーを超えており、Cursor が自社の枠に詰め込んでいる範囲をはるかに超えている。
 
@@ -35,7 +35,12 @@ Token Station のダッシュボードで **API Keys** を開き、**Create new 
 
 **API Keys** に戻り、先ほど作成したキーを見つけて **Edit** をクリックする。**WASM middleware** の項目は最初「No WASM middleware assigned.」と表示されている。**Select WASM module** のドロップダウンを開き、**Cursor ↔ OpenAI adapter** を選ぶ。これは OpenAI のツール呼び出しレスポンスを、Cursor の Agent モードが期待する形に変換し直すエントリだ。**Save changes** をクリックする。確認バナー（「WASM middleware installed and validated」）が表示され、**Active keys** テーブルのそのキーの行には、今度は **WASM** 列にこのアダプターが表示される。
 
-実際に新しいのはこのステップだ。これを接続しなければ、この記事の他の部分はすべて以前と同じように動作するが、OpenAI モデルに対する Agent モードのファイル編集は、以前の Claude の記事で記録した通りに失敗し続ける。
+<figure>
+  <img src="/blog/route-cursor-through-token-station/openai-adapter-confirmed.png" alt="Token Station の API Keys ページ。WASM middleware installed and validated という確認バナーと、Cursor キーの行の WASM 列に表示されたアダプター" />
+  <figcaption>アダプターを接続した後の Token Station の API Keys ページ。確認バナーと、WASM 列に表示されたキーの行。</figcaption>
+</figure>
+
+実際に新しいのはこのステップだ。これを接続しなければ、この記事の他の部分はすべて以前と同じように動作するが、OpenAI モデルに対する Agent モードのファイル編集は、以前のテストで分かったのと同じように失敗し続ける。Agent モードはコードを読み議論することはできても、実際にファイルを変更することは決してない。
 
 ## ステップ 2：Token Station をカスタムプロバイダーとして登録する
 
@@ -61,7 +66,7 @@ OpenAI API Key のトグルをオンにすると、先に確認を求められ�
 
 ```
 openai/gpt-6-astra
-openai/gpt-5.6
+openai/gpt-5.6-sol
 openai/gpt-5.6-terra
 openai/gpt-5.6-luna
 ```
@@ -71,7 +76,7 @@ openai/gpt-5.6-luna
 | モデル | コスト（入力/出力、100万トークンあたり） | 向いている用途 |
 |---|---|---|
 | `openai/gpt-6-astra` | $10 / $50 | 最も難しく、最も長いエージェント的セッション向け。マルチファイルのリファクタリングや長時間の Agent モード実行では、トークン単価より修正の往復回数を減らすことのほうが重要になる。 |
-| `openai/gpt-5.6`（Sol） | $5 / $30 | ほとんどのコーディングエージェントのステップに使える、Astra の半額のフラッグシップ既定モデル。 |
+| `openai/gpt-5.6-sol` | $5 / $30 | ほとんどのコーディングエージェントのステップに使える、Astra の半額のフラッグシップ既定モデル。 |
 | `openai/gpt-5.6-terra` | $2.50 / $15 | 繰り返しの実装とデバッグのループ向け。 |
 | `openai/gpt-5.6-luna` | $1 / $6 | メインのチャットを直接切り替えて、より軽い単発の質問、調査、トリアージに使う。 |
 
@@ -95,7 +100,7 @@ Token Station のダッシュボードも、課金の側から同じことを確
   <figcaption>Token Station の Recent Activity。テスト中の openai/gpt-5.6-luna のリクエストが正しく課金されている様子。</figcaption>
 </figure>
 
-四つのルート、`openai/gpt-6-astra`、`openai/gpt-5.6`、`openai/gpt-5.6-terra`、`openai/gpt-5.6-luna` はすべて、この方法でエンドツーエンドに動作することが確認できた。実際のファイル編集、正しい課金、すべてステップ 1 で接続した同じアダプターを経由している。
+四つのルート、`openai/gpt-6-astra`、`openai/gpt-5.6-sol`、`openai/gpt-5.6-terra`、`openai/gpt-5.6-luna` はすべて、この方法でエンドツーエンドに動作することが確認できた。実際のファイル編集、正しい課金、すべてステップ 1 で接続した同じアダプターを経由している。
 
 ## ステップ 5：範囲を絞ったサブエージェントを定義する
 
@@ -162,7 +167,7 @@ Using what bill-the-explorer found, add the effective URL next to the existing e
 
 ## 今できること
 
-四つの OpenAI ルート、`openai/gpt-6-astra`、`openai/gpt-5.6`、`openai/gpt-5.6-terra`、`openai/gpt-5.6-luna` すべてで、Token Station 経由の Cursor における Agent モードのファイル編集が確認できた。実際にファイルへ反映された編集があり、Token Station のキーに正しく課金され、ダッシュボードにも表示される。これは新しい点だ。同じルートは以前、Agent モードでコードを議論することはできたが編集できなかった。その修正が、ステップ 1 で Token Station のキーに接続したアダプターだ。
+四つの OpenAI ルート、`openai/gpt-6-astra`、`openai/gpt-5.6-sol`、`openai/gpt-5.6-terra`、`openai/gpt-5.6-luna` すべてで、Token Station 経由の Cursor における Agent モードのファイル編集が確認できた。実際にファイルへ反映された編集があり、Token Station のキーに正しく課金され、ダッシュボードにも表示される。これは新しい点だ。同じルートは以前、Agent モードでコードを議論することはできたが編集できなかった。その修正が、ステップ 1 で Token Station のキーに接続したアダプターだ。
 
 サブエージェントはスコープと権限の面では機能する。`name`、`description`、`readonly` はすべて反映され、自動呼び出しと明示的な呼び出し（`/name`）のどちらも実際の委任を発生させる。サブエージェント単位のモデルルーティングは、プロバイダーを問わずカスタムモデルに対して現状機能しない。Cursor の Task ツールは `inherit` か自身の `composer-2.5-fast` しか受け付けないため、すべてのサブエージェントは親の会話のモデルで動作する。これは私たちの Claude と Grok のセットアップで記録した Cursor プラットフォーム自体の同じ制限であり、OpenAI のモデルに特有の問題ではない。
 
