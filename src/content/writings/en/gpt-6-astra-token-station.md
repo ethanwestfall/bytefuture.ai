@@ -75,6 +75,6 @@ For a single Q&A call, a classification task, or anything that doesn't chain man
 
 ## Get started
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): $1 in free credit, no card required, with up to $50 in bonus credit on your first top-up. Export your key and point your existing OpenAI-compatible integration at `openai/gpt-6-astra`.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): no card required, with a 100% match up to $50 on your first top-up. Export your key and point your existing OpenAI-compatible integration at `openai/gpt-6-astra`.
 
 [Try Token Station](https://models.bytefuture.ai/intro.html)

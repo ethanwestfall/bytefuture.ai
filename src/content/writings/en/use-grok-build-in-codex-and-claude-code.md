@@ -2,7 +2,7 @@
 slug: "use-grok-build-in-codex-and-claude-code"
 lang: "en"
 title: "How to Use Grok Build in Codex and Claude Code"
-summary: "xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with Token Station free credits. No xAI account needed."
+summary: "xAI's Grok Build model is evolving fast and costs a fraction of GPT-5.5 or Claude Fable 5. Run it inside Claude Code or Codex with a Token Station key. No xAI account needed."
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -17,7 +17,7 @@ draft: false
 <p><a href="https://models.bytefuture.ai/signup">Token Station</a> sits between your coding agent and xAI, and closes the gap with four things:</p>
 
 <ul>
-<li><strong>Free credits for Grok Build.</strong> The $1 you get at signup works with Grok Build. No card, no subscription.</li>
+<li><strong>No card to start.</strong> Sign up free and top up when you're ready; the balance works with Grok Build. No card required, no subscription.</li>
 <li><strong>No xAI account needed.</strong> You skip creating and then funding a separate xAI account; your one Token Station key covers it.</li>
 <li><strong>Claude Code: API translation.</strong> Claude Code speaks Anthropic's Messages API. Token Station translates those requests into what xAI's endpoint expects, and translates the responses back.</li>
 <li><strong>Codex: tool and parameter name translation.</strong> Codex's built-in tool calls use names and parameters xAI does not recognize. Token Station rewrites them in both directions so tool use actually works.</li>
@@ -28,7 +28,7 @@ draft: false
 <h2 id="what-you-need">What you need</h2>
 
 <ul>
-<li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; you get $1 in credit, no card required)</li>
+<li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; no card required)</li>
 <li>Your Token Station API key (starts with <code>gw-</code>)</li>
 <li>Claude Code or Codex installed</li>
 </ul>
@@ -108,6 +108,6 @@ codex</code></pre>
 
 <h2 id="try-it">Try it</h2>
 
-<p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> and get $1 in free credit. No card, no subscription, no xAI account to create or fund. Your first top-up adds up to $50 in bonus credit. The free credit works with every model on the platform, including Grok Build, GPT-5.5, Claude, Gemini, and 200+ others. And since Grok Build costs a fraction of the frontier flagships per token, that credit goes a long way.</p>
+<p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>. No card, no subscription, no xAI account to create or fund. Your first top-up adds up to $50 in bonus credit, and it works across every model on the platform, including Grok Build, GPT-5.5, Claude, Gemini, and 200+ others. Grok Build itself costs a fraction of the frontier flagships per token, so even a modest budget covers a lot of ground.</p>
 
-<p>Two minutes of config. Then you are coding with Grok Build. And if Grok Build is not the right fit, the $1 credit works with every other model on the platform.</p>
+<p>Two minutes of config. Then you are coding with Grok Build. And if Grok Build is not the right fit, the same balance works with every other model on the platform.</p>

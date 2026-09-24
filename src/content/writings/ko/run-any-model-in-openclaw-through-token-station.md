@@ -15,7 +15,7 @@ OpenClaw는 온보딩 위저드와 CLI를 통해 커스텀 프로바이더(어�
 ## 시작하기 전에 필요한 것
 
 - Node 22.22.3+, 24.15+, 또는 25.9+(기본값으로는 Node 24를 권장). `node --version`으로 확인한다.
-- Token Station 계정과 API 키. [models.bytefuture.ai](https://models.bytefuture.ai)에서 무료로 가입할 수 있다. 가입 시 1달러 크레딧이 지급되며 카드는 필요 없다.
+- Token Station 계정과 API 키. [models.bytefuture.ai](https://models.bytefuture.ai)에서 카드 없이 무료로 가입할 수 있다.
 - OpenClaw 설치(아래 1단계 참고).
 
 ## 1단계: OpenClaw 설치하기
@@ -146,4 +146,4 @@ OpenClaw의 경우, `--custom-model-id`를 Token Station의 라우팅 대상 워
 
 OpenClaw에 Token Station을 설정하는 것은 명령 하나와 환경 변수 하나로 끝난다. 데몬이 실행되면, 모델을 바꾸는 것도 `openclaw configure --section model` 호출 한 번이면 되고 설정의 다른 부분은 아무것도 바뀌지 않는다.
 
-[models.bytefuture.ai](https://models.bytefuture.ai)에서 가입하고(1달러 무료 크레딧, 카드 불필요, 첫 충전 시 최대 50달러 보너스), 키를 export하고, 온보딩 명령을 실행하고, 대시보드를 열어보자. 키 하나, 엔드포인트 하나로 당신의 OpenClaw 환경에 필요한 모든 모델을 쓸 수 있다.
+[models.bytefuture.ai](https://models.bytefuture.ai)에서 가입하고(카드 불필요, 첫 충전 시 최대 50달러 보너스), 키를 export하고, 온보딩 명령을 실행하고, 대시보드를 열어보자. 키 하나, 엔드포인트 하나로 당신의 OpenClaw 환경에 필요한 모든 모델을 쓸 수 있다.

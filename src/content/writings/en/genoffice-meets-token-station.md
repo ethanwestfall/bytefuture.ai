@@ -27,7 +27,7 @@ draft: false
   <tr><td>Pricing</td><td>Credits tied to a Genspark plan</td><td>One key, provider rates, zero markup</td></tr>
 </table>
 
-<p><strong>Pay-as-you-go, not a contract.</strong> Token Station has no subscription tier. Register free, no card required, and a $1 credit lands in your balance immediately. From there you pay provider rates on the models you actually call, nothing recurring and nothing to cancel. Some models, like NVIDIA NIM, cost nothing at all.</p>
+<p><strong>Pay-as-you-go, not a contract.</strong> Token Station has no subscription tier. Register free, no card required, and top up when you're ready: a 100% match up to $50 on your first top-up. From there you pay provider rates on the models you actually call, nothing recurring and nothing to cancel. Some models, like NVIDIA NIM, cost nothing at all.</p>
 
 <p><strong>Freedom to choose the model.</strong> A gateway account isn't pinned to one vendor's lineup. Run GenOffice Docs on Claude for long-form editing, switch Sheets to a cheaper model for routine formula work, and point Slides at whichever image-capable model fits the deck, all through the same key and the same OpenAI-style endpoint, with no separate signup per provider.</p>
 
@@ -172,4 +172,4 @@ composePageElements: async (args) => {
   <li>GenOffice: <a href="https://github.com/genspark-ai/genoffice/blob/main/CONTRIBUTING.md">contributing guide</a></li>
 </ul>
 
-<p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($1 in free credit, no card required), export <code>TOKEN_STATION_API_KEY</code>, and relaunch GenOffice. One key, one endpoint, every model your Docs, Sheets, and Slides sessions need.</p>
+<p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> (no card required), export <code>TOKEN_STATION_API_KEY</code>, and relaunch GenOffice. One key, one endpoint, every model your Docs, Sheets, and Slides sessions need.</p>

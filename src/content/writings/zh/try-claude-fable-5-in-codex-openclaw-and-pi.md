@@ -2,7 +2,7 @@
 slug: "try-claude-fable-5-in-codex-openclaw-and-pi"
 lang: "zh"
 title: "先试后用：在 Codex、OpenClaw 和 Pi 中体验 Claude Fable 5"
-summary: "Anthropic 全新的旗舰模型性能领先、备受争议，价格为每百万 token 10/50 美元。在你现有的工具中临时体验它，无需 Anthropic 账户，只要 Token Station 的免费额度。"
+summary: "Anthropic 全新的旗舰模型性能领先、备受争议，价格为每百万 token 10/50 美元。在你现有的工具中临时体验它，无需 Anthropic 账户，只要一个 Token Station key。"
 category: "tutorial"
 date: "2026-06-12"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -16,7 +16,7 @@ draft: false
 
   <p>这样的组合：显然出色，却又公开遭到质疑，定价更像奢侈品，需要一种明确的态度：<strong>去试，但别轻易押注。</strong>不要注册新账户，不要充值新余额，也不要把整套工作流搬到新平台上。在你已经在用的编码工具里<em>临时</em>跑一跑它，用按量计费的 token，看够了随时就能停。</p>
 
-  <p>Fable 5 已在 <a href="https://models.bytefuture.ai">Token Station</a> 上线，模型 ID 为 <code>anthropic/claude-fable-5</code>，按 Anthropic 官方标价、零加价提供，你的 <a href="https://models.bytefuture.ai/signup">1 美元注册额度</a>也可以用在它上面。本文给出 <strong>Codex</strong>、<strong>OpenClaw</strong> 和 <strong>Pi</strong> 的完整配置。（如果你用的是 Claude Code，Fable 5 在那里是原生支持的；本文是写给其他人的。）</p>
+  <p>Fable 5 已在 <a href="https://models.bytefuture.ai">Token Station</a> 上线，模型 ID 为 <code>anthropic/claude-fable-5</code>，按 Anthropic 官方标价、零加价提供。本文给出 <strong>Codex</strong>、<strong>OpenClaw</strong> 和 <strong>Pi</strong> 的完整配置。（如果你用的是 Claude Code，Fable 5 在那里是原生支持的；本文是写给其他人的。）</p>
 
   <h2 id="what-it-is">Fable 5 究竟是什么</h2>
 
@@ -66,12 +66,12 @@ draft: false
 
   <p>这是 Opus 4.8 在两项上的 2 倍，输出价格更是 <strong>Grok Build 的 25 倍</strong>。同一段较长的 agent 会话，在 Grok Build 上只要几分钱，在 Fable 5 上却可能花掉真金白银。带有大量思考和工具输出的长周期运行，正是每百万 50 美元的输出价格最咬人的地方。</p>
 
-  <p>反过来看：哪怕只是 Token Station 的 1 美元注册额度，也足够先尝个鲜：按 Fable 5 的价格，大约相当于 10 万输入 token 或 2 万输出 token，实际上就是几次强度适中的编码 agent 提示。足以让你形成初步印象，又不至于让你心疼。想做更充分的评估，首次充值还能再获得最多 50 美元的赠送额度。</p>
+  <p>反过来看：先尝个鲜花不了多少钱。按 Fable 5 的价格，大约 10 万输入 token 或 2 万输出 token，也就是几次强度适中的编码 agent 提示，就足以让你形成初步印象，又不至于让你心疼。想做更充分的评估，首次充值还能再获得最多 50 美元的赠送额度。</p>
 
   <h2 id="what-you-need">你需要准备什么</h2>
 
   <ul>
-    <li>一个 Token Station 账户（<a href="https://models.bytefuture.ai/signup">免费注册</a>；赠送 1 美元额度，无需信用卡，也不涉及 Anthropic 账户）</li>
+    <li>一个 Token Station 账户（<a href="https://models.bytefuture.ai/signup">免费注册</a>；无需信用卡，也不涉及 Anthropic 账户）</li>
     <li>你的 Token Station API 密钥（以 <code>gw-</code> 开头）</li>
     <li>已安装 Codex、OpenClaw 或 Pi</li>
   </ul>
@@ -178,8 +178,8 @@ pi --model anthropic/claude-fable-5</code></pre>
 
   <h2 id="try-it">开始这场试验</h2>
 
-  <p>这套配置的意义就在于「用完即弃」。用你的免费额度，让 Fable 5 跑一遍你自己积压的真实任务，然后用数据来决定。因为 Token Station 上的每个模型都在同一个密钥后面，对比只需改一行配置：把同一个任务跑在 <code>anthropic/claude-opus-4-8</code>（价格只有一半）、<code>openai/gpt-5.5</code> 或 <code>xai/grok-build-0.1</code>（输出价格只有二十五分之一）上，看看 Fable 5 的优势<em>对你的工作</em>是否值这个溢价。</p>
+  <p>这套配置的意义就在于「用完即弃」。花小成本让 Fable 5 跑一遍你自己积压的真实任务，然后用数据来决定。因为 Token Station 上的每个模型都在同一个密钥后面，对比只需改一行配置：把同一个任务跑在 <code>anthropic/claude-opus-4-8</code>（价格只有一半）、<code>openai/gpt-5.5</code> 或 <code>xai/grok-build-0.1</code>（输出价格只有二十五分之一）上，看看 Fable 5 的优势<em>对你的工作</em>是否值这个溢价。</p>
 
   <p>如果值，那很好：保留配置、充值即可。如果不值，或者下一次政策意外让你改了主意，删掉三行配置走人就是了。你没订阅任何东西，也没有什么需要取消。</p>
 
-  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（1 美元免费额度，无需信用卡，无需 Anthropic 账户；首次充值最高再送 50 美元），亲眼看看一个 Mythos 级模型在你的代码上能做到什么。</p>
+  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（无需信用卡，无需 Anthropic 账户；首次充值可获 100% 匹配、最高 50 美元奖励），亲眼看看一个 Mythos 级模型在你的代码上能做到什么。</p>

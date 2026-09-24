@@ -21,7 +21,7 @@ draft: false
 <p>Both models passed <strong>9 out of 9</strong> runs.</p>
 <p>This does not mean every open model beats every closed model. It means something more important for developers and companies:</p>
 <blockquote>American open models are now strong enough to compete on real agent workloads, not just toy prompts.</blockquote>
-<p>A note on access before we dig in: <strong>NVIDIA NIM is offering Nemotron-3 Ultra inference for free for a limited time</strong>, so <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> offers it for free as well. And the free credits you get when you <a href="https://models.bytefuture.ai/signup">sign up for Token Station</a> can go toward GPT-5.5 and Claude Fable 5, so you can evaluate all three on your own coding tasks.</p>
+<p>A note on access before we dig in: <strong>NVIDIA NIM is offering Nemotron-3 Ultra inference for free for a limited time</strong>, so <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> offers it for free as well. And the same <a href="https://models.bytefuture.ai/signup">Token Station</a> key works for GPT-5.5 and Claude Fable 5 too, so you can evaluate all three on your own coding tasks.</p>
 <h2 id="why-this-matters">Why this matters</h2>
 <p>The open-vs-closed model debate used to be mostly philosophical.</p>
 <p>Open models gave developers more control. Closed models usually gave better performance.</p>

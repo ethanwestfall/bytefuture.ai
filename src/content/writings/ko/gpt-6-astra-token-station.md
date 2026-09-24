@@ -75,6 +75,6 @@ Astra는 토큰당 가격이 GPT-5.6 Sol의 두 배입니다. 이 프리미엄�
 
 ## 시작하기
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하면 카드 등록 없이 $1 무료 크레딧을 받을 수 있고, 첫 충전 시 최대 $50의 보너스 크레딧도 추가로 받을 수 있습니다. 키를 발급받아 기존 OpenAI 호환 연동을 `openai/gpt-6-astra`로 지정하기만 하면 됩니다.
+[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하면 카드 등록 없이 시작할 수 있고, 첫 충전 시 최대 $50의 보너스 크레딧도 추가로 받을 수 있습니다. 키를 발급받아 기존 OpenAI 호환 연동을 `openai/gpt-6-astra`로 지정하기만 하면 됩니다.
 
 [Token Station 사용해보기](https://models.bytefuture.ai/intro.html)

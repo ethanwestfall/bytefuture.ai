@@ -36,9 +36,9 @@ The case studies are where the 1M context and long-horizon design show up in pra
 
 K3 is live on [Token Station](https://models.bytefuture.ai/intro.html) as `kimi/kimi-k3`, at Moonshot's list price with zero markup: **$3.00 per million input tokens on a cache miss, $0.30 per million on a cache hit, and $15.00 per million output tokens**, with the full 1,048,576-token context window. K3's thinking mode cannot be turned off and defaults to maximum reasoning effort, so budget reasoning tokens as output; set `reasoning_effort` to `low` in your request if you want faster, cheaper responses.
 
-One thing Token Station removes: on Moonshot's own console, K3 is gated behind a minimum $1 top-up before it unlocks. On Token Station, your signup credit unlocks it immediately, no separate Moonshot account or top-up required.
+One thing Token Station removes: on Moonshot's own console, K3 is gated behind a minimum $1 top-up before it unlocks. On Token Station, it's available as soon as you sign up, no separate Moonshot account or top-up required.
 
-It is free to start. [Register](https://models.bytefuture.ai/signup) and you get $1 in credit, no card needed. Your first top-up then adds up to $50 in bonus credit. Here's where K3 sits next to other models already on Token Station:
+It is free to start. [Register](https://models.bytefuture.ai/signup), no card needed. Your first top-up adds up to $50 in bonus credit. Here's where K3 sits next to other models already on Token Station:
 
 | Model | Input / 1M | Output / 1M | Context |
 |---|---|---|---|

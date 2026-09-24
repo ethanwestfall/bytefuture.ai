@@ -74,6 +74,6 @@ Fable 5.1 が価格に見合うのは、失敗のパターンが早々に諦め�
 
 ## はじめ方
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録すると、クレジットカード不要で $1 分の無料クレジットがもらえ、初回のチャージでは最大 $50 分のボーナスクレジットも付与されます。キーをエクスポートし、既存の Anthropic 互換の実装を `anthropic/claude-fable-5-1` に向けてください。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録してください。クレジットカードは不要で、初回のチャージには最大 $50 の 100% マッチボーナスが付きます。キーをエクスポートし、既存の Anthropic 互換の実装を `anthropic/claude-fable-5-1` に向けてください。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)

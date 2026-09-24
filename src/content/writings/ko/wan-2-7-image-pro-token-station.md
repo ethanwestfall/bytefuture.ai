@@ -76,6 +76,6 @@ Token Station은 프로바이더 가격을 마진 없이 그대로 전달한다.
 
 ## 시작하기
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하자. 1달러 무료 크레딧, 카드 불필요, 첫 충전 시 최대 50달러 보너스도 받을 수 있다. 키를 export하고 위의 생성 요청을 실행한 다음, 직접 가진 이미지로 편집도 시도해보자.
+[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하자. 카드 불필요, 첫 충전 시 최대 50달러 보너스도 받을 수 있다. 키를 export하고 위의 생성 요청을 실행한 다음, 직접 가진 이미지로 편집도 시도해보자.
 
 [Token Station 사용해보기](https://models.bytefuture.ai/intro.html)

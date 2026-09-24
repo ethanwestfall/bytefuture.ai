@@ -19,7 +19,7 @@ One Grok-specific wrinkle worth flagging up front: Cursor's own Pro plan already
 ## What you need before starting
 
 - Cursor installed ([cursor.com/download](https://cursor.com/download)).
-- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai): $1 in credit on registration, no card required.
+- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai), no card required.
 - Cursor Pro. Custom-model selection in Agent mode is gated on the Free plan, even with your own API key, so you'll need Pro ($20/month) for anything past Chat mode.
 
 ## Step 1: Register Token Station as a custom provider
@@ -147,6 +147,6 @@ Subagent-level model routing has the same limitation described in the companion 
 
 ## Get started
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): $1 in free credit, no card required, with up to $50 in bonus credit on your first top-up. Export your key, wire it into Cursor's Models settings, and add `xai/grok-4.6`.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): no card required, with a 100% match up to $50 on your first top-up. Export your key, wire it into Cursor's Models settings, and add `xai/grok-4.6`.
 
 [Try Token Station](https://models.bytefuture.ai/intro.html)

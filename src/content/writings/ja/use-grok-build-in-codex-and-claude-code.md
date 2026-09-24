@@ -2,7 +2,7 @@
 slug: "use-grok-build-in-codex-and-claude-code"
 lang: "ja"
 title: "Codex と Claude Code で Grok Build を使う方法"
-summary: "xAI の Grok Build モデルは進化が速く、価格は GPT-5.5 や Claude Fable 5 のほんの一部。Token Station の無料クレジットで Claude Code や Codex 内で動かせる。xAI アカウントは不要。"
+summary: "xAI の Grok Build モデルは進化が速く、価格は GPT-5.5 や Claude Fable 5 のほんの一部。Token Station のキー一つで Claude Code や Codex 内で動かせる。xAI アカウントは不要。"
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -17,7 +17,7 @@ draft: false
 <p><a href="https://models.bytefuture.ai/signup">Token Station</a> はあなたのコーディングエージェントと xAI の間に入り、4 つの形でこのギャップを埋めます。</p>
 
 <ul>
-<li><strong>Grok Build に使える無料クレジット。</strong>登録時にもらえる 1 ドルは Grok Build に使えます。カード不要、サブスク不要。</li>
+<li><strong>登録は無料。</strong>Grok Build にすぐ使えます。カード不要、サブスク不要。</li>
 <li><strong>xAI アカウント不要。</strong>別途 xAI アカウントを作成して入金する手間が省けます。Token Station のキー 1 つで足ります。</li>
 <li><strong>Claude Code：API の変換。</strong>Claude Code は Anthropic の Messages API を話します。Token Station はそれらのリクエストを xAI のエンドポイントが期待する形に変換し、レスポンスを元に戻します。</li>
 <li><strong>Codex：ツール名とパラメータ名の変換。</strong>Codex の組み込みツール呼び出しは、xAI が認識しない名前やパラメータを使います。Token Station は双方向でそれらを書き換え、ツール呼び出しが実際に動くようにします。</li>
@@ -28,7 +28,7 @@ draft: false
 <h2 id="what-you-need">必要なもの</h2>
 
 <ul>
-<li>Token Station アカウント（<a href="https://models.bytefuture.ai/signup">無料登録</a>。1 ドル分のクレジットがもらえ、カードは不要）</li>
+<li>Token Station アカウント（<a href="https://models.bytefuture.ai/signup">無料登録</a>。カードは不要）</li>
 <li>Token Station の API キー（<code>gw-</code> で始まる）</li>
 <li>Claude Code または Codex がインストール済みであること</li>
 </ul>
@@ -108,6 +108,6 @@ codex</code></pre>
 
 <h2 id="try-it">試してみる</h2>
 
-<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録すると、1 ドル分の無料クレジットがもらえます。カード不要、サブスク不要、作成・入金が必要な xAI アカウントも不要です。初回チャージでは最大 50 ドルのボーナスクレジットが上乗せされます。この無料クレジットは、Grok Build、GPT-5.5、Claude、Gemini をはじめ 200 以上を含む、プラットフォーム上のすべてのモデルで使えます。さらに Grok Build はトークンあたりの価格がフロンティアのフラッグシップのごく一部なので、このクレジットは長く持ちます。</p>
+<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録しましょう。カード不要、サブスク不要、作成・入金が必要な xAI アカウントも不要です。初回チャージでは最大 50 ドルのボーナスクレジットが上乗せされ、Grok Build、GPT-5.5、Claude、Gemini をはじめ 200 以上を含む、プラットフォーム上のすべてのモデルで使えます。さらに Grok Build はトークンあたりの価格がフロンティアのフラッグシップのごく一部なので、その予算は長く持ちます。</p>
 
-<p>設定は 2 分。あとは Grok Build でコーディングするだけです。もし Grok Build が合わなくても、1 ドルのクレジットはプラットフォーム上の他のすべてのモデルでも使えます。</p>
+<p>設定は 2 分。あとは Grok Build でコーディングするだけです。もし Grok Build が合わなくても、その残高はプラットフォーム上の他のすべてのモデルでも使えます。</p>

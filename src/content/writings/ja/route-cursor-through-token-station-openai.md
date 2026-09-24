@@ -23,7 +23,7 @@ OpenAI は Cursor での組み込みサポートを終了しつつあるため�
 ## 始める前に必要なもの
 
 - Cursor がインストール済みであること（[cursor.com/download](https://cursor.com/download)）。
-- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。登録時に 1 ドル分のクレジットが付与され、クレジットカードは不要。
+- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。クレジットカードは不要。
 - Cursor Pro。Agent モードでのカスタムモデル選択は、自分の API キーを設定していても無料プランではロックされているため、Chat モード以外の用途にはすべて Pro（月額 20 ドル）が必要になる。
 
 ## ステップ 1：OpenAI アダプターを接続した Token Station API キーを作成する
@@ -177,6 +177,6 @@ Using what bill-the-explorer found, add the effective URL next to the existing e
 
 ## はじめよう
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。1 ドル分の無料クレジット、クレジットカード不要。初回チャージで最大 50 ドルのボーナスも付く。キーをエクスポートし、OpenAI アダプターを接続し、Cursor の Models 設定に接続して、上のルートを追加しよう。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。クレジットカード不要。初回チャージで最大 50 ドルの 100% マッチボーナスも付く。キーをエクスポートし、OpenAI アダプターを接続し、Cursor の Models 設定に接続して、上のルートを追加しよう。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)

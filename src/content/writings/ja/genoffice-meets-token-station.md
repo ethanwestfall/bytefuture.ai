@@ -27,7 +27,7 @@ draft: false
   <tr><td>価格</td><td>Genspark のプランに紐づくクレジット</td><td>ひとつの API キー、プロバイダー料金そのまま、上乗せなし</td></tr>
 </table>
 
-<p><strong>従量課金であって契約ではない。</strong>Token Station にはサブスクリプション階層がない。クレジットカードなしで無料登録でき、登録直後に 1 ドル分のクレジットが付与される。そこから先は、実際に呼び出したモデルに対してプロバイダーの料金をそのまま支払うだけで、定期的な費用も解約すべきものも発生しない。NVIDIA NIM のような一部のモデルはまったくの無料だ。</p>
+<p><strong>従量課金であって契約ではない。</strong>Token Station にはサブスクリプション階層がない。クレジットカードなしで無料登録でき、そこから先は実際に呼び出したモデルに対してプロバイダーの料金をそのまま支払うだけで、定期的な費用も解約すべきものも発生しない。NVIDIA NIM のような一部のモデルはまったくの無料だ。</p>
 
 <p><strong>モデルを選ぶ自由。</strong>ゲートウェイアカウントはひとつのベンダーのラインナップに縛られない。GenOffice の Docs では長文編集に Claude を使い、Sheets では日常的な数式作業に安価なモデルへ切り替え、Slides ではデッキに合った画像対応モデルを選ぶ。すべて同じ API キー、同じ OpenAI 形式のエンドポイントで行え、プロバイダーごとの個別登録は不要だ。</p>
 
@@ -172,4 +172,4 @@ composePageElements: async (args) => {
   <li>GenOffice：<a href="https://github.com/genspark-ai/genoffice/blob/main/CONTRIBUTING.md">コントリビューションガイド</a></li>
 </ul>
 
-<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録し（1 ドル分の無料クレジット、クレジットカード不要）、<code>TOKEN_STATION_API_KEY</code> をエクスポートしたら、GenOffice を再起動する。ひとつの API キー、ひとつのエンドポイントで、Docs・Sheets・Slides のセッションに必要なすべてのモデルが使える。</p>
+<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録し（クレジットカード不要）、<code>TOKEN_STATION_API_KEY</code> をエクスポートしたら、GenOffice を再起動する。ひとつの API キー、ひとつのエンドポイントで、Docs・Sheets・Slides のセッションに必要なすべてのモデルが使える。</p>

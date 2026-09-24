@@ -76,6 +76,6 @@ Token Station はプロバイダーの料金をマージンなしでそのまま
 
 ## はじめよう
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。1 ドル分の無料クレジット、クレジットカード不要、初回チャージで最大 50 ドルのボーナスも付く。キーをエクスポートして上のリクエストを実行し、次に自分の画像で編集も試してみてほしい。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。クレジットカード不要、初回チャージには最大 50 ドルの 100% マッチボーナスが付く。キーをエクスポートして上のリクエストを実行し、次に自分の画像で編集も試してみてほしい。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)

@@ -19,7 +19,7 @@ Grok에 특유한 부분 하나를 미리 짚어두자면, Cursor 자체의 Pro 
 ## 시작하기 전에 필요한 것
 
 - Cursor 설치([cursor.com/download](https://cursor.com/download)).
-- Token Station 계정과 API 키. [models.bytefuture.ai](https://models.bytefuture.ai)에서 무료로 가입할 수 있다. 가입 시 1달러 크레딧이 지급되며 카드는 필요 없다.
+- Token Station 계정과 API 키. [models.bytefuture.ai](https://models.bytefuture.ai)에서 카드 없이 무료로 가입할 수 있다.
 - Cursor Pro. Agent 모드에서의 커스텀 모델 선택은 자신의 API 키가 있어도 무료 플랜에서는 막혀 있어서, Chat 모드를 넘어서는 모든 용도에 Pro(월 20달러)가 필요하다.
 
 ## 1단계: Token Station을 커스텀 프로바이더로 등록하기
@@ -147,6 +147,6 @@ Chat 모드와 Agent 모드 모두에서 Grok 4.6은 Token Station을 통해 Cur
 
 ## 시작하기
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하자. 1달러 무료 크레딧, 카드 불필요, 첫 충전 시 최대 50달러 보너스도 받을 수 있다. 키를 export하고 Cursor의 Models 설정에 연결한 다음, `xai/grok-4.6`을 추가하자.
+[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하자. 카드 불필요, 첫 충전 시 최대 50달러 보너스도 받을 수 있다. 키를 export하고 Cursor의 Models 설정에 연결한 다음, `xai/grok-4.6`을 추가하자.
 
 [Token Station 사용해보기](https://models.bytefuture.ai/intro.html)

@@ -21,7 +21,7 @@ draft: false
 <p>두 모델 모두 <strong>9회 중 9회</strong>를 통과했다.</p>
 <p>이것은 모든 오픈 모델이 모든 클로즈드 모델을 이긴다는 뜻이 아니다. 개발자와 기업에게 더 중요한 무언가를 뜻한다.</p>
 <blockquote>미국 오픈 모델은 이제 장난감 같은 프롬프트뿐 아니라 실제 에이전트 작업에서도 경쟁할 만큼 강해졌다.</blockquote>
-<p>본격적으로 들어가기 전에 이용에 관한 한마디. <strong>NVIDIA NIM은 한정 기간 동안 Nemotron-3 Ultra 추론을 무료로 제공하고 있다</strong>. 그래서 <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>에서도 무료로 쓸 수 있다. 또한 <a href="https://models.bytefuture.ai/signup">Token Station에 가입</a>하면 받는 무료 크레딧은 GPT-5.5와 Claude Fable 5에도 쓸 수 있어, 세 모델 모두를 자신의 코딩 작업에서 평가할 수 있다.</p>
+<p>본격적으로 들어가기 전에 이용에 관한 한마디. <strong>NVIDIA NIM은 한정 기간 동안 Nemotron-3 Ultra 추론을 무료로 제공하고 있다</strong>. 그래서 <strong><a href="https://models.bytefuture.ai">Token Station</a></strong>에서도 무료로 쓸 수 있다. 또한 같은 <a href="https://models.bytefuture.ai/signup">Token Station</a> 키는 GPT-5.5와 Claude Fable 5에도 쓸 수 있어, 세 모델 모두를 자신의 코딩 작업에서 평가할 수 있다.</p>
 <h2 id="why-this-matters">왜 중요한가</h2>
 <p>오픈 대 클로즈드 모델 논쟁은 한때 대체로 이념적인 것이었다.</p>
 <p>오픈 모델은 개발자에게 더 많은 제어권을 줬다. 클로즈드 모델은 대개 더 나은 성능을 줬다.</p>

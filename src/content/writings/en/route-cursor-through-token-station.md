@@ -17,7 +17,7 @@ Before the setup, it's worth being explicit about why to route Cursor through To
 ## What you need before starting
 
 - Cursor installed ([cursor.com/download](https://cursor.com/download)).
-- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai): $1 in credit on registration, no card required.
+- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai), no card required.
 - Cursor Pro. Custom-model selection in Agent mode is gated on the Free plan, even with your own API key, so you'll need Pro ($20/month) for anything past Chat mode.
 
 ## Step 1: Register Token Station as a custom provider
@@ -151,6 +151,6 @@ Token Station's xAI route, `xai/grok-4.6`, is also supported in Cursor through t
 
 ## Get started
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): $1 in free credit, no card required, with up to $50 in bonus credit on your first top-up. Export your key, wire it into Cursor's Models settings, and add the two routes.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): no card required, with a 100% match up to $50 on your first top-up. Export your key, wire it into Cursor's Models settings, and add the two routes.
 
 [Try Token Station](https://models.bytefuture.ai/intro.html)

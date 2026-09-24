@@ -24,7 +24,7 @@ Before the setup, the same reasoning applies here as with any tool you route thr
 ## What you need before starting
 
 - Docker installed and running.
-- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai): $1 in credit on registration, no card required.
+- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai), no card required.
 
 ## Step 1: Run Open WebUI
 
@@ -71,6 +71,6 @@ To verify a model works end to end rather than just appearing in the list: selec
 
 ## Get started
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): $1 in free credit, no card required, with up to $50 in bonus credit on your first top-up. Export your key, run the Docker command above, and connect it.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): no card required, with a 100% match up to $50 on your first top-up. Export your key, run the Docker command above, and connect it.
 
 [Try Token Station](https://models.bytefuture.ai/intro.html)

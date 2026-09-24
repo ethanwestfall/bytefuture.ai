@@ -75,6 +75,6 @@ Astra 的单 token 价格是 GPT-5.6 Sol 的两倍。这份溢价，在其基准
 
 ## 开始使用
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需绑卡即可获得 $1 免费额度，首次充值最高可再获 $50 奖励额度。导出你的密钥，把现有的 OpenAI 兼容集成指向 `openai/gpt-6-astra` 即可。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需绑卡，首次充值可获 100% 匹配、最高 $50 奖励。导出你的密钥，把现有的 OpenAI 兼容集成指向 `openai/gpt-6-astra` 即可。
 
 [试用 Token Station](https://models.bytefuture.ai/intro.html)

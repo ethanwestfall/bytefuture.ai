@@ -15,7 +15,7 @@ OpenClaw supports custom providers (any OpenAI-compatible or Anthropic-compatibl
 ## What you need before starting
 
 - Node 22.22.3+, 24.15+, or 25.9+ (Node 24 is the recommended default). Check with `node --version`.
-- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai): $1 in credit on registration, no card required.
+- A Token Station account and API key. Sign up free at [models.bytefuture.ai](https://models.bytefuture.ai), no card required.
 - OpenClaw installed (see Step 1 below).
 
 ## Step 1: Install OpenClaw
@@ -146,4 +146,4 @@ Set these before starting the daemon if you need non-default locations:
 
 Setting up Token Station in OpenClaw is one command and one environment variable. Once the daemon is running, switching models is a single `openclaw configure --section model` call and nothing else in your setup changes.
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai) ($1 in free credit, no card; up to $50 bonus on your first top-up), export your key, run the onboard command, and open the dashboard. One key, one endpoint, every model your OpenClaw setup needs.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai) (no card required, with a 100% match up to $50 on your first top-up), export your key, run the onboard command, and open the dashboard. One key, one endpoint, every model your OpenClaw setup needs.

@@ -2,7 +2,7 @@
 slug: "try-claude-fable-5-in-codex-openclaw-and-pi"
 lang: "ja"
 title: "本採用の前に試す：Codex、OpenClaw、Pi で Claude Fable 5 を使う"
-summary: "Anthropic の新しいフラッグシップは最先端だが物議を醸し、100 万トークンあたり 10/50 ドル。既存のハーネスで一時的に試してみよう。Anthropic アカウントは不要、Token Station の無料クレジットだけ。"
+summary: "Anthropic の新しいフラッグシップは最先端だが物議を醸し、100 万トークンあたり 10/50 ドル。既存のハーネスで一時的に試してみよう。Anthropic アカウントは不要、Token Station のキーが一つあればいい。"
 category: "tutorial"
 date: "2026-06-12"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -16,7 +16,7 @@ draft: false
 
   <p>この組み合わせ、明らかに優秀でありながら公然と不信を持たれ、高級品のような価格がついている以上、取るべき姿勢は明確だ。<strong>試しはするが、深入りはしない。</strong>新しいアカウントを作らない、新しい残高をチャージしない、ワークフローを別プラットフォームに移さない。すでに使っているコーディングツールの中で<em>一時的に</em>動かし、十分だと思った瞬間に止められる従量課金のトークンで使う。</p>
 
-  <p>Fable 5 は <a href="https://models.bytefuture.ai">Token Station</a> 上で <code>anthropic/claude-fable-5</code> として利用でき、Anthropic の定価そのまま、上乗せ料金はゼロ。あなたの <a href="https://models.bytefuture.ai/signup">1 ドルの登録クレジット</a>もこれに使える。本ガイドでは <strong>Codex</strong>、<strong>OpenClaw</strong>、<strong>Pi</strong> での具体的なセットアップを示す。（Claude Code を使っているなら Fable 5 はそこでネイティブに動くので、本ガイドはそれ以外の人向けだ。）</p>
+  <p>Fable 5 は <a href="https://models.bytefuture.ai">Token Station</a> 上で <code>anthropic/claude-fable-5</code> として利用でき、Anthropic の定価そのまま、上乗せ料金はゼロ。<a href="https://models.bytefuture.ai/signup">無料登録</a>してそのまま試せる。本ガイドでは <strong>Codex</strong>、<strong>OpenClaw</strong>、<strong>Pi</strong> での具体的なセットアップを示す。（Claude Code を使っているなら Fable 5 はそこでネイティブに動くので、本ガイドはそれ以外の人向けだ。）</p>
 
   <h2 id="what-it-is">Fable 5 とは実際のところ何か</h2>
 
@@ -66,12 +66,12 @@ draft: false
 
   <p>これは入出力とも Opus 4.8 の 2 倍、出力では <strong>Grok Build の 25 倍</strong>だ。Grok Build なら数セントで済む長めのエージェントセッション 1 回が、Fable 5 では本物のドル単位になりうる。思考とツール出力が大量に発生する長時間の実行こそ、100 万あたり 50 ドルの出力価格が効いてくる場面だ。</p>
 
-  <p>一方で、Token Station の 1 ドルの登録クレジットでも、まず試してみるには十分だ。Fable 5 の価格でおよそ 10 万入力トークン、または 2 万出力トークンに相当し、実際には適度なコーディングエージェントのプロンプトを数回試せる量だ。第一印象を持つには十分で、痛手になるほどではない。より本格的に評価したいなら、初回チャージで最大 50 ドルのボーナスクレジットが上乗せされる。</p>
+  <p>一方で、まず試してみるだけなら、小さな予算でも十分だ。実際には適度なコーディングエージェントのプロンプトを数回試せる量で、第一印象を持つには十分、痛手になるほどではない。より本格的に評価したいなら、初回チャージで最大 50 ドルのボーナスクレジットが上乗せされる。</p>
 
   <h2 id="what-you-need">必要なもの</h2>
 
   <ul>
-    <li>Token Station のアカウント（<a href="https://models.bytefuture.ai/signup">無料で登録</a>。1 ドルのクレジット付き、カード不要、Anthropic のアカウントも不要）</li>
+    <li>Token Station のアカウント（<a href="https://models.bytefuture.ai/signup">無料で登録</a>。カード不要、Anthropic のアカウントも不要）</li>
     <li>あなたの Token Station API キー（<code>gw-</code> で始まる）</li>
     <li>インストール済みの Codex、OpenClaw、または Pi</li>
   </ul>
@@ -178,8 +178,8 @@ pi --model anthropic/claude-fable-5</code></pre>
 
   <h2 id="try-it">実験してみる</h2>
 
-  <p>このセットアップの肝は、使い捨てにできることだ。無料クレジットを使って、Fable 5 に自分の積み残しタスクを実際にこなさせ、データで判断する。Token Station 上のどのモデルも同じキーの背後にあるので、比較は設定 1 行で済む。同じタスクを <code>anthropic/claude-opus-4-8</code>（価格は半分）、<code>openai/gpt-5.5</code>、<code>xai/grok-build-0.1</code>（出力価格は 25 分の 1）で走らせ、Fable 5 の優位性が<em>あなたの仕事において</em>その割増に見合うかを確かめればよい。</p>
+  <p>このセットアップの肝は、使い捨てにできることだ。わずかなコストで Fable 5 に自分の積み残しタスクを実際にこなさせ、データで判断する。Token Station 上のどのモデルも同じキーの背後にあるので、比較は設定 1 行で済む。同じタスクを <code>anthropic/claude-opus-4-8</code>（価格は半分）、<code>openai/gpt-5.5</code>、<code>xai/grok-build-0.1</code>（出力価格は 25 分の 1）で走らせ、Fable 5 の優位性が<em>あなたの仕事において</em>その割増に見合うかを確かめればよい。</p>
 
   <p>見合うなら結構、設定をそのまま残して残高を足せばよい。見合わないなら、あるいは次のポリシーの不意打ちで気が変わったなら、設定を 3 行消して立ち去ればいい。何も契約していないし、解約する必要もない。</p>
 
-  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録して（1 ドルの無料クレジット、カード不要、Anthropic アカウント不要、初回チャージで最大 50 ドルのボーナス）、Mythos クラスのモデルがあなたのコードで何をやってのけるか、その目で確かめてほしい。</p>
+  <p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> で登録して（カード不要、Anthropic アカウント不要、初回チャージで最大 50 ドルの 100% マッチボーナス）、Mythos クラスのモデルがあなたのコードで何をやってのけるか、その目で確かめてほしい。</p>

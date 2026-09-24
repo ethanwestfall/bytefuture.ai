@@ -24,7 +24,7 @@ draft: false
 ## 开始之前需要准备什么
 
 - 已安装并运行 Docker。
-- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，注册即送 1 美元额度，无需信用卡。
+- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，无需信用卡。
 
 ## 步骤 1：运行 Open WebUI
 
@@ -71,6 +71,6 @@ Open WebUI 通过调用 provider 的 `/models` 接口来验证一个新连接，
 
 ## 开始使用
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：1 美元免费额度，无需信用卡，首次充值最高可再获得 50 美元奖励。导出你的密钥，运行上面的 Docker 命令，然后接入它。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需信用卡，首次充值可获 100% 匹配、最高 50 美元奖励。导出你的密钥，运行上面的 Docker 命令，然后接入它。
 
 [试用 Token Station](https://models.bytefuture.ai/intro.html)

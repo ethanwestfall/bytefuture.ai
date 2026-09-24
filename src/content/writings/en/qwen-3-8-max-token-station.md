@@ -103,7 +103,7 @@ codex
 
 ## Pricing
 
-Qwen 3.8-Max is in preview and Alibaba has not published standard API pricing. Token Station passes the provider's rate through at zero markup; check the dashboard for the current per-million rate. The $1 signup credit is enough to run a first evaluation.
+Qwen 3.8-Max is in preview and Alibaba has not published standard API pricing. Token Station passes the provider's rate through at zero markup; check the dashboard for the current per-million rate. A modest balance is enough to run a first evaluation.
 
 The essentials:
 
