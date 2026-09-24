@@ -16,7 +16,7 @@ draft: false
 
   <p>この組み合わせ、明らかに優秀でありながら公然と不信を持たれ、高級品のような価格がついている以上、取るべき姿勢は明確だ。<strong>試しはするが、深入りはしない。</strong>新しいアカウントを作らない、新しい残高をチャージしない、ワークフローを別プラットフォームに移さない。すでに使っているコーディングツールの中で<em>一時的に</em>動かし、十分だと思った瞬間に止められる従量課金のトークンで使う。</p>
 
-  <p>Fable 5 は <a href="https://models.bytefuture.ai">Token Station</a> 上で <code>anthropic/claude-fable-5</code> として利用でき、Anthropic の定価そのまま、上乗せ料金はゼロ。<a href="https://models.bytefuture.ai/signup">無料登録</a>してそのまま試せる。本ガイドでは <strong>Codex</strong>、<strong>OpenClaw</strong>、<strong>Pi</strong> での具体的なセットアップを示す。（Claude Code を使っているなら Fable 5 はそこでネイティブに動くので、本ガイドはそれ以外の人向けだ。）</p>
+  <p>Fable 5 は <a href="https://models.bytefuture.ai">Token Station</a> 上で <code>anthropic/claude-fable-5</code> として利用でき、Anthropic の定価そのまま、上乗せ料金はゼロ。<a href="https://models.bytefuture.ai/signup">登録</a>して少額をチャージすれば試せる。本ガイドでは <strong>Codex</strong>、<strong>OpenClaw</strong>、<strong>Pi</strong> での具体的なセットアップを示す。（Claude Code を使っているなら Fable 5 はそこでネイティブに動くので、本ガイドはそれ以外の人向けだ。）</p>
 
   <h2 id="what-it-is">Fable 5 とは実際のところ何か</h2>
 

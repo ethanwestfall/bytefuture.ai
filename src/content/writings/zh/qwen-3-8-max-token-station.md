@@ -103,7 +103,7 @@ codex
 
 ## 价格
 
-Qwen 3.8-Max 处于 preview，Alibaba 还没公布标准 API 定价。Token Station 以零 markup 透传 provider 价格；当前每百万 token 单价见 dashboard。$1 注册额度够跑一次初步评估。
+Qwen 3.8-Max 处于 preview，Alibaba 还没公布标准 API 定价。Token Station 以零 markup 透传 provider 价格；当前每百万 token 单价见 dashboard。小额充值就够跑一次初步评估。
 
 要点：
 

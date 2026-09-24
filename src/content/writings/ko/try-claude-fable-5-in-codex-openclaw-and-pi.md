@@ -16,7 +16,7 @@ draft: false
 
   <p>분명히 뛰어나면서도 대놓고 불신을 받고, 가격은 사치품처럼 매겨진 이 조합에는 분명한 태도가 필요하다. <strong>써보되, 올인하지는 마라.</strong>새 계정을 만들지 말고, 새 잔액을 충전하지 말고, 워크플로를 다른 플랫폼으로 옮기지 마라. 이미 쓰고 있는 코딩 도구 안에서 <em>일시적으로</em> 돌려보고, 충분히 봤다 싶으면 바로 멈출 수 있는 종량제 토큰으로 사용하라.</p>
 
-  <p>Fable 5는 <a href="https://models.bytefuture.ai">Token Station</a>에서 <code>anthropic/claude-fable-5</code>로 사용할 수 있으며, Anthropic의 정가 그대로, 추가 마진 없이 제공된다. 그리고 <a href="https://models.bytefuture.ai/signup">지금 가입해서</a> 바로 써볼 수도 있다. 이 가이드는 <strong>Codex</strong>, <strong>OpenClaw</strong>, <strong>Pi</strong>에서의 구체적인 설정을 보여준다. (Claude Code를 쓴다면 Fable 5는 거기서 기본 지원되므로, 이 가이드는 그 외의 모든 사람을 위한 것이다.)</p>
+  <p>Fable 5는 <a href="https://models.bytefuture.ai">Token Station</a>에서 <code>anthropic/claude-fable-5</code>로 사용할 수 있으며, Anthropic의 정가 그대로, 추가 마진 없이 제공된다. <a href="https://models.bytefuture.ai/signup">가입</a>해서 소액만 충전해도 써볼 수 있다. 이 가이드는 <strong>Codex</strong>, <strong>OpenClaw</strong>, <strong>Pi</strong>에서의 구체적인 설정을 보여준다. (Claude Code를 쓴다면 Fable 5는 거기서 기본 지원되므로, 이 가이드는 그 외의 모든 사람을 위한 것이다.)</p>
 
   <h2 id="what-it-is">Fable 5는 실제로 무엇인가</h2>
 
