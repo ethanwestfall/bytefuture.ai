@@ -19,7 +19,7 @@ Grok に特有の点を一つ、先に触れておく価値がある。Cursor �
 ## 始める前に必要なもの
 
 - Cursor がインストール済みであること（[cursor.com/download](https://cursor.com/download)）。
-- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。登録時に 1 ドル分のクレジットが付与され、クレジットカードは不要。
+- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。クレジットカードは不要。
 - Cursor Pro。Agent モードでのカスタムモデル選択は、自分の API キーを設定していても無料プランではロックされているため、Chat モード以外の用途にはすべて Pro（月額 20 ドル)が必要になる。
 
 ## ステップ 1：Token Station をカスタムプロバイダーとして登録する
@@ -147,6 +147,6 @@ Chat モードと Agent モードのどちらでも、Grok 4.6 は Token Station
 
 ## はじめよう
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。1 ドル分の無料クレジット、クレジットカード不要。初回チャージで最大 50 ドルのボーナスも付く。キーをエクスポートし、Cursor の Models 設定に接続し、`xai/grok-4.6` を追加しよう。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。クレジットカード不要。初回チャージで最大 50 ドルの 100% マッチボーナスも付く。キーをエクスポートし、Cursor の Models 設定に接続し、`xai/grok-4.6` を追加しよう。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)

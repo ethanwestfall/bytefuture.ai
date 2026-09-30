@@ -74,6 +74,6 @@ Fable 5.1 物有所值的场景，是那些失败方式表现为过早放弃或�
 
 ## 开始使用
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：免费获得 $1 额度，无需绑卡，首次充值最高可获得 $50 奖励额度。导出你的密钥，将现有的 Anthropic 兼容接入指向 `anthropic/claude-fable-5-1` 即可。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需绑卡，首次充值可获 100% 匹配、最高 $50 奖励。导出你的密钥，将现有的 Anthropic 兼容接入指向 `anthropic/claude-fable-5-1` 即可。
 
 [试用 Token Station](https://models.bytefuture.ai/intro.html)

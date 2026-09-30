@@ -15,7 +15,7 @@ OpenClaw はオンボーディングウィザードと CLI から、カスタム
 ## 始める前に必要なもの
 
 - Node 22.22.3+、24.15+、または 25.9+（推奨デフォルトは Node 24）。`node --version` で確認する。
-- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。登録時に 1 ドル分のクレジットが付与され、クレジットカードは不要。
+- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。クレジットカードは不要。
 - OpenClaw のインストール（以下のステップ 1 を参照）。
 
 ## ステップ 1：OpenClaw をインストールする
@@ -146,4 +146,4 @@ OpenClaw の場合、`--custom-model-id` を Token Station 上のルーティン
 
 OpenClaw に Token Station を設定するのは、コマンド 1 つと環境変数 1 つだけで済む。デーモンが起動すれば、モデルの切り替えも `openclaw configure --section model` を 1 回呼ぶだけで、設定の他の部分は何も変わらない。
 
-[models.bytefuture.ai](https://models.bytefuture.ai) で登録し（1 ドル分の無料クレジット、クレジットカード不要。初回チャージで最大 50 ドルのボーナスも）、キーをエクスポートし、オンボーディングコマンドを実行し、ダッシュボードを開こう。1 つのキー、1 つのエンドポイントで、あなたの OpenClaw 環境に必要なすべてのモデルが揃う。
+[models.bytefuture.ai](https://models.bytefuture.ai) で登録し（クレジットカード不要。初回チャージで最大 50 ドルの 100% マッチボーナスも）、キーをエクスポートし、オンボーディングコマンドを実行し、ダッシュボードを開こう。1 つのキー、1 つのエンドポイントで、あなたの OpenClaw 環境に必要なすべてのモデルが揃う。

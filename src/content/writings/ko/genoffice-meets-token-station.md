@@ -27,7 +27,7 @@ draft: false
   <tr><td>가격</td><td>Genspark 요금제에 묶인 크레딧</td><td>키 하나, 제공사 원가, 마진 없음</td></tr>
 </table>
 
-<p><strong>쓴 만큼만 지불, 계약이 아니다.</strong> Token Station에는 구독 등급이 없다. 카드 없이 무료로 가입하면 즉시 1달러 크레딧이 지급된다. 이후에는 실제로 호출한 모델에 대해 제공사 가격을 그대로 지불할 뿐, 정기적으로 나가는 비용도 해지할 것도 없다. NVIDIA NIM 같은 일부 모델은 아예 무료다.</p>
+<p><strong>쓴 만큼만 지불, 계약이 아니다.</strong> Token Station에는 구독 등급이 없다. 카드 없이 무료로 가입할 수 있다. 이후에는 실제로 호출한 모델에 대해 제공사 가격을 그대로 지불할 뿐, 정기적으로 나가는 비용도 해지할 것도 없다. NVIDIA NIM 같은 일부 모델은 아예 무료다.</p>
 
 <p><strong>모델을 고를 수 있는 자유.</strong> 게이트웨이 계정은 특정 벤더의 라인업에 묶이지 않는다. GenOffice Docs에서는 장문 편집에 Claude를 쓰고, Sheets에서는 일상적인 수식 작업에 더 저렴한 모델로 바꾸고, Slides에서는 덱에 맞는 이미지 지원 모델을 고르면 된다. 모두 같은 키, 같은 OpenAI 방식 엔드포인트로 처리되며 제공사별로 따로 가입할 필요가 없다.</p>
 
@@ -172,4 +172,4 @@ composePageElements: async (args) => {
   <li>GenOffice: <a href="https://github.com/genspark-ai/genoffice/blob/main/CONTRIBUTING.md">기여 가이드</a></li>
 </ul>
 
-<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>에서 가입하고(카드 없이 1달러 무료 크레딧), <code>TOKEN_STATION_API_KEY</code>를 내보낸 뒤 GenOffice를 재실행한다. 키 하나, 엔드포인트 하나로 Docs, Sheets, Slides 세션에 필요한 모든 모델을 쓸 수 있다.</p>
+<p><a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a>에서 가입하고(카드 불필요), <code>TOKEN_STATION_API_KEY</code>를 내보낸 뒤 GenOffice를 재실행한다. 키 하나, 엔드포인트 하나로 Docs, Sheets, Slides 세션에 필요한 모든 모델을 쓸 수 있다.</p>

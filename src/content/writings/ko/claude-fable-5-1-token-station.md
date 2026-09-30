@@ -74,6 +74,6 @@ Fable 5.1은 실패의 원인이 너무 일찍 포기하거나 맥락을 놓치�
 
 ## 시작하기
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하면 카드 등록 없이 $1의 무료 크레딧을 받을 수 있고, 첫 충전 시 최대 $50의 보너스 크레딧도 제공됩니다. 키를 내보낸 뒤 기존 Anthropic 호환 연동을 `anthropic/claude-fable-5-1`로 지정하세요.
+[models.bytefuture.ai](https://models.bytefuture.ai/signup)에서 가입하세요. 카드 등록이 필요 없고, 첫 충전 시 최대 $50의 보너스도 받을 수 있습니다. 키를 내보낸 뒤 기존 Anthropic 호환 연동을 `anthropic/claude-fable-5-1`로 지정하세요.
 
 [Token Station 사용해보기](https://models.bytefuture.ai/intro.html)

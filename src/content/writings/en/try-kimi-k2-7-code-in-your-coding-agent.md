@@ -16,7 +16,7 @@ draft: false
 
   <p>There is one twist that makes this experiment more interesting than a simple swap. At <strong>$0.95 per million input tokens and $4.00 per million output</strong>, K2.7 Code costs about a tenth of Claude Fable 5 on input and a twelfth on output. That is cheap enough to give it a different job: working alongside your SOTA model, taking the routine fan-out work while the expensive model keeps the hard parts.</p>
 
-  <p>K2.7 Code is on <a href="https://models.bytefuture.ai">Token Station</a> as <code>kimi/kimi-k2.7-code</code>, at Moonshot's list price with zero markup, and your <a href="https://models.bytefuture.ai/signup">$1 signup credit</a> covers a lot of it.</p>
+  <p>K2.7 Code is on <a href="https://models.bytefuture.ai">Token Station</a> as <code>kimi/kimi-k2.7-code</code>, at Moonshot's list price with zero markup, and a small top-up covers a lot of it.</p>
 
   <h2 id="what-we-know">What we know (and what we don't)</h2>
 
@@ -54,7 +54,7 @@ draft: false
     <tr><td><code>anthropic/claude-fable-5</code></td><td>$10.00</td><td>$50.00</td><td>1M</td></tr>
   </table>
 
-  <p>The $1 signup credit buys roughly 1 million input tokens or 250K output tokens at K2.7 Code prices. Where the same credit barely covers a few Fable 5 prompts, here it covers a real evaluation. The downside risk of this experiment rounds to zero. And your first top-up adds up to $50 in bonus credit, which at K2.7 Code prices is weeks of evaluation.</p>
+  <p>A dollar buys roughly 1 million input tokens or 250K output tokens at K2.7 Code prices. Where that same dollar barely covers a few Fable 5 prompts, here it covers a real evaluation. The downside risk of this experiment rounds to zero. And your first top-up adds up to $50 in bonus credit, which at K2.7 Code prices is weeks of evaluation.</p>
 
   <h2 id="share-the-work">The real experiment: share the work</h2>
 
@@ -65,7 +65,7 @@ draft: false
   <h2 id="what-you-need">What you need</h2>
 
   <ul>
-    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; $1 in credit, no card, no Moonshot account needed)</li>
+    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; no card, no Moonshot account needed)</li>
     <li>Your Token Station API key (starts with <code>gw-</code>)</li>
     <li>Claude Code, Codex, or OpenClaw installed</li>
   </ul>
@@ -172,4 +172,4 @@ codex --profile deep   # hard problems on Fable 5</code></pre>
 
   <p>Give K2.7 Code the work your expensive model is overqualified for: subagent searches, test runs, boilerplate, summaries. Watch for a week where it holds up and where it drops the ball, then settle the split accordingly. The same Token Station key runs <code>anthropic/claude-fable-5</code>, <code>anthropic/claude-opus-4-8</code>, and <code>kimi/kimi-k2.7-code</code> side by side, so the comparison is built in.</p>
 
-  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($1 in free credit, no card; up to $50 bonus on your first top-up) and find out whether a one-day-old open-weights model can carry half your agent's workload at a tenth of the price.</p>
+  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> (no card required, with a 100% match up to $50 on your first top-up) and find out whether a one-day-old open-weights model can carry half your agent's workload at a tenth of the price.</p>

@@ -2,7 +2,7 @@
 slug: "use-grok-build-in-codex-and-claude-code"
 lang: "zh"
 title: "如何在 Codex 和 Claude Code 中使用 Grok Build"
-summary: "xAI 的 Grok Build 模型迭代很快，价格只有 GPT-5.5 或 Claude Fable 5 的零头。用 Token Station 的免费额度在 Claude Code 或 Codex 中运行它，无需 xAI 账户。"
+summary: "xAI 的 Grok Build 模型迭代很快，价格只有 GPT-5.5 或 Claude Fable 5 的零头。用一个 Token Station key 在 Claude Code 或 Codex 中运行它，无需 xAI 账户。"
 category: "tutorial"
 date: "2026-06-10"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -17,7 +17,7 @@ draft: false
 <p><a href="https://models.bytefuture.ai/signup">Token Station</a> 位于你的编程智能体和 xAI 之间，用四点补上这道缺口：</p>
 
 <ul>
-<li><strong>Grok Build 可用的免费额度。</strong>注册即得的 1 美元额度可用于 Grok Build。无需信用卡，无需订阅。</li>
+<li><strong>无需信用卡即可用上 Grok Build。</strong>注册无需信用卡，也无需订阅。</li>
 <li><strong>无需 xAI 账户。</strong>你不必再单独创建并充值一个 xAI 账户；一把 Token Station 密钥就够了。</li>
 <li><strong>Claude Code：API 转换。</strong>Claude Code 使用 Anthropic 的 Messages API。Token Station 把这些请求转换成 xAI 端点所期望的格式，再把响应转换回来。</li>
 <li><strong>Codex：工具与参数名转换。</strong>Codex 的内置工具调用使用了 xAI 无法识别的名称和参数。Token Station 在两个方向上重写它们，让工具调用真正可用。</li>
@@ -28,7 +28,7 @@ draft: false
 <h2 id="what-you-need">你需要什么</h2>
 
 <ul>
-<li>一个 Token Station 账户（<a href="https://models.bytefuture.ai/signup">免费注册</a>；获得 1 美元额度，无需信用卡）</li>
+<li>一个 Token Station 账户（<a href="https://models.bytefuture.ai/signup">免费注册</a>；无需信用卡）</li>
 <li>你的 Token Station API 密钥（以 <code>gw-</code> 开头）</li>
 <li>已安装 Claude Code 或 Codex</li>
 </ul>
@@ -108,6 +108,6 @@ codex</code></pre>
 
 <h2 id="try-it">动手试试</h2>
 
-<p>在 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册，即可获得 1 美元免费额度。无需信用卡，无需订阅，也无需创建或充值 xAI 账户。首次充值还能再获得最多 50 美元的赠送额度。这笔免费额度适用于平台上的每一个模型，包括 Grok Build、GPT-5.5、Claude、Gemini 以及其他 200 多个模型。而且由于 Grok Build 每 token 的价格只是前沿旗舰的零头，这笔额度能用很久。</p>
+<p>在 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册。无需信用卡，无需订阅，也无需创建或充值 xAI 账户。首次充值还能再获得最多 50 美元的赠送额度，并且适用于平台上的每一个模型，包括 Grok Build、GPT-5.5、Claude、Gemini 以及其他 200 多个模型。Grok Build 本身每 token 的价格只是前沿旗舰的零头，因此即便预算有限也能用很久。</p>
 
-<p>两分钟配置，然后你就在用 Grok Build 写代码了。如果 Grok Build 不太合适，这 1 美元额度也适用于平台上的其他每一个模型。</p>
+<p>两分钟配置，然后你就在用 Grok Build 写代码了。如果 Grok Build 不太合适，你的余额同样适用于平台上的其他每一个模型。</p>

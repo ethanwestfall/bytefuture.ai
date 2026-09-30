@@ -15,7 +15,7 @@ OpenClaw 通过其引导向导和 CLI 支持自定义提供方（任意 OpenAI �
 ## 开始之前需要准备什么
 
 - Node 22.22.3+、24.15+ 或 25.9+（推荐默认使用 Node 24）。用 `node --version` 检查版本。
-- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，注册即送 1 美元额度，无需信用卡。
+- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，无需信用卡。
 - 已安装 OpenClaw（见下方步骤 1）。
 
 ## 步骤 1：安装 OpenClaw
@@ -146,4 +146,4 @@ openclaw configure --section model
 
 在 OpenClaw 中设置 Token Station，只需要一条命令和一个环境变量。守护进程运行起来之后，切换模型只需一次 `openclaw configure --section model` 调用，你设置中的其他部分都不会改变。
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai) 注册（1 美元免费额度，无需信用卡；首次充值最高可再获得 50 美元奖励），导出你的密钥，运行引导命令，打开控制面板。一个密钥，一个端点，满足你 OpenClaw 设置所需的每一个模型。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai) 注册（无需信用卡，首次充值可获 100% 匹配、最高 50 美元奖励），导出你的密钥，运行引导命令，打开控制面板。一个密钥，一个端点，满足你 OpenClaw 设置所需的每一个模型。

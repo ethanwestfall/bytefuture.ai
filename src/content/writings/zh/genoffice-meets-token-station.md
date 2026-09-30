@@ -27,7 +27,7 @@ draft: false
   <tr><td>定价</td><td>额度绑定 Genspark 套餐</td><td>一把密钥，供应商原价，零加价</td></tr>
 </table>
 
-<p><strong>按量付费，不是签合同。</strong>Token Station 没有订阅档位。免费注册，无需信用卡，注册后立即到账 1 美元额度。之后你只按实际调用的模型付供应商原价，没有周期性费用，也没有需要取消的东西。像 NVIDIA NIM 这样的部分模型甚至完全免费。</p>
+<p><strong>按量付费，不是签合同。</strong>Token Station 没有订阅档位。免费注册，无需信用卡。之后你只按实际调用的模型付供应商原价，没有周期性费用，也没有需要取消的东西。像 NVIDIA NIM 这样的部分模型甚至完全免费。</p>
 
 <p><strong>模型选择的自由。</strong>网关账户不会被锁定在某一家供应商的产品线上。GenOffice Docs 用 Claude 做长文编辑，Sheets 用更便宜的模型处理日常公式工作，Slides 则挑选适合当前演示稿的图像模型，全部通过同一把密钥、同一个 OpenAI 风格的接口完成，不需要为每家供应商单独注册。</p>
 
@@ -172,4 +172,4 @@ composePageElements: async (args) => {
   <li>GenOffice：<a href="https://github.com/genspark-ai/genoffice/blob/main/CONTRIBUTING.md">贡献指南</a></li>
 </ul>
 
-<p>前往 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（1 美元免费额度，无需信用卡），导出 <code>TOKEN_STATION_API_KEY</code>，然后重新启动 GenOffice。一把密钥、一个接口，满足你 Docs、Sheets、Slides 会话需要的所有模型。</p>
+<p>前往 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（无需信用卡），导出 <code>TOKEN_STATION_API_KEY</code>，然后重新启动 GenOffice。一把密钥、一个接口，满足你 Docs、Sheets、Slides 会话需要的所有模型。</p>

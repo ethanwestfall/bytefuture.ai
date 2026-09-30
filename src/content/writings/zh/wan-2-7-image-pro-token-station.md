@@ -76,6 +76,6 @@ Token Station 按 provider 定价零 markup 透传。`qwen/wan-2.7-image-pro` �
 
 ## 开始使用
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：1 美元免费额度，无需信用卡，首次充值最高可再获得 50 美元奖励。导出你的密钥，运行上面的生成调用，再拿你自己的一张图片试试编辑。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需信用卡，首次充值可获 100% 匹配、最高 50 美元奖励。导出你的密钥，运行上面的生成调用，再拿你自己的一张图片试试编辑。
 
 [试用 Token Station](https://models.bytefuture.ai/intro.html)

@@ -36,9 +36,9 @@ Moonshot 的表态很直接：K3 的整体表现仍落后于其对比的两个�
 
 K3 已经上线 [Token Station](https://models.bytefuture.ai/intro.html)，模型 ID 为 `kimi/kimi-k3`，按 Moonshot 的标价、零加价提供：**未命中缓存时输入每百万 token 3.00 美元，命中缓存时每百万 token 0.30 美元，输出每百万 token 15.00 美元**，并拥有完整的 1,048,576 token 上下文窗口。K3 的思考模式无法关闭，默认使用最高推理强度，因此推理 token 会按输出计费；如果想要更快、更便宜的响应，可以在请求中把 `reasoning_effort` 设为 `low`。
 
-Token Station 省去了一件事：在 Moonshot 自己的控制台上，K3 需要先完成至少 1 美元的充值才能解锁。而在 Token Station 上，你的注册赠金就能立即解锁，无需单独的 Moonshot 账号或充值。
+Token Station 省去了一件事：在 Moonshot 自己的控制台上，K3 需要先完成至少 1 美元的充值才能解锁。而在 Token Station 上，注册后即可直接使用，无需单独的 Moonshot 账号或充值。
 
-免费即可开始。[注册](https://models.bytefuture.ai/signup)即可获得 1 美元赠金，无需信用卡。首次充值后还能额外获得最多 50 美元的奖励赠金。以下是 K3 与 Token Station 上其他模型的价格对比：
+免费即可开始。[注册](https://models.bytefuture.ai/signup)，无需信用卡。首次充值后可额外获得最多 50 美元的奖励赠金。以下是 K3 与 Token Station 上其他模型的价格对比：
 
 | 模型 | 输入 / 100万 | 输出 / 100万 | 上下文 |
 |---|---|---|---|

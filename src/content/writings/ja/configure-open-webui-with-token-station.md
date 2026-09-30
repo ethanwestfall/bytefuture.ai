@@ -24,7 +24,7 @@ draft: false
 ## 始める前に必要なもの
 
 - Docker がインストールされ、動作していること。
-- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。登録時に 1 ドル分のクレジットが付与され、クレジットカードは不要。
+- Token Station のアカウントと API キー。[models.bytefuture.ai](https://models.bytefuture.ai) から無料登録できる。クレジットカードは不要。
 
 ## ステップ 1：Open WebUI を起動する
 
@@ -71,6 +71,6 @@ Open WebUI はプロバイダーの `/models` エンドポイントを呼び出�
 
 ## はじめよう
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。1 ドル分の無料クレジット、クレジットカード不要。初回チャージで最大 50 ドルのボーナスも付く。キーをエクスポートし、上記の Docker コマンドを実行して接続しよう。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup) で登録する。クレジットカード不要。初回チャージで最大 50 ドルの 100% マッチボーナスも付く。キーをエクスポートし、上記の Docker コマンドを実行して接続しよう。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)

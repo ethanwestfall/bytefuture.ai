@@ -74,6 +74,6 @@ For a single hard question, a classification task, or most day-to-day chat and c
 
 ## Get started
 
-Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): $1 in free credit, no card required, with up to $50 in bonus credit on your first top-up. Export your key and point your existing Anthropic-compatible integration at `anthropic/claude-fable-5-1`.
+Sign up at [models.bytefuture.ai](https://models.bytefuture.ai/signup): no card required, with a 100% match up to $50 on your first top-up. Export your key and point your existing Anthropic-compatible integration at `anthropic/claude-fable-5-1`.
 
 [Try Token Station](https://models.bytefuture.ai/intro.html)

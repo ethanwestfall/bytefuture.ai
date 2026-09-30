@@ -19,7 +19,7 @@ Cursor 在 Settings → Models 里支持自定义 OpenAI 兼容 provider。把�
 ## 开始之前需要准备什么
 
 - 已安装 Cursor（[cursor.com/download](https://cursor.com/download)）。
-- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，注册即送 1 美元额度，无需信用卡。
+- 一个 Token Station 账户和 API 密钥。免费注册：[models.bytefuture.ai](https://models.bytefuture.ai)，无需信用卡。
 - Cursor Pro。免费版即使填了自己的 API key，Agent 模式下的自定义模型选择依然是锁死的，所以除了 Chat 模式之外的任何用法都需要 Pro（每月 20 美元）。
 
 ## 步骤 1：将 Token Station 注册为自定义 provider
@@ -147,6 +147,6 @@ subagent 层面的模型路由和姐妹篇文章里描述的限制一样，不�
 
 ## 开始使用
 
-前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：1 美元免费额度，无需信用卡，首次充值最高可再获得 50 美元奖励。导出你的密钥，接入 Cursor 的 Models 设置，添加 `xai/grok-4.6`。
+前往 [models.bytefuture.ai](https://models.bytefuture.ai/signup) 注册：无需信用卡，首次充值可获 100% 匹配、最高 50 美元奖励。导出你的密钥，接入 Cursor 的 Models 设置，添加 `xai/grok-4.6`。
 
 [试用 Token Station](https://models.bytefuture.ai/intro.html)

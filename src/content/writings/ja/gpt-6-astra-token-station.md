@@ -75,6 +75,6 @@ Astraはトークンあたりの料金がGPT-5.6 Solの2倍です。この上乗
 
 ## 始めるには
 
-[models.bytefuture.ai](https://models.bytefuture.ai/signup)でサインアップすると、カード登録不要で$1分の無料クレジットが付与され、初回チャージ時には最大$50分のボーナスクレジットも受け取れます。APIキーを取得し、既存のOpenAI互換の実装を`openai/gpt-6-astra`に向けるだけです。
+[models.bytefuture.ai](https://models.bytefuture.ai/signup)でサインアップしてください。カード登録は不要で、初回チャージ時には最大$50の100%マッチボーナスが付きます。APIキーを取得し、既存のOpenAI互換の実装を`openai/gpt-6-astra`に向けるだけです。
 
 [Token Station を試す](https://models.bytefuture.ai/intro.html)
