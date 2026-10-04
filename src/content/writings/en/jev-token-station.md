@@ -16,7 +16,7 @@ Jev is now available on Token Station as `typesafe/jev-1.13.0`, with `typesafe/j
 
 Jev is TypeSafe's first "System One Model," a name borrowed from Daniel Kahneman's fast, intuitive mode of thinking. Where a chat model reads a conversation and writes a reply, Jev reads a piece of state (plain text, a JSON object, or an array of messages) and a set of typed questions, then returns typed answers: a probability, a chosen option, or a score, each with a confidence value. TypeSafe describes it as a frontier-intelligence function call: unstructured state in, typed probabilistic decisions out. There is no generated prose to parse, because none is generated.
 
-In one of the launch demos, TypeSafe's founder raced two Wikipedia pages against each other using only the links on each page: hundreds to thousands of candidate links per hop, each one a choice that can't afford to invent a link that doesn't exist. That's the kind of high-cardinality decision Jev is built for, where a chat model's free-text answer would need to be parsed and validated after the fact, and might not validate at all.
+In one of the launch demos, TypeSafe's founder showed Jev racing from a starting Wikipedia page to a target page using only the links it found along the way: hundreds to thousands of candidate links per hop, each one a choice that can't afford to invent a link that doesn't exist. That's the kind of high-cardinality decision Jev is built for, where a chat model's free-text answer would need to be parsed and validated after the fact, and might not validate at all.
 
 It's also why Token Station routes Jev differently from every other model on the platform. Jev answers through its own endpoint, `/typesafe/v1/systemone`, not the OpenAI-compatible chat routes. Send it to `/v1/chat/completions`, `/v1/responses`, or `/v1/messages` instead, and the gateway rejects the request with a 400 that points you at the native endpoint. Jev is also left out of the OpenAI-compatible `/v1/models` listing entirely; its own catalog lives at `/typesafe/v1/models`. Both are deliberate: a decision model that happened to share a wire format with chat models would be exactly the kind of thing that gets silently misused.
 
@@ -36,7 +36,11 @@ curl https://models.bytefuture.ai/typesafe/v1/systemone \
     "questions": {
       "urgent": {
         "type": "noul",
-        "instructions": "Does this incident require immediate action?"
+        "instructions": "Does this incident require immediate action?",
+        "criteria": {
+          "true": "An ongoing service outage needs immediate action",
+          "false": "A routine request that can wait"
+        }
       }
     }
   }'
@@ -124,7 +128,7 @@ Dropping a classification or routing decision into a full chat model works, but 
 - **Ticket and request triage**: route high-volume, low-creativity traffic by queue, priority, or owner without opening a full conversation for each one.
 - **Loop and trajectory checks**: ask whether an agent's last step actually made progress, and stop a runaway loop early instead of burning turns on it.
 
-TypeSafe's own benchmarks claim up to 193.6x the speed and 444.6x lower cost than comparable LLMs on tasks like these, measured against GPT-5.6 Terra, GPT-6 Astra, and Claude Fable 5.1. All three are already on Token Station, so the comparison is one key away if you want to check it yourself. Independent tracking of launch week told a more modest story: across thousands of user-reported results, the median came out to roughly 7x faster and 30x cheaper, not 193x and 444x. Still a real win on the right workload, just a smaller one than the headline number.
+TypeSafe's own benchmarks claim up to 193.6x the speed and 444.6x lower cost than comparable LLMs on tasks like these, measured against the average of GPT-6 Astra and Claude Fable 5.1. Both are already on Token Station, so the comparison is one key away if you want to check it yourself. Independent tracking of launch week told a more modest story: across thousands of user-reported results, the median came out to roughly 7x faster and 30x cheaper, not 193x and 444x. Still a real win on the right workload, just a smaller one than the headline number.
 
 TypeSafe also calls this a 0% hallucination rate, and in a narrow sense that's accurate: a `choice` answer is checked against the `criteria` keys you provided, so Jev cannot return an option you didn't offer. That guarantees a valid answer, not a correct one. It's a classifier with a stricter output contract than a chat model, still worth evaluating on your own data the same way you would any other model.
 
