@@ -12,7 +12,7 @@ draft: false
 
 <div class="note">
 
-The steps in this tutorial are based on the public Token Station at [models.bytefuture.ai](https://models.bytefuture.ai/). If you would like to set up your own private Token Station instance and save costs through pooled subscriptions, discounted API keys, and smart routing, [get in touch](/enterprise.html).
+The steps in this tutorial are based on the public Token Station at [models.bytefuture.ai](https://models.bytefuture.ai/). If you would like to set up your own private Token Station instance and save costs through pooled subscriptions, discounted API keys, and smart routing, [get in touch](/tokens/enterprise.html).
 
 </div>
 
