@@ -12,7 +12,7 @@ draft: false
 
 <div class="note">
 
-本教程中的步骤和说明，基于 [models.bytefuture.ai](https://models.bytefuture.ai/) 上的公共 Token Station。如果你想搭建自己的私有 Token Station 实例，通过共享订阅、折扣 API 密钥和智能路由来节省成本，欢迎[联系我们](/enterprise.html)。
+本教程中的步骤和说明，基于 [models.bytefuture.ai](https://models.bytefuture.ai/) 上的公共 Token Station。如果你想搭建自己的私有 Token Station 实例，通过共享订阅、折扣 API 密钥和智能路由来节省成本，欢迎[联系我们](/tokens/enterprise.html)。
 
 </div>
 
