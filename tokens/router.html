@@ -231,7 +231,7 @@ fbq('track', 'PageView');
     footer { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
     footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; padding-bottom: 28px; font-size: 14px; color: var(--muted); }
     footer .brand { font-size: 15px; color: var(--ink); }
-    .foot-links { display: flex; gap: 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 10px 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
 
     .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.is-visible { opacity: 1; transform: none; }
@@ -283,7 +283,7 @@ fbq('track', 'PageView');
 
 <nav>
   <div class="wrap">
-    <a href="#" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
+    <a href="/" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
     <div class="nav-links">
       <a href="#router">Router</a>
       <a href="#privacy">PII masking</a>
@@ -593,6 +593,8 @@ fbq('track', 'PageView');
     <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg>Token Station · by ByteFuture</span>
     <span>© 2026 ByteFuture AI. All rights reserved.</span>
     <div class="foot-links">
+      <a href="/tokens/enterprise.html">Enterprise</a>
+      <a href="/tokens/company-brain.html">Company brain</a>
       <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
       <a href="https://models.bytefuture.ai/terms.html">Terms</a>
       <a href="mailto:team@bytefuture.ai">Contact</a>
@@ -671,7 +673,7 @@ function pickPlan(plan) {
 }
 
 // ---- Request form ----
-// Leads go to the same Google Apps Script web app as /enterprise.html (one
+// Leads go to the same Google Apps Script web app as /tokens/enterprise.html (one
 // Sheet, one notification mail). Source + setup: scripts/leads-apps-script.gs.
 var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwOYsANJ2jIiOJ5mr_7Taa1N98d1BkXhc1HkI9kK65sUrP7x1k2iLhczdIdN-rnEiKyCw/exec';
 
