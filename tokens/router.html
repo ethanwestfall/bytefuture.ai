@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="idea-slug" content="token-station-hybrid-inference" />
-  <title>Token Station — Cut AI Costs 73% with Hybrid Inference Routing</title>
-  <meta name="description" content="Token Station's hybrid inference router sends simple tasks to local models, hard tasks to the cloud — and gets smarter every week using your own data. Up to 73% cost reduction." />
+  <title>Token Station Router: a gateway that learns your workload</title>
+  <meta name="description" content="Token Station is an AI gateway with a router trained on your own traffic. It keeps simple requests on your own servers and sends only the hard ones to the cloud." />
+  <link rel="canonical" href="https://bytefuture.ai/tokens/router.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bytefuture.ai/tokens/router.html" />
+  <meta property="og:title" content="Token Station Router: a gateway that learns your workload" />
+  <meta property="og:description" content="One OpenAI-compatible endpoint for 30+ models, with a router that keeps simple requests on your own servers." />
 <!-- GA4 Tracking -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XKZPCX8G2J"></script>
 <script>
@@ -31,1732 +36,430 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 32'%3E%3Cpath d='M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z' fill='%232563eb' fill-opacity='0.15' stroke='%2360a5fa' stroke-width='1.5'/%3E%3Ccircle cx='14' cy='14' r='3.5' fill='%2360a5fa'/%3E%3Cpath d='M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='5' r='1.5' fill='%23a78bfa'/%3E%3Ccircle cx='22' cy='19' r='1.5' fill='%2334d399'/%3E%3Ccircle cx='6' cy='19' r='1.5' fill='%23fb923c'/%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
   <style>
-    /* =====================================================
-       CSS VARIABLES — Descript DNA (dark-technical)
-       ===================================================== */
     :root {
-      --bg: #0A0A0A;
-      --surface: #111111;
-      --card: #1E1E1E;
-      --elevated: #282828;
-      --border: rgba(255,255,255,0.07);
-      --border-hover: rgba(255,255,255,0.14);
-      --text: #F5F5F5;
-      --text-muted: #6B7280;
-      --text-dim: #9CA3AF;
-      --accent-blue: #1a73e8;
-      --accent-electric: #3b82f6;
-      --accent-green: #10B981;
-      --accent-amber: #f59e0b;
-      --accent-white: #ffffff;
-      --glass-bg: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.10);
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 16px;
-      --radius-pill: 100px;
-      --font-display: 'Syne', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      --font-body: 'Inter', sans-serif;
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-      --section-pad: 112px 0;
+      --bg: #faf9f5; --surface: #ffffff; --line: #e4e4e7; --line-soft: #efefec;
+      --ink: #18181b; --sec: #52525b; --muted: #71717a;
+      --blue: #2563EB; --teal: #0D9488; --amber: #b45309;
+      --blue-wash: #2563eb12; --teal-wash: #0d948812; --amber-wash: #f59e0b1f;
+      --head: 'Space Grotesk', system-ui, sans-serif;
+      --ui: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
-
-    [data-theme="light"] {
-      --bg: #fafafa;
-      --surface: #f4f4f5;
-      --card: #ffffff;
-      --elevated: #f0f0f0;
-      --border: rgba(0,0,0,0.08);
-      --border-hover: rgba(0,0,0,0.16);
-      --text: #111111;
-      --text-muted: #6B7280;
-      --text-dim: #4B5563;
-      --glass-bg: rgba(0,0,0,0.04);
-      --glass-border: rgba(0,0,0,0.10);
-    }
-
-    /* =====================================================
-       RESET & BASE
-       ===================================================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.625;
-      font-size: 16px;
-      overflow-x: hidden;
-      transition: background 0.3s var(--ease), color 0.3s var(--ease);
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(#d9d9d4 1px, transparent 1px); background-size: 24px 24px; opacity: .45;
+      mask-image: linear-gradient(#000, transparent 70%); -webkit-mask-image: linear-gradient(#000, transparent 70%); }
+    a { color: inherit; }
+    img, svg { max-width: 100%; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: var(--mono); }
 
-    /* =====================================================
-       NAVIGATION
-       ===================================================== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 64px;
-      z-index: 100;
-      background: rgba(10,10,10,0.7);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s var(--ease);
-    }
-    [data-theme="light"] nav {
-      background: rgba(250,250,250,0.8);
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 32px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .nav-logo .logo-icon { display: block; }
-    .nav-logo .logo-icon.dark-logo { display: block; }
-    .nav-logo .logo-icon.light-logo { display: none; }
-    [data-theme="light"] .nav-logo .logo-icon.dark-logo { display: none; }
-    [data-theme="light"] .nav-logo .logo-icon.light-logo { display: block; }
-    .nav-logo-text {
-      font-family: var(--font-display);
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-dim);
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .theme-toggle {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 6px 10px;
-      cursor: pointer;
-      color: var(--text-dim);
-      font-size: 14px;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .theme-toggle:hover { border-color: var(--border-hover); color: var(--text); }
-    /* =====================================================
-       LANGUAGE PICKER (globe + flag dropdown)
-       ===================================================== */
-    .lang-picker {
-      position: relative;
-    }
-    .lang-trigger {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      color: var(--text-dim);
-      cursor: pointer;
-      padding: 0;
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-    }
-    .lang-trigger:hover,
-    .lang-picker.open .lang-trigger {
-      border-color: var(--border-hover);
-      color: var(--text);
-      background: var(--elevated);
-    }
-    .lang-trigger svg { width: 18px; height: 18px; display: block; }
-    .lang-menu {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      min-width: 180px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 6px;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-      display: none;
-      flex-direction: column;
-      gap: 2px;
-      z-index: 1000;
-    }
-    .lang-picker.open .lang-menu { display: flex; }
-    .lang-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 10px;
-      cursor: pointer;
-      color: var(--text-dim);
-      font-size: 13px;
-      font-weight: 500;
-      font-family: var(--font-body);
-      text-align: left;
-      transition: background 0.15s, color 0.15s;
-    }
-    .lang-option:hover { background: var(--glass-bg); color: var(--text); }
-    .lang-option.active { background: var(--accent-blue); color: #fff; }
-    .lang-option .flag { font-size: 18px; line-height: 1; }
-    .lang-option .check {
-      margin-left: auto;
-      opacity: 0;
-      font-size: 12px;
-    }
-    .lang-option.active .check { opacity: 1; }
+    /* ---------- nav ---------- */
+    nav { position: sticky; top: 0; z-index: 50; background: #faf9f5e6; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--head); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+    .brand small { font-family: var(--ui); font-weight: 500; font-size: 13px; color: var(--muted); border-left: 1px solid var(--line); padding-left: 10px; }
+    .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--sec); }
+    .nav-links a { text-decoration: none; } .nav-links a:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; font-family: var(--ui); font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; padding: 12px 18px; transition: transform .15s, background .15s; white-space: nowrap; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; } .btn-blue:hover { background: #1d4ed8; }
+    .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn-sm { padding: 9px 15px; font-size: 14px; }
 
-    .nav-cta {
-      background: var(--accent-white);
-      color: #0A0A0A;
-      border: none;
-      border-radius: var(--radius-pill);
-      padding: 8px 20px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s, opacity 0.15s;
-      font-family: var(--font-body);
-    }
-    [data-theme="light"] .nav-cta { background: #111111; color: #fff; }
-    .nav-cta:hover { transform: scale(1.02); opacity: 0.9; }
+    /* ---------- hero ---------- */
+    .hero { padding-top: 80px; padding-bottom: 40px; text-align: center; }
+    h1 { font-family: var(--head); font-weight: 600; font-size: clamp(38px, 6.2vw, 74px); line-height: 1.02; letter-spacing: -0.035em; max-width: 15ch; margin: 0 auto; }
+    h1 em { font-style: normal; color: var(--blue); }
+    .lede { color: var(--sec); font-size: clamp(17px, 1.6vw, 19px); max-width: 640px; margin: 24px auto 32px; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .fine { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-    /* =====================================================
-       CONTAINER
-       ===================================================== */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
+    /* ---------- live console ---------- */
+    .console { margin: 56px auto 0; max-width: 1040px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .console-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .console-bar .dots { display: flex; gap: 6px; } .console-bar .dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+    .split { display: flex; align-items: center; gap: 10px; }
+    .lg { display: inline-flex; align-items: center; gap: 6px; }
+    .lg::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+    .lg-local::before { background: var(--teal); } .lg-cloud::before { background: #f59e0b; }
+    .log { font-family: var(--mono); font-size: 13px; overflow-x: auto; }
+    .log-head, .log-row { display: grid; grid-template-columns: 76px minmax(260px, 1fr) 150px 92px; gap: 16px; padding: 9px 18px; white-space: nowrap; min-width: 660px; }
+    .log-head { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line-soft); }
+    .log-row { border-bottom: 1px solid var(--line-soft); animation: rowIn .45s ease both; }
+    .log-row:last-child { border-bottom: 0; }
+    .log-row .t { color: #a1a1aa; } .log-row .req { color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+    .to-local { color: var(--teal); } .to-cloud { color: var(--amber); }
+    .p { color: var(--muted); }
+    .mask { background: var(--amber-wash); color: var(--amber); border-radius: 4px; padding: 0 4px; }
+    .console-foot { padding: 10px 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--muted); background: #fbfbfa; }
+    @keyframes rowIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-    /* =====================================================
-       HERO
-       ===================================================== */
-    .hero {
-      padding: 160px 0 96px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px; left: 50%;
-      transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(ellipse at center, rgba(26,115,232,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-pill);
-      padding: 6px 16px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent-blue);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-    }
-    .hero-eyebrow-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent-blue);
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    .hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(42px, 6vw, 76px);
-      font-weight: 800;
-      line-height: 1.03;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      max-width: 820px;
-      margin: 0 auto 24px;
-    }
-    .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent-electric) 0%, var(--accent-green) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: 18px;
-      color: var(--text-dim);
-      max-width: 580px;
-      margin: 0 auto 48px;
-      line-height: 1.6;
-    }
-    .hero-form {
-      max-width: 440px;
-      margin: 0 auto 48px;
-    }
-    .email-capture-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .email-capture-form input[type="email"] {
-      width: 100%;
-      height: 60px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      font-size: 16px;
-      padding: 0 20px;
-      outline: none;
-      font-family: var(--font-body);
-      transition: border-color 0.2s;
-    }
-    .email-capture-form input[type="email"]::placeholder {
-      color: var(--text-muted);
-    }
-    .email-capture-form input[type="email"]:focus {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
-    }
-    .email-capture-form button {
-      width: 100%;
-      height: 60px;
-      background: var(--accent-white);
-      color: #0A0A0A;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: var(--font-display);
-      cursor: pointer;
-      letter-spacing: -0.01em;
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
-    }
-    [data-theme="light"] .email-capture-form button { background: #111111; color: #fff; }
-    .email-capture-form button:hover {
-      transform: scale(1.01);
-      box-shadow: 0 8px 32px rgba(255,255,255,0.15);
-      opacity: 0.95;
-    }
-    .email-capture-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .form-message {
-      font-size: 14px;
-      color: var(--accent-green);
-      text-align: center;
-      margin-top: 4px;
-    }
-    .hero-microcopy {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 64px;
-    }
+    /* ---------- stats ---------- */
+    .stats { margin-top: 64px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .stats .wrap { display: grid; grid-template-columns: repeat(5, 1fr); }
+    .stat { padding: 28px 20px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--head); font-weight: 600; font-size: clamp(28px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
+    .stat b span { color: var(--blue); }
+    .stat small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; line-height: 1.45; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
-    /* =====================================================
-       ROUTING DIAGRAM (hero visual anchor)
-       ===================================================== */
-    .routing-diagram {
-      max-width: 760px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .routing-svg-wrap {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px 32px;
-      overflow: hidden;
-      position: relative;
-    }
-    .routing-svg-wrap::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
-    }
+    /* ---------- sections ---------- */
+    section.wrap { margin-top: 112px; scroll-margin-top: 80px; }
+    h2 { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+    .sec-lede { color: var(--sec); max-width: 620px; margin-top: 16px; font-size: 18px; }
 
-    /* =====================================================
-       STAT TICKER
-       ===================================================== */
-    .stat-ticker {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 0 0 80px;
-    }
-    .stat-item {
-      text-align: center;
-    }
-    .stat-number {
-      font-family: var(--font-mono);
-      font-size: 36px;
-      font-weight: 600;
-      color: var(--accent-white);
-      letter-spacing: -0.02em;
-      line-height: 1;
-    }
-    [data-theme="light"] .stat-number { color: #111; }
-    .stat-number span.unit {
-      font-size: 20px;
-      color: var(--accent-blue);
-    }
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      font-family: var(--font-mono);
-    }
 
-    /* =====================================================
-       SECTION HEADERS
-       ===================================================== */
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-blue);
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 3.5vw, 42px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 17px;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
 
-    /* =====================================================
-       PAIN SECTION
-       ===================================================== */
-    .pain-section {
-      padding: var(--section-pad);
-    }
-    .pain-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 64px;
-    }
-    .pain-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .pain-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .pain-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-3px);
-    }
-    .pain-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .pain-card h3 {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-    .pain-card p {
-      font-size: 15px;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
-    .pain-card .pain-cost {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: #EF4444;
-      margin-top: 16px;
-      padding: 6px 12px;
-      background: rgba(239,68,68,0.08);
-      border-radius: var(--radius-sm);
-      display: inline-block;
-    }
+    /* router section: no cards, no tags */
+    .rt-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; margin-top: 56px; }
+    .rt-row > * { min-width: 0; }
+    .rt-copy h3 { font-family: var(--head); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .rt-copy p { color: var(--sec); margin-bottom: 14px; max-width: 34em; }
+    .rt-copy strong { font-weight: 600; }
+    .c-local { color: var(--teal); } .c-cloud { color: var(--amber); }
+    .rt-copy .aside { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 14px; margin-top: 22px; }
+    .conf { margin: 0; }
+    .conf-zones { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .conf-zones span:first-child { color: var(--amber); } .conf-zones span:last-child { color: var(--teal); }
+    .conf-track { position: relative; height: 64px; border-bottom: 2px solid var(--ink); }
+    .conf-cloud { position: absolute; left: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(90deg, #f59e0b14, #f59e0b05); border-radius: 8px 0 0 0; }
+    .conf-track .d { position: absolute; bottom: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; }
+    .conf-track .d.cloud { background: #f59e0b; } .conf-track .d.local { background: var(--teal); }
+    .conf-track .d:nth-child(even) { bottom: 34px; }
+    .conf-th { position: absolute; left: 85%; top: -10px; bottom: -8px; border-left: 2px dashed var(--ink); }
+    .conf-th b { position: absolute; bottom: -26px; left: -15px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .conf-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .conf figcaption { font-size: 14px; color: var(--muted); margin-top: 18px; }
+    .tl { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; position: relative; }
+    .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line); }
+    .tl li { position: relative; padding: 32px 28px 0 0; }
+    .tl li::before { content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--blue); }
+    .tl li.tl-loop::before { background: var(--blue); }
+    .tl-when { font-size: 14px; font-weight: 600; color: var(--blue); }
+    .tl-what { font-family: var(--head); font-size: 20px; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
+    .tl p { color: var(--sec); font-size: 16px; }
+    .tl-loop .tl-when::after { content: " ↻"; }
 
-    /* =====================================================
-       SOLUTION / HOW IT WORKS
-       ===================================================== */
-    .solution-section {
-      padding: var(--section-pad);
-      background: var(--surface);
-      position: relative;
-      overflow: hidden;
-    }
-    .solution-section::before {
-      content: '';
-      position: absolute;
-      bottom: -300px; right: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(ellipse, rgba(16,185,129,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .solution-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 72px;
-    }
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .step-item {
-      background: var(--card);
-      padding: 40px 36px;
-      position: relative;
-    }
-    .step-num {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-      text-transform: uppercase;
-    }
-    .step-icon-wrap {
-      width: 48px; height: 48px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-    .step-icon-blue { background: rgba(26,115,232,0.12); }
-    .step-icon-green { background: rgba(16,185,129,0.12); }
-    .step-icon-amber { background: rgba(245,158,11,0.12); }
-    .step-item h3 {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-    .step-item p {
-      font-size: 15px;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
-    .step-item .step-detail {
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: var(--elevated);
-      border-radius: var(--radius-md);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--accent-green);
-      line-height: 1.6;
-    }
 
-    /* =====================================================
-       FEATURES
-       ===================================================== */
-    .features-section { padding: var(--section-pad); }
-    .features-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 72px;
-    }
 
-    .feature-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-      margin-bottom: 96px;
-    }
-    .feature-block:last-child { margin-bottom: 0; }
-    .feature-block.reverse { direction: rtl; }
-    .feature-block.reverse > * { direction: ltr; }
 
-    .feature-text .feature-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 20px;
-    }
-    .badge-blue { background: rgba(26,115,232,0.12); color: var(--accent-blue); }
-    .badge-green { background: rgba(16,185,129,0.12); color: var(--accent-green); }
-    .badge-amber { background: rgba(245,158,11,0.12); color: var(--accent-amber); }
 
-    .feature-text h3 {
-      font-family: var(--font-display);
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    .feature-text p {
-      font-size: 16px;
-      color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 24px;
-    }
-    .feature-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .feature-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--text-dim);
-    }
-    .feature-list li::before {
-      content: '';
-      width: 18px; height: 18px;
-      min-width: 18px;
-      background: rgba(16,185,129,0.15);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 2px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9l3 3 6-6' stroke='%2310B981' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    .feature-visual {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      position: relative;
-      min-height: 340px;
-    }
-    .feature-visual img {
-      width: 100%;
-      height: 340px;
-      object-fit: cover;
-      transition: transform 0.7s var(--ease), opacity 0.7s var(--ease);
-    }
-    .feature-visual:hover img { transform: scale(1.03); }
-    .feature-visual-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 20px;
-      background: linear-gradient(transparent, rgba(10,10,10,0.85));
-    }
-    .feature-visual-overlay .mono-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--accent-green);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .feature-visual-overlay .mono-stat {
-      font-family: var(--font-mono);
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--accent-white);
-    }
+    /* pii before/after */
+    .diff { margin: 0; }
+    .diff-who { font-size: 14px; font-weight: 600; color: var(--sec); margin-bottom: 8px; }
+    .diff-box { font-family: var(--mono); font-size: 14px; line-height: 1.8; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .diff-box u { text-decoration: none; background: #fee2e2; color: #b91c1c; border-radius: 4px; padding: 0 3px; }
+    .diff-box.out { border-color: #f5d9a8; }
+    .diff-arrow { font-size: 22px; color: var(--muted); text-align: center; padding: 6px 0; }
 
-    /* No-competitor callout */
-    .no-competitor-box {
-      background: linear-gradient(135deg, rgba(26,115,232,0.08) 0%, rgba(16,185,129,0.08) 100%);
-      border: 1px solid rgba(26,115,232,0.2);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      margin-top: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .no-competitor-box .nc-icon { font-size: 18px; margin-top: 2px; }
-    .no-competitor-box p {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin: 0;
-    }
-    .no-competitor-box p strong { color: var(--text); }
+    /* unboxed columns */
+    .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 48px; }
+    .cols.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols > * { min-width: 0; }
+    .col { border-top: 2px solid var(--ink); padding-top: 22px; }
+    .col h3 { font-family: var(--head); font-weight: 600; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .col p { color: var(--sec); font-size: 16px; }
+    .col strong { color: var(--ink); font-weight: 600; }
+    .col code { font-family: var(--mono); font-size: 13.5px; background: #efefec; border-radius: 5px; padding: 1px 5px; }
+    .col .cite { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .ico { width: 26px; height: 26px; fill: none; stroke: var(--blue); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 14px; }
 
-    /* =====================================================
-       RESEARCH / SOCIAL PROOF
-       ===================================================== */
-    .proof-section {
-      padding: var(--section-pad);
-      background: var(--surface);
-      position: relative;
-      overflow: hidden;
-    }
-    .proof-section::before {
-      content: '';
-      position: absolute;
-      top: -200px; left: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(ellipse, rgba(26,115,232,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .proof-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 64px;
-    }
-    .proof-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 48px;
-    }
-    .proof-stat {
-      background: var(--card);
-      padding: 36px 28px;
-      text-align: center;
-    }
-    .proof-stat-num {
-      font-family: var(--font-mono);
-      font-size: 52px;
-      font-weight: 600;
-      color: var(--accent-white);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    [data-theme="light"] .proof-stat-num { color: #111; }
-    .proof-stat-num .pct { color: var(--accent-electric); }
-    .proof-stat-num .x { color: var(--accent-green); }
-    .proof-stat-label {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-    .proof-stat-source {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .proof-papers {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .paper-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      transition: border-color 0.2s;
-    }
-    .paper-card:hover { border-color: var(--border-hover); }
-    .paper-venue {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--accent-blue);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .paper-card h4 {
-      font-family: var(--font-display);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 8px;
-      line-height: 1.3;
-    }
-    .paper-card p {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-    .paper-card .paper-finding {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--accent-green);
-      margin-top: 12px;
-      padding: 8px 12px;
-      background: rgba(16,185,129,0.07);
-      border-radius: var(--radius-sm);
-    }
+    /* case study */
+    .case { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+    .case > * { min-width: 0; }
+    .fineprint { font-size: 14px; color: var(--muted); margin-top: 16px; max-width: 40em; }
+    .figs { display: grid; grid-template-columns: 1fr 1fr; }
+    .figs > div { padding: 22px 0; border-top: 1px solid var(--line); }
+    .figs > div:nth-child(odd) { padding-right: 20px; }
+    .figs > div:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--line); }
+    .figs dt { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -0.02em; line-height: 1.1; color: var(--blue); }
+    .figs dd { font-size: 14px; color: var(--sec); margin-top: 4px; }
 
-    /* =====================================================
-       PRICING
-       ===================================================== */
-    .pricing-section { padding: var(--section-pad); }
-    .pricing-header {
-      text-align: center;
-      max-width: 560px;
-      margin: 0 auto 64px;
-    }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-    .pricing-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      position: relative;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .pricing-card:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-2px);
-    }
-    .pricing-card.featured {
-      border-color: rgba(26,115,232,0.35);
-      background: linear-gradient(135deg, rgba(26,115,232,0.05) 0%, var(--card) 60%);
-    }
-    .pricing-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: -1px; right: 24px;
-      background: var(--accent-blue);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 0 0 8px 8px;
-    }
-    .pricing-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-    .pricing-price {
-      font-family: var(--font-display);
-      font-size: 48px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .pricing-price-unit {
-      font-size: 16px;
-      font-family: var(--font-body);
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0;
-    }
-    .pricing-desc {
-      font-size: 14px;
-      color: var(--text-dim);
-      margin-bottom: 28px;
-      line-height: 1.6;
-      min-height: 44px;
-    }
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-    .pricing-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--text-dim);
-    }
-    .pricing-features li::before {
-      content: '';
-      width: 18px; height: 18px;
-      min-width: 18px;
-      margin-top: 2px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9l3 3 6-6' stroke='%2310B981' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    .pricing-cta-btn {
-      width: 100%;
-      height: 52px;
-      border-radius: var(--radius-pill);
-      font-size: 15px;
-      font-weight: 700;
-      font-family: var(--font-display);
-      letter-spacing: -0.01em;
-      cursor: pointer;
-      transition: transform 0.15s, opacity 0.15s;
-      border: none;
-    }
-    .pricing-cta-btn.primary {
-      background: var(--accent-white);
-      color: #0A0A0A;
-    }
-    [data-theme="light"] .pricing-cta-btn.primary { background: #111; color: #fff; }
-    .pricing-cta-btn.secondary {
-      background: transparent;
-      border: 1.5px solid var(--border-hover);
-      color: var(--text);
-    }
-    .pricing-cta-btn:hover { transform: scale(1.01); opacity: 0.92; }
-    .pricing-note {
-      font-size: 12px;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 10px;
-      font-family: var(--font-mono);
-    }
+    /* pricing table */
+    .ptable-wrap { margin-top: 48px; overflow-x: auto; }
+    .ptable { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .ptable th, .ptable td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .ptable tbody th { font-weight: 600; color: var(--ink); width: 28%; }
+    .ptable td { color: var(--sec); width: 36%; }
+    .ptable thead th { border-bottom: 2px solid var(--ink); padding-bottom: 20px; vertical-align: bottom; }
+    .ptable .hl { background: #2563eb08; }
+    .ptable thead .hl { border-radius: 12px 12px 0 0; }
+    .pname { display: block; font-family: var(--head); font-weight: 600; font-size: 20px; }
+    .pprice { display: block; font-family: var(--head); font-weight: 600; font-size: 40px; letter-spacing: -0.03em; line-height: 1.1; margin-top: 6px; }
+    .punit { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+    .yes { color: var(--teal); font-weight: 700; margin-right: 4px; }
+    .ptable tfoot td, .ptable tfoot th { border-bottom: 0; padding-top: 22px; }
+    .ptable tfoot .hl { border-radius: 0 0 12px 12px; }
+    .ptable .btn { width: 100%; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .request-points li::before { content: "✓"; color: var(--teal); font-weight: 700; }
 
-    /* =====================================================
-       FAQ
-       ===================================================== */
-    .faq-section {
-      padding: var(--section-pad);
-      background: var(--surface);
-    }
-    .faq-header {
-      text-align: center;
-      max-width: 500px;
-      margin: 0 auto 56px;
-    }
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .faq-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 28px 32px;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-    .faq-item:hover { border-color: var(--border-hover); }
-    .faq-item.open { border-color: rgba(26,115,232,0.3); }
-    .faq-q {
-      font-family: var(--font-display);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      user-select: none;
-    }
-    .faq-toggle {
-      font-size: 20px;
-      color: var(--text-muted);
-      flex-shrink: 0;
-      line-height: 1.3;
-      transition: transform 0.2s;
-    }
-    .faq-item.open .faq-toggle { transform: rotate(45deg); }
-    .faq-a {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.7;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s var(--ease), padding-top 0.35s;
-    }
-    .faq-item.open .faq-a {
-      max-height: 300px;
-      padding-top: 16px;
-    }
-    .faq-a code {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--accent-blue);
-      background: rgba(26,115,232,0.08);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
+    /* request form */
+    .request { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+    .request > * { min-width: 0; }
+    .request-points { list-style: none; margin-top: 26px; display: grid; gap: 14px; }
+    .request-points li { display: flex; gap: 12px; color: var(--sec); }
+    form.req { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+    form.req .full { grid-column: span 2; }
+    form.req label { display: block; font-size: 13px; font-weight: 600; color: var(--sec); margin-bottom: 6px; }
+    form.req label .opt { font-weight: 400; color: var(--muted); }
+    form.req input, form.req select, form.req textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #fbfbfa; border: 1px solid var(--line); border-radius: 9px; padding: 11px 12px; appearance: none; -webkit-appearance: none; }
+    form.req select { background-image: linear-gradient(45deg, transparent 50%, #71717a 50%), linear-gradient(135deg, #71717a 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+    form.req textarea { min-height: 96px; resize: vertical; }
+    form.req input:focus, form.req select:focus, form.req textarea:focus { outline: 2px solid var(--blue-wash); border-color: var(--blue); background: #fff; }
+    form.req .btn { width: 100%; padding: 14px; font-size: 16px; }
+    .form-message { display: none; font-size: 14px; margin-top: 4px; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
-    /* =====================================================
-       FINAL CTA
-       ===================================================== */
-    .final-cta {
-      padding: 128px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .final-cta::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(ellipse, rgba(26,115,232,0.10) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .final-cta h2 {
-      font-family: var(--font-display);
-      font-size: clamp(32px, 5vw, 60px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.07;
-      color: var(--text);
-      max-width: 660px;
-      margin: 0 auto 24px;
-    }
-    .final-cta h2 em {
-      font-style: normal;
-      color: var(--accent-electric);
-    }
-    .final-cta p {
-      font-size: 18px;
-      color: var(--text-dim);
-      max-width: 480px;
-      margin: 0 auto 48px;
-      line-height: 1.6;
-    }
-    .final-cta .email-capture-form {
-      max-width: 420px;
-      margin: 0 auto;
-    }
+    /* faq */
+    .faq { max-width: 820px; margin-top: 36px; }
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 22px 36px 22px 0; position: relative; font-family: var(--head); font-weight: 600; font-size: 19px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-family: var(--mono); font-size: 22px; color: var(--muted); transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--sec); padding: 0 0 22px; max-width: 70ch; }
 
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 0;
-    }
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-    .footer-copy {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-muted);
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text); }
+    /* footer */
+    footer { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; padding-bottom: 28px; font-size: 14px; color: var(--muted); }
+    footer .brand { font-size: 15px; color: var(--ink); }
+    .foot-links { display: flex; gap: 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
 
-    /* =====================================================
-       ANIMATE ON SCROLL
-       ===================================================== */
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-    }
-    .animate-on-scroll.delay-1 { transition-delay: 0.1s; }
-    .animate-on-scroll.delay-2 { transition-delay: 0.2s; }
-    .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
-    .animate-on-scroll.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .animate-scale {
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .animate-scale.is-visible { opacity: 1; transform: scale(1); }
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .log-row { animation: none; } html { scroll-behavior: auto; } }
 
-    /* =====================================================
-       ROUTING DIAGRAM SVG STYLES
-       ===================================================== */
-    .route-node {
-      transition: filter 0.2s;
+    @media (max-width: 960px) {
+      .rt-row { grid-template-columns: 1fr; gap: 40px; }
+      .tl { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .tl::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+      .tl li { padding: 0; }
+      .tl li::before { left: -30px; top: 2px; }
+      .case, .request { grid-template-columns: 1fr; gap: 40px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
+      .stats .wrap { grid-template-columns: repeat(3, 1fr); }
+      .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
     }
-    .route-node:hover { filter: brightness(1.15); }
-    .flow-dot {
-      animation: flow-move 3s linear infinite;
-      opacity: 0;
-    }
-    @keyframes flow-move {
-      0% { offset-distance: 0%; opacity: 0; }
-      5% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { offset-distance: 100%; opacity: 0; }
-    }
-    .flow-dot:nth-child(2) { animation-delay: 1s; }
-    .flow-dot:nth-child(3) { animation-delay: 2s; }
-
-    /* =====================================================
-       RESPONSIVE
-       ===================================================== */
-    @media (max-width: 900px) {
-      .pain-cards { grid-template-columns: 1fr; gap: 16px; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .feature-block { grid-template-columns: 1fr; gap: 32px; }
-      .feature-block.reverse { direction: ltr; }
-      .proof-stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .proof-papers { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-      .faq-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .stat-ticker { gap: 28px; }
-      .proof-stat-num { font-size: 36px; }
-    }
-    @media (max-width: 600px) {
-      .container { padding: 0 20px; }
-      .nav-inner { padding: 0 20px; }
-      :root { --section-pad: 72px 0; }
-      .hero { padding: 120px 0 72px; }
-      .proof-stats-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .animate-on-scroll, .animate-scale { transition: none; opacity: 1; transform: none; }
-      .flow-dot { animation: none; }
-      .hero-eyebrow-dot { animation: none; }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .nav-links, .brand small, .nav-hide-sm { display: none; }
+      .hero { padding-top: 52px; padding-bottom: 24px; }
+      .console-bar .dots, .console-bar > span { display: none; }
+      .log-head { display: none; }
+      .log-row { grid-template-columns: 1fr auto; gap: 4px 12px; min-width: 0; white-space: normal; padding: 11px 14px; }
+      .log-row .t { display: none; }
+      .log-row .req { grid-column: span 2; white-space: nowrap; }
+      .hero-ctas .btn { width: 100%; }
+      .console { margin-top: 40px; border-radius: 12px; }
+      .stats .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+      .stat { padding: 20px 16px; border-bottom: 1px solid var(--line); }
+      .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+      .stat:nth-child(even), .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(3) { border-right: 1px solid var(--line); }
+      .stat:last-child { grid-column: span 2; border-bottom: 0; border-right: 0; }
+      section.wrap { margin-top: 80px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr; gap: 32px; }
+      .ptable { font-size: 14px; }
+      .ptable th, .ptable td { padding: 12px 10px; }
+      .ptable tbody th { width: 30%; }
+      .pprice { font-size: 30px; }
+      .ptable .btn { padding: 11px 8px; font-size: 13px; white-space: normal; }
+      form.req { grid-template-columns: 1fr; padding: 20px; }
+      form.req .full { grid-column: auto; }
+      footer .wrap { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-<!-- ======================================================
-     NAVIGATION
-     ====================================================== -->
 <nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <svg class="logo-icon dark-logo" width="26" height="28" viewBox="0 0 28 32" fill="none">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#a78bfa"/>
-        <circle cx="22" cy="19" r="1.5" fill="#34d399"/>
-        <circle cx="6" cy="19" r="1.5" fill="#fb923c"/>
-      </svg>
-      <svg class="logo-icon light-logo" width="26" height="28" viewBox="0 0 28 32" fill="none">
-        <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.08" stroke="#2563eb" stroke-width="1.5"/>
-        <circle cx="14" cy="14" r="3.5" fill="#2563eb"/>
-        <path d="M14 10.5V6M17.5 15.5L21 18M10.5 15.5L7 18" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="14" cy="5" r="1.5" fill="#6366f1"/>
-        <circle cx="22" cy="19" r="1.5" fill="#16a34a"/>
-        <circle cx="6" cy="19" r="1.5" fill="#ea580c"/>
-      </svg>
-      <span class="nav-logo-text">Token Station</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#how-it-works" data-i18n="nav_how">How It Works</a></li>
-      <li><a href="#features" data-i18n="nav_features">Features</a></li>
-      <li><a href="#research" data-i18n="nav_research">Research</a></li>
-      <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
-      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
-    </ul>
-    <div class="nav-right">
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">☀</button>
-      <button class="nav-cta" onclick="document.getElementById('hero-email').focus()" data-i18n="nav_cta">Start Free Pilot</button>
+  <div class="wrap">
+    <a href="#" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
+    <div class="nav-links">
+      <a href="#router">Router</a>
+      <a href="#privacy">PII masking</a>
+      <a href="#gateway">Gateway</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
     </div>
+    <a href="#request" class="btn btn-dark btn-sm" onclick="gtag('event', 'cta_click')">Start a pilot</a>
   </div>
 </nav>
 
 <!-- ======================================================
-     HERO
+     HERO + LIVE ROUTING LOG
      ====================================================== -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-eyebrow animate-on-scroll">
-      <span class="hero-eyebrow-dot"></span>
-      <span data-i18n="hero_eyebrow">Hybrid Inference — Local + Cloud</span>
-    </div>
-
-    <h1 class="animate-on-scroll delay-1">
-      <span data-i18n="hero_h1_pre">Your AI bill is a</span><br/><em data-i18n="hero_h1_em">routing problem.</em>
-    </h1>
-
-    <p class="hero-sub animate-on-scroll delay-2" data-i18n="hero_sub">
-      Token Station's smart router sends simple tasks to local models at near-zero cost, and hard tasks to GPT-5.5 and Claude Opus — then trains itself on your data every 60 days to get smarter.
-    </p>
-
-    <div class="hero-form animate-on-scroll delay-3">
-      <form class="email-capture-form" onsubmit="return submitEmail(event)">
-        <input
-          type="email"
-          id="hero-email"
-          name="email"
-          placeholder="your@company.com"
-          data-i18n-placeholder="hero_placeholder"
-          required
-          autocomplete="email"
-        />
-        <button type="submit" onclick="gtag('event', 'cta_click')" data-i18n="hero_btn">
-          Start Your 30-Day Free Pilot
-        </button>
-        <p class="form-message" style="display:none"></p>
-      </form>
-    </div>
-
-    <p class="hero-microcopy animate-on-scroll" data-i18n="hero_microcopy">No credit card required · One OpenAI-compatible endpoint · Works with your existing stack</p>
-
-    <!-- Routing Diagram -->
-    <div class="routing-diagram animate-scale">
-      <div class="routing-svg-wrap">
-        <svg viewBox="0 0 720 300" width="100%" xmlns="http://www.w3.org/2000/svg" aria-label="Token routing flow diagram">
-          <defs>
-            <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#1a73e8" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.8"/>
-            </linearGradient>
-            <linearGradient id="gGreen" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#34d399" stop-opacity="0.8"/>
-            </linearGradient>
-            <linearGradient id="gAmber" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.8"/>
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <filter id="glow-sm">
-              <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-            <!-- Flow paths for animated dots -->
-            <path id="path-left" d="M 210 150 L 320 150 L 420 100" fill="none"/>
-            <path id="path-right" d="M 210 150 L 320 150 L 420 200" fill="none"/>
-            <path id="path-user" d="M 90 150 L 170 150" fill="none"/>
-          </defs>
-
-          <!-- Background grid subtle -->
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
-          </pattern>
-          <rect width="720" height="300" fill="url(#grid)"/>
-
-          <!-- User node -->
-          <g class="route-node" transform="translate(50, 130)">
-            <rect x="0" y="0" width="90" height="40" rx="8" fill="#1E1E1E" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-            <text x="45" y="14" text-anchor="middle" fill="#9CA3AF" font-family="'JetBrains Mono', monospace" font-size="8" letter-spacing="1">YOUR APP</text>
-            <text x="45" y="28" text-anchor="middle" fill="#F5F5F5" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">API Request</text>
-          </g>
-
-          <!-- Arrow: user → router -->
-          <line x1="142" y1="150" x2="192" y2="150" stroke="#1a73e8" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
-          <polygon points="192,145 202,150 192,155" fill="#1a73e8" opacity="0.7"/>
-
-          <!-- Animated dot: user → router -->
-          <circle r="3.5" fill="#3b82f6" filter="url(#glow-sm)" style="offset-path: path('M 142 150 L 202 150'); offset-distance: 0%; animation: flow-move 2.5s linear infinite;">
-          </circle>
-
-          <!-- Router (center) -->
-          <g class="route-node" transform="translate(205, 110)">
-            <rect x="0" y="0" width="110" height="80" rx="12" fill="#1E1E1E" stroke="rgba(26,115,232,0.4)" stroke-width="1.5"/>
-            <rect x="0" y="0" width="110" height="80" rx="12" fill="url(#gBlue)" opacity="0.06"/>
-            <!-- Top glow line -->
-            <rect x="10" y="0" width="90" height="1" rx="1" fill="url(#gBlue)" opacity="0.8"/>
-            <text x="55" y="22" text-anchor="middle" fill="#9CA3AF" font-family="'JetBrains Mono', monospace" font-size="7.5" letter-spacing="1">SMART ROUTER</text>
-            <text x="55" y="40" text-anchor="middle" fill="#F5F5F5" font-family="'Syne', sans-serif" font-size="13" font-weight="700">Token Station</text>
-            <text x="55" y="58" text-anchor="middle" fill="#6B7280" font-family="'JetBrains Mono', monospace" font-size="8">complexity classifier</text>
-            <text x="55" y="72" text-anchor="middle" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="7">● live</text>
-          </g>
-
-          <!-- Upper branch line: router → local -->
-          <line x1="315" y1="135" x2="395" y2="95" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
-          <!-- Lower branch line: router → cloud -->
-          <line x1="315" y1="165" x2="395" y2="205" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
-
-          <!-- Label: simple vs complex -->
-          <text x="332" y="105" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8.5" opacity="0.9">simple</text>
-          <text x="332" y="185" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="8.5" opacity="0.9">complex</text>
-
-          <!-- Animated dot: router → local -->
-          <circle r="3" fill="#10b981" filter="url(#glow-sm)" style="offset-path: path('M 315 135 L 395 95'); offset-distance: 0%; animation: flow-move 2s linear infinite 0.8s;">
-          </circle>
-          <!-- Animated dot: router → cloud -->
-          <circle r="3" fill="#f59e0b" filter="url(#glow-sm)" style="offset-path: path('M 315 165 L 395 205'); offset-distance: 0%; animation: flow-move 2s linear infinite 1.4s;">
-          </circle>
-
-          <!-- Local models box -->
-          <g class="route-node" transform="translate(400, 64)">
-            <rect x="0" y="0" width="130" height="62" rx="10" fill="#1E1E1E" stroke="rgba(16,185,129,0.35)" stroke-width="1.5"/>
-            <rect x="0" y="0" width="130" height="62" rx="10" fill="url(#gGreen)" opacity="0.05"/>
-            <rect x="10" y="0" width="110" height="1" rx="1" fill="url(#gGreen)" opacity="0.7"/>
-            <text x="65" y="18" text-anchor="middle" fill="#9CA3AF" font-family="'JetBrains Mono', monospace" font-size="7.5" letter-spacing="1">LOCAL MODELS</text>
-            <text x="65" y="35" text-anchor="middle" fill="#F5F5F5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">Llama · Mistral</text>
-            <text x="65" y="52" text-anchor="middle" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8">≈$0.000 per call</text>
-          </g>
-
-          <!-- Cloud models box -->
-          <g class="route-node" transform="translate(400, 174)">
-            <rect x="0" y="0" width="130" height="62" rx="10" fill="#1E1E1E" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
-            <rect x="0" y="0" width="130" height="62" rx="10" fill="url(#gAmber)" opacity="0.05"/>
-            <rect x="10" y="0" width="110" height="1" rx="1" fill="url(#gAmber)" opacity="0.7"/>
-            <text x="65" y="18" text-anchor="middle" fill="#9CA3AF" font-family="'JetBrains Mono', monospace" font-size="7.5" letter-spacing="1">CLOUD MODELS</text>
-            <text x="65" y="35" text-anchor="middle" fill="#F5F5F5" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600">GPT-5.5 · Claude</text>
-            <text x="65" y="52" text-anchor="middle" fill="#f59e0b" font-family="'JetBrains Mono', monospace" font-size="8">high-complexity tasks</text>
-          </g>
-
-          <!-- Cost savings callout -->
-          <g transform="translate(548, 82)">
-            <rect x="0" y="0" width="140" height="52" rx="8" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
-            <text x="70" y="18" text-anchor="middle" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="600">73%</text>
-            <text x="70" y="34" text-anchor="middle" fill="#6B7280" font-family="'JetBrains Mono', monospace" font-size="8">avg. cost reduction</text>
-            <text x="70" y="46" text-anchor="middle" fill="#4B5563" font-family="'JetBrains Mono', monospace" font-size="7">Token Station composite</text>
-          </g>
-
-          <!-- RL training loop callout -->
-          <g transform="translate(548, 172)">
-            <rect x="0" y="0" width="140" height="52" rx="8" fill="rgba(26,115,232,0.07)" stroke="rgba(26,115,232,0.18)" stroke-width="1"/>
-            <text x="70" y="16" text-anchor="middle" fill="#9CA3AF" font-family="'JetBrains Mono', monospace" font-size="7.5" letter-spacing="1">SELF-EVOLVING</text>
-            <text x="70" y="32" text-anchor="middle" fill="#F5F5F5" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">RL fine-tuning</text>
-            <text x="70" y="46" text-anchor="middle" fill="#6B7280" font-family="'JetBrains Mono', monospace" font-size="7">trained on YOUR data</text>
-          </g>
-        </svg>
-      </div>
-    </div>
+<header class="wrap hero">
+  <h1>The AI gateway whose router <em>learns your workload.</em></h1>
+  <p class="lede">Token Station gives your company one OpenAI-compatible endpoint for 30+ models. Its router learns your workload, keeps simple requests on your own servers, and sends only the hard ones to the cloud.</p>
+  <div class="hero-ctas">
+    <a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start a 30-day pilot</a>
+    <a href="#router" class="btn btn-ghost">See how the router works</a>
   </div>
-</section>
+  <p class="fine">No seat fees for 30 days · Your first custom router trained in 60 days</p>
 
-<!-- ======================================================
-     STAT TICKER
-     ====================================================== -->
-<div class="stat-ticker" id="stat-ticker">
-  <div class="container" style="width:100%">
-    <div class="stat-ticker" style="border:none; margin:0; padding:0;">
-      <div class="stat-item">
-        <div class="stat-number" data-countup="73">73<span class="unit">%</span></div>
-        <div class="stat-label" data-i18n="stat_cost">Cost Reduction</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-countup-x="20">20<span class="unit">×</span></div>
-        <div class="stat-label" data-i18n="stat_cheaper">Cheaper vs. Claude Opus Only</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-countup="40">40<span class="unit">%</span></div>
-        <div class="stat-label" data-i18n="stat_fewer">Fewer Large-Model Calls</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-countup="30">30<span class="unit">+</span></div>
-        <div class="stat-label" data-i18n="stat_models">Supported Models</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-countup="60">60<span class="unit">d</span></div>
-        <div class="stat-label" data-i18n="stat_router">To First Custom Router</div>
-      </div>
+  <div class="console" aria-label="Example routing log">
+    <div class="console-bar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <span>routing log · example</span>
+      <div class="split"><span class="lg lg-local">kept local</span><span class="lg lg-cloud">sent to cloud</span></div>
     </div>
+    <div class="log" id="log">
+      <div class="log-head"><span>time</span><span>request</span><span>routed to</span><span>confidence</span></div>
+    </div>
+    <div class="console-foot">Illustrative traffic. Each request is scored by the router.</div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>5.4<span>×</span></b><small>More token savings than a telecom's existing pipeline</small></div>
+    <div class="stat"><b>14.6<span>%</span></b><small>Fewer input tokens in the same test</small></div>
+    <div class="stat"><b>120<span>/120</span></b><small>Answers still semantically correct</small></div>
+    <div class="stat"><b>30<span>+</span></b><small>Supported models</small></div>
+    <div class="stat"><b>60<span>d</span></b><small>To first custom router</small></div>
   </div>
 </div>
 
 <!-- ======================================================
-     PAIN — 3 CARDS
+     ROUTER
      ====================================================== -->
-<section class="pain-section">
-  <div class="container">
-    <div class="pain-header animate-on-scroll">
-      <div class="section-tag" data-i18n="pain_tag">The Problem</div>
-      <h2 class="section-title" data-i18n="pain_title">You're routing every request to the most expensive model by default</h2>
-      <p class="section-sub" data-i18n="pain_sub">Most teams route everything to GPT-5.5 because it's the safest choice — not because every task needs it.</p>
+<section id="router" class="wrap">
+  <h2>A router trained on your traffic, then on its own results.</h2>
+  <p class="sec-lede">Static routing rules go stale as your workload shifts. Token Station's router starts with fast heuristics, then trains a model on what your company actually sends and keeps retraining it.</p>
+
+  <div class="rt-row reveal">
+    <div class="rt-copy">
+      <h3>Routing by confidence, not by rule.</h3>
+      <p>Every request gets a confidence score. Above your threshold it stays on <strong class="c-local">your own servers</strong>; below it, it goes to <strong class="c-cloud">a cloud model</strong>. You set the threshold, and you can move it without redeploying.</p>
+      <p>Each decision is logged with how it turned out. The next retrain learns from those outcomes, so every router version starts where the last one stopped.</p>
+      <p class="aside">The router supports several routing methods, from deterministic heuristics to a trained model. The trained router is built on Jev, a discriminative model that returns a decision and a calibrated confidence score instead of generated text.</p>
     </div>
-    <div class="pain-cards">
-      <div class="pain-card animate-on-scroll">
-        <span class="pain-icon">💸</span>
-        <h3 data-i18n="pain1_title">Paying GPT-5.5 prices for tasks Llama handles fine</h3>
-        <p data-i18n="pain1_body">Summarization, Q&A, formatting, classification — 60-70% of your API calls don't need frontier reasoning. You're paying for a jet engine to fly across the street.</p>
-        <span class="pain-cost">$0.011/1K tokens (GPT-5.5) → $0.0001/1K locally</span>
+    <figure class="conf" aria-label="Requests placed on a confidence scale with a threshold at 0.85">
+      <div class="conf-zones"><span>sent to the cloud</span><span>kept local</span></div>
+      <div class="conf-track">
+        <div class="conf-cloud"></div>
+        <i class="d cloud" style="left:22%"></i><i class="d cloud" style="left:37%"></i><i class="d cloud" style="left:41%"></i><i class="d cloud" style="left:63%"></i><i class="d cloud" style="left:78%"></i>
+        <i class="d local" style="left:88%"></i><i class="d local" style="left:91%"></i><i class="d local" style="left:94%"></i><i class="d local" style="left:96%"></i><i class="d local" style="left:98.5%"></i>
+        <div class="conf-th"><b>0.85</b></div>
       </div>
-      <div class="pain-card animate-on-scroll delay-1">
-        <span class="pain-icon">📉</span>
-        <h3 data-i18n="pain2_title">Static routing rules go stale as your workload shifts</h3>
-        <p data-i18n="pain2_body">You write routing rules in Week 1, then your product changes. The rules stay. A fintech's "simple" isn't a law firm's "simple" — and neither is yours six months from now.</p>
-        <span class="pain-cost">LiteLLM · Portkey · OpenRouter: all static rules</span>
+      <div class="conf-axis"><span>0</span><span>confidence</span><span>1</span></div>
+      <figcaption>Each dot is one request; the dashed line is your threshold. Move it right and more traffic goes to the cloud; move it left and more stays local.</figcaption>
+    </figure>
+  </div>
+
+  <ol class="tl reveal">
+    <li><div class="tl-when">Day 1</div><div class="tl-what">Heuristics and your rules</div><p>Built-in heuristics route from the first request. Add rules like "under 500 tokens stays local" and change them any time.</p></li>
+    <li><div class="tl-when">Day 60</div><div class="tl-what">The router is trained on your traffic</div><p>It learns what "simple" means for your workload, not a generic benchmark's.</p></li>
+    <li class="tl-loop"><div class="tl-when">Every 60 days</div><div class="tl-what">It retrains on its own outcomes</div><p>Quality ratings, downstream task success and latency feed the next version.</p></li>
+  </ol>
+</section>
+
+<!-- ======================================================
+     PII MASKING SLM
+     ====================================================== -->
+<section id="privacy" class="wrap">
+  <h2>Personal data is masked before a request leaves your network.</h2>
+  <p class="sec-lede">A small language model finds personal information in each request and masks it before any cloud model sees it. If you allow it, the model keeps learning from your company's own usage data.</p>
+
+  <div class="rt-row reveal">
+    <div class="rt-copy">
+      <h3>It can learn how your company writes.</h3>
+      <p>Generic PII filters catch names and card numbers, then miss your customer IDs, internal account formats and the way your teams refer to people. With your permission, the masking model learns them from your own traffic.</p>
+      <p>It runs inside your network, in front of every cloud call. Requests the router keeps local never leave your network at all.</p>
+    </div>
+    <figure class="diff" aria-label="A request before and after masking">
+      <div class="diff-side">
+        <div class="diff-who">Your app sends</div>
+        <div class="diff-box">Refund order <u>88-4412</u> for <u>Jane Park</u>, card <u>4111 1111 1111 1111</u>, call <u>555-0142</u></div>
       </div>
-      <div class="pain-card animate-on-scroll delay-2">
-        <span class="pain-icon">🖥️</span>
-        <h3 data-i18n="pain3_title">Local models sit idle while your cloud bill grows</h3>
-        <p data-i18n="pain3_body">You bought the compute, deployed the models, and now 90% of your traffic bypasses them entirely. Your local GPU cluster is a sunk cost waiting to be unlocked.</p>
-        <span class="pain-cost">Avg. local GPU utilization: &lt;15% in AI teams</span>
+      <div class="diff-arrow" aria-hidden="true">↓</div>
+      <div class="diff-side">
+        <div class="diff-who">The cloud model receives</div>
+        <div class="diff-box out">Refund order <span class="mask">[ORDER_ID]</span> for <span class="mask">[NAME]</span>, card <span class="mask">[CARD]</span>, call <span class="mask">[PHONE]</span></div>
       </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ======================================================
+     GATEWAY ESSENTIALS
+     ====================================================== -->
+<section id="gateway" class="wrap">
+  <h2>Everything else a team gateway needs.</h2>
+  <div class="cols reveal">
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+      <h3>No code changes</h3>
+      <p>Point your existing OpenAI client at Token Station and set <code>model="auto"</code>. <code>/v1/chat/completions</code> works as-is.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+      <h3>Local models at compute cost</h3>
+      <p>Llama, Mistral, Phi and Qwen run on Olares or servers you already own. A locally routed call costs compute, not API dollars.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg>
+      <h3>30+ cloud models</h3>
+      <p>GPT-5.5, Claude Opus, Gemini and more, with your own keys or ours. Set latency caps, cost floors and quality thresholds.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <h3>Budgets that enforce themselves</h3>
+      <p>Monthly token budgets per employee or team: a warning at 80%, a cutoff at 100%. When cloud budget runs out, traffic shifts to local models.</p>
     </div>
   </div>
 </section>
 
 <!-- ======================================================
-     SOLUTION — HOW IT WORKS
+     CASE STUDY (smart-route-headroom-report-en-2026-09-04)
      ====================================================== -->
-<section class="solution-section" id="how-it-works">
-  <div class="container">
-    <div class="solution-header animate-on-scroll">
-      <div class="section-tag" data-i18n="sol_tag">How It Works</div>
-      <h2 class="section-title" data-i18n="sol_title">Route. Learn. Optimize.</h2>
-      <p class="section-sub" data-i18n="sol_sub">Three phases that compound over time — starting with rules on day one, graduating to a self-trained classifier within 60 days.</p>
+<section id="case" class="wrap">
+  <div class="case reveal">
+    <div>
+      <h2>Five times the token savings of a major telecom's existing pipeline.</h2>
+      <p class="sec-lede">In a controlled test in September 2026, we ran Token Station's router side by side with the compression proxy the carrier already uses, on the same requests and the same answer models. Token Station cut more tokens, kept every answer semantically correct, and spent less time doing it.</p>
+      <p class="fineprint">The router ran in heuristic mode, before any training on the carrier's traffic. 15 single-turn prompts, 8 answer paths, 1,200 timed samples. Latency covers local preprocessing only, not model response time.</p>
     </div>
-    <div class="steps-grid animate-on-scroll delay-1">
-      <div class="step-item">
-        <div class="step-num">Step 01</div>
-        <div class="step-icon-wrap step-icon-blue">🔀</div>
-        <h3 data-i18n="step1_title">Route by Rules</h3>
-        <p data-i18n="step1_body">On day one, configure routing with user-defined rules: "tasks under 500 tokens → Haiku," "use GPT-5.5 above confidence threshold." No redeployment needed to change rules.</p>
-        <div class="step-detail">
-          route(task)<br/>
-          → complexity_score: 0.23<br/>
-          → model: llama-3-8b<br/>
-          → cost: $0.0001
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">Step 02</div>
-        <div class="step-icon-wrap step-icon-green">🧠</div>
-        <h3 data-i18n="step2_title">Learn from Your Data</h3>
-        <p data-i18n="step2_body">After 60 days, Token Station trains a custom complexity classifier on your actual request history. It learns what "simple" and "complex" mean for your specific workloads — not a generic benchmark.</p>
-        <div class="step-detail">
-          training_data: 847K requests<br/>
-          classifier: fine-tuned on your corpus<br/>
-          accuracy: +31% vs static rules
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">Step 03</div>
-        <div class="step-icon-wrap step-icon-amber">⚡</div>
-        <h3 data-i18n="step3_title">Optimize Forever</h3>
-        <p data-i18n="step3_body">Reinforcement learning refines the router using real quality signals — user ratings, downstream task success, latency. More usage means better accuracy, which means lower costs. Automatically.</p>
-        <div class="step-detail">
-          rl_reward: quality × speed × cost<br/>
-          router_version: v4 (auto-updated)<br/>
-          savings_trend: ↑ 8% / 30 days
-        </div>
-      </div>
-    </div>
+    <dl class="figs">
+      <div><dt>5.4×</dt><dd>more token savings than their current compressor</dd></div>
+      <div><dt>14.6%</dt><dd>fewer input tokens, vs 2.7% before</dd></div>
+      <div><dt>120/120</dt><dd>answers semantically correct</dd></div>
+      <div><dt>0.61 ms</dt><dd>local routing and compression, vs 2.2 ms</dd></div>
+    </dl>
   </div>
 </section>
 
 <!-- ======================================================
-     FEATURES — 3 BLOCKS
+     RESEARCH
      ====================================================== -->
-<section class="features-section" id="features">
-  <div class="container">
-    <div class="features-header animate-on-scroll">
-      <div class="section-tag" data-i18n="feat_tag">Core Capabilities</div>
-      <h2 class="section-title" data-i18n="feat_title">Built for ML infrastructure engineers</h2>
-      <p class="section-sub" data-i18n="feat_sub">Not another wrapper. A production-grade inference layer with learning capabilities no other product ships.</p>
+<section id="research" class="wrap">
+  <h2>Learned routing is a published research area.</h2>
+  <p class="sec-lede">Routing between strong and weak models has been studied at UC Berkeley, Microsoft and in recent ICLR work. Token Station ships it as a product.</p>
+  <div class="cols cols-3 reveal">
+    <div class="col">
+      <h3>RouteLLM</h3>
+      <p class="cite">UC Berkeley and Anyscale, ICLR 2025</p>
+      <p>Routing between strong and weak LLMs gave <strong>2× or more cost savings</strong> on real-world benchmarks while keeping response quality.</p>
     </div>
-
-    <!-- Feature 1: Hybrid Inference -->
-    <div class="feature-block animate-on-scroll">
-      <div class="feature-text">
-        <div class="feature-badge badge-blue" data-i18n="feat1_badge">Hybrid Inference</div>
-        <h3 data-i18n="feat1_title">One endpoint. Two cost tiers. Zero code changes.</h3>
-        <p data-i18n="feat1_body">Drop Token Station in front of your existing OpenAI calls. Your team doesn't change a line of code — the router decides whether each request goes to Llama 3 on your Olares Mini or GPT-5.5 in the cloud.</p>
-        <ul class="feature-list">
-          <li data-i18n="feat1_li1">OpenAI-compatible API — <code>/v1/chat/completions</code> works as-is</li>
-          <li data-i18n="feat1_li2">Local models: Llama, Mistral, Phi, Qwen on your own hardware</li>
-          <li data-i18n="feat1_li3">Data never leaves your network for locally-routed calls</li>
-          <li data-i18n="feat1_li4">Automatic fallback when local model confidence is below threshold</li>
-          <li data-i18n="feat1_li5">Latency caps, cost floors, quality thresholds — all configurable</li>
-        </ul>
-      </div>
-      <div class="feature-visual animate-scale">
-        <img
-          src="/marketing/token-station-hybrid-inference_hero_1600x900_20260430_190912.jpg"
-          alt="AI inference routing diagram"
-          loading="lazy"
-          style="object-fit:cover;width:100%;height:340px;"
-        />
-        <div class="feature-visual-overlay">
-          <div class="mono-label">Routing Decision</div>
-          <div class="mono-stat">73% → Local</div>
-        </div>
-      </div>
+    <div class="col">
+      <h3>Hybrid LLM</h3>
+      <p class="cite">Microsoft Research, ICLR 2024</p>
+      <p>Difficulty-based routing between small and large models made <strong>40% fewer large-model calls</strong> with on-par downstream performance.</p>
     </div>
-
-    <!-- Feature 2: Self-Evolving Router -->
-    <div class="feature-block reverse animate-on-scroll">
-      <div class="feature-text">
-        <div class="feature-badge badge-green" data-i18n="feat2_badge">Self-Evolving Router</div>
-        <h3 data-i18n="feat2_title">The router trains itself on your workload. No competitor does this.</h3>
-        <p data-i18n="feat2_body">LiteLLM, Portkey, and OpenRouter all use static rules or generic benchmarks. Token Station trains a custom classifier every 60 days using reinforcement learning on your company's actual usage history.</p>
-        <ul class="feature-list">
-          <li data-i18n="feat2_li1">Fine-tunes on 60+ days of your actual request history</li>
-          <li data-i18n="feat2_li2">RL signal: quality ratings, downstream task success, latency</li>
-          <li data-i18n="feat2_li3">A law firm's "simple" ≠ a fintech's "simple" — it learns yours</li>
-          <li data-i18n="feat2_li4">Router improves automatically: more usage = better accuracy</li>
-        </ul>
-        <div class="no-competitor-box">
-          <span class="nc-icon">🔬</span>
-          <p data-i18n-html="feat2_nc">LiteLLM, Portkey, and OpenRouter all use static routing rules — none train a model on your data. This is the moat.</p>
-        </div>
-      </div>
-      <div class="feature-visual animate-scale">
-        <img
-          src="/marketing/token-station-hybrid-inference_feature_800x800_20260430_191010.jpg"
-          alt="Machine learning router training visualization"
-          loading="lazy"
-          style="object-fit:cover;width:100%;height:340px;"
-        />
-        <div class="feature-visual-overlay">
-          <div class="mono-label">Router Version</div>
-          <div class="mono-stat">v4 · Auto-trained</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 3: Local Model Integration -->
-    <div class="feature-block animate-on-scroll">
-      <div class="feature-text">
-        <div class="feature-badge badge-amber" data-i18n="feat3_badge">Local Integration</div>
-        <h3 data-i18n="feat3_title">Your hardware. Your data. Near-zero marginal cost.</h3>
-        <p data-i18n="feat3_body">Token Station runs Llama, Mistral, Phi, and Qwen locally on your Olares Mini or any server you already own. Every locally-routed call costs you compute cycles, not API dollars.</p>
-        <ul class="feature-list">
-          <li data-i18n="feat3_li1">Runs on Olares Mini — a compact personal server for self-hosted AI</li>
-          <li data-i18n="feat3_li2">Local inference = zero API cost per routed query</li>
-          <li data-i18n="feat3_li3">Sensitive data never leaves your network for local calls</li>
-          <li data-i18n="feat3_li4">Confidence threshold fallback — always cloud-backed for quality</li>
-          <li data-i18n="feat3_li5">No GPU required — optimized models run on CPU + RAM</li>
-        </ul>
-      </div>
-      <div class="feature-visual animate-scale">
-        <img
-          src="/marketing/token-station-hybrid-inference_section_1200x800_20260430_190937.jpg"
-          alt="Local AI model server hardware"
-          loading="lazy"
-          style="object-fit:cover;width:100%;height:340px;"
-        />
-        <div class="feature-visual-overlay">
-          <div class="mono-label">Local API Cost</div>
-          <div class="mono-stat">$0.0001 / 1K tokens</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 4: Quota Management / Cost Controls -->
-    <div class="feature-block reverse animate-on-scroll">
-      <div class="feature-text">
-        <div class="feature-badge badge-blue" data-i18n="feat4_badge">Cost Controls</div>
-        <h3 data-i18n="feat4_title">Set per-employee budgets. Stop runaway AI spend before it happens.</h3>
-        <p data-i18n="feat4_body">Routing cuts costs at the infrastructure level. Quota management cuts them at the human level. Assign monthly token budgets per employee or per team — the gateway enforces limits automatically, so no single power-user can blow the quarter's budget.</p>
-        <ul class="feature-list">
-          <li data-i18n="feat4_li1">Monthly token budgets per employee, team, or department</li>
-          <li data-i18n="feat4_li2">Live usage dashboard — who's spending what, on which models</li>
-          <li data-i18n="feat4_li3">Soft warnings at 80% quota; hard cutoff at 100%</li>
-          <li data-i18n="feat4_li4">When cloud budget is hit, automatically fall back to local models</li>
-          <li data-i18n="feat4_li5">Manager view: department-level spend rolled up in one place</li>
-          <li data-i18n="feat4_li6">Automatic quota resets on billing period rollover</li>
-        </ul>
-      </div>
-      <div class="feature-visual animate-scale">
-        <div style="padding:28px 24px;height:340px;display:flex;flex-direction:column;justify-content:center;gap:18px;">
-          <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px;">Quota Dashboard · April 2026</div>
-
-          <!-- Engineering row -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-family:var(--font-mono);font-size:12px;color:var(--text);">Engineering · 12 seats</span>
-              <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent-amber);">91% ⚠</span>
-            </div>
-            <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;">
-              <div style="height:100%;width:91%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:3px;"></div>
-            </div>
-            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">455K / 500K tokens · <span style="color:var(--accent-amber);">routing to local ↓</span></div>
-          </div>
-
-          <!-- Marketing row -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-family:var(--font-mono);font-size:12px;color:var(--text);">Marketing · 6 seats</span>
-              <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent-green);">58%</span>
-            </div>
-            <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;">
-              <div style="height:100%;width:58%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:3px;"></div>
-            </div>
-            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">174K / 300K tokens</div>
-          </div>
-
-          <!-- Design row -->
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span style="font-family:var(--font-mono);font-size:12px;color:var(--text);">Design · 4 seats</span>
-              <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent-electric);">31%</span>
-            </div>
-            <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;">
-              <div style="height:100%;width:31%;background:linear-gradient(90deg,#1a73e8,#3b82f6);border-radius:3px;"></div>
-            </div>
-            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">62K / 200K tokens</div>
-          </div>
-
-          <!-- Divider -->
-          <div style="height:1px;background:var(--border);margin:2px 0;"></div>
-
-          <!-- Totals -->
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;">
-            <div>
-              <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">Total · April</div>
-              <div style="font-family:var(--font-mono);font-size:22px;font-weight:600;color:var(--text);margin-top:3px;">691K <span style="font-size:12px;color:var(--text-muted);">/ 1M tokens</span></div>
-            </div>
-            <div style="text-align:right;">
-              <div style="font-family:var(--font-mono);font-size:10px;color:var(--accent-green);letter-spacing:0.06em;text-transform:uppercase;">Routing Savings</div>
-              <div style="font-family:var(--font-mono);font-size:20px;font-weight:600;color:var(--accent-green);margin-top:3px;">$847 saved</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ======================================================
-     RESEARCH / SOCIAL PROOF
-     ====================================================== -->
-<section class="proof-section" id="research">
-  <div class="container">
-    <div class="proof-header animate-on-scroll">
-      <div class="section-tag" data-i18n="proof_tag">Research-Backed</div>
-      <h2 class="section-title" data-i18n="proof_title">The numbers are peer-reviewed</h2>
-      <p class="section-sub" data-i18n="proof_sub">Hybrid inference routing isn't a startup pitch — it's a published research area from UC Berkeley, Microsoft, and Anyscale. Token Station ships it as a product.</p>
-    </div>
-
-    <div class="proof-stats-grid animate-on-scroll delay-1">
-      <div class="proof-stat">
-        <div class="proof-stat-num" id="stat-73">0<span class="pct">%</span></div>
-        <div class="proof-stat-label" data-i18n="proof_stat1_label">Token cost reduction via hybrid routing</div>
-        <div class="proof-stat-source">Token Station Composite</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num" id="stat-2x">2<span class="x">×</span></div>
-        <div class="proof-stat-label" data-i18n="proof_stat2_label">Cost savings vs. always using GPT-4, zero quality loss</div>
-        <div class="proof-stat-source">RouteLLM · UC Berkeley / Anyscale</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num" id="stat-40">0<span class="pct">%</span></div>
-        <div class="proof-stat-label" data-i18n="proof_stat3_label">Fewer large-model calls via difficulty-based routing</div>
-        <div class="proof-stat-source">Hybrid LLM · Microsoft Research</div>
-      </div>
-      <div class="proof-stat">
-        <div class="proof-stat-num" id="stat-30">30<span class="x">+</span></div>
-        <div class="proof-stat-label" data-i18n="proof_stat4_label">Unseen models dynamically routed without retraining</div>
-        <div class="proof-stat-source">UniRoute · ICLR 2026</div>
-      </div>
-    </div>
-
-    <div class="proof-papers animate-on-scroll delay-2">
-      <div class="paper-card">
-        <div class="paper-venue">ICLR 2025 · UC Berkeley / Anyscale</div>
-        <h4>RouteLLM: Learning to Route LLMs with Preference Data</h4>
-        <p data-i18n="paper1_body">Demonstrates that routing between strong and weak LLMs can achieve 2× or more cost savings on real-world benchmarks while maintaining response quality.</p>
-        <div class="paper-finding">↳ 2× savings · zero quality regression</div>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue">ICLR 2024 · Microsoft Research</div>
-        <h4>Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing</h4>
-        <p data-i18n="paper2_body">Introduces difficulty-based routing between local and cloud models, showing 40% fewer large-model calls with on-par downstream task performance.</p>
-        <div class="paper-finding">↳ 40% fewer GPT-4 calls · same quality</div>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue">ICLR 2026</div>
-        <h4>UniRoute: Scalable Dynamic Routing Across Unseen Models</h4>
-        <p data-i18n="paper3_body">Demonstrates dynamic routing across 30+ previously unseen models without retraining the router, proving generalization at production scale.</p>
-        <div class="paper-finding">↳ 30+ models · zero retraining needed</div>
-      </div>
+    <div class="col">
+      <h3>UniRoute</h3>
+      <p class="cite">ICLR 2026</p>
+      <p>Dynamic routing across <strong>30+ previously unseen models</strong>, without retraining the router.</p>
     </div>
   </div>
 </section>
@@ -1764,192 +467,135 @@ fbq('track', 'PageView');
 <!-- ======================================================
      PRICING
      ====================================================== -->
-<section class="pricing-section" id="pricing">
-  <div class="container">
-    <div class="pricing-header animate-on-scroll">
-      <div class="section-tag" data-i18n="price_tag">Pricing</div>
-      <h2 class="section-title" data-i18n="price_title">Scales with your team, not your usage</h2>
-      <p class="section-sub" data-i18n="price_sub">Flat per-seat pricing means the more you route, the better your unit economics get.</p>
+<section id="pricing" class="wrap">
+  <h2>Priced per seat, not per token.</h2>
+  <p class="sec-lede">Flat per-seat pricing means the more you route locally, the better your unit economics get. Every plan starts with a 30-day pilot with no seat fees.</p>
+  <div class="ptable-wrap reveal">
+    <table class="ptable">
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Feature</span></th>
+          <th scope="col"><span class="pname">On-Prem</span><span class="pprice">$10</span><span class="punit">per employee / month</span></th>
+          <th scope="col" class="hl"><span class="pname">Cloud</span><span class="pprice">$10</span><span class="punit">per employee / month</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Who runs it</th><td>You, on your infrastructure</td><td class="hl">We do</td></tr>
+        <tr><th scope="row">API keys</th><td>Your own OpenAI, Anthropic and Google keys</td><td class="hl">Our pooled keys with volume discounts</td></tr>
+        <tr><th scope="row">Extra cloud usage</th><td>Billed by your providers</td><td class="hl">$50 token top-ups</td></tr>
+        <tr><th scope="row">Local models</th><td>Llama, Mistral, Phi, Qwen</td><td class="hl">On Olares hardware</td></tr>
+        <tr><th scope="row">Router trained on your data</th><td><span class="yes">✓</span> after 60 days</td><td class="hl"><span class="yes">✓</span> after 60 days</td></tr>
+        <tr><th scope="row">PII masking</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Quotas and usage alerts</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span> with team dashboards</td></tr>
+        <tr><th scope="row">Support</th><td>Slack and email</td><td class="hl">Priority, with a dedicated Slack channel</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td><a href="#request" class="btn btn-ghost" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start On-Prem pilot</a></td>
+          <td class="hl"><a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start Cloud pilot</a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================
+     PILOT FORM (leads → Apps Script)
+     ====================================================== -->
+<section id="request" class="wrap">
+  <div class="request">
+    <div>
+      <h2>Tell us about your team.</h2>
+      <p class="sec-lede">We review every request and reply within two business days with a pilot plan for your stack.</p>
+      <ul class="request-points">
+        <li><span>A 30-day pilot with no seat fees, on one OpenAI-compatible endpoint.</span></li>
+        <li><span>Rules-based routing from day one, PII masking switched on.</span></li>
+        <li><span>Your first custom router trained on your traffic by day 60.</span></li>
+      </ul>
     </div>
-    <div class="pricing-grid animate-on-scroll delay-1">
-
-      <!-- On-Prem -->
-      <div class="pricing-card">
-        <div class="pricing-label" data-i18n="price_onprem_label">On-Prem</div>
-        <div class="pricing-price">$10<span class="pricing-price-unit"> / employee / month</span></div>
-        <div class="pricing-desc" data-i18n="price_onprem_desc">Bring your own API keys. Token Station runs on your infrastructure.</div>
-        <ul class="pricing-features">
-          <li data-i18n="price_onprem_li1">Bring your own API keys (OpenAI, Anthropic, Google)</li>
-          <li data-i18n="price_onprem_li2">Local model support — Llama, Mistral, Phi, Qwen</li>
-          <li data-i18n="price_onprem_li3">Self-evolving router after 60 days</li>
-          <li data-i18n="price_onprem_li4">All routing rules and cost thresholds</li>
-          <li data-i18n="price_onprem_li5">Per-employee token quotas and usage alerts</li>
-          <li data-i18n="price_onprem_li6">Data stays on your network</li>
-          <li data-i18n="price_onprem_li7">Slack + email support</li>
-        </ul>
-        <form class="email-capture-form" onsubmit="return submitEmail(event, 'on-prem')" style="gap:10px;">
-          <input type="email" name="email" placeholder="your@company.com" data-i18n-placeholder="hero_placeholder" required autocomplete="email" />
-          <button type="submit" onclick="gtag('event', 'cta_click')" style="background:rgba(255,255,255,0.07);border:1.5px solid var(--border-hover);color:var(--text);" data-i18n="price_onprem_btn">
-            Start On-Prem Pilot
-          </button>
-          <p class="form-message" style="display:none;font-size:13px;margin-top:0;"></p>
-        </form>
-        <div class="pricing-note" style="margin-top:8px;" data-i18n="price_note">No credit card required</div>
+    <form class="req" onsubmit="return submitRequest(event)">
+      <div class="full">
+        <label for="r-email">Work email</label>
+        <input id="r-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
       </div>
-
-      <!-- Cloud -->
-      <div class="pricing-card featured">
-        <div class="pricing-label" data-i18n="price_cloud_label">Cloud</div>
-        <div class="pricing-price">$10<span class="pricing-price-unit"> / employee / month</span></div>
-        <div class="pricing-desc" data-i18n="price_cloud_desc">Use our keys — plus $50 token increments when you need cloud burst. We handle the infra.</div>
-        <ul class="pricing-features">
-          <li data-i18n="price_cloud_li1">Managed API keys — we negotiate volume discounts</li>
-          <li data-i18n="price_cloud_li2">$50 token increment top-ups for cloud burst</li>
-          <li data-i18n="price_cloud_li3">Local model support on Olares Mini hardware</li>
-          <li data-i18n="price_cloud_li4">Self-evolving router after 60 days</li>
-          <li data-i18n="price_cloud_li5">Per-employee token quotas with team dashboards</li>
-          <li data-i18n="price_cloud_li6">All routing rules and cost thresholds</li>
-          <li data-i18n="price_cloud_li7">Priority support + dedicated Slack channel</li>
-        </ul>
-        <form class="email-capture-form" onsubmit="return submitEmail(event, 'cloud')" style="gap:10px;">
-          <input type="email" name="email" placeholder="your@company.com" data-i18n-placeholder="hero_placeholder" required autocomplete="email" />
-          <button type="submit" onclick="gtag('event', 'cta_click')" data-i18n="price_cloud_btn">
-            Start Cloud Pilot
-          </button>
-          <p class="form-message" style="display:none;font-size:13px;margin-top:0;"></p>
-        </form>
-        <div class="pricing-note" style="margin-top:8px;" data-i18n="price_note">No credit card required</div>
+      <div>
+        <label for="r-company">Company</label>
+        <input id="r-company" type="text" name="company" required autocomplete="organization" />
       </div>
-
-    </div>
+      <div>
+        <label for="r-size">Company size</label>
+        <select id="r-size" name="company_size" required>
+          <option value="" selected disabled>Select one</option>
+          <option value="1-50">1-50 people</option>
+          <option value="51-200">51-200</option>
+          <option value="201-500">201-500</option>
+          <option value="501-1000">501-1000</option>
+          <option value="1000+">1000+</option>
+        </select>
+      </div>
+      <div>
+        <label for="r-role">Your role <span class="opt">(optional)</span></label>
+        <select id="r-role" name="role">
+          <option value="" selected>Select one</option>
+          <option value="it-infrastructure">IT / infrastructure</option>
+          <option value="engineering">Engineering</option>
+          <option value="finance-finops">Finance / FinOps</option>
+          <option value="security">Security</option>
+          <option value="founder-exec">Founder / exec</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+      <div>
+        <label for="r-plan">Plan <span class="opt">(optional)</span></label>
+        <select id="r-plan" name="plan">
+          <option value="" selected>Not sure yet</option>
+          <option value="on-prem">On-Prem, our own keys</option>
+          <option value="cloud">Cloud, your pooled keys</option>
+        </select>
+      </div>
+      <div class="full">
+        <label for="r-notes">What do you want to route? <span class="opt">(optional)</span></label>
+        <textarea id="r-notes" name="notes" placeholder="Models you use today, monthly spend, data you need to keep in-house"></textarea>
+      </div>
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="full">
+        <button type="submit" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Get my pilot plan</button>
+        <p class="form-message" role="status"></p>
+      </div>
+    </form>
   </div>
 </section>
 
 <!-- ======================================================
      FAQ
      ====================================================== -->
-<section class="faq-section" id="faq">
-  <div class="container">
-    <div class="faq-header animate-on-scroll">
-      <div class="section-tag" data-i18n="faq_tag">FAQ</div>
-      <h2 class="section-title" data-i18n="faq_title">Technical questions, answered</h2>
-    </div>
-    <div class="faq-grid animate-on-scroll delay-1">
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq1_q">Does routing add latency to every request?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq1_a">
-          Token Station's complexity classifier runs in under 5ms — far below the P99 latency of any LLM call. For local inference, you eliminate round-trip network latency entirely, which often makes locally-routed requests <em>faster</em> than cloud calls. For cloud-routed requests, the routing overhead is negligible. We publish latency benchmarks in the pilot dashboard.
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq2_q">Will routing to smaller models hurt quality?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq2_a">
-          That's the whole problem we solved. The router only sends tasks to local models when its confidence score exceeds a threshold you configure (default: 0.85). If the classifier isn't confident, it falls back to cloud. The RouteLLM paper (ICLR 2025) demonstrates 2× cost savings with zero measurable quality regression on real-world benchmarks — and our router improves on that baseline using your specific data.
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq3_q">Which local models are supported?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq3_a">
-          Token Station currently supports <code>Llama 3 (8B, 70B)</code>, <code>Mistral 7B</code>, <code>Phi-3 (mini, small, medium)</code>, and <code>Qwen 2.5</code>. We add new models quarterly. All models run via the Olares runtime — no manual CUDA setup required. You can also plug in any model that exposes an OpenAI-compatible endpoint.
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq4_q">What data does the self-evolving router train on?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq4_a">
-          The router trains only on metadata about your requests — token counts, task categories, confidence scores, and downstream quality signals you opt into. No request content (prompts or completions) is ever used for training. The trained classifier stays in your environment; it does not leave your network. Training runs on-premise using Olares compute.
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq5_q">How is this different from LiteLLM or Portkey?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq5_a">
-          LiteLLM and Portkey are excellent load-balancers and proxies — they route by rules you define. Token Station adds a learning layer on top: the complexity classifier trains on your actual usage and improves over time. Static rules decay as your product evolves. A self-trained router doesn't. That's the fundamental difference.
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">
-          <span data-i18n="faq6_q">Can I set limits so one team doesn't blow the whole budget?</span>
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a" data-i18n="faq6_a">
-          Yes — quota management is a core feature. You assign monthly token budgets per employee, per team, or per department from the admin dashboard. The gateway enforces limits in real time: a soft warning fires at 80% usage, and a hard cutoff triggers at 100%. Once a cloud budget is exhausted, the router automatically shifts that employee's traffic to local models — they stay productive, but your cloud bill doesn't spike. Quotas reset automatically at the start of each billing period.
-        </div>
-      </div>
-
-    </div>
+<section id="faq" class="wrap">
+  <h2>Technical questions, answered.</h2>
+  <div class="faq">
+    <details><summary>Does routing add latency to every request?</summary>
+      <p>The routing decision is a classification, not text generation, so it adds milliseconds rather than seconds, well below the time of any LLM call. Locally routed requests skip the round trip to a cloud provider, which often makes them faster than cloud calls. Pilot dashboards show the measured overhead.</p></details>
+    <details><summary>Will routing to smaller models hurt quality?</summary>
+      <p>The router sends a request to a local model only when its confidence is above a threshold you set (default 0.85). Below that, it falls back to the cloud. RouteLLM (ICLR 2025) showed 2× cost savings with no measurable quality regression on real-world benchmarks, and Token Station's router improves on that baseline by training on your own data.</p></details>
+    <details><summary>Which local models are supported?</summary>
+      <p>Llama 3 (8B, 70B), Mistral 7B, Phi-3 (mini, small, medium) and Qwen 2.5, with new models added quarterly. All run through the Olares runtime with no manual CUDA setup. You can also plug in any model that exposes an OpenAI-compatible endpoint.</p></details>
+    <details><summary>What data do the router and the PII model train on?</summary>
+      <p>You choose. By default they train only on metadata about your requests: token counts, task categories, confidence scores and the quality signals you opt into. You can also allow training on request content, which lets the router and the PII masking model learn your own formats and identifiers more precisely. Either way, training runs inside your environment and the trained models never leave your network.</p></details>
+    <details><summary>How is this different from LiteLLM or Portkey?</summary>
+      <p>LiteLLM and Portkey are good load balancers and proxies. They route by rules you define. Token Station adds a learning layer: the router trains on your actual usage and improves with each version. Static rules decay as your product changes; a router that retrains on its own outcomes does not.</p></details>
+    <details><summary>Can I set limits so one team doesn't use the whole budget?</summary>
+      <p>Yes. You assign monthly token budgets per employee, team or department from the admin dashboard. The gateway enforces them in real time: a soft warning at 80% and a hard cutoff at 100%. Once a cloud budget is used up, that employee's traffic shifts to local models, and quotas reset at the start of each billing period.</p></details>
   </div>
 </section>
 
-<!-- ======================================================
-     FINAL CTA
-     ====================================================== -->
-<section class="final-cta">
-  <div class="container">
-    <h2 class="animate-on-scroll"><span data-i18n="cta_h2_pre">Start cutting your</span><br/><em data-i18n="cta_h2_em">AI costs</em> <span data-i18n="cta_h2_suf">today.</span></h2>
-    <p class="animate-on-scroll delay-1" data-i18n="cta_p">
-      30-day free pilot. One OpenAI-compatible endpoint. Your first custom router trained in 60 days.
-    </p>
-    <div class="animate-on-scroll delay-2">
-      <form class="email-capture-form" onsubmit="return submitEmail(event)" style="max-width:420px;margin:0 auto;">
-        <input
-          type="email"
-          name="email"
-          placeholder="your@company.com"
-          data-i18n-placeholder="hero_placeholder"
-          required
-          autocomplete="email"
-        />
-        <button type="submit" onclick="gtag('event', 'cta_click')">
-          Start Your 30-Day Free Pilot
-        </button>
-        <p class="form-message" style="display:none"></p>
-      </form>
-    </div>
-    <p class="animate-on-scroll delay-3" style="font-size:13px;color:var(--text-muted);margin-top:20px;" data-i18n="cta_fine">
-      No credit card · No sales call · Works with GPT-5.5, Claude Opus, Gemini, and 30+ models
-    </p>
-  </div>
-</section>
-
-<!-- ======================================================
-     FOOTER
-     ====================================================== -->
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <svg width="20" height="22" viewBox="0 0 28 32" fill="none">
-          <path d="M14 2L26 7V17C26 23 21 28 14 30C7 28 2 23 2 17V7L14 2Z" fill="#2563eb" fill-opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
-          <circle cx="14" cy="14" r="3.5" fill="#60a5fa"/>
-        </svg>
-        Token Station · by ByteFuture
-      </div>
-      <div class="footer-copy" data-i18n="footer_copy">© 2026 ByteFuture AI. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
-        <a href="https://models.bytefuture.ai/terms.html">Terms</a>
-        <a href="mailto:team@bytefuture.ai">Contact</a>
-      </div>
+  <div class="wrap">
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg>Token Station · by ByteFuture</span>
+    <span>© 2026 ByteFuture AI. All rights reserved.</span>
+    <div class="foot-links">
+      <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
+      <a href="https://models.bytefuture.ai/terms.html">Terms</a>
+      <a href="mailto:team@bytefuture.ai">Contact</a>
     </div>
   </div>
 </footer>
@@ -1959,7 +605,6 @@ fbq('track', 'PageView');
      ====================================================== -->
 <script>
 window.dataLayer = window.dataLayer || [];
-
 // ---- scroll_50 event ----
 (function() {
   var fired = false;
@@ -1974,73 +619,58 @@ window.dataLayer = window.dataLayer || [];
 })();
 
 // ---- Scroll reveal ----
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(el) { el.classList.add('is-visible'); }); return; }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+})();
 
-document.querySelectorAll('.animate-on-scroll, .animate-scale').forEach(function(el) {
-  observer.observe(el);
-});
+// ---- Example routing log ----
+// Illustrative rows only; labelled as such in the console footer.
+(function() {
+  var rows = [
+    ['summarize support ticket #8812', 'local', 'local-qwen', 0.96],
+    ['refund order <span class="mask">[ORDER_ID]</span> for <span class="mask">[NAME]</span>', 'cloud', 'cloud · masked', 0.41],
+    ['classify intent: "cancel my plan"', 'local', 'local-qwen', 0.98],
+    ['draft a migration plan for the billing service', 'cloud', 'cloud-opus', 0.22],
+    ['extract fields from invoice.pdf', 'local', 'local-llama', 0.91],
+    ['translate release notes to Japanese', 'local', 'local-qwen', 0.88],
+    ['review contract clause for <span class="mask">[COMPANY]</span>', 'cloud', 'cloud · masked', 0.37],
+    ['format this JSON as a table', 'local', 'local-phi', 0.99]
+  ];
+  var log = document.getElementById('log');
+  if (!log) return;
+  var VISIBLE = 5, i = 0, base = new Date(2026, 9, 6, 9, 41, 2);
+  function stamp(n) { var d = new Date(base.getTime() + n * 700); return d.toTimeString().slice(0, 8); }
+  function add() {
+    var r = rows[i % rows.length];
+    var el = document.createElement('div');
+    el.className = 'log-row';
+    el.innerHTML = '<span class="t">' + stamp(i) + '</span><span class="req">' + r[0] + '</span>' +
+      '<span class="' + (r[1] === 'local' ? 'to-local' : 'to-cloud') + '">→ ' + r[2] + '</span>' +
+      '<span class="p">p=' + r[3].toFixed(2) + '</span>';
+    log.appendChild(el);
+    var all = log.querySelectorAll('.log-row');
+    if (all.length > VISIBLE) all[0].remove();
+    i++;
+  }
+  for (var k = 0; k < VISIBLE; k++) add();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) setInterval(add, 1800);
+})();
 
-// ---- CountUp for proof stats ----
-function countUp(el, target, suffix, duration) {
-  duration = duration || 1500;
-  var start = performance.now();
-  var update = function(time) {
-    var progress = Math.min((time - start) / duration, 1);
-    var ease = 1 - Math.pow(1 - progress, 3);
-    var val = Math.floor(ease * target);
-    el.innerHTML = val + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-  };
-  requestAnimationFrame(update);
+// ---- Pricing buttons preselect the plan ----
+function pickPlan(plan) {
+  var s = document.getElementById('r-plan');
+  if (s) s.value = plan;
 }
 
-var statsObserver = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      var el = entry.target;
-      statsObserver.unobserve(el);
-      var id = el.id;
-      if (id === 'stat-73') {
-        countUp(el, 73, '<span class="pct">%</span>');
-      } else if (id === 'stat-40') {
-        countUp(el, 40, '<span class="pct">%</span>');
-      }
-    }
-  });
-}, { threshold: 0.5 });
-
-['stat-73', 'stat-40'].forEach(function(id) {
-  var el = document.getElementById(id);
-  if (el) statsObserver.observe(el);
-});
-
-// ---- Theme toggle ----
-function toggleTheme() {
-  var html = document.documentElement;
-  var current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  document.querySelector('.theme-toggle').textContent = current === 'dark' ? '☾' : '☀';
-}
-
-// ---- FAQ toggle ----
-function toggleFaq(el) {
-  var isOpen = el.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(function(item) {
-    item.classList.remove('open');
-  });
-  if (!isOpen) el.classList.add('open');
-}
-</script>
-
-<script>
-// ---- Email submission ----
+// ---- Request form ----
 // Leads go to the same Google Apps Script web app as /enterprise.html (one
 // Sheet, one notification mail). Source + setup: scripts/leads-apps-script.gs.
 var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwOYsANJ2jIiOJ5mr_7Taa1N98d1BkXhc1HkI9kK65sUrP7x1k2iLhczdIdN-rnEiKyCw/exec';
@@ -2055,7 +685,7 @@ function getUTM() {
   };
 }
 
-async function submitEmail(e, plan) {
+async function submitRequest(e) {
   e.preventDefault();
   var form = e.target;
   var email = form.email.value;
@@ -2073,8 +703,13 @@ async function submitEmail(e, plan) {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(Object.assign({
         email: email,
-        plan: plan || '',
+        company: form.company.value,
+        company_size: form.company_size.value,
+        role: form.role.value,
+        plan: form.plan.value,
+        notes: form.notes.value,
         form: 'router',
+        _gotcha: form._gotcha.value,
         page: location.pathname,
         referrer: document.referrer || '',
         user_agent: navigator.userAgent || ''
@@ -2086,16 +721,16 @@ async function submitEmail(e, plan) {
       var _evId = Math.random().toString(36).slice(2) + Date.now().toString(36);
       fbq('init', '1263865485900196', { em: email });
       fbq('track', 'Lead', {}, {eventID: _evId});
-      msg.textContent = '✓ You\'re on the list! We\'ll reach out with pilot details.';
-      msg.style.color = 'var(--accent-green)';
+      msg.textContent = '✓ Request received. We\'ll reply within two business days.';
+      msg.style.color = 'var(--teal)';
       msg.style.display = 'block';
-      form.email.value = '';
+      form.reset();
     } else {
       throw new Error('Failed');
     }
   } catch (err) {
-    msg.textContent = 'Something went wrong. Please try again.';
-    msg.style.color = '#EF4444';
+    msg.textContent = 'That did not go through. Please try again, or email team@bytefuture.ai.';
+    msg.style.color = '#b91c1c';
     msg.style.display = 'block';
   } finally {
     btn.disabled = false;
@@ -2103,7 +738,5 @@ async function submitEmail(e, plan) {
   }
 }
 </script>
-
-
 </body>
 </html>
