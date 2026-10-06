@@ -290,7 +290,33 @@ fbq('track', 'PageView');
       font-size: 14px; line-height: 1.5; margin-bottom: 10px;
     }
     .pf-check { color: #0D9488; font-weight: 700; flex: none; }
-    .pricing-cta-form { margin-top: auto; }
+    .pricing-cta-btn { margin-top: auto; width: 100%; }
+    .hero-cta { width: 100%; max-width: 520px; }
+
+    /* Pilot request form: same fields as /tokens/router.html */
+    .req-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; margin: 0 auto; text-align: left;
+      background: #faf9f5; border: 1px solid #e4e4e7; border-radius: 16px; padding: 28px; position: relative; }
+    .req-form .full { grid-column: 1 / -1; }
+    .req-form > * { min-width: 0; }
+    .req-form label { display: block; font-size: 13px; font-weight: 600; color: #52525b; margin-bottom: 6px; }
+    .req-form label .opt { font-weight: 400; color: #71717a; }
+    .req-form input, .req-form select, .req-form textarea {
+      width: 100%; font-family: 'DM Sans', sans-serif; font-size: 16px; color: #18181b;
+      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 10px; padding: 11px 12px;
+      transition: border-color 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none;
+    }
+    .req-form select {
+      cursor: pointer; padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%2371717a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+    }
+    .req-form select:invalid { color: #a1a1aa; }
+    .req-form textarea { min-height: 96px; resize: vertical; }
+    .req-form input:focus, .req-form select:focus, .req-form textarea:focus {
+      outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .req-form input::placeholder, .req-form textarea::placeholder { color: #a1a1aa; }
+    .req-form button { width: 100%; }
 
     /* ─── FAQ ─── */
     .faq-item {
@@ -357,6 +383,7 @@ fbq('track', 'PageView');
       .faq-answer-inner { padding: 0 18px 20px; }
       footer > div { flex-direction: column; gap: 12px; text-align: center; }
       .email-form { grid-template-columns: 1fr; }
+      .req-form { grid-template-columns: 1fr; padding: 20px; }
     }
   </style>
 </head>
@@ -380,7 +407,7 @@ fbq('track', 'PageView');
         <a class="nav-link" href="#how" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">How it works</a>
         <a class="nav-link" href="#pilot-cta" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">Pricing</a>
         <a class="nav-link" href="#faq" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">FAQ</a>
-        <a href="#pilot-cta" class="btn-primary nav-cta" onclick="gtag('event','cta_click',{label:'nav_pilot'});">Start free pilot</a>
+        <a href="#request" class="btn-primary nav-cta" onclick="gtag('event','cta_click',{label:'nav_pilot'});">Start free pilot</a>
       </div>
     </div>
   </div>
@@ -408,22 +435,9 @@ fbq('track', 'PageView');
           <strong>"In 2026, the biggest budgeting risk isn't overspending. It's spending invisibly."</strong>
           <span class="quote-source">FinOps Weekly</span>
         </blockquote>
-        <form class="email-form" id="hero-form" onsubmit="return submitEmail(event, 'hero')">
-          <input type="email" name="email" placeholder="Enter your work email" required />
-          <select name="company_size" aria-label="Company size" required>
-            <option value="" selected disabled>Company size</option>
-            <option value="1-50">1-50 people</option>
-            <option value="51-200">51-200</option>
-            <option value="201-500">201-500</option>
-            <option value="501-1000">501-1000</option>
-            <option value="1000+">1000+</option>
-          </select>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
-          <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">
-            Start your 30-day free pilot →
-          </button>
-        </form>
-        <p class="form-message" id="hero-msg"></p>
+        <a href="#request" class="btn-primary hero-cta" onclick="gtag('event', 'cta_click')">
+          Start your 30-day free pilot →
+        </a>
         <div class="hero-trust">
           <span><span class="check">✓</span> Self-hosted on your infrastructure</span>
           <span><span class="check">✓</span> We set it up with you</span>
@@ -644,20 +658,7 @@ fbq('track', 'PageView');
           <li><span class="pf-check">✓</span><span>Works with your existing vendor accounts</span></li>
           <li><span class="pf-check">✓</span><span>AI tokens billed direct to your vendor</span></li>
         </ul>
-        <form class="email-form pricing-cta-form" id="pricing-form-a" onsubmit="return submitEmail(event, 'pricing', 'on-prem')">
-          <input type="email" name="email" placeholder="Enter your work email" required />
-          <select name="company_size" aria-label="Company size" required>
-            <option value="" selected disabled>Company size</option>
-            <option value="1-50">1-50 people</option>
-            <option value="51-200">51-200</option>
-            <option value="201-500">201-500</option>
-            <option value="501-1000">501-1000</option>
-            <option value="1000+">1000+</option>
-          </select>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
-          <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">Start your On-Prem pilot →</button>
-        </form>
-        <p class="form-message"></p>
+        <a href="#request" class="btn-primary pricing-cta-btn" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start your On-Prem pilot →</a>
       </div>
 
       <!-- Cloud plan -->
@@ -678,20 +679,7 @@ fbq('track', 'PageView');
           <li><span class="pf-check">✓</span><span>Fully consolidated billing</span></li>
           <li><span class="pf-check">✓</span><span>Instant setup, no key management</span></li>
         </ul>
-        <form class="email-form pricing-cta-form" id="pricing-form-b" onsubmit="return submitEmail(event, 'pricing', 'cloud')">
-          <input type="email" name="email" placeholder="Enter your work email" required />
-          <select name="company_size" aria-label="Company size" required>
-            <option value="" selected disabled>Company size</option>
-            <option value="1-50">1-50 people</option>
-            <option value="51-200">51-200</option>
-            <option value="201-500">201-500</option>
-            <option value="501-1000">501-1000</option>
-            <option value="1000+">1000+</option>
-          </select>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
-          <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">Start your Cloud pilot →</button>
-        </form>
-        <p class="form-message"></p>
+        <a href="#request" class="btn-primary pricing-cta-btn" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start your Cloud pilot →</a>
       </div>
 
     </div>
@@ -777,7 +765,7 @@ fbq('track', 'PageView');
 </section>
 
 <!-- ─── FINAL CTA ─── -->
-<section class="final-cta" style="background:#ffffff; border-top:1px solid #e4e4e7;">
+<section class="final-cta" id="request" style="background:#ffffff; border-top:1px solid #e4e4e7;">
   <div class="final-cta-bg"></div>
   <div class="final-cta-inner">
     <div class="animate-on-scroll">
@@ -786,20 +774,56 @@ fbq('track', 'PageView');
       <p class="final-cta-sub">
         Join the pilot. Get full visibility, one consolidated bill, and up to 73% lower token costs, all on your own infrastructure.
       </p>
-      <form class="email-form" id="final-form" onsubmit="return submitEmail(event, 'final')">
-        <input type="email" name="email" placeholder="Enter your work email" required />
-          <select name="company_size" aria-label="Company size" required>
-            <option value="" selected disabled>Company size</option>
+      <form class="req-form" id="request-form" onsubmit="return submitEmail(event, 'request')">
+        <div class="full">
+          <label for="r-email">Work email</label>
+          <input id="r-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+        </div>
+        <div>
+          <label for="r-company">Company</label>
+          <input id="r-company" type="text" name="company" required autocomplete="organization" />
+        </div>
+        <div>
+          <label for="r-size">Company size</label>
+          <select id="r-size" name="company_size" required>
+            <option value="" selected disabled>Select one</option>
             <option value="1-50">1-50 people</option>
             <option value="51-200">51-200</option>
             <option value="201-500">201-500</option>
             <option value="501-1000">501-1000</option>
             <option value="1000+">1000+</option>
           </select>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
-        <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">Start your 30-day free pilot →</button>
+        </div>
+        <div>
+          <label for="r-role">Your role <span class="opt">(optional)</span></label>
+          <select id="r-role" name="role">
+            <option value="" selected>Select one</option>
+            <option value="it-infrastructure">IT / infrastructure</option>
+            <option value="engineering">Engineering</option>
+            <option value="finance-finops">Finance / FinOps</option>
+            <option value="security">Security</option>
+            <option value="founder-exec">Founder / exec</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div>
+          <label for="r-plan">Plan <span class="opt">(optional)</span></label>
+          <select id="r-plan" name="plan">
+            <option value="" selected>Not sure yet</option>
+            <option value="on-prem">On-Prem, our own keys</option>
+            <option value="cloud">Cloud, your pooled keys</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="r-notes">What do you want to route? <span class="opt">(optional)</span></label>
+          <textarea id="r-notes" name="notes" placeholder="Models you use today, monthly spend, data you need to keep in-house"></textarea>
+        </div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+        <div class="full">
+          <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">Start your 30-day free pilot →</button>
+          <p class="form-message" id="request-msg"></p>
+        </div>
       </form>
-      <p class="form-message" id="final-msg" style="text-align:center;"></p>
     </div>
   </div>
 </section>
@@ -869,14 +893,17 @@ function showMessage(el, text, ok) {
 }
 
 // Last resort: hand the signup to the visitor's mail client rather than lose it.
-function mailFallback(email, plan) {
+function mailFallback(email, plan, form) {
+  const val = function (name) { return form && form[name] ? form[name].value : ''; };
   const body = [
     "I'd like to start the 30-day Token Station pilot.",
     '',
     'Email: ' + email,
+    'Company: ' + val('company'),
+    'Company size: ' + val('company_size'),
+    'Role: ' + val('role'),
     'Plan: ' + (plan || 'not sure yet'),
-    'Company size: ',
-    'People who would use it: ',
+    'What we want to route: ' + val('notes'),
     ''
   ].join('\r\n');
   window.location.href = 'mailto:' + CONTACT_EMAIL
@@ -884,19 +911,24 @@ function mailFallback(email, plan) {
     + '&body=' + encodeURIComponent(body);
 }
 
+// Pricing buttons preselect the plan in the request form.
+function pickPlan(plan) {
+  const s = document.getElementById('r-plan');
+  if (s) s.value = plan;
+}
+
 async function submitEmail(e, formId, plan) {
   e.preventDefault();
   const form = e.target;
   const email = form.email.value;
-  const btn = form.querySelector('button');
-  const msgEl = formId === 'hero' ? document.getElementById('hero-msg')
-              : formId === 'final' ? document.getElementById('final-msg')
-              : form.nextElementSibling || null;
+  const btn = form.querySelector('button[type="submit"]');
+  const msgEl = document.getElementById('request-msg');
+  plan = plan || (form.plan ? form.plan.value : '');
 
   if (!LEAD_ENDPOINT) {
     gtag('event', 'email_submit_mail');
     showMessage(msgEl, 'Opening your mail app so you can send this to us directly.', true);
-    mailFallback(email, plan);
+    mailFallback(email, plan, form);
     return;
   }
 
@@ -908,7 +940,10 @@ async function submitEmail(e, formId, plan) {
     email: email,
     plan: plan || '',
     form: formId,
+    company: form.company ? form.company.value.trim() : '',
     company_size: form.company_size ? form.company_size.value : '',
+    role: form.role ? form.role.value : '',
+    notes: form.notes ? form.notes.value.trim() : '',
     _gotcha: form._gotcha ? form._gotcha.value : ''
   }, getContext());
 
@@ -931,15 +966,17 @@ async function submitEmail(e, formId, plan) {
     // The thank-you page confirms the signup, asks the remaining questions, and
     // is the URL a LinkedIn conversion rule can match. Hand it what we know so
     // it does not ask twice; sessionStorage keeps the address out of the URL.
+    // complete: the thanks page skips its follow-up questions, since this
+    // form already asked them.
     try {
-      sessionStorage.setItem('bf_lead', JSON.stringify(payload));
+      sessionStorage.setItem('bf_lead', JSON.stringify(Object.assign({ complete: true }, payload)));
     } catch (err) {}
     showMessage(msgEl, '\u2713 Got it. One moment...', true);
     window.location.href = '/enterprise-thanks.html';
   } catch (err) {
     gtag('event', 'email_submit_mail');
     showMessage(msgEl, 'That did not go through. Opening your mail app so you can send it to us directly.', false);
-    mailFallback(email, plan);
+    mailFallback(email, plan, form);
   } finally {
     btn.disabled = false;
     btn.textContent = origBtnText;
