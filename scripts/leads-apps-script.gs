@@ -18,7 +18,7 @@
  *                                             account" blocks the landing page
  *  4. Authorize when prompted (it needs Sheets + Gmail scopes for the notify
  *     mail). Copy the /exec URL it hands back.
- *  5. Put that URL in LEAD_ENDPOINT in enterprise.html. Until it is set, the
+ *  5. Put that URL in LEAD_ENDPOINT in tokens/enterprise.html. Until it is set, the
  *     page's forms fall back to a prefilled mailto so no lead is lost.
  *
  * Re-deploying after an edit: Deploy → Manage deployments → edit the existing

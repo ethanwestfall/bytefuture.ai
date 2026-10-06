@@ -184,7 +184,7 @@ fbq('track', 'PageView');
         </svg>
         <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
       </a>
-      <a class="nav-link" href="/enterprise.html" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">← Back to Token Station Enterprise</a>
+      <a class="nav-link" href="/tokens/enterprise.html" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">← Back to Token Station Enterprise</a>
     </div>
   </div>
 </nav>
@@ -280,7 +280,7 @@ fbq('track', 'PageView');
       <h2>Thanks, that's everything.</h2>
       <p>Your pilot notes are with the team. Expect a reply within 48 hours.</p>
       <div class="links">
-        <a href="/enterprise.html" style="color:#2563EB; text-decoration:none;">← Back to the overview</a>
+        <a href="/tokens/enterprise.html" style="color:#2563EB; text-decoration:none;">← Back to the overview</a>
         <a href="/blog/" style="color:#2563EB; text-decoration:none;">Read the ByteFuture Writings</a>
       </div>
     </div>
@@ -343,6 +343,12 @@ try {
     if ([].some.call(planEl.options, function (o) { return o.value === lead.plan; })) {
       planEl.value = lead.plan;
     }
+  }
+  // The full request form on /tokens/enterprise.html already asked these
+  // questions, so go straight to the confirmation.
+  if (lead.complete) {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('done').style.display = 'block';
   }
 })();
 
