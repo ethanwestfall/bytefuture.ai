@@ -55,726 +55,473 @@ fbq('track', 'PageView');
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
-    * { box-sizing: border-box; }
-    body {
-      background: #faf9f5;
-      color: #18181b;
-      font-family: 'DM Sans', sans-serif;
-      margin: 0;
+    :root {
+      --bg: #faf9f5; --surface: #ffffff; --line: #e4e4e7; --line-soft: #efefec;
+      --ink: #18181b; --sec: #52525b; --muted: #71717a;
+      --blue: #2563EB; --teal: #0D9488; --amber: #b45309;
+      --blue-wash: #2563eb12; --teal-wash: #0d948812; --amber-wash: #f59e0b1f;
+      --head: 'Space Grotesk', system-ui, sans-serif;
+      --ui: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
-    a { transition: color 0.2s; }
-    img { max-width: 100%; height: auto; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(#d9d9d4 1px, transparent 1px); background-size: 24px 24px; opacity: .45;
+      mask-image: linear-gradient(#000, transparent 70%); -webkit-mask-image: linear-gradient(#000, transparent 70%); }
+    a { color: inherit; }
+    img, svg { max-width: 100%; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: var(--mono); }
 
-    /* Animate on scroll */
-    .animate-on-scroll {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-    .anim-delay-1 { transition-delay: 0.06s; }
-    .anim-delay-2 { transition-delay: 0.12s; }
-    .anim-delay-3 { transition-delay: 0.18s; }
-    .anim-delay-4 { transition-delay: 0.24s; }
-    .anim-delay-5 { transition-delay: 0.30s; }
+    /* ---------- nav ---------- */
+    nav { position: sticky; top: 0; z-index: 50; background: #faf9f5e6; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--head); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+    .brand small { font-family: var(--ui); font-weight: 500; font-size: 13px; color: var(--muted); border-left: 1px solid var(--line); padding-left: 10px; }
+    .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--sec); }
+    .nav-links a { text-decoration: none; } .nav-links a:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; font-family: var(--ui); font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; padding: 12px 18px; transition: transform .15s, background .15s; white-space: nowrap; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; } .btn-blue:hover { background: #1d4ed8; }
+    .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn-sm { padding: 9px 15px; font-size: 14px; }
 
-    /* Gradient text */
-    .gradient-text {
-      background: linear-gradient(135deg, #2563EB 0%, #0D9488 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* ---------- hero ---------- */
+    .hero { padding-top: 80px; padding-bottom: 40px; text-align: center; }
+    h1 { font-family: var(--head); font-weight: 600; font-size: clamp(38px, 6.2vw, 74px); line-height: 1.02; letter-spacing: -0.035em; max-width: 15ch; margin: 0 auto; }
+    h1 em { font-style: normal; color: var(--blue); }
+    .lede { color: var(--sec); font-size: clamp(17px, 1.6vw, 19px); max-width: 640px; margin: 24px auto 32px; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .fine { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-    /* Buttons */
-    .btn-primary {
-      background: #2563EB; color: #faf9f5; border-radius: 50px;
-      padding: 14px 28px; font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600; font-size: 15px; border: none; cursor: pointer;
-      transition: all 0.2s ease; text-decoration: none;
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.16); }
-    .btn-primary:disabled { opacity: 0.6; cursor: default; transform: none; box-shadow: none; }
-    .nav-cta { padding: 10px 20px; font-size: 13px; }
+    /* ---------- live console ---------- */
+    .console { margin: 56px auto 0; max-width: 1040px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .console-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .console-bar .dots { display: flex; gap: 6px; } .console-bar .dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+    .split { display: flex; align-items: center; gap: 10px; }
+    .lg { display: inline-flex; align-items: center; gap: 6px; }
+    .lg::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+    .lg-local::before { background: var(--teal); } .lg-cloud::before { background: #f59e0b; }
+    .log { font-family: var(--mono); font-size: 13px; overflow-x: auto; }
+    .log-head, .log-row { display: grid; grid-template-columns: 76px minmax(260px, 1fr) 150px 92px; gap: 16px; padding: 9px 18px; white-space: nowrap; min-width: 660px; }
+    .log-head { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line-soft); }
+    .log-row { border-bottom: 1px solid var(--line-soft); animation: rowIn .45s ease both; }
+    .log-row:last-child { border-bottom: 0; }
+    .log-row .t { color: #a1a1aa; } .log-row .req { color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+    .to-local { color: var(--teal); } .to-cloud { color: var(--amber); }
+    .p { color: var(--muted); }
+    .mask { background: var(--amber-wash); color: var(--amber); border-radius: 4px; padding: 0 4px; }
+    .console-foot { padding: 10px 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--muted); background: #fbfbfa; }
+    @keyframes rowIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-    /* Nav */
-    nav { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid #e4e4e7; }
+    /* ---------- stats ---------- */
+    .stats { margin-top: 64px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .stats .wrap { display: grid; grid-template-columns: repeat(5, 1fr); }
+    .stat { padding: 28px 20px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--head); font-weight: 600; font-size: clamp(28px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
+    .stat b span { color: var(--blue); }
+    .stat small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; line-height: 1.45; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
-    /* Section label */
-    .section-label {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.15em; text-transform: uppercase; color: #2563EB;
-      margin: 0 0 14px;
-    }
-    .section-h2 {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.03em;
-      line-height: 1.1; margin: 0;
-    }
-    .section-lead { color: #52525b; font-size: 17px; line-height: 1.6; margin: 0; max-width: 620px; }
-    section { padding: 88px 24px; }
-    .section-inner { max-width: 1160px; margin: 0 auto; }
+    /* ---------- sections ---------- */
+    section.wrap { margin-top: 112px; scroll-margin-top: 80px; }
+    h2 { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+    .sec-lede { color: var(--sec); max-width: 620px; margin-top: 16px; font-size: 18px; }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .grid-2 > *, .grid-3 > *, .hero-grid > *, .feature-row > * { min-width: 0; }
 
-    /* ─── HERO ─── */
-    .hero { position: relative; padding: 72px 24px 88px; overflow: hidden; }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(37,99,235,0.09) 0%, transparent 62%),
-        radial-gradient(ellipse 45% 45% at 88% 78%, rgba(13,148,136,0.08) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 40% at 5% 60%, rgba(124,58,237,0.05) 0%, transparent 55%);
-    }
-    .hero-inner { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; }
-    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 56px; align-items: center; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 50px;
-      padding: 7px 16px 7px 13px; margin-bottom: 22px;
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.13em; text-transform: uppercase; color: #52525b;
-    }
-    .pulse-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: #0D9488;
-      box-shadow: 0 0 0 0 rgba(13,148,136,0.5); animation: pulse 2.2s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(13,148,136,0.45); }
-      70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); }
-      100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); }
-    }
-    .hero-h1 {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-      font-size: clamp(34px, 4.6vw, 58px); letter-spacing: -0.03em;
-      line-height: 1.06; margin: 0 0 22px;
-    }
-    .hero-sub { color: #52525b; font-size: 18px; line-height: 1.6; margin: 0 0 24px; max-width: 560px; }
-    .hero-quote {
-      border-left: 3px solid #0D9488; padding: 2px 0 2px 18px; margin: 0 0 28px;
-      color: #18181b; font-size: 15px; line-height: 1.55;
-    }
-    .hero-quote strong { font-weight: 600; }
-    .quote-source { display: block; margin-top: 8px; color: #71717a; font-size: 13px; font-weight: 500; }
 
-    /* Email capture: address + company size, then the button across both */
-    .email-form { display: grid; grid-template-columns: 1fr 172px; gap: 10px; }
-    .email-form input[type="email"], .email-form select {
-      min-width: 0; width: 100%;
-      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 50px;
-      padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: #18181b;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .email-form select {
-      appearance: none; -webkit-appearance: none; cursor: pointer;
-      padding-right: 40px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%2371717a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 18px center;
-    }
-    .email-form select:invalid { color: #a1a1aa; }
-    .email-form input[type="email"]:focus, .email-form select:focus {
-      outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
-    }
-    .email-form input[type="email"]::placeholder { color: #a1a1aa; }
-    .email-form button { grid-column: 1 / -1; }
-    .form-message {
-      display: none; margin: 12px 0 0; font-size: 14px; color: #0D9488; font-weight: 500;
-    }
-    .hero-trust {
-      display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px;
-      color: #52525b; font-size: 14px;
-    }
-    .hero-trust span { display: inline-flex; align-items: center; gap: 7px; }
-    .check { color: #0D9488; font-weight: 700; }
+    /* router section: no cards, no tags */
+    .rt-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; margin-top: 56px; }
+    .rt-row > * { min-width: 0; }
+    .rt-copy h3 { font-family: var(--head); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .rt-copy p { color: var(--sec); margin-bottom: 14px; max-width: 34em; }
+    .rt-copy strong { font-weight: 600; }
+    .c-local { color: var(--teal); } .c-cloud { color: var(--amber); }
+    .rt-copy .aside { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 14px; margin-top: 22px; }
+    .conf { margin: 0; }
+    .conf-zones { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .conf-zones span:first-child { color: var(--amber); } .conf-zones span:last-child { color: var(--teal); }
+    .conf-track { position: relative; height: 64px; border-bottom: 2px solid var(--ink); }
+    .conf-cloud { position: absolute; left: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(90deg, #f59e0b14, #f59e0b05); border-radius: 8px 0 0 0; }
+    .conf-track .d { position: absolute; bottom: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; }
+    .conf-track .d.cloud { background: #f59e0b; } .conf-track .d.local { background: var(--teal); }
+    .conf-track .d:nth-child(even) { bottom: 34px; }
+    .conf-th { position: absolute; left: 85%; top: -10px; bottom: -8px; border-left: 2px dashed var(--ink); }
+    .conf-th b { position: absolute; bottom: -26px; left: -15px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .conf-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .conf figcaption { font-size: 14px; color: var(--muted); margin-top: 18px; }
+    .tl { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; position: relative; }
+    .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line); }
+    .tl li { position: relative; padding: 32px 28px 0 0; }
+    .tl li::before { content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--blue); }
+    .tl li.tl-loop::before { background: var(--blue); }
+    .tl-when { font-size: 14px; font-weight: 600; color: var(--blue); }
+    .tl-what { font-family: var(--head); font-size: 20px; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
+    .tl p { color: var(--sec); font-size: 16px; }
+    .tl-loop .tl-when::after { content: " ↻"; }
 
-    /* Hero visual */
-    .hero-visual { position: relative; }
-    .hero-img-wrap {
-      border-radius: 16px; overflow: hidden; border: 1px solid #e4e4e7;
-      box-shadow: 0 18px 50px rgba(24,24,27,0.10);
-    }
-    .hero-img-wrap img { display: block; width: 100%; height: auto; }
 
-    /* ─── STEPS ─── */
-    .step-number {
-      font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500;
-      color: #2563EB; letter-spacing: 0.1em; margin-bottom: 14px;
-    }
-    .step-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px;
-      letter-spacing: -0.01em; margin-bottom: 10px;
-    }
-    .step-desc { color: #52525b; font-size: 15px; line-height: 1.6; margin: 0; }
-    .step-optional { margin-top: 44px; padding-top: 36px; border-top: 1px dashed #d4d4d8; }
-    .step-optional .step-desc { max-width: 720px; }
-    .step-tag {
-      display: inline-block; margin-left: 10px; padding: 3px 10px; border-radius: 50px;
-      background: rgba(13,148,136,0.10); color: #0D9488;
-      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; vertical-align: 1px;
-    }
 
-    /* ─── FEATURES ─── */
-    .feature-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
-    }
-    .feature-row.reverse .feature-visual { order: -1; }
-    .feature-h3 {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(23px, 2.6vw, 31px);
-      letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 14px;
-    }
-    .feature-desc { color: #52525b; font-size: 16px; line-height: 1.65; margin: 0 0 20px; }
-    .feature-list { list-style: none; padding: 0; margin: 0 0 24px; }
-    .feature-list li {
-      display: flex; gap: 10px; align-items: flex-start;
-      font-size: 15px; line-height: 1.5; color: #18181b; margin-bottom: 11px;
-    }
-    .check-icon { color: #0D9488; font-weight: 700; flex: none; }
-    .feature-img-card {
-      border-radius: 16px; overflow: hidden; border: 1px solid #e4e4e7;
-      box-shadow: 0 14px 40px rgba(24,24,27,0.08);
-    }
-    .feature-img-card img { display: block; width: 100%; object-fit: cover; }
-    .brain-step {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase; color: #2563EB; margin: 0 0 8px;
-    }
-    .brain-text { font-size: 15px; line-height: 1.6; color: #18181b; margin: 0; }
 
-    /* ─── RESEARCH ─── */
-    .research-card {
-      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 12px; padding: 24px;
-    }
-    .research-text { font-size: 15px; line-height: 1.6; color: #18181b; margin: 0 0 12px; }
-    .research-source {
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
-      text-transform: uppercase; color: #0D9488; margin: 0;
-    }
 
-    /* ─── PRICING ─── */
-    .pricing-section { background: #ffffff; border-top: 1px solid #e4e4e7; border-bottom: 1px solid #e4e4e7; }
-    .pricing-card {
-      background: #faf9f5; border: 1px solid #e4e4e7; border-radius: 16px; padding: 32px;
-      display: flex; flex-direction: column; position: relative; overflow: hidden;
-    }
-    .pricing-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #2563EB, #0D9488);
-    }
-    .pricing-badge {
-      display: inline-block; align-self: flex-start;
-      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase; color: #2563EB;
-      background: rgba(37,99,235,0.08); border-radius: 50px; padding: 5px 12px; margin-bottom: 16px;
-    }
-    .pricing-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 24px;
-      letter-spacing: -0.02em; margin-bottom: 14px;
-    }
-    .pricing-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-    .pricing-price-amount {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 46px;
-      letter-spacing: -0.03em; line-height: 1;
-    }
-    .pricing-price-unit { color: #71717a; font-size: 14px; }
-    .pricing-billing-note { color: #52525b; font-size: 14px; line-height: 1.5; margin: 14px 0 0; }
-    .pricing-desc { color: #52525b; font-size: 15px; line-height: 1.6; margin: 16px 0 0; }
-    .pricing-best-for {
-      font-size: 13px; font-weight: 600; color: #0D9488; margin: 18px 0 0;
-    }
-    .pricing-features { list-style: none; padding: 0; margin: 20px 0 26px; }
-    .pricing-features li {
-      display: flex; gap: 10px; align-items: flex-start;
-      font-size: 14px; line-height: 1.5; margin-bottom: 10px;
-    }
-    .pf-check { color: #0D9488; font-weight: 700; flex: none; }
-    .pricing-cta-btn { margin-top: auto; width: 100%; }
-    .hero-cta { width: 100%; max-width: 520px; }
+    /* pii before/after */
+    .diff { margin: 0; }
+    .diff-who { font-size: 14px; font-weight: 600; color: var(--sec); margin-bottom: 8px; }
+    .diff-box { font-family: var(--mono); font-size: 14px; line-height: 1.8; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .diff-box u { text-decoration: none; background: #fee2e2; color: #b91c1c; border-radius: 4px; padding: 0 3px; }
+    .diff-box.out { border-color: #f5d9a8; }
+    .diff-arrow { font-size: 22px; color: var(--muted); text-align: center; padding: 6px 0; }
 
-    /* Pilot request form: same fields as /tokens/router.html */
-    .req-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; margin: 0 auto; text-align: left;
-      background: #faf9f5; border: 1px solid #e4e4e7; border-radius: 16px; padding: 28px; position: relative; }
-    .req-form .full { grid-column: 1 / -1; }
-    .req-form > * { min-width: 0; }
-    .req-form label { display: block; font-size: 13px; font-weight: 600; color: #52525b; margin-bottom: 6px; }
-    .req-form label .opt { font-weight: 400; color: #71717a; }
-    .req-form input, .req-form select, .req-form textarea {
-      width: 100%; font-family: 'DM Sans', sans-serif; font-size: 16px; color: #18181b;
-      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 10px; padding: 11px 12px;
-      transition: border-color 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none;
-    }
-    .req-form select {
-      cursor: pointer; padding-right: 36px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%2371717a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 14px center;
-    }
-    .req-form select:invalid { color: #a1a1aa; }
-    .req-form textarea { min-height: 96px; resize: vertical; }
-    .req-form input:focus, .req-form select:focus, .req-form textarea:focus {
-      outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
-    }
-    .req-form input::placeholder, .req-form textarea::placeholder { color: #a1a1aa; }
-    .req-form button { width: 100%; }
+    /* unboxed columns */
+    .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 48px; }
+    .cols.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols > * { min-width: 0; }
+    .col { border-top: 2px solid var(--ink); padding-top: 22px; }
+    .col h3 { font-family: var(--head); font-weight: 600; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .col p { color: var(--sec); font-size: 16px; }
+    .col strong { color: var(--ink); font-weight: 600; }
+    .col code { font-family: var(--mono); font-size: 13.5px; background: #efefec; border-radius: 5px; padding: 1px 5px; }
+    .col .cite { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .ico { width: 26px; height: 26px; fill: none; stroke: var(--blue); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 14px; }
 
-    /* ─── FAQ ─── */
-    .faq-item {
-      background: #ffffff; border: 1px solid #e4e4e7; border-radius: 12px;
-      margin-bottom: 12px; overflow: hidden;
-    }
-    .faq-question {
-      width: 100%; background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 20px 24px; text-align: left;
-      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px;
-      color: #18181b; letter-spacing: -0.01em;
-    }
-    .faq-arrow { color: #71717a; font-size: 11px; transition: transform 0.25s ease; flex: none; }
-    .faq-item.open .faq-arrow { transform: rotate(180deg); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .faq-item.open .faq-answer { max-height: 420px; }
-    .faq-answer-inner {
-      padding: 0 24px 22px; color: #52525b; font-size: 15px; line-height: 1.65;
-    }
+    /* case study */
+    .case { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+    .case > * { min-width: 0; }
+    .fineprint { font-size: 14px; color: var(--muted); margin-top: 16px; max-width: 40em; }
+    .figs { display: grid; grid-template-columns: 1fr 1fr; }
+    .figs > div { padding: 22px 0; border-top: 1px solid var(--line); }
+    .figs > div:nth-child(odd) { padding-right: 20px; }
+    .figs > div:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--line); }
+    .figs dt { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -0.02em; line-height: 1.1; color: var(--blue); }
+    .figs dd { font-size: 14px; color: var(--sec); margin-top: 4px; }
 
-    /* ─── FINAL CTA ─── */
-    .final-cta { position: relative; overflow: hidden; text-align: center; }
-    .final-cta-bg {
-      position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 70% at 50% 0%, rgba(37,99,235,0.10) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 50% at 82% 90%, rgba(13,148,136,0.08) 0%, transparent 60%);
-    }
-    .final-cta-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
-    .final-cta-h2 {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(27px, 3.8vw, 42px);
-      letter-spacing: -0.03em; line-height: 1.12; margin: 14px 0 18px;
-    }
-    .final-cta-sub { color: #52525b; font-size: 17px; line-height: 1.6; margin: 0 auto 30px; max-width: 600px; }
-    .final-cta .email-form { max-width: 520px; margin: 0 auto; }
+    /* pricing table */
+    .ptable-wrap { margin-top: 48px; overflow-x: auto; }
+    .ptable { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .ptable th, .ptable td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .ptable tbody th { font-weight: 600; color: var(--ink); width: 28%; }
+    .ptable td { color: var(--sec); width: 36%; }
+    .ptable thead th { border-bottom: 2px solid var(--ink); padding-bottom: 20px; vertical-align: bottom; }
+    .ptable .hl { background: #2563eb08; }
+    .ptable thead .hl { border-radius: 12px 12px 0 0; }
+    .pname { display: block; font-family: var(--head); font-weight: 600; font-size: 20px; }
+    .pprice { display: block; font-family: var(--head); font-weight: 600; font-size: 40px; letter-spacing: -0.03em; line-height: 1.1; margin-top: 6px; }
+    .punit { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+    .yes { color: var(--teal); font-weight: 700; margin-right: 4px; }
+    .ptable tfoot td, .ptable tfoot th { border-bottom: 0; padding-top: 22px; }
+    .ptable tfoot .hl { border-radius: 0 0 12px 12px; }
+    .ptable .btn { width: 100%; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .request-points li::before { content: "✓"; color: var(--teal); font-weight: 700; }
 
-    @media (max-width: 900px) {
-      .grid-2, .grid-3 { grid-template-columns: 1fr; }
-      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
-      .feature-row { grid-template-columns: 1fr; gap: 32px; }
-      .feature-row.reverse .feature-visual { order: 0; }
-      nav a.nav-link { display: none; }
+    /* enterprise page */
+    h1 { max-width: 19ch; }
+    .hero-trust { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; font-size: 14px; color: var(--sec); margin-top: 16px; }
+    .hero-trust span::before { content: "\2713  "; color: var(--teal); font-weight: 700; }
+    .hero-shot { margin: 56px auto 0; max-width: 1040px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .hero-shot img { display: block; width: 100%; height: auto; }
+    .quote { margin: 0; padding: 36px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .quote p { font-family: var(--head); font-weight: 500; font-size: clamp(24px, 3vw, 34px); line-height: 1.25; letter-spacing: -0.015em; max-width: 30em; text-wrap: balance; }
+    .quote .q-by { margin-top: 14px; font-size: 15px; color: var(--muted); }
+    .tl.tl-4 { grid-template-columns: repeat(4, 1fr); }
+    .tl-opt { font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 6px; }
+    .tl.tl-v { grid-template-columns: 1fr; gap: 26px; margin-top: 0; padding-left: 30px; }
+    .tl.tl-v::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+    .tl.tl-v li { padding: 0; }
+    .tl.tl-v li::before { left: -30px; top: 2px; }
+    .feat + .feat { margin-top: 96px; }
+    .rt-row.flip > :first-child { order: 2; }
+    .ticks { list-style: none; display: grid; gap: 9px; margin-top: 18px; }
+    .ticks li { display: flex; gap: 10px; color: var(--sec); font-size: 16px; }
+    .ticks li::before { content: "\2713"; color: var(--teal); font-weight: 700; }
+    .shot { margin: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); }
+    .shot img { display: block; width: 100%; height: auto; }
+    .notes > div { border-top: 2px solid var(--ink); padding: 18px 0 22px; }
+    .notes .n-h { font-family: var(--head); font-weight: 600; font-size: 18px; margin-bottom: 6px; }
+    .notes p { color: var(--sec); font-size: 16px; }
+    .notes .n-src { font-size: 14px; color: var(--muted); margin-top: 6px; }
+    .rt-copy .aside a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .ptable .pnote { display: block; font-size: 13px; font-weight: 400; color: var(--sec); margin-top: 8px; max-width: 26em; }
+    .final { text-align: center; }
+    .final h2 { margin: 0 auto; max-width: 22ch; }
+    .final .sec-lede { margin: 16px auto 36px; }
+    .final form.req { max-width: 680px; margin: 0 auto; text-align: left; }
+    .foot-links { flex-wrap: wrap; row-gap: 10px; }
+
+    /* request form */
+    .request { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+    .request > * { min-width: 0; }
+    .request-points { list-style: none; margin-top: 26px; display: grid; gap: 14px; }
+    .request-points li { display: flex; gap: 12px; color: var(--sec); }
+    form.req { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+    form.req .full { grid-column: span 2; }
+    form.req label { display: block; font-size: 13px; font-weight: 600; color: var(--sec); margin-bottom: 6px; }
+    form.req label .opt { font-weight: 400; color: var(--muted); }
+    form.req input, form.req select, form.req textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #fbfbfa; border: 1px solid var(--line); border-radius: 9px; padding: 11px 12px; appearance: none; -webkit-appearance: none; }
+    form.req select { background-image: linear-gradient(45deg, transparent 50%, #71717a 50%), linear-gradient(135deg, #71717a 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+    form.req textarea { min-height: 96px; resize: vertical; }
+    form.req input:focus, form.req select:focus, form.req textarea:focus { outline: 2px solid var(--blue-wash); border-color: var(--blue); background: #fff; }
+    form.req .btn { width: 100%; padding: 14px; font-size: 16px; }
+    .form-message { display: none; font-size: 14px; margin-top: 4px; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+    /* faq */
+    .faq { max-width: 820px; margin-top: 36px; }
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 22px 36px 22px 0; position: relative; font-family: var(--head); font-weight: 600; font-size: 19px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-family: var(--mono); font-size: 22px; color: var(--muted); transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--sec); padding: 0 0 22px; max-width: 70ch; }
+
+    /* footer */
+    footer { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; padding-bottom: 28px; font-size: 14px; color: var(--muted); }
+    footer .brand { font-size: 15px; color: var(--ink); }
+    .foot-links { display: flex; gap: 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .log-row { animation: none; } html { scroll-behavior: auto; } }
+
+    @media (max-width: 960px) {
+      .tl.tl-4 { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .rt-row.flip > :first-child { order: 0; }
+      .feat + .feat { margin-top: 72px; }
+      .rt-row { grid-template-columns: 1fr; gap: 40px; }
+      .tl { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .tl::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+      .tl li { padding: 0; }
+      .tl li::before { left: -30px; top: 2px; }
+      .case, .request { grid-template-columns: 1fr; gap: 40px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
+      .stats .wrap { grid-template-columns: repeat(3, 1fr); }
+      .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
     }
     @media (max-width: 640px) {
-      section { padding: 60px 18px; }
-      /* 首屏图下面已经没有内容，两个 section 的 padding 叠起来会留 148px 死空白 */
-      .hero { padding: 44px 18px 32px; }
-
-      /* 硬换行是按桌面栏宽调的，窄屏下会断出孤字，交给浏览器自己排 */
-      .hero-h1 br, .section-h2 br, .final-cta-h2 br { display: none; }
-      .hero-h1, .section-h2, .final-cta-h2, .feature-h3 { text-wrap: balance; }
-
-      /* 正文在手机上不低于 16px */
-      .step-desc, .pricing-desc, .faq-answer-inner, .research-text, .brain-text,
-      .feature-list li, .pricing-features li { font-size: 16px; }
-      .hero-trust { font-size: 15px; }
-      .pricing-best-for { font-size: 14px; }
-
-      /* 点击区域够大 */
-      .nav-cta { padding: 13px 22px; font-size: 14px; }
-      .pricing-card { padding: 24px; }
-      .faq-question { padding: 18px; font-size: 15px; }
-      .faq-answer-inner { padding: 0 18px 20px; }
-      footer > div { flex-direction: column; gap: 12px; text-align: center; }
-      .email-form { grid-template-columns: 1fr; }
-      .req-form { grid-template-columns: 1fr; padding: 20px; }
+      .wrap { padding: 0 16px; }
+      .nav-links, .brand small, .nav-hide-sm { display: none; }
+      .hero { padding-top: 52px; padding-bottom: 24px; }
+      .console-bar .dots, .console-bar > span { display: none; }
+      .log-head { display: none; }
+      .log-row { grid-template-columns: 1fr auto; gap: 4px 12px; min-width: 0; white-space: normal; padding: 11px 14px; }
+      .log-row .t { display: none; }
+      .log-row .req { grid-column: span 2; white-space: nowrap; }
+      .hero-ctas .btn { width: 100%; }
+      .console { margin-top: 40px; border-radius: 12px; }
+      .stats .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+      .stat { padding: 20px 16px; border-bottom: 1px solid var(--line); }
+      .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+      .stat:nth-child(even), .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(3) { border-right: 1px solid var(--line); }
+      .stat:last-child { grid-column: span 2; border-bottom: 0; border-right: 0; }
+      section.wrap { margin-top: 80px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr; gap: 32px; }
+      .ptable { font-size: 14px; }
+      .ptable th, .ptable td { padding: 12px 10px; }
+      .ptable tbody th { width: 30%; }
+      .pprice { font-size: 30px; }
+      .ptable .btn { padding: 11px 8px; font-size: 13px; white-space: normal; }
+      form.req { grid-template-columns: 1fr; padding: 20px; }
+      form.req .full { grid-column: auto; }
+      footer .wrap { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
-
 <body>
 
-<!-- ─── NAV ─── -->
 <nav>
-  <div style="background:rgba(250,249,245,0.88); backdrop-filter:blur(12px);">
-    <div style="max-width:1160px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between;">
-      <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;">
-        <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img">
-          <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
-          <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
-          <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
-          <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; letter-spacing:-0.01em;">ByteFuture</span>
-      </a>
-      <div style="display:flex; align-items:center; gap:26px;">
-        <a class="nav-link" href="#how" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">How it works</a>
-        <a class="nav-link" href="#pilot-cta" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">Pricing</a>
-        <a class="nav-link" href="#faq" style="color:#52525b; font-size:14px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#52525b'">FAQ</a>
-        <a href="#request" class="btn-primary nav-cta" onclick="gtag('event','cta_click',{label:'nav_pilot'});">Start free pilot</a>
-      </div>
+  <div class="wrap">
+    <a href="/" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pilot-cta">Pricing</a>
+      <a href="#faq">FAQ</a>
     </div>
+    <a href="#request" class="btn btn-dark btn-sm" onclick="gtag('event','cta_click',{label:'nav_pilot'});">Start free pilot</a>
   </div>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-inner">
-    <div class="hero-grid">
-      <div>
-        <div class="hero-eyebrow">
-          <span class="pulse-dot"></span>
-          <span>Enterprise AI Governance</span>
-        </div>
-        <h1 class="hero-h1">
-          One AI Account for<br/>
-          <span class="gradient-text">Your Whole Team.</span><br/>
-          Token Reports for<br/> Every Manager.
-        </h1>
-        <p class="hero-sub">
-          Token Station pools your team's coding plans and API keys in one private gateway. Its smart router sends each task to the right model, and its company brain turns what AI solves into knowledge the whole team can reuse. Buy fewer plans and see exactly who used what, and when.
-        </p>
-        <blockquote class="hero-quote">
-          <strong>"In 2026, the biggest budgeting risk isn't overspending. It's spending invisibly."</strong>
-          <span class="quote-source">FinOps Weekly</span>
-        </blockquote>
-        <a href="#request" class="btn-primary hero-cta" onclick="gtag('event', 'cta_click')">
-          Start your 30-day free pilot →
-        </a>
-        <div class="hero-trust">
-          <span><span class="check">✓</span> Self-hosted on your infrastructure</span>
-          <span><span class="check">✓</span> We set it up with you</span>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-img-wrap">
-          <img
-            src="/marketing/hero.jpg"
-            alt="Token Station overview: monthly AI spend, active users, request volume, smart routing savings, and spend broken out by team"
-            width="1600" height="900"
-            loading="eager"
-          />
-        </div>
-      </div>
+<!-- ======================================================
+     HERO
+     ====================================================== -->
+<header class="wrap hero">
+  <h1>One AI account for your whole team. <em>Token reports for every manager.</em></h1>
+  <p class="lede">Token Station pools your team's coding plans and API keys in one private gateway. Its smart router sends each task to the right model, and its company brain turns what AI solves into knowledge the whole team can reuse. Buy fewer plans and see exactly who used what, and when.</p>
+  <div class="hero-ctas">
+    <a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start your 30-day free pilot</a>
+    <a href="#how" class="btn btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-trust"><span>Self-hosted on your infrastructure</span><span>We set it up with you</span></div>
+  <div class="hero-shot">
+    <img src="/marketing/hero.jpg" alt="Token Station overview: monthly AI spend, active users, request volume, smart routing savings, and spend broken out by team" width="1600" height="900" loading="eager" />
+  </div>
+</header>
+
+<section class="wrap">
+  <blockquote class="quote reveal">
+    <p>“In 2026, the biggest budgeting risk isn't overspending. It's spending invisibly.”</p>
+    <div class="q-by">FinOps Weekly</div>
+  </blockquote>
+</section>
+
+<!-- ======================================================
+     HOW IT WORKS
+     ====================================================== -->
+<section id="how" class="wrap">
+  <h2>From chaos to control in three steps.</h2>
+  <p class="sec-lede">Token Station runs on your own servers. Your keys, your data, your rules.</p>
+  <ol class="tl tl-4 reveal">
+    <li><div class="tl-when">Step 1</div><div class="tl-what">Deploy on your own server</div><p>Install Token Station on any Linux server you control, from an Olares Mini to a cloud VPS. We walk your team through the install during the pilot. No vendor lock-in.</p></li>
+    <li><div class="tl-when">Step 2</div><div class="tl-what">Pool your subscriptions</div><p>Bring the coding plan subscriptions and API keys you already pay for into one shared pool, then invite your team. Requests spread across every plan, so no quota sits idle while a teammate is rate-limited, and everyone keeps the same AI tools.</p></li>
+    <li><div class="tl-when">Step 3</div><div class="tl-what">Route, report, optimize</div><p>Smart routing selects the right model for each task automatically. Management gets per-user, per-department token reports. Finance can finally forecast AI spend.</p></li>
+    <li class="tl-loop"><div class="tl-when">Step 4<span class="tl-opt">optional</span></div><div class="tl-what">Build your company brain</div><p>Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable "company brain". Anyone can look up how a problem was already solved, and future AI interactions build on what the team has learned instead of starting from zero.</p></li>
+  </ol>
+</section>
+
+<!-- ======================================================
+     FEATURES
+     ====================================================== -->
+<section id="features" class="wrap">
+  <h2>Everything enterprise AI governance requires.</h2>
+
+  <div class="feat rt-row reveal">
+    <div class="rt-copy">
+      <h3>Fewer coding plans, every one fully used</h3>
+      <p>Coding plan subscriptions are bought one per person, but usage is uneven: a few engineers hit their limits mid-week while other seats sit mostly idle. A private Token Station pools the plans your team already pays for and spreads requests across them, so spare quota covers your heaviest users and you stop buying more plans to keep them unblocked. Finance gets one invoice. IT gets one control plane.</p>
+      <ul class="ticks">
+        <li>Coding plan subscriptions and API keys pooled across all users</li>
+        <li>Requests balanced across the pool, so no plan's quota goes to waste</li>
+        <li>Per-user and per-team spending limits</li>
+        <li>Rate limiting and access control built in</li>
+        <li>Supports 300+ models from 30+ leading labs and coding plans</li>
+      </ul>
     </div>
+    <figure class="shot"><img src="/marketing/section.jpg" alt="Twenty individual vendor keys across OpenAI, Anthropic, Google, Mistral and local models converging into one Token Station gateway, which yields one account, per-user limits and one finance report" width="1200" height="800" loading="lazy" /></figure>
+  </div>
+
+  <div class="feat rt-row flip reveal">
+    <div class="rt-copy">
+      <h3>Management can finally see where the money goes</h3>
+      <p>Who used what model, when, and how many tokens. Department-level rollups. Daily, weekly, monthly trends. The reports your CFO has been asking for since ChatGPT launched.</p>
+      <ul class="ticks">
+        <li>Per-employee token consumption breakdown</li>
+        <li>Model-level usage attribution (GPT-4o vs Claude vs Gemini)</li>
+        <li>Department and team rollup views</li>
+        <li>Exportable CSV reports for finance review</li>
+        <li>Anomaly alerts when usage spikes unexpectedly</li>
+      </ul>
+    </div>
+    <figure class="shot"><img src="/marketing/feature.jpg" alt="Token usage report: total tokens, spend, smart routing savings, spend by premium versus efficient models over 30 days, and the top teams by spend" width="800" height="800" loading="lazy" /></figure>
+  </div>
+
+  <div class="feat rt-row reveal">
+    <div class="rt-copy">
+      <h3>Cut token costs up to 73%</h3>
+      <p>Not every task needs a frontier model. Token Station's adaptive router directs simple queries to cost-efficient models and complex tasks to powerful ones, with no change to your team's workflow.</p>
+      <ul class="ticks">
+        <li>Automatic model selection based on task complexity</li>
+        <li>Cost/quality tradeoff tunable per department</li>
+        <li>Fallback routing when primary models are unavailable</li>
+        <li>Based on RouteLLM (ICLR 2025) and UniRoute (ICLR 2026) research</li>
+      </ul>
+      <p class="aside"><a href="/tokens/router.html">See how the router works →</a></p>
+    </div>
+    <div class="notes">
+      <div><div class="n-h">RouteLLM</div><p>2x+ cost savings with no drop in response quality by routing queries intelligently between large and small models.</p><div class="n-src">ICLR 2025</div></div>
+      <div><div class="n-h">Hybrid LLM and UniRoute</div><p>40% reduction in large-model calls, with further improvements on adaptive routing.</p><div class="n-src">ICLR 2024 / 2026</div></div>
+    </div>
+  </div>
+
+  <div class="feat rt-row flip reveal">
+    <div class="rt-copy">
+      <h3>Every problem AI solves becomes team knowledge</h3>
+      <p>When AI helps someone crack a hard problem, the answer usually stays buried in one person's chat history. Token Station can analyze how AI solves problems for your team and extract that knowledge into a searchable company brain, so the whole team and every future AI interaction can use it.</p>
+      <ul class="ticks">
+        <li>Knowledge drawn from real AI sessions, with nothing to write up by hand</li>
+        <li>One searchable knowledge base for the whole team</li>
+        <li>Future AI interactions start with your team's context</li>
+        <li>Optional: turn it on when your team is ready</li>
+      </ul>
+    </div>
+    <ol class="tl tl-v">
+      <li><div class="tl-when">Analyze</div><p>Token Station looks at how AI worked through your team's problems: the question, the approach, and the answer that worked.</p></li>
+      <li><div class="tl-when">Extract</div><p>The reusable knowledge goes into your company brain instead of disappearing with the chat.</p></li>
+      <li class="tl-loop"><div class="tl-when">Reuse</div><p>Anyone on the team can search it, and future AI interactions draw on it.</p></li>
+    </ol>
   </div>
 </section>
 
-<!-- ─── HOW IT WORKS ─── -->
-<section id="how" style="background:#ffffff; border-top:1px solid #e4e4e7; border-bottom:1px solid #e4e4e7;">
-  <div class="section-inner">
-    <div class="animate-on-scroll">
-      <p class="section-label">How It Works</p>
-      <h2 class="section-h2">From Chaos to Control in Three Steps</h2>
-      <p class="section-lead" style="margin-top:16px;">
-        Token Station runs on your own servers. Your keys, your data, your rules.
-      </p>
-    </div>
-    <div class="grid-3 animate-on-scroll" style="margin-top:48px;">
-      <div>
-        <div class="step-number">01</div>
-        <div class="step-title">Deploy on Your Own Server</div>
-        <p class="step-desc">
-          Install Token Station on any Linux server you control, from an Olares Mini to a cloud VPS. We walk your team through the install during the pilot. No vendor lock-in.
-        </p>
-      </div>
-      <div>
-        <div class="step-number">02</div>
-        <div class="step-title">Pool Your Subscriptions</div>
-        <p class="step-desc">
-          Bring the coding plan subscriptions and API keys you already pay for into one shared pool, then invite your team. Requests spread across every plan, so no quota sits idle while a teammate is rate-limited, and everyone keeps the same AI tools.
-        </p>
-      </div>
-      <div>
-        <div class="step-number">03</div>
-        <div class="step-title">Route, Report, Optimize</div>
-        <p class="step-desc">
-          Smart routing selects the right model for each task automatically. Management gets per-user, per-department token reports. Finance can finally forecast AI spend.
-        </p>
-      </div>
-    </div>
-    <div class="step-optional animate-on-scroll">
-      <div class="step-number">04<span class="step-tag">Optional</span></div>
-      <div class="step-title">Build Your Company Brain</div>
-      <p class="step-desc">
-        Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable "company brain". Anyone can look up how a problem was already solved, and future AI interactions build on what the team has learned instead of starting from zero.
-      </p>
-    </div>
+<!-- ======================================================
+     PRICING (id kept: ads and old links point at #pilot-cta)
+     ====================================================== -->
+<section id="pilot-cta" class="wrap">
+  <h2>Self-hosted, your infrastructure, your control.</h2>
+  <p class="sec-lede">$10 per employee per month. Two ways to handle AI vendor keys. Token Station supports 300+ models from 30+ leading labs and coding plans.</p>
+  <div class="ptable-wrap reveal">
+    <table class="ptable">
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Feature</span></th>
+          <th scope="col"><span class="pname">On-Prem: bring your own keys</span><span class="pprice">$10</span><span class="punit">per employee / month</span><span class="pnote">AI token costs bill directly to your existing vendor accounts.</span></th>
+          <th scope="col" class="hl"><span class="pname">Cloud: use our keys</span><span class="pprice">$10</span><span class="punit">per employee / month</span><span class="pnote">Plus token usage billed in $50 increments at published provider rates, zero markup.</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Best for</th><td>Teams already paying for coding plans or API keys</td><td class="hl">New deployments and fully consolidated billing</td></tr>
+        <tr><th scope="row">Vendor accounts</th><td>Your own coding plans and API keys. We never touch your vendor billing.</td><td class="hl">Not needed: we provide pooled vendor accounts</td></tr>
+        <tr><th scope="row">AI token costs</th><td>Billed direct to your vendor</td><td class="hl">Metered in $50 increments, zero markup</td></tr>
+        <tr><th scope="row">Pooled coding plans, fully used across the team</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Gateway and smart routing</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Per-user token limits and reports</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Management usage dashboards</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Key management</th><td>Centralized</td><td class="hl">None: instant setup</td></tr>
+        <tr><th scope="row">Billing</th><td>Works with your existing vendor accounts</td><td class="hl">Fully consolidated</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td><a href="#request" class="btn btn-ghost" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start your On-Prem pilot</a></td>
+          <td class="hl"><a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start your Cloud pilot</a></td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </section>
 
-<!-- ─── FEATURES ─── -->
-<section>
-  <div class="section-inner">
-    <div class="animate-on-scroll" style="margin-bottom:56px;">
-      <p class="section-label">Core Capabilities</p>
-      <h2 class="section-h2">Everything Enterprise AI Governance Requires</h2>
-    </div>
-
-    <!-- Feature 1: Pooled Accounts -->
-    <div class="feature-row animate-on-scroll">
-      <div>
-        <p class="section-label">Pooled Subscriptions</p>
-        <h3 class="feature-h3">Fewer Coding Plans, Every One Fully Used</h3>
-        <p class="feature-desc">
-          Coding plan subscriptions are bought one per person, but usage is uneven: a few engineers hit their limits mid-week while other seats sit mostly idle. A private Token Station pools the plans your team already pays for and spreads requests across them, so spare quota covers your heaviest users and you stop buying more plans to keep them unblocked. Finance gets one invoice. IT gets one control plane.
-        </p>
-        <ul class="feature-list">
-          <li><span class="check-icon">✓</span><span>Coding plan subscriptions and API keys pooled across all users</span></li>
-          <li><span class="check-icon">✓</span><span>Requests balanced across the pool, so no plan's quota goes to waste</span></li>
-          <li><span class="check-icon">✓</span><span>Per-user and per-team spending limits</span></li>
-          <li><span class="check-icon">✓</span><span>Rate limiting and access control built in</span></li>
-          <li><span class="check-icon">✓</span><span>Supports 300+ models from 30+ leading labs and coding plans</span></li>
-        </ul>
-      </div>
-      <div class="feature-visual">
-        <div class="feature-img-card">
-          <img
-            src="/marketing/section.jpg"
-            alt="Twenty individual vendor keys across OpenAI, Anthropic, Google, Mistral and local models converging into one Token Station gateway, which yields one account, per-user limits and one finance report"
-            width="1200" height="800"
-            loading="lazy"
-            style="aspect-ratio:3/2;"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 2: Token Reports -->
-    <div class="feature-row reverse animate-on-scroll" style="margin-top:80px;">
-      <div>
-        <p class="section-label">Token Usage Reports</p>
-        <h3 class="feature-h3">Management Can Finally See Where the Money Goes</h3>
-        <p class="feature-desc">
-          Who used what model, when, and how many tokens. Department-level rollups. Daily, weekly, monthly trends. The reports your CFO has been asking for since ChatGPT launched.
-        </p>
-        <ul class="feature-list">
-          <li><span class="check-icon">✓</span><span>Per-employee token consumption breakdown</span></li>
-          <li><span class="check-icon">✓</span><span>Model-level usage attribution (GPT-4o vs Claude vs Gemini)</span></li>
-          <li><span class="check-icon">✓</span><span>Department and team rollup views</span></li>
-          <li><span class="check-icon">✓</span><span>Exportable CSV reports for finance review</span></li>
-          <li><span class="check-icon">✓</span><span>Anomaly alerts when usage spikes unexpectedly</span></li>
-        </ul>
-      </div>
-      <div class="feature-visual">
-        <div class="feature-img-card">
-          <img
-            src="/marketing/feature.jpg"
-            alt="Token usage report: total tokens, spend, smart routing savings, spend by premium versus efficient models over 30 days, and the top teams by spend"
-            width="800" height="800"
-            loading="lazy"
-            style="aspect-ratio:1/1;"
-          />
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 3: Smart Routing -->
-    <div class="feature-row animate-on-scroll" style="margin-top:80px;">
-      <div>
-        <p class="section-label">Smart Routing</p>
-        <h3 class="feature-h3">Cut Token Costs Up to 73%</h3>
-        <p class="feature-desc">
-          Not every task needs a frontier model. Token Station's adaptive router directs simple queries to cost-efficient models and complex tasks to powerful ones, with no change to your team's workflow.
-        </p>
-        <ul class="feature-list">
-          <li><span class="check-icon">✓</span><span>Automatic model selection based on task complexity</span></li>
-          <li><span class="check-icon">✓</span><span>Cost/quality tradeoff tunable per department</span></li>
-          <li><span class="check-icon">✓</span><span>Fallback routing when primary models are unavailable</span></li>
-          <li><span class="check-icon">✓</span><span>Based on RouteLLM (ICLR 2025) and UniRoute (ICLR 2026) research</span></li>
-        </ul>
-      </div>
-      <div class="feature-visual" style="display:flex; flex-direction:column; gap:16px;">
-        <div class="research-card">
-          <p class="research-text">RouteLLM (ICLR 2025): 2x+ cost savings with no drop in response quality by routing queries intelligently between large and small models.</p>
-          <p class="research-source">ICLR 2025 Research</p>
-        </div>
-        <div class="research-card">
-          <p class="research-text">Hybrid LLM (ICLR 2024): 40% reduction in large-model calls. UniRoute (ICLR 2026): further improvements on adaptive routing.</p>
-          <p class="research-source">ICLR 2024 / 2026 Research</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Feature 4: Company Brain -->
-    <div class="feature-row reverse animate-on-scroll" style="margin-top:80px;">
-      <div>
-        <p class="section-label">Company Brain</p>
-        <h3 class="feature-h3">Every Problem AI Solves Becomes Team Knowledge</h3>
-        <p class="feature-desc">
-          When AI helps someone crack a hard problem, the answer usually stays buried in one person's chat history. Token Station can analyze how AI solves problems for your team and extract that knowledge into a searchable company brain, so the whole team and every future AI interaction can use it.
-        </p>
-        <ul class="feature-list">
-          <li><span class="check-icon">✓</span><span>Knowledge drawn from real AI sessions, with nothing to write up by hand</span></li>
-          <li><span class="check-icon">✓</span><span>One searchable knowledge base for the whole team</span></li>
-          <li><span class="check-icon">✓</span><span>Future AI interactions start with your team's context</span></li>
-          <li><span class="check-icon">✓</span><span>Optional: turn it on when your team is ready</span></li>
-        </ul>
-      </div>
-      <div class="feature-visual" style="display:flex; flex-direction:column; gap:16px;">
-        <div class="research-card">
-          <p class="brain-step">01 · Analyze</p>
-          <p class="brain-text">Token Station looks at how AI worked through your team's problems: the question, the approach, and the answer that worked.</p>
-        </div>
-        <div class="research-card">
-          <p class="brain-step">02 · Extract</p>
-          <p class="brain-text">The reusable knowledge goes into your company brain instead of disappearing with the chat.</p>
-        </div>
-        <div class="research-card">
-          <p class="brain-step">03 · Reuse</p>
-          <p class="brain-text">Anyone on the team can search it, and future AI interactions draw on it.</p>
-        </div>
-      </div>
-    </div>
+<!-- ======================================================
+     FAQ
+     ====================================================== -->
+<section id="faq" class="wrap">
+  <h2>Common questions.</h2>
+  <div class="faq">
+    <details><summary>Where does our data go?</summary>
+      <p>Requests to cloud models go from your own Token Station to the AI providers, just as they would if your team used those tools directly. When your pool and routing span several labs, no single upstream AI sees your team's complete data. For sensitive work, route requests to local models that stay inside your network, or turn on the optional PII filter to mask or reject personal data before it reaches a cloud AI.</p></details>
+    <details><summary>How does pooling coding plan subscriptions save money?</summary>
+      <p>Coding plans are bought one per person, but usage is uneven: a few people hit their limits mid-week while other seats sit mostly idle. Token Station puts the coding plan subscriptions and API keys your team already pays for into one pool and spreads requests across it, so spare quota covers your heaviest users and you stop buying extra plans to keep them unblocked. Per-user limits stop any one person from draining the pool, and usage reports show who used what.</p></details>
+    <details><summary>Does my team have to change how they work?</summary>
+      <p>Minimal disruption. Employees point their AI tools at the Token Station gateway endpoint instead of directly at OpenAI or Anthropic. Most tools support custom base URLs. Setup per user takes under 5 minutes. The smart routing happens transparently, so they get the same responses, often faster and cheaper.</p></details>
+    <details><summary>How does smart routing work? Will it affect response quality?</summary>
+      <p>Token Station analyzes query complexity and routes simple tasks (summarization, basic Q&amp;A, formatting) to smaller, cheaper models, and complex reasoning or code tasks to your preferred premium model. Based on RouteLLM (ICLR 2025) research, this achieves 2x+ cost savings with no measurable quality loss. You can tune the cost/quality balance per department or disable routing entirely.</p></details>
+    <details><summary>What is the company brain, and where is it stored?</summary>
+      <p>It's an optional feature you can turn on when your team is ready. Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable company brain, stored locally on your own Token Station. Anyone on your team can look up how a problem was already solved, and future AI interactions build on what the team has already learned.</p></details>
+    <details><summary>Is the $10 per seat price locked in?</summary>
+      <p>Pilot partners keep $10 per employee per month as founder pricing for as long as the deployment stays active. Token costs sit outside that seat fee: on On-Prem they bill straight to your own vendor accounts, and on Cloud they are metered in $50 increments at published provider rates with zero markup.</p></details>
   </div>
 </section>
 
-<!-- ─── PRICING ─── -->
-<section class="pricing-section" id="pilot-cta">
-  <div class="section-inner">
-    <div class="animate-on-scroll" style="text-align:center; margin-bottom:48px;">
-      <p class="section-label">Pricing</p>
-      <h2 class="section-h2">Self-Hosted, Your Infrastructure, Your Control</h2>
-      <p class="section-lead" style="margin:16px auto 0; text-align:center;">
-        $10 per employee per month. Two ways to handle AI vendor keys.
-      </p>
-    </div>
-
-    <div class="grid-2 animate-on-scroll">
-
-      <!-- On-Prem plan -->
-      <div class="pricing-card">
-        <div class="pricing-badge">On-Prem</div>
-        <div class="pricing-title">Bring Your Own Keys</div>
-        <div class="pricing-price"><span class="pricing-price-amount">$10</span><span class="pricing-price-unit">per employee / month</span></div>
-        <p class="pricing-billing-note">AI token costs bill directly to your existing vendor accounts.</p>
-        <p class="pricing-desc">
-          You supply your own coding plan subscriptions and API keys. Token Station supports 300+ models from 30+ leading labs and coding plans, pools your plans and keys across the team so every plan's quota gets used, and adds the gateway, smart routing, per-user limits, and token usage reports on top. We never touch your vendor billing.
-        </p>
-        <p class="pricing-best-for">Best for teams already paying for coding plans or API keys</p>
-        <ul class="pricing-features">
-          <li><span class="pf-check">✓</span><span><strong>Pooled coding plan subscriptions, fully used across the team</strong></span></li>
-          <li><span class="pf-check">✓</span><span>Gateway + smart routing</span></li>
-          <li><span class="pf-check">✓</span><span>Per-user token limits &amp; reports</span></li>
-          <li><span class="pf-check">✓</span><span>Management usage dashboards</span></li>
-          <li><span class="pf-check">✓</span><span>Centralized key management</span></li>
-          <li><span class="pf-check">✓</span><span>Works with your existing vendor accounts</span></li>
-          <li><span class="pf-check">✓</span><span>AI tokens billed direct to your vendor</span></li>
-        </ul>
-        <a href="#request" class="btn-primary pricing-cta-btn" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start your On-Prem pilot →</a>
-      </div>
-
-      <!-- Cloud plan -->
-      <div class="pricing-card">
-        <div class="pricing-badge">Cloud</div>
-        <div class="pricing-title">Use Our Keys</div>
-        <div class="pricing-price"><span class="pricing-price-amount">$10</span><span class="pricing-price-unit">per employee / month</span></div>
-        <p class="pricing-billing-note" style="font-weight:600; color:#18181b;">Plus token usage billed in $50 increments at published provider rates, zero markup.</p>
-        <p class="pricing-desc">
-          Token Station provides pooled vendor accounts, so you don't need your own API subscriptions. Token usage is metered and charged in $50 increments as consumed, at published provider rates. Zero markup.
-        </p>
-        <p class="pricing-best-for">Best for new deployments and fully consolidated billing</p>
-        <ul class="pricing-features">
-          <li><span class="pf-check">✓</span><span>Everything in On-Prem</span></li>
-          <li><span class="pf-check">✓</span><span>No vendor accounts needed</span></li>
-          <li><span class="pf-check">✓</span><span>Token usage billed in $50 increments</span></li>
-          <li><span class="pf-check">✓</span><span>Published provider rates, zero markup</span></li>
-          <li><span class="pf-check">✓</span><span>Fully consolidated billing</span></li>
-          <li><span class="pf-check">✓</span><span>Instant setup, no key management</span></li>
-        </ul>
-        <a href="#request" class="btn-primary pricing-cta-btn" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start your Cloud pilot →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─── FAQ ─── -->
-<section id="faq">
-  <div class="section-inner" style="max-width:860px;">
-    <div class="animate-on-scroll" style="margin-bottom:40px;">
-      <p class="section-label">FAQ</p>
-      <h2 class="section-h2">Common Questions</h2>
-    </div>
-    <div>
-      <div class="faq-item animate-on-scroll anim-delay-1">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>Where does our data go?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            Requests to cloud models go from your own Token Station to the AI providers, just as they would if your team used those tools directly. When your pool and routing span several labs, no single upstream AI sees your team's complete data. For sensitive work, route requests to local models that stay inside your network, or turn on the optional PII filter to mask or reject personal data before it reaches a cloud AI.
-          </div>
-        </div>
-      </div>
-      <div class="faq-item animate-on-scroll anim-delay-2">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>How does pooling coding plan subscriptions save money?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            Coding plans are bought one per person, but usage is uneven: a few people hit their limits mid-week while other seats sit mostly idle. Token Station puts the coding plan subscriptions and API keys your team already pays for into one pool and spreads requests across it, so spare quota covers your heaviest users and you stop buying extra plans to keep them unblocked. Per-user limits stop any one person from draining the pool, and usage reports show who used what.
-          </div>
-        </div>
-      </div>
-      <div class="faq-item animate-on-scroll anim-delay-3">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>Does my team have to change how they work?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            Minimal disruption. Employees point their AI tools at the Token Station gateway endpoint instead of directly at OpenAI or Anthropic. Most tools support custom base URLs. Setup per user takes under 5 minutes. The smart routing happens transparently, so they get the same responses, often faster and cheaper.
-          </div>
-        </div>
-      </div>
-      <div class="faq-item animate-on-scroll anim-delay-4">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>How does smart routing work? Will it affect response quality?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            Token Station analyzes query complexity and routes simple tasks (summarization, basic Q&amp;A, formatting) to smaller, cheaper models, and complex reasoning or code tasks to your preferred premium model. Based on RouteLLM (ICLR 2025) research, this achieves 2x+ cost savings with no measurable quality loss. You can tune the cost/quality balance per department or disable routing entirely.
-          </div>
-        </div>
-      </div>
-      <div class="faq-item animate-on-scroll anim-delay-5">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>What is the company brain, and where is it stored?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            It's an optional feature you can turn on when your team is ready. Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable company brain, stored locally on your own Token Station. Anyone on your team can look up how a problem was already solved, and future AI interactions build on what the team has already learned.
-          </div>
-        </div>
-      </div>
-      <div class="faq-item animate-on-scroll anim-delay-5">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span>Is the $10 per seat price locked in?</span>
-          <span class="faq-arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">
-            Pilot partners keep $10 per employee per month as founder pricing for as long as the deployment stays active. Token costs sit outside that seat fee: on On-Prem they bill straight to your own vendor accounts, and on Cloud they are metered in $50 increments at published provider rates with zero markup.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── FINAL CTA ─── -->
-<section class="final-cta" id="request" style="background:#ffffff; border-top:1px solid #e4e4e7;">
-  <div class="final-cta-bg"></div>
-  <div class="final-cta-inner">
-    <div class="animate-on-scroll">
-      <p class="section-label" style="text-align:center;">Ready When You Are</p>
-      <h2 class="final-cta-h2">Your team is already spending on AI.<br/> You're just not seeing where.</h2>
-      <p class="final-cta-sub">
-        Join the pilot. Get full visibility, one consolidated bill, and up to 73% lower token costs, all on your own infrastructure.
-      </p>
-      <form class="req-form" id="request-form" onsubmit="return submitEmail(event, 'request')">
+<!-- ======================================================
+     PILOT FORM (submit goes to /enterprise-thanks.html, the LinkedIn conversion URL)
+     ====================================================== -->
+<section id="request" class="wrap final">
+  <h2>Your team is already spending on AI. You're just not seeing where.</h2>
+  <p class="sec-lede">Join the pilot. Get full visibility, one consolidated bill, and up to 73% lower token costs, all on your own infrastructure.</p>
+      <form class="req" id="request-form" onsubmit="return submitEmail(event, 'request')">
         <div class="full">
           <label for="r-email">Work email</label>
           <input id="r-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
@@ -818,36 +565,25 @@ fbq('track', 'PageView');
           <label for="r-notes">What do you want to route? <span class="opt">(optional)</span></label>
           <textarea id="r-notes" name="notes" placeholder="Models you use today, monthly spend, data you need to keep in-house"></textarea>
         </div>
-        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" />
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="full">
-          <button type="submit" class="btn-primary" onclick="gtag('event', 'cta_click')">Start your 30-day free pilot →</button>
+          <button type="submit" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start your 30-day free pilot →</button>
           <p class="form-message" id="request-msg"></p>
         </div>
       </form>
-    </div>
-  </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
-<footer style="padding:36px 24px; border-top:1px solid #e4e4e7;">
-  <div style="max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img" style="opacity:0.85;">
-        <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/>
-        <circle cx="12" cy="16" r="3.4" fill="#2563EB"/>
-        <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/>
-        <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-      <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; color:#71717a;">ByteFuture</span>
-    </div>
-    <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; justify-content:center;">
-      <a href="https://models.bytefuture.ai/intro.html" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Token Station</a>
-      <a href="https://github.com/beclab/olares" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Olares</a>
-      <a href="/blog/" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Writings</a>
-      <a href="https://models.bytefuture.ai/privacy.html" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Privacy</a>
-      <a href="https://models.bytefuture.ai/terms.html" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Terms</a>
-      <a href="mailto:team@bytefuture.ai" style="color:#71717a; font-size:13px; text-decoration:none;" onmouseover="this.style.color='#18181b'" onmouseout="this.style.color='#71717a'">Contact</a>
-      <span style="color:#a1a1aa; font-size:13px;">© 2026 ByteFuture</span>
+<footer>
+  <div class="wrap">
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg>Token Station · by ByteFuture</span>
+    <span>© 2026 ByteFuture</span>
+    <div class="foot-links">
+      <a href="https://models.bytefuture.ai/intro.html">Token Station</a>
+      <a href="https://github.com/beclab/olares">Olares</a>
+      <a href="/blog/">Writings</a>
+      <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
+      <a href="https://models.bytefuture.ai/terms.html">Terms</a>
+      <a href="mailto:team@bytefuture.ai">Contact</a>
     </div>
   </div>
 </footer>
@@ -992,7 +728,7 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12 });
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Scroll 50% milestone
 (function() {
@@ -1007,13 +743,6 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
   });
 })();
 
-// FAQ accordion
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
 </script>
 
 <!-- LinkedIn Insight Tag -->
