@@ -2041,16 +2041,17 @@ function toggleFaq(el) {
 
 <script>
 // ---- Email submission ----
-var API_BASE = 'https://minilab-backend-test.up.railway.app';
-var IDEA_ID = '2f25b004-c1df-47cc-9b39-224502cf8f2f';
-var LP_ID = '3749f58c-5fdd-4988-a156-b90367e28e7b';
+// Leads go to the same Google Apps Script web app as /enterprise.html (one
+// Sheet, one notification mail). Source + setup: scripts/leads-apps-script.gs.
+var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwOYsANJ2jIiOJ5mr_7Taa1N98d1BkXhc1HkI9kK65sUrP7x1k2iLhczdIdN-rnEiKyCw/exec';
 
 function getUTM() {
   var p = new URLSearchParams(window.location.search);
   return {
     utm_source: p.get('utm_source') || '',
     utm_medium: p.get('utm_medium') || '',
-    utm_campaign: p.get('utm_campaign') || ''
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content: p.get('utm_content') || ''
   };
 }
 
@@ -2065,20 +2066,22 @@ async function submitEmail(e, plan) {
   btn.textContent = 'Sending...';
 
   try {
-    var utm = getUTM();
-    if (plan) {
-      utm.utm_medium = utm.utm_medium ? utm.utm_medium + '|' + plan : plan;
-    }
-    var res = await fetch(API_BASE + '/api/leads', {
+    // text/plain is CORS-safelisted, so the browser sends no preflight. Apps
+    // Script cannot answer one; the body is still JSON.
+    var res = await fetch(LEAD_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(Object.assign({
         email: email,
-        ideaId: IDEA_ID,
-        landingPageId: LP_ID || undefined
-      }, utm))
+        plan: plan || '',
+        form: 'router',
+        page: location.pathname,
+        referrer: document.referrer || '',
+        user_agent: navigator.userAgent || ''
+      }, getUTM()))
     });
-    if (res.ok) {
+    var data = await res.json().catch(function () { return null; });
+    if (res.ok && data && data.ok === true) {
       gtag('event', 'email_submit');
       var _evId = Math.random().toString(36).slice(2) + Date.now().toString(36);
       fbq('init', '1263865485900196', { em: email });
