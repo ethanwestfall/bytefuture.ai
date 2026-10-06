@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="idea-slug" content="token-station-hybrid-inference" />
+  <title>Token Station Router: a gateway that learns your workload</title>
+  <meta name="description" content="Token Station is an AI gateway with a router trained on your own traffic. It keeps simple requests on your own servers and sends only the hard ones to the cloud." />
+  <link rel="canonical" href="https://bytefuture.ai/tokens/router.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bytefuture.ai/tokens/router.html" />
+  <meta property="og:title" content="Token Station Router: a gateway that learns your workload" />
+  <meta property="og:description" content="One OpenAI-compatible endpoint for 30+ models, with a router that keeps simple requests on your own servers." />
+<!-- GA4 Tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKZPCX8G2J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKZPCX8G2J');
+</script>
+<!-- End GA4 Tracking -->
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1263865485900196');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
+  <style>
+    :root {
+      --bg: #faf9f5; --surface: #ffffff; --line: #e4e4e7; --line-soft: #efefec;
+      --ink: #18181b; --sec: #52525b; --muted: #71717a;
+      --blue: #2563EB; --teal: #0D9488; --amber: #b45309;
+      --blue-wash: #2563eb12; --teal-wash: #0d948812; --amber-wash: #f59e0b1f;
+      --head: 'Space Grotesk', system-ui, sans-serif;
+      --ui: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(#d9d9d4 1px, transparent 1px); background-size: 24px 24px; opacity: .45;
+      mask-image: linear-gradient(#000, transparent 70%); -webkit-mask-image: linear-gradient(#000, transparent 70%); }
+    a { color: inherit; }
+    img, svg { max-width: 100%; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: var(--mono); }
+
+    /* ---------- nav ---------- */
+    nav { position: sticky; top: 0; z-index: 50; background: #faf9f5e6; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--head); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+    .brand small { font-family: var(--ui); font-weight: 500; font-size: 13px; color: var(--muted); border-left: 1px solid var(--line); padding-left: 10px; }
+    .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--sec); }
+    .nav-links a { text-decoration: none; } .nav-links a:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; font-family: var(--ui); font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; padding: 12px 18px; transition: transform .15s, background .15s; white-space: nowrap; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; } .btn-blue:hover { background: #1d4ed8; }
+    .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn-sm { padding: 9px 15px; font-size: 14px; }
+
+    /* ---------- hero ---------- */
+    .hero { padding-top: 80px; padding-bottom: 40px; text-align: center; }
+    h1 { font-family: var(--head); font-weight: 600; font-size: clamp(38px, 6.2vw, 74px); line-height: 1.02; letter-spacing: -0.035em; max-width: 15ch; margin: 0 auto; }
+    h1 em { font-style: normal; color: var(--blue); }
+    .lede { color: var(--sec); font-size: clamp(17px, 1.6vw, 19px); max-width: 640px; margin: 24px auto 32px; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .fine { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+    /* ---------- live console ---------- */
+    .console { margin: 56px auto 0; max-width: 1040px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .console-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .console-bar .dots { display: flex; gap: 6px; } .console-bar .dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+    .split { display: flex; align-items: center; gap: 10px; }
+    .lg { display: inline-flex; align-items: center; gap: 6px; }
+    .lg::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+    .lg-local::before { background: var(--teal); } .lg-cloud::before { background: #f59e0b; }
+    .log { font-family: var(--mono); font-size: 13px; overflow-x: auto; }
+    .log-head, .log-row { display: grid; grid-template-columns: 76px minmax(260px, 1fr) 150px 92px; gap: 16px; padding: 9px 18px; white-space: nowrap; min-width: 660px; }
+    .log-head { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line-soft); }
+    .log-row { border-bottom: 1px solid var(--line-soft); animation: rowIn .45s ease both; }
+    .log-row:last-child { border-bottom: 0; }
+    .log-row .t { color: #a1a1aa; } .log-row .req { color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+    .to-local { color: var(--teal); } .to-cloud { color: var(--amber); }
+    .p { color: var(--muted); }
+    .mask { background: var(--amber-wash); color: var(--amber); border-radius: 4px; padding: 0 4px; }
+    .console-foot { padding: 10px 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--muted); background: #fbfbfa; }
+    @keyframes rowIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* ---------- stats ---------- */
+    .stats { margin-top: 64px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .stats .wrap { display: grid; grid-template-columns: repeat(5, 1fr); }
+    .stat { padding: 28px 20px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--head); font-weight: 600; font-size: clamp(28px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
+    .stat b span { color: var(--blue); }
+    .stat small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; line-height: 1.45; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ---------- sections ---------- */
+    section.wrap { margin-top: 112px; scroll-margin-top: 80px; }
+    h2 { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+    .sec-lede { color: var(--sec); max-width: 620px; margin-top: 16px; font-size: 18px; }
+
+
+
+    /* router section: no cards, no tags */
+    .rt-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; margin-top: 56px; }
+    .rt-row > * { min-width: 0; }
+    .rt-copy h3 { font-family: var(--head); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .rt-copy p { color: var(--sec); margin-bottom: 14px; max-width: 34em; }
+    .rt-copy strong { font-weight: 600; }
+    .c-local { color: var(--teal); } .c-cloud { color: var(--amber); }
+    .rt-copy .aside { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 14px; margin-top: 22px; }
+    .conf { margin: 0; }
+    .conf-zones { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .conf-zones span:first-child { color: var(--amber); } .conf-zones span:last-child { color: var(--teal); }
+    .conf-track { position: relative; height: 64px; border-bottom: 2px solid var(--ink); }
+    .conf-cloud { position: absolute; left: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(90deg, #f59e0b14, #f59e0b05); border-radius: 8px 0 0 0; }
+    .conf-track .d { position: absolute; bottom: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; }
+    .conf-track .d.cloud { background: #f59e0b; } .conf-track .d.local { background: var(--teal); }
+    .conf-track .d:nth-child(even) { bottom: 34px; }
+    .conf-th { position: absolute; left: 85%; top: -10px; bottom: -8px; border-left: 2px dashed var(--ink); }
+    .conf-th b { position: absolute; bottom: -26px; left: -15px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .conf-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .conf figcaption { font-size: 14px; color: var(--muted); margin-top: 18px; }
+    .tl { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; position: relative; }
+    .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line); }
+    .tl li { position: relative; padding: 32px 28px 0 0; }
+    .tl li::before { content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--blue); }
+    .tl li.tl-loop::before { background: var(--blue); }
+    .tl-when { font-size: 14px; font-weight: 600; color: var(--blue); }
+    .tl-what { font-family: var(--head); font-size: 20px; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
+    .tl p { color: var(--sec); font-size: 16px; }
+    .tl-loop .tl-when::after { content: " ↻"; }
+
+
+
+
+
+    /* pii before/after */
+    .diff { margin: 0; }
+    .diff-who { font-size: 14px; font-weight: 600; color: var(--sec); margin-bottom: 8px; }
+    .diff-box { font-family: var(--mono); font-size: 14px; line-height: 1.8; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .diff-box u { text-decoration: none; background: #fee2e2; color: #b91c1c; border-radius: 4px; padding: 0 3px; }
+    .diff-box.out { border-color: #f5d9a8; }
+    .diff-arrow { font-size: 22px; color: var(--muted); text-align: center; padding: 6px 0; }
+
+    /* unboxed columns */
+    .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 48px; }
+    .cols.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols > * { min-width: 0; }
+    .col { border-top: 2px solid var(--ink); padding-top: 22px; }
+    .col h3 { font-family: var(--head); font-weight: 600; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .col p { color: var(--sec); font-size: 16px; }
+    .col strong { color: var(--ink); font-weight: 600; }
+    .col code { font-family: var(--mono); font-size: 13.5px; background: #efefec; border-radius: 5px; padding: 1px 5px; }
+    .col .cite { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .ico { width: 26px; height: 26px; fill: none; stroke: var(--blue); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 14px; }
+
+    /* case study */
+    .case { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+    .case > * { min-width: 0; }
+    .fineprint { font-size: 14px; color: var(--muted); margin-top: 16px; max-width: 40em; }
+    .figs { display: grid; grid-template-columns: 1fr 1fr; }
+    .figs > div { padding: 22px 0; border-top: 1px solid var(--line); }
+    .figs > div:nth-child(odd) { padding-right: 20px; }
+    .figs > div:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--line); }
+    .figs dt { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -0.02em; line-height: 1.1; color: var(--blue); }
+    .figs dd { font-size: 14px; color: var(--sec); margin-top: 4px; }
+
+    /* pricing table */
+    .ptable-wrap { margin-top: 48px; overflow-x: auto; }
+    .ptable { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .ptable th, .ptable td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .ptable tbody th { font-weight: 600; color: var(--ink); width: 28%; }
+    .ptable td { color: var(--sec); width: 36%; }
+    .ptable thead th { border-bottom: 2px solid var(--ink); padding-bottom: 20px; vertical-align: bottom; }
+    .ptable .hl { background: #2563eb08; }
+    .ptable thead .hl { border-radius: 12px 12px 0 0; }
+    .pname { display: block; font-family: var(--head); font-weight: 600; font-size: 20px; }
+    .pprice { display: block; font-family: var(--head); font-weight: 600; font-size: 40px; letter-spacing: -0.03em; line-height: 1.1; margin-top: 6px; }
+    .punit { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+    .yes { color: var(--teal); font-weight: 700; margin-right: 4px; }
+    .ptable tfoot td, .ptable tfoot th { border-bottom: 0; padding-top: 22px; }
+    .ptable tfoot .hl { border-radius: 0 0 12px 12px; }
+    .ptable .btn { width: 100%; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .request-points li::before { content: "✓"; color: var(--teal); font-weight: 700; }
+
+    /* request form */
+    .request { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+    .request > * { min-width: 0; }
+    .request-points { list-style: none; margin-top: 26px; display: grid; gap: 14px; }
+    .request-points li { display: flex; gap: 12px; color: var(--sec); }
+    form.req { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+    form.req .full { grid-column: span 2; }
+    form.req label { display: block; font-size: 13px; font-weight: 600; color: var(--sec); margin-bottom: 6px; }
+    form.req label .opt { font-weight: 400; color: var(--muted); }
+    form.req input, form.req select, form.req textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #fbfbfa; border: 1px solid var(--line); border-radius: 9px; padding: 11px 12px; appearance: none; -webkit-appearance: none; }
+    form.req select { background-image: linear-gradient(45deg, transparent 50%, #71717a 50%), linear-gradient(135deg, #71717a 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+    form.req textarea { min-height: 96px; resize: vertical; }
+    form.req input:focus, form.req select:focus, form.req textarea:focus { outline: 2px solid var(--blue-wash); border-color: var(--blue); background: #fff; }
+    form.req .btn { width: 100%; padding: 14px; font-size: 16px; }
+    .form-message { display: none; font-size: 14px; margin-top: 4px; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+    /* faq */
+    .faq { max-width: 820px; margin-top: 36px; }
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 22px 36px 22px 0; position: relative; font-family: var(--head); font-weight: 600; font-size: 19px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-family: var(--mono); font-size: 22px; color: var(--muted); transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--sec); padding: 0 0 22px; max-width: 70ch; }
+
+    /* footer */
+    footer { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; padding-bottom: 28px; font-size: 14px; color: var(--muted); }
+    footer .brand { font-size: 15px; color: var(--ink); }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 10px 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .log-row { animation: none; } html { scroll-behavior: auto; } }
+
+    @media (max-width: 960px) {
+      .rt-row { grid-template-columns: 1fr; gap: 40px; }
+      .tl { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .tl::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+      .tl li { padding: 0; }
+      .tl li::before { left: -30px; top: 2px; }
+      .case, .request { grid-template-columns: 1fr; gap: 40px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
+      .stats .wrap { grid-template-columns: repeat(3, 1fr); }
+      .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .nav-links, .brand small, .nav-hide-sm { display: none; }
+      .hero { padding-top: 52px; padding-bottom: 24px; }
+      .console-bar .dots, .console-bar > span { display: none; }
+      .log-head { display: none; }
+      .log-row { grid-template-columns: 1fr auto; gap: 4px 12px; min-width: 0; white-space: normal; padding: 11px 14px; }
+      .log-row .t { display: none; }
+      .log-row .req { grid-column: span 2; white-space: nowrap; }
+      .hero-ctas .btn { width: 100%; }
+      .console { margin-top: 40px; border-radius: 12px; }
+      .stats .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+      .stat { padding: 20px 16px; border-bottom: 1px solid var(--line); }
+      .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+      .stat:nth-child(even), .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(3) { border-right: 1px solid var(--line); }
+      .stat:last-child { grid-column: span 2; border-bottom: 0; border-right: 0; }
+      section.wrap { margin-top: 80px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr; gap: 32px; }
+      .ptable { font-size: 14px; }
+      .ptable th, .ptable td { padding: 12px 10px; }
+      .ptable tbody th { width: 30%; }
+      .pprice { font-size: 30px; }
+      .ptable .btn { padding: 11px 8px; font-size: 13px; white-space: normal; }
+      form.req { grid-template-columns: 1fr; padding: 20px; }
+      form.req .full { grid-column: auto; }
+      footer .wrap { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
+    <div class="nav-links">
+      <a href="#router">Router</a>
+      <a href="#privacy">PII masking</a>
+      <a href="#gateway">Gateway</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#request" class="btn btn-dark btn-sm" onclick="gtag('event', 'cta_click')">Start a pilot</a>
+  </div>
+</nav>
+
+<!-- ======================================================
+     HERO + LIVE ROUTING LOG
+     ====================================================== -->
+<header class="wrap hero">
+  <h1>The AI gateway whose router <em>learns your workload.</em></h1>
+  <p class="lede">Token Station gives your company one OpenAI-compatible endpoint for 30+ models. Its router learns your workload, keeps simple requests on your own servers, and sends only the hard ones to the cloud.</p>
+  <div class="hero-ctas">
+    <a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start a 30-day pilot</a>
+    <a href="#router" class="btn btn-ghost">See how the router works</a>
+  </div>
+  <p class="fine">No seat fees for 30 days · Your first custom router trained in 60 days</p>
+
+  <div class="console" aria-label="Example routing log">
+    <div class="console-bar">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <span>routing log · example</span>
+      <div class="split"><span class="lg lg-local">kept local</span><span class="lg lg-cloud">sent to cloud</span></div>
+    </div>
+    <div class="log" id="log">
+      <div class="log-head"><span>time</span><span>request</span><span>routed to</span><span>confidence</span></div>
+    </div>
+    <div class="console-foot">Illustrative traffic. Each request is scored by the router.</div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>5.4<span>×</span></b><small>More token savings than a telecom's existing pipeline</small></div>
+    <div class="stat"><b>14.6<span>%</span></b><small>Fewer input tokens in the same test</small></div>
+    <div class="stat"><b>120<span>/120</span></b><small>Answers still semantically correct</small></div>
+    <div class="stat"><b>30<span>+</span></b><small>Supported models</small></div>
+    <div class="stat"><b>60<span>d</span></b><small>To first custom router</small></div>
+  </div>
+</div>
+
+<!-- ======================================================
+     ROUTER
+     ====================================================== -->
+<section id="router" class="wrap">
+  <h2>A router trained on your traffic, then on its own results.</h2>
+  <p class="sec-lede">Static routing rules go stale as your workload shifts. Token Station's router starts with fast heuristics, then trains a model on what your company actually sends and keeps retraining it.</p>
+
+  <div class="rt-row reveal">
+    <div class="rt-copy">
+      <h3>Routing by confidence, not by rule.</h3>
+      <p>Every request gets a confidence score. Above your threshold it stays on <strong class="c-local">your own servers</strong>; below it, it goes to <strong class="c-cloud">a cloud model</strong>. You set the threshold, and you can move it without redeploying.</p>
+      <p>Each decision is logged with how it turned out. The next retrain learns from those outcomes, so every router version starts where the last one stopped.</p>
+      <p class="aside">The router supports several routing methods, from deterministic heuristics to a trained model. The trained router is built on Jev, a discriminative model that returns a decision and a calibrated confidence score instead of generated text.</p>
+    </div>
+    <figure class="conf" aria-label="Requests placed on a confidence scale with a threshold at 0.85">
+      <div class="conf-zones"><span>sent to the cloud</span><span>kept local</span></div>
+      <div class="conf-track">
+        <div class="conf-cloud"></div>
+        <i class="d cloud" style="left:22%"></i><i class="d cloud" style="left:37%"></i><i class="d cloud" style="left:41%"></i><i class="d cloud" style="left:63%"></i><i class="d cloud" style="left:78%"></i>
+        <i class="d local" style="left:88%"></i><i class="d local" style="left:91%"></i><i class="d local" style="left:94%"></i><i class="d local" style="left:96%"></i><i class="d local" style="left:98.5%"></i>
+        <div class="conf-th"><b>0.85</b></div>
+      </div>
+      <div class="conf-axis"><span>0</span><span>confidence</span><span>1</span></div>
+      <figcaption>Each dot is one request; the dashed line is your threshold. Move it right and more traffic goes to the cloud; move it left and more stays local.</figcaption>
+    </figure>
+  </div>
+
+  <ol class="tl reveal">
+    <li><div class="tl-when">Day 1</div><div class="tl-what">Heuristics and your rules</div><p>Built-in heuristics route from the first request. Add rules like "under 500 tokens stays local" and change them any time.</p></li>
+    <li><div class="tl-when">Day 60</div><div class="tl-what">The router is trained on your traffic</div><p>It learns what "simple" means for your workload, not a generic benchmark's.</p></li>
+    <li class="tl-loop"><div class="tl-when">Every 60 days</div><div class="tl-what">It retrains on its own outcomes</div><p>Quality ratings, downstream task success and latency feed the next version.</p></li>
+  </ol>
+</section>
+
+<!-- ======================================================
+     PII MASKING SLM
+     ====================================================== -->
+<section id="privacy" class="wrap">
+  <h2>Personal data is masked before a request leaves your network.</h2>
+  <p class="sec-lede">A small language model finds personal information in each request and masks it before any cloud model sees it. If you allow it, the model keeps learning from your company's own usage data.</p>
+
+  <div class="rt-row reveal">
+    <div class="rt-copy">
+      <h3>It can learn how your company writes.</h3>
+      <p>Generic PII filters catch names and card numbers, then miss your customer IDs, internal account formats and the way your teams refer to people. With your permission, the masking model learns them from your own traffic.</p>
+      <p>It runs inside your network, in front of every cloud call. Requests the router keeps local never leave your network at all.</p>
+    </div>
+    <figure class="diff" aria-label="A request before and after masking">
+      <div class="diff-side">
+        <div class="diff-who">Your app sends</div>
+        <div class="diff-box">Refund order <u>88-4412</u> for <u>Jane Park</u>, card <u>4111 1111 1111 1111</u>, call <u>555-0142</u></div>
+      </div>
+      <div class="diff-arrow" aria-hidden="true">↓</div>
+      <div class="diff-side">
+        <div class="diff-who">The cloud model receives</div>
+        <div class="diff-box out">Refund order <span class="mask">[ORDER_ID]</span> for <span class="mask">[NAME]</span>, card <span class="mask">[CARD]</span>, call <span class="mask">[PHONE]</span></div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<!-- ======================================================
+     GATEWAY ESSENTIALS
+     ====================================================== -->
+<section id="gateway" class="wrap">
+  <h2>Everything else a team gateway needs.</h2>
+  <div class="cols reveal">
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+      <h3>No code changes</h3>
+      <p>Point your existing OpenAI client at Token Station and set <code>model="auto"</code>. <code>/v1/chat/completions</code> works as-is.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+      <h3>Local models at compute cost</h3>
+      <p>Llama, Mistral, Phi and Qwen run on Olares or servers you already own. A locally routed call costs compute, not API dollars.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg>
+      <h3>30+ cloud models</h3>
+      <p>GPT-5.5, Claude Opus, Gemini and more, with your own keys or ours. Set latency caps, cost floors and quality thresholds.</p>
+    </div>
+    <div class="col">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <h3>Budgets that enforce themselves</h3>
+      <p>Monthly token budgets per employee or team: a warning at 80%, a cutoff at 100%. When cloud budget runs out, traffic shifts to local models.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     CASE STUDY (smart-route-headroom-report-en-2026-09-04)
+     ====================================================== -->
+<section id="case" class="wrap">
+  <div class="case reveal">
+    <div>
+      <h2>Five times the token savings of a major telecom's existing pipeline.</h2>
+      <p class="sec-lede">In a controlled test in September 2026, we ran Token Station's router side by side with the compression proxy the carrier already uses, on the same requests and the same answer models. Token Station cut more tokens, kept every answer semantically correct, and spent less time doing it.</p>
+      <p class="fineprint">The router ran in heuristic mode, before any training on the carrier's traffic. 15 single-turn prompts, 8 answer paths, 1,200 timed samples. Latency covers local preprocessing only, not model response time.</p>
+    </div>
+    <dl class="figs">
+      <div><dt>5.4×</dt><dd>more token savings than their current compressor</dd></div>
+      <div><dt>14.6%</dt><dd>fewer input tokens, vs 2.7% before</dd></div>
+      <div><dt>120/120</dt><dd>answers semantically correct</dd></div>
+      <div><dt>0.61 ms</dt><dd>local routing and compression, vs 2.2 ms</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ======================================================
+     RESEARCH
+     ====================================================== -->
+<section id="research" class="wrap">
+  <h2>Learned routing is a published research area.</h2>
+  <p class="sec-lede">Routing between strong and weak models has been studied at UC Berkeley, Microsoft and in recent ICLR work. Token Station ships it as a product.</p>
+  <div class="cols cols-3 reveal">
+    <div class="col">
+      <h3>RouteLLM</h3>
+      <p class="cite">UC Berkeley and Anyscale, ICLR 2025</p>
+      <p>Routing between strong and weak LLMs gave <strong>2× or more cost savings</strong> on real-world benchmarks while keeping response quality.</p>
+    </div>
+    <div class="col">
+      <h3>Hybrid LLM</h3>
+      <p class="cite">Microsoft Research, ICLR 2024</p>
+      <p>Difficulty-based routing between small and large models made <strong>40% fewer large-model calls</strong> with on-par downstream performance.</p>
+    </div>
+    <div class="col">
+      <h3>UniRoute</h3>
+      <p class="cite">ICLR 2026</p>
+      <p>Dynamic routing across <strong>30+ previously unseen models</strong>, without retraining the router.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PRICING
+     ====================================================== -->
+<section id="pricing" class="wrap">
+  <h2>Priced per seat, not per token.</h2>
+  <p class="sec-lede">Flat per-seat pricing means the more you route locally, the better your unit economics get. Every plan starts with a 30-day pilot with no seat fees.</p>
+  <div class="ptable-wrap reveal">
+    <table class="ptable">
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Feature</span></th>
+          <th scope="col"><span class="pname">On-Prem</span><span class="pprice">$10</span><span class="punit">per employee / month</span></th>
+          <th scope="col" class="hl"><span class="pname">Cloud</span><span class="pprice">$10</span><span class="punit">per employee / month</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Who runs it</th><td>You, on your infrastructure</td><td class="hl">We do</td></tr>
+        <tr><th scope="row">API keys</th><td>Your own OpenAI, Anthropic and Google keys</td><td class="hl">Our pooled keys with volume discounts</td></tr>
+        <tr><th scope="row">Extra cloud usage</th><td>Billed by your providers</td><td class="hl">$50 token top-ups</td></tr>
+        <tr><th scope="row">Local models</th><td>Llama, Mistral, Phi, Qwen</td><td class="hl">On Olares hardware</td></tr>
+        <tr><th scope="row">Router trained on your data</th><td><span class="yes">✓</span> after 60 days</td><td class="hl"><span class="yes">✓</span> after 60 days</td></tr>
+        <tr><th scope="row">PII masking</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Quotas and usage alerts</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span> with team dashboards</td></tr>
+        <tr><th scope="row">Support</th><td>Slack and email</td><td class="hl">Priority, with a dedicated Slack channel</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td><a href="#request" class="btn btn-ghost" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start On-Prem pilot</a></td>
+          <td class="hl"><a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start Cloud pilot</a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================
+     PILOT FORM (leads → Apps Script)
+     ====================================================== -->
+<section id="request" class="wrap">
+  <div class="request">
+    <div>
+      <h2>Tell us about your team.</h2>
+      <p class="sec-lede">We review every request and reply within two business days with a pilot plan for your stack.</p>
+      <ul class="request-points">
+        <li><span>A 30-day pilot with no seat fees, on one OpenAI-compatible endpoint.</span></li>
+        <li><span>Rules-based routing from day one, PII masking switched on.</span></li>
+        <li><span>Your first custom router trained on your traffic by day 60.</span></li>
+      </ul>
+    </div>
+    <form class="req" onsubmit="return submitRequest(event)">
+      <div class="full">
+        <label for="r-email">Work email</label>
+        <input id="r-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+      </div>
+      <div>
+        <label for="r-company">Company</label>
+        <input id="r-company" type="text" name="company" required autocomplete="organization" />
+      </div>
+      <div>
+        <label for="r-size">Company size</label>
+        <select id="r-size" name="company_size" required>
+          <option value="" selected disabled>Select one</option>
+          <option value="1-50">1-50 people</option>
+          <option value="51-200">51-200</option>
+          <option value="201-500">201-500</option>
+          <option value="501-1000">501-1000</option>
+          <option value="1000+">1000+</option>
+        </select>
+      </div>
+      <div>
+        <label for="r-role">Your role <span class="opt">(optional)</span></label>
+        <select id="r-role" name="role">
+          <option value="" selected>Select one</option>
+          <option value="it-infrastructure">IT / infrastructure</option>
+          <option value="engineering">Engineering</option>
+          <option value="finance-finops">Finance / FinOps</option>
+          <option value="security">Security</option>
+          <option value="founder-exec">Founder / exec</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+      <div>
+        <label for="r-plan">Plan <span class="opt">(optional)</span></label>
+        <select id="r-plan" name="plan">
+          <option value="" selected>Not sure yet</option>
+          <option value="on-prem">On-Prem, our own keys</option>
+          <option value="cloud">Cloud, your pooled keys</option>
+        </select>
+      </div>
+      <div class="full">
+        <label for="r-notes">What do you want to route? <span class="opt">(optional)</span></label>
+        <textarea id="r-notes" name="notes" placeholder="Models you use today, monthly spend, data you need to keep in-house"></textarea>
+      </div>
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="full">
+        <button type="submit" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Get my pilot plan</button>
+        <p class="form-message" role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ======================================================
+     FAQ
+     ====================================================== -->
+<section id="faq" class="wrap">
+  <h2>Technical questions, answered.</h2>
+  <div class="faq">
+    <details><summary>Does routing add latency to every request?</summary>
+      <p>The routing decision is a classification, not text generation, so it adds milliseconds rather than seconds, well below the time of any LLM call. Locally routed requests skip the round trip to a cloud provider, which often makes them faster than cloud calls. Pilot dashboards show the measured overhead.</p></details>
+    <details><summary>Will routing to smaller models hurt quality?</summary>
+      <p>The router sends a request to a local model only when its confidence is above a threshold you set (default 0.85). Below that, it falls back to the cloud. RouteLLM (ICLR 2025) showed 2× cost savings with no measurable quality regression on real-world benchmarks, and Token Station's router improves on that baseline by training on your own data.</p></details>
+    <details><summary>Which local models are supported?</summary>
+      <p>Llama 3 (8B, 70B), Mistral 7B, Phi-3 (mini, small, medium) and Qwen 2.5, with new models added quarterly. All run through the Olares runtime with no manual CUDA setup. You can also plug in any model that exposes an OpenAI-compatible endpoint.</p></details>
+    <details><summary>What data do the router and the PII model train on?</summary>
+      <p>You choose. By default they train only on metadata about your requests: token counts, task categories, confidence scores and the quality signals you opt into. You can also allow training on request content, which lets the router and the PII masking model learn your own formats and identifiers more precisely. Either way, training runs inside your environment and the trained models never leave your network.</p></details>
+    <details><summary>How is this different from LiteLLM or Portkey?</summary>
+      <p>LiteLLM and Portkey are good load balancers and proxies. They route by rules you define. Token Station adds a learning layer: the router trains on your actual usage and improves with each version. Static rules decay as your product changes; a router that retrains on its own outcomes does not.</p></details>
+    <details><summary>Can I set limits so one team doesn't use the whole budget?</summary>
+      <p>Yes. You assign monthly token budgets per employee, team or department from the admin dashboard. The gateway enforces them in real time: a soft warning at 80% and a hard cutoff at 100%. Once a cloud budget is used up, that employee's traffic shifts to local models, and quotas reset at the start of each billing period.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg>Token Station · by ByteFuture</span>
+    <span>© 2026 ByteFuture AI. All rights reserved.</span>
+    <div class="foot-links">
+      <a href="/tokens/enterprise.html">Enterprise</a>
+      <a href="/tokens/company-brain.html">Company brain</a>
+      <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
+      <a href="https://models.bytefuture.ai/terms.html">Terms</a>
+      <a href="mailto:team@bytefuture.ai">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======================================================
+     SCRIPTS
+     ====================================================== -->
+<script>
+window.dataLayer = window.dataLayer || [];
+// ---- scroll_50 event ----
+(function() {
+  var fired = false;
+  window.addEventListener('scroll', function() {
+    if (fired) return;
+    var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+    if (scrollPercent >= 0.5) {
+      fired = true;
+      gtag('event', 'scroll_50');
+    }
+  });
+})();
+
+// ---- Scroll reveal ----
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(el) { el.classList.add('is-visible'); }); return; }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(function(el) { io.observe(el); });
+})();
+
+// ---- Example routing log ----
+// Illustrative rows only; labelled as such in the console footer.
+(function() {
+  var rows = [
+    ['summarize support ticket #8812', 'local', 'local-qwen', 0.96],
+    ['refund order <span class="mask">[ORDER_ID]</span> for <span class="mask">[NAME]</span>', 'cloud', 'cloud · masked', 0.41],
+    ['classify intent: "cancel my plan"', 'local', 'local-qwen', 0.98],
+    ['draft a migration plan for the billing service', 'cloud', 'cloud-opus', 0.22],
+    ['extract fields from invoice.pdf', 'local', 'local-llama', 0.91],
+    ['translate release notes to Japanese', 'local', 'local-qwen', 0.88],
+    ['review contract clause for <span class="mask">[COMPANY]</span>', 'cloud', 'cloud · masked', 0.37],
+    ['format this JSON as a table', 'local', 'local-phi', 0.99]
+  ];
+  var log = document.getElementById('log');
+  if (!log) return;
+  var VISIBLE = 5, i = 0, base = new Date(2026, 9, 6, 9, 41, 2);
+  function stamp(n) { var d = new Date(base.getTime() + n * 700); return d.toTimeString().slice(0, 8); }
+  function add() {
+    var r = rows[i % rows.length];
+    var el = document.createElement('div');
+    el.className = 'log-row';
+    el.innerHTML = '<span class="t">' + stamp(i) + '</span><span class="req">' + r[0] + '</span>' +
+      '<span class="' + (r[1] === 'local' ? 'to-local' : 'to-cloud') + '">→ ' + r[2] + '</span>' +
+      '<span class="p">p=' + r[3].toFixed(2) + '</span>';
+    log.appendChild(el);
+    var all = log.querySelectorAll('.log-row');
+    if (all.length > VISIBLE) all[0].remove();
+    i++;
+  }
+  for (var k = 0; k < VISIBLE; k++) add();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) setInterval(add, 1800);
+})();
+
+// ---- Pricing buttons preselect the plan ----
+function pickPlan(plan) {
+  var s = document.getElementById('r-plan');
+  if (s) s.value = plan;
+}
+
+// ---- Request form ----
+// Leads go to the same Google Apps Script web app as /tokens/enterprise.html (one
+// Sheet, one notification mail). Source + setup: scripts/leads-apps-script.gs.
+var LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwOYsANJ2jIiOJ5mr_7Taa1N98d1BkXhc1HkI9kK65sUrP7x1k2iLhczdIdN-rnEiKyCw/exec';
+
+function getUTM() {
+  var p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content: p.get('utm_content') || ''
+  };
+}
+
+async function submitRequest(e) {
+  e.preventDefault();
+  var form = e.target;
+  var email = form.email.value;
+  var msg = form.querySelector('.form-message');
+  var btn = form.querySelector('button[type="submit"]');
+  var origText = btn.textContent.trim();
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    // text/plain is CORS-safelisted, so the browser sends no preflight. Apps
+    // Script cannot answer one; the body is still JSON.
+    var res = await fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(Object.assign({
+        email: email,
+        company: form.company.value,
+        company_size: form.company_size.value,
+        role: form.role.value,
+        plan: form.plan.value,
+        notes: form.notes.value,
+        form: 'router',
+        _gotcha: form._gotcha.value,
+        page: location.pathname,
+        referrer: document.referrer || '',
+        user_agent: navigator.userAgent || ''
+      }, getUTM()))
+    });
+    var data = await res.json().catch(function () { return null; });
+    if (res.ok && data && data.ok === true) {
+      gtag('event', 'email_submit');
+      var _evId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      fbq('init', '1263865485900196', { em: email });
+      fbq('track', 'Lead', {}, {eventID: _evId});
+      msg.textContent = '✓ Request received. We\'ll reply within two business days.';
+      msg.style.color = 'var(--teal)';
+      msg.style.display = 'block';
+      form.reset();
+    } else {
+      throw new Error('Failed');
+    }
+  } catch (err) {
+    msg.textContent = 'That did not go through. Please try again, or email team@bytefuture.ai.';
+    msg.style.color = '#b91c1c';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origText;
+  }
+}
+</script>
+</body>
+</html>

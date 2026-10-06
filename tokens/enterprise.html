@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="idea-slug" content="token-station-enterprise-ai-governance" />
+
+  <title>Token Station Enterprise: One AI Account for Your Whole Team | ByteFuture</title>
+  <meta name="description" content="Token Station pools your team's AI access into one self-hosted gateway. Stop paying for 20 individual subscriptions. Start seeing exactly who used what, and when." />
+  <link rel="canonical" href="https://bytefuture.ai/tokens/enterprise.html" />
+
+  <!-- Open Graph / social cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bytefuture.ai/tokens/enterprise.html" />
+  <meta property="og:title" content="One AI Account for Your Whole Team. Token Reports for Every Manager." />
+  <meta property="og:description" content="Token Station pools your team's AI access into one self-hosted gateway. One bill instead of 20 subscriptions, per-user token reports, and up to 73% lower token costs." />
+  <meta property="og:image" content="https://bytefuture.ai/marketing/hero.jpg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="900" />
+  <meta property="og:image:alt" content="Token Station overview: monthly AI spend, active users, smart routing savings, and spend broken out by team" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="One AI Account for Your Whole Team. Token Reports for Every Manager." />
+  <meta name="twitter:description" content="Pool your team's AI access into one self-hosted gateway. One bill, per-user token reports, up to 73% lower token costs." />
+  <meta name="twitter:image" content="https://bytefuture.ai/marketing/hero.jpg" />
+
+<!-- GA4 Tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XKZPCX8G2J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XKZPCX8G2J');
+</script>
+<!-- End GA4 Tracking -->
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1263865485900196');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel -->
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='8' fill='%232563EB' fill-opacity='0.10' stroke='%232563EB' stroke-width='1.6'/><circle cx='12' cy='16' r='3.4' fill='%232563EB'/><circle cx='21.5' cy='16' r='3.4' fill='none' stroke='%230D9488' stroke-width='1.8'/><path d='M15.4 16h2.7' stroke='%230D9488' stroke-width='1.8' stroke-linecap='round'/></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #faf9f5; --surface: #ffffff; --line: #e4e4e7; --line-soft: #efefec;
+      --ink: #18181b; --sec: #52525b; --muted: #71717a;
+      --blue: #2563EB; --teal: #0D9488; --amber: #b45309;
+      --blue-wash: #2563eb12; --teal-wash: #0d948812; --amber-wash: #f59e0b1f;
+      --head: 'Space Grotesk', system-ui, sans-serif;
+      --ui: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image: radial-gradient(#d9d9d4 1px, transparent 1px); background-size: 24px 24px; opacity: .45;
+      mask-image: linear-gradient(#000, transparent 70%); -webkit-mask-image: linear-gradient(#000, transparent 70%); }
+    a { color: inherit; }
+    img, svg { max-width: 100%; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .mono { font-family: var(--mono); }
+
+    /* ---------- nav ---------- */
+    nav { position: sticky; top: 0; z-index: 50; background: #faf9f5e6; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--head); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+    .brand small { font-family: var(--ui); font-weight: 500; font-size: 13px; color: var(--muted); border-left: 1px solid var(--line); padding-left: 10px; }
+    .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--sec); }
+    .nav-links a { text-decoration: none; } .nav-links a:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 9px; font-family: var(--ui); font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; padding: 12px 18px; transition: transform .15s, background .15s; white-space: nowrap; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; } .btn-blue:hover { background: #1d4ed8; }
+    .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+    .btn-sm { padding: 9px 15px; font-size: 14px; }
+
+    /* ---------- hero ---------- */
+    .hero { padding-top: 80px; padding-bottom: 40px; text-align: center; }
+    h1 { font-family: var(--head); font-weight: 600; font-size: clamp(38px, 6.2vw, 74px); line-height: 1.02; letter-spacing: -0.035em; max-width: 15ch; margin: 0 auto; }
+    h1 em { font-style: normal; color: var(--blue); }
+    .lede { color: var(--sec); font-size: clamp(17px, 1.6vw, 19px); max-width: 640px; margin: 24px auto 32px; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .fine { font-size: 13px; color: var(--muted); margin-top: 14px; }
+
+    /* ---------- live console ---------- */
+    .console { margin: 56px auto 0; max-width: 1040px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; text-align: left; box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .console-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .console-bar .dots { display: flex; gap: 6px; } .console-bar .dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+    .split { display: flex; align-items: center; gap: 10px; }
+    .lg { display: inline-flex; align-items: center; gap: 6px; }
+    .lg::before { content: ""; width: 8px; height: 8px; border-radius: 50%; }
+    .lg-local::before { background: var(--teal); } .lg-cloud::before { background: #f59e0b; }
+    .log { font-family: var(--mono); font-size: 13px; overflow-x: auto; }
+    .log-head, .log-row { display: grid; grid-template-columns: 76px minmax(260px, 1fr) 150px 92px; gap: 16px; padding: 9px 18px; white-space: nowrap; min-width: 660px; }
+    .log-head { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line-soft); }
+    .log-row { border-bottom: 1px solid var(--line-soft); animation: rowIn .45s ease both; }
+    .log-row:last-child { border-bottom: 0; }
+    .log-row .t { color: #a1a1aa; } .log-row .req { color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+    .to-local { color: var(--teal); } .to-cloud { color: var(--amber); }
+    .p { color: var(--muted); }
+    .mask { background: var(--amber-wash); color: var(--amber); border-radius: 4px; padding: 0 4px; }
+    .console-foot { padding: 10px 18px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; color: var(--muted); background: #fbfbfa; }
+    @keyframes rowIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* ---------- stats ---------- */
+    .stats { margin-top: 64px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .stats .wrap { display: grid; grid-template-columns: repeat(5, 1fr); }
+    .stat { padding: 28px 20px; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--head); font-weight: 600; font-size: clamp(28px, 3vw, 38px); letter-spacing: -0.02em; line-height: 1.1; }
+    .stat b span { color: var(--blue); }
+    .stat small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; line-height: 1.45; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+    /* ---------- sections ---------- */
+    section.wrap { margin-top: 112px; scroll-margin-top: 80px; }
+    h2 { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+    .sec-lede { color: var(--sec); max-width: 620px; margin-top: 16px; font-size: 18px; }
+
+
+
+    /* router section: no cards, no tags */
+    .rt-row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; margin-top: 56px; }
+    .rt-row > * { min-width: 0; }
+    .rt-copy h3 { font-family: var(--head); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 14px; }
+    .rt-copy p { color: var(--sec); margin-bottom: 14px; max-width: 34em; }
+    .rt-copy strong { font-weight: 600; }
+    .c-local { color: var(--teal); } .c-cloud { color: var(--amber); }
+    .rt-copy .aside { font-size: 14px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 14px; margin-top: 22px; }
+    .conf { margin: 0; }
+    .conf-zones { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+    .conf-zones span:first-child { color: var(--amber); } .conf-zones span:last-child { color: var(--teal); }
+    .conf-track { position: relative; height: 64px; border-bottom: 2px solid var(--ink); }
+    .conf-cloud { position: absolute; left: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(90deg, #f59e0b14, #f59e0b05); border-radius: 8px 0 0 0; }
+    .conf-track .d { position: absolute; bottom: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; }
+    .conf-track .d.cloud { background: #f59e0b; } .conf-track .d.local { background: var(--teal); }
+    .conf-track .d:nth-child(even) { bottom: 34px; }
+    .conf-th { position: absolute; left: 85%; top: -10px; bottom: -8px; border-left: 2px dashed var(--ink); }
+    .conf-th b { position: absolute; bottom: -26px; left: -15px; font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .conf-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .conf figcaption { font-size: 14px; color: var(--muted); margin-top: 18px; }
+    .tl { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 72px; position: relative; }
+    .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--line); }
+    .tl li { position: relative; padding: 32px 28px 0 0; }
+    .tl li::before { content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--blue); }
+    .tl li.tl-loop::before { background: var(--blue); }
+    .tl-when { font-size: 14px; font-weight: 600; color: var(--blue); }
+    .tl-what { font-family: var(--head); font-size: 20px; font-weight: 600; margin: 4px 0 8px; letter-spacing: -0.01em; }
+    .tl p { color: var(--sec); font-size: 16px; }
+    .tl-loop .tl-when::after { content: " ↻"; }
+
+
+
+
+
+    /* pii before/after */
+    .diff { margin: 0; }
+    .diff-who { font-size: 14px; font-weight: 600; color: var(--sec); margin-bottom: 8px; }
+    .diff-box { font-family: var(--mono); font-size: 14px; line-height: 1.8; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+    .diff-box u { text-decoration: none; background: #fee2e2; color: #b91c1c; border-radius: 4px; padding: 0 3px; }
+    .diff-box.out { border-color: #f5d9a8; }
+    .diff-arrow { font-size: 22px; color: var(--muted); text-align: center; padding: 6px 0; }
+
+    /* unboxed columns */
+    .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 48px; }
+    .cols.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols > * { min-width: 0; }
+    .col { border-top: 2px solid var(--ink); padding-top: 22px; }
+    .col h3 { font-family: var(--head); font-weight: 600; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .col p { color: var(--sec); font-size: 16px; }
+    .col strong { color: var(--ink); font-weight: 600; }
+    .col code { font-family: var(--mono); font-size: 13.5px; background: #efefec; border-radius: 5px; padding: 1px 5px; }
+    .col .cite { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .ico { width: 26px; height: 26px; fill: none; stroke: var(--blue); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 14px; }
+
+    /* case study */
+    .case { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+    .case > * { min-width: 0; }
+    .fineprint { font-size: 14px; color: var(--muted); margin-top: 16px; max-width: 40em; }
+    .figs { display: grid; grid-template-columns: 1fr 1fr; }
+    .figs > div { padding: 22px 0; border-top: 1px solid var(--line); }
+    .figs > div:nth-child(odd) { padding-right: 20px; }
+    .figs > div:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--line); }
+    .figs dt { font-family: var(--head); font-weight: 600; font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -0.02em; line-height: 1.1; color: var(--blue); }
+    .figs dd { font-size: 14px; color: var(--sec); margin-top: 4px; }
+
+    /* pricing table */
+    .ptable-wrap { margin-top: 48px; overflow-x: auto; }
+    .ptable { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .ptable th, .ptable td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .ptable tbody th { font-weight: 600; color: var(--ink); width: 28%; }
+    .ptable td { color: var(--sec); width: 36%; }
+    .ptable thead th { border-bottom: 2px solid var(--ink); padding-bottom: 20px; vertical-align: bottom; }
+    .ptable .hl { background: #2563eb08; }
+    .ptable thead .hl { border-radius: 12px 12px 0 0; }
+    .pname { display: block; font-family: var(--head); font-weight: 600; font-size: 20px; }
+    .pprice { display: block; font-family: var(--head); font-weight: 600; font-size: 40px; letter-spacing: -0.03em; line-height: 1.1; margin-top: 6px; }
+    .punit { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+    .yes { color: var(--teal); font-weight: 700; margin-right: 4px; }
+    .ptable tfoot td, .ptable tfoot th { border-bottom: 0; padding-top: 22px; }
+    .ptable tfoot .hl { border-radius: 0 0 12px 12px; }
+    .ptable .btn { width: 100%; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .request-points li::before { content: "✓"; color: var(--teal); font-weight: 700; }
+
+    /* enterprise page */
+    h1 { max-width: 19ch; }
+    .hero-trust { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; font-size: 14px; color: var(--sec); margin-top: 16px; }
+    .hero-trust span::before { content: "\2713  "; color: var(--teal); font-weight: 700; }
+    .hero-shot { margin: 56px auto 0; max-width: 1040px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); box-shadow: 0 1px 0 #0000000a, 0 30px 60px -36px #2563eb40; }
+    .hero-shot img { display: block; width: 100%; height: auto; }
+    .quote { margin: 0; padding: 36px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .quote p { font-family: var(--head); font-weight: 500; font-size: clamp(24px, 3vw, 34px); line-height: 1.25; letter-spacing: -0.015em; max-width: 30em; text-wrap: balance; }
+    .quote .q-by { margin-top: 14px; font-size: 15px; color: var(--muted); }
+    .tl.tl-4 { grid-template-columns: repeat(4, 1fr); }
+    .tl-opt { font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 6px; }
+    .tl.tl-v { grid-template-columns: 1fr; gap: 26px; margin-top: 0; padding-left: 30px; }
+    .tl.tl-v::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+    .tl.tl-v li { padding: 0; }
+    .tl.tl-v li::before { left: -30px; top: 2px; }
+    .feat + .feat { margin-top: 96px; }
+    .rt-row.flip > :first-child { order: 2; }
+    .ticks { list-style: none; display: grid; gap: 9px; margin-top: 18px; }
+    .ticks li { display: flex; gap: 10px; color: var(--sec); font-size: 16px; }
+    .ticks li::before { content: "\2713"; color: var(--teal); font-weight: 700; }
+    .shot { margin: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); }
+    .shot img { display: block; width: 100%; height: auto; }
+    .notes > div { border-top: 2px solid var(--ink); padding: 18px 0 22px; }
+    .notes .n-h { font-family: var(--head); font-weight: 600; font-size: 18px; margin-bottom: 6px; }
+    .notes p { color: var(--sec); font-size: 16px; }
+    .notes .n-src { font-size: 14px; color: var(--muted); margin-top: 6px; }
+    .rt-copy .aside a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    .ptable .pnote { display: block; font-size: 13px; font-weight: 400; color: var(--sec); margin-top: 8px; max-width: 26em; }
+    .final { text-align: center; }
+    .final h2 { margin: 0 auto; max-width: 22ch; }
+    .final .sec-lede { margin: 16px auto 36px; }
+    .final form.req { max-width: 680px; margin: 0 auto; text-align: left; }
+    .foot-links { flex-wrap: wrap; row-gap: 10px; }
+
+    /* request form */
+    .request { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+    .request > * { min-width: 0; }
+    .request-points { list-style: none; margin-top: 26px; display: grid; gap: 14px; }
+    .request-points li { display: flex; gap: 12px; color: var(--sec); }
+    form.req { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+    form.req .full { grid-column: span 2; }
+    form.req label { display: block; font-size: 13px; font-weight: 600; color: var(--sec); margin-bottom: 6px; }
+    form.req label .opt { font-weight: 400; color: var(--muted); }
+    form.req input, form.req select, form.req textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: #fbfbfa; border: 1px solid var(--line); border-radius: 9px; padding: 11px 12px; appearance: none; -webkit-appearance: none; }
+    form.req select { background-image: linear-gradient(45deg, transparent 50%, #71717a 50%), linear-gradient(135deg, #71717a 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+    form.req textarea { min-height: 96px; resize: vertical; }
+    form.req input:focus, form.req select:focus, form.req textarea:focus { outline: 2px solid var(--blue-wash); border-color: var(--blue); background: #fff; }
+    form.req .btn { width: 100%; padding: 14px; font-size: 16px; }
+    .form-message { display: none; font-size: 14px; margin-top: 4px; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+    /* faq */
+    .faq { max-width: 820px; margin-top: 36px; }
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 22px 36px 22px 0; position: relative; font-family: var(--head); font-weight: 600; font-size: 19px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-family: var(--mono); font-size: 22px; color: var(--muted); transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--sec); padding: 0 0 22px; max-width: 70ch; }
+
+    /* footer */
+    footer { margin-top: 112px; border-top: 1px solid var(--line); background: var(--surface); }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 28px; padding-bottom: 28px; font-size: 14px; color: var(--muted); }
+    footer .brand { font-size: 15px; color: var(--ink); }
+    .foot-links { display: flex; gap: 22px; } .foot-links a { text-decoration: none; } .foot-links a:hover { color: var(--ink); }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .log-row { animation: none; } html { scroll-behavior: auto; } }
+
+    @media (max-width: 960px) {
+      .tl.tl-4 { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .rt-row.flip > :first-child { order: 0; }
+      .feat + .feat { margin-top: 72px; }
+      .rt-row { grid-template-columns: 1fr; gap: 40px; }
+      .tl { grid-template-columns: 1fr; gap: 28px; margin-top: 56px; padding-left: 30px; }
+      .tl::before { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+      .tl li { padding: 0; }
+      .tl li::before { left: -30px; top: 2px; }
+      .case, .request { grid-template-columns: 1fr; gap: 40px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr 1fr; gap: 36px 28px; }
+      .stats .wrap { grid-template-columns: repeat(3, 1fr); }
+      .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .nav-links, .brand small, .nav-hide-sm { display: none; }
+      .hero { padding-top: 52px; padding-bottom: 24px; }
+      .console-bar .dots, .console-bar > span { display: none; }
+      .log-head { display: none; }
+      .log-row { grid-template-columns: 1fr auto; gap: 4px 12px; min-width: 0; white-space: normal; padding: 11px 14px; }
+      .log-row .t { display: none; }
+      .log-row .req { grid-column: span 2; white-space: nowrap; }
+      .hero-ctas .btn { width: 100%; }
+      .console { margin-top: 40px; border-radius: 12px; }
+      .stats .wrap { grid-template-columns: 1fr 1fr; padding: 0; }
+      .stat { padding: 20px 16px; border-bottom: 1px solid var(--line); }
+      .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+      .stat:nth-child(even), .stat:nth-child(3) { border-right: 0; }
+      .stat:nth-child(3) { border-right: 1px solid var(--line); }
+      .stat:last-child { grid-column: span 2; border-bottom: 0; border-right: 0; }
+      section.wrap { margin-top: 80px; }
+      .cols, .cols.cols-3 { grid-template-columns: 1fr; gap: 32px; }
+      .ptable { font-size: 14px; }
+      .ptable th, .ptable td { padding: 12px 10px; }
+      .ptable tbody th { width: 30%; }
+      .pprice { font-size: 30px; }
+      .ptable .btn { padding: 11px 8px; font-size: 13px; white-space: normal; }
+      form.req { grid-template-columns: 1fr; padding: 20px; }
+      form.req .full { grid-column: auto; }
+      footer .wrap { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="brand"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg><span>Token Station</span><small>by ByteFuture</small></a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pilot-cta">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#request" class="btn btn-dark btn-sm" onclick="gtag('event','cta_click',{label:'nav_pilot'});">Start a pilot</a>
+  </div>
+</nav>
+
+<!-- ======================================================
+     HERO
+     ====================================================== -->
+<header class="wrap hero">
+  <h1>One AI account for your whole team. <em>Token reports for every manager.</em></h1>
+  <p class="lede">Token Station pools your team's coding plans and API keys in one private gateway. Its smart router sends each task to the right model, and its company brain turns what AI solves into knowledge the whole team can reuse. Buy fewer plans and see exactly who used what, and when.</p>
+  <div class="hero-ctas">
+    <a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start your 30-day pilot</a>
+    <a href="#how" class="btn btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-trust"><span>No seat fees for 30 days</span><span>Self-hosted on your infrastructure</span><span>We set it up with you</span></div>
+  <div class="hero-shot">
+    <img src="/marketing/hero.jpg" alt="Token Station overview: monthly AI spend, active users, request volume, smart routing savings, and spend broken out by team" width="1600" height="900" loading="eager" />
+  </div>
+</header>
+
+<section class="wrap">
+  <blockquote class="quote reveal">
+    <p>“In 2026, the biggest budgeting risk isn't overspending. It's spending invisibly.”</p>
+    <div class="q-by">FinOps Weekly</div>
+  </blockquote>
+</section>
+
+<!-- ======================================================
+     HOW IT WORKS
+     ====================================================== -->
+<section id="how" class="wrap">
+  <h2>From chaos to control in three steps.</h2>
+  <p class="sec-lede">Token Station runs on your own servers. Your keys, your data, your rules.</p>
+  <ol class="tl tl-4 reveal">
+    <li><div class="tl-when">Step 1</div><div class="tl-what">Deploy on your own server</div><p>Install Token Station on any Linux server you control, from an Olares Mini to a cloud VPS. We walk your team through the install during the pilot. No vendor lock-in.</p></li>
+    <li><div class="tl-when">Step 2</div><div class="tl-what">Pool your subscriptions</div><p>Bring the coding plan subscriptions and API keys you already pay for into one shared pool, then invite your team. Requests spread across every plan, so no quota sits idle while a teammate is rate-limited, and everyone keeps the same AI tools.</p></li>
+    <li><div class="tl-when">Step 3</div><div class="tl-what">Route, report, optimize</div><p>Smart routing selects the right model for each task automatically. Management gets per-user, per-department token reports. Finance can finally forecast AI spend.</p></li>
+    <li class="tl-loop"><div class="tl-when">Step 4<span class="tl-opt">optional</span></div><div class="tl-what">Build your company brain</div><p>Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable "company brain". Anyone can look up how a problem was already solved, and future AI interactions build on what the team has learned instead of starting from zero.</p></li>
+  </ol>
+</section>
+
+<!-- ======================================================
+     FEATURES
+     ====================================================== -->
+<section id="features" class="wrap">
+  <h2>Everything enterprise AI governance requires.</h2>
+
+  <div class="feat rt-row reveal">
+    <div class="rt-copy">
+      <h3>Fewer coding plans, every one fully used</h3>
+      <p>Coding plan subscriptions are bought one per person, but usage is uneven: a few engineers hit their limits mid-week while other seats sit mostly idle. A private Token Station pools the plans your team already pays for and spreads requests across them, so spare quota covers your heaviest users and you stop buying more plans to keep them unblocked. Finance gets one invoice. IT gets one control plane.</p>
+      <ul class="ticks">
+        <li>Coding plan subscriptions and API keys pooled across all users</li>
+        <li>Requests balanced across the pool, so no plan's quota goes to waste</li>
+        <li>Per-user and per-team spending limits</li>
+        <li>Rate limiting and access control built in</li>
+        <li>30+ supported models from leading labs, plus coding plans</li>
+      </ul>
+    </div>
+    <figure class="shot"><img src="/marketing/section.jpg" alt="Twenty individual vendor keys across OpenAI, Anthropic, Google, Mistral and local models converging into one Token Station gateway, which yields one account, per-user limits and one finance report" width="1200" height="800" loading="lazy" /></figure>
+  </div>
+
+  <div class="feat rt-row flip reveal">
+    <div class="rt-copy">
+      <h3>Management can finally see where the money goes</h3>
+      <p>Who used what model, when, and how many tokens. Department-level rollups. Daily, weekly, monthly trends. The reports your CFO has been asking for since ChatGPT launched.</p>
+      <ul class="ticks">
+        <li>Per-employee token consumption breakdown</li>
+        <li>Model-level usage attribution (GPT-4o vs Claude vs Gemini)</li>
+        <li>Department and team rollup views</li>
+        <li>Exportable CSV reports for finance review</li>
+        <li>Anomaly alerts when usage spikes unexpectedly</li>
+      </ul>
+    </div>
+    <figure class="shot"><img src="/marketing/feature.jpg" alt="Token usage report: total tokens, spend, smart routing savings, spend by premium versus efficient models over 30 days, and the top teams by spend" width="800" height="800" loading="lazy" /></figure>
+  </div>
+
+  <div class="feat rt-row reveal">
+    <div class="rt-copy">
+      <h3>Cut token costs up to 73%</h3>
+      <p>Not every task needs a frontier model. Token Station's adaptive router directs simple queries to cost-efficient models and complex tasks to frontier models, with no change to your team's workflow.</p>
+      <ul class="ticks">
+        <li>Automatic model selection based on task complexity</li>
+        <li>Cost/quality tradeoff tunable per department</li>
+        <li>Fallback routing when primary models are unavailable</li>
+        <li>Based on RouteLLM (ICLR 2025) and UniRoute (ICLR 2026) research</li>
+      </ul>
+      <p class="aside"><a href="/tokens/router.html">See how the router works →</a></p>
+    </div>
+    <div class="notes">
+      <div><div class="n-h">RouteLLM</div><p>2x+ cost savings with no drop in response quality by routing queries intelligently between large and small models.</p><div class="n-src">ICLR 2025</div></div>
+      <div><div class="n-h">Hybrid LLM and UniRoute</div><p>40% reduction in large-model calls, with further improvements on adaptive routing.</p><div class="n-src">ICLR 2024 / 2026</div></div>
+    </div>
+  </div>
+
+  <div class="feat rt-row flip reveal">
+    <div class="rt-copy">
+      <h3>Every problem AI solves becomes team knowledge</h3>
+      <p>When AI helps someone crack a hard problem, the answer usually stays buried in one person's chat history. Token Station can analyze how AI solves problems for your team and extract that knowledge into a searchable company brain, so the whole team and every future AI interaction can use it.</p>
+      <ul class="ticks">
+        <li>Knowledge drawn from real AI sessions, with nothing to write up by hand</li>
+        <li>One searchable knowledge base for the whole team</li>
+        <li>Future AI interactions start with your team's context</li>
+        <li>Optional: turn it on when your team is ready</li>
+      </ul>
+      <p class="aside"><a href="/tokens/company-brain.html">Learn more about the company brain →</a></p>
+    </div>
+    <ol class="tl tl-v">
+      <li><div class="tl-when">Analyze</div><p>Token Station looks at how AI worked through your team's problems: the question, the approach, and the answer that worked.</p></li>
+      <li><div class="tl-when">Extract</div><p>The reusable knowledge goes into your company brain instead of disappearing with the chat.</p></li>
+      <li class="tl-loop"><div class="tl-when">Reuse</div><p>Anyone on the team can search it, and future AI interactions draw on it.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================================================
+     PRICING (id kept: ads and old links point at #pilot-cta)
+     ====================================================== -->
+<section id="pilot-cta" class="wrap">
+  <h2>Self-hosted, your infrastructure, your control.</h2>
+  <p class="sec-lede">$10 per employee per month, with no seat fees for the first 30 days. Two ways to handle AI vendor keys. Token Station has 30+ supported models from leading labs, plus coding plans.</p>
+  <div class="ptable-wrap reveal">
+    <table class="ptable">
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Feature</span></th>
+          <th scope="col"><span class="pname">On-Prem: bring your own keys</span><span class="pprice">$10</span><span class="punit">per employee / month</span><span class="pnote">AI token costs bill directly to your existing vendor accounts.</span></th>
+          <th scope="col" class="hl"><span class="pname">Cloud: use our keys</span><span class="pprice">$10</span><span class="punit">per employee / month</span><span class="pnote">Plus token usage billed in $50 increments at published provider rates, zero markup.</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Best for</th><td>Teams already paying for coding plans or API keys</td><td class="hl">New deployments and fully consolidated billing</td></tr>
+        <tr><th scope="row">Vendor accounts</th><td>Your own coding plans and API keys. We never touch your vendor billing.</td><td class="hl">Not needed: we provide pooled vendor accounts</td></tr>
+        <tr><th scope="row">AI token costs</th><td>Billed direct to your vendor</td><td class="hl">Metered in $50 increments, zero markup</td></tr>
+        <tr><th scope="row">Pooled coding plans, fully used across the team</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Gateway and smart routing</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Per-user token limits and reports</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Management usage dashboards</th><td><span class="yes">✓</span></td><td class="hl"><span class="yes">✓</span></td></tr>
+        <tr><th scope="row">Key management</th><td>Centralized</td><td class="hl">None: instant setup</td></tr>
+        <tr><th scope="row">Billing</th><td>Works with your existing vendor accounts</td><td class="hl">Fully consolidated</td></tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <td><a href="#request" class="btn btn-ghost" onclick="gtag('event', 'cta_click'); pickPlan('on-prem')">Start your On-Prem pilot</a></td>
+          <td class="hl"><a href="#request" class="btn btn-blue" onclick="gtag('event', 'cta_click'); pickPlan('cloud')">Start your Cloud pilot</a></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================
+     FAQ
+     ====================================================== -->
+<section id="faq" class="wrap">
+  <h2>Common questions.</h2>
+  <div class="faq">
+    <details><summary>Where does our data go?</summary>
+      <p>Requests to cloud models go from your own Token Station to the AI providers, just as they would if your team used those tools directly. When your pool and routing span several labs, no single upstream AI sees your team's complete data. For sensitive work, route requests to local models that stay inside your network, or turn on the optional PII filter to mask or reject personal data before it reaches a cloud AI.</p></details>
+    <details><summary>How does pooling coding plan subscriptions save money?</summary>
+      <p>Coding plans are bought one per person, but usage is uneven: a few people hit their limits mid-week while other seats sit mostly idle. Token Station puts the coding plan subscriptions and API keys your team already pays for into one pool and spreads requests across it, so spare quota covers your heaviest users and you stop buying extra plans to keep them unblocked. Per-user limits stop any one person from draining the pool, and usage reports show who used what.</p></details>
+    <details><summary>Does my team have to change how they work?</summary>
+      <p>Minimal disruption. Employees point their AI tools at the Token Station gateway endpoint instead of directly at OpenAI or Anthropic. Most tools support custom base URLs. Setup per user takes under 5 minutes. The smart routing happens transparently, so they get the same responses, often faster and cheaper.</p></details>
+    <details><summary>How does smart routing work? Will it affect response quality?</summary>
+      <p>Token Station analyzes query complexity and routes simple tasks (summarization, basic Q&amp;A, formatting) to smaller, cheaper models, and complex reasoning or code tasks to your preferred premium model. Based on RouteLLM (ICLR 2025) research, this achieves 2x+ cost savings with no measurable quality loss. You can tune the cost/quality balance per department or disable routing entirely.</p></details>
+    <details><summary>What is the company brain, and where is it stored?</summary>
+      <p>It's an optional feature you can turn on when your team is ready. Token Station analyzes how AI solves problems for your team and extracts that knowledge into a searchable company brain, stored locally on your own Token Station. Anyone on your team can look up how a problem was already solved, and future AI interactions build on what the team has already learned.</p></details>
+    <details><summary>Is the $10 per seat price locked in?</summary>
+      <p>Pilot partners keep $10 per employee per month as founder pricing for as long as the deployment stays active. Token costs sit outside that seat fee: on On-Prem they bill straight to your own vendor accounts, and on Cloud they are metered in $50 increments at published provider rates with zero markup.</p></details>
+  </div>
+</section>
+
+<!-- ======================================================
+     PILOT FORM (submit goes to /enterprise-thanks.html, the LinkedIn conversion URL)
+     ====================================================== -->
+<section id="request" class="wrap final">
+  <h2>Your team is already spending on AI. You're just not seeing where.</h2>
+  <p class="sec-lede">Join the pilot. Get full visibility, one consolidated bill, and up to 73% lower token costs, all on your own infrastructure.</p>
+      <form class="req" id="request-form" onsubmit="return submitEmail(event, 'request')">
+        <div class="full">
+          <label for="r-email">Work email</label>
+          <input id="r-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+        </div>
+        <div>
+          <label for="r-company">Company</label>
+          <input id="r-company" type="text" name="company" required autocomplete="organization" />
+        </div>
+        <div>
+          <label for="r-size">Company size</label>
+          <select id="r-size" name="company_size" required>
+            <option value="" selected disabled>Select one</option>
+            <option value="1-50">1-50 people</option>
+            <option value="51-200">51-200</option>
+            <option value="201-500">201-500</option>
+            <option value="501-1000">501-1000</option>
+            <option value="1000+">1000+</option>
+          </select>
+        </div>
+        <div>
+          <label for="r-role">Your role <span class="opt">(optional)</span></label>
+          <select id="r-role" name="role">
+            <option value="" selected>Select one</option>
+            <option value="it-infrastructure">IT / infrastructure</option>
+            <option value="engineering">Engineering</option>
+            <option value="finance-finops">Finance / FinOps</option>
+            <option value="security">Security</option>
+            <option value="founder-exec">Founder / exec</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div>
+          <label for="r-plan">Plan <span class="opt">(optional)</span></label>
+          <select id="r-plan" name="plan">
+            <option value="" selected>Not sure yet</option>
+            <option value="on-prem">On-Prem, our own keys</option>
+            <option value="cloud">Cloud, your pooled keys</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="r-notes">What do you want to route? <span class="opt">(optional)</span></label>
+          <textarea id="r-notes" name="notes" placeholder="Models you use today, monthly spend, data you need to keep in-house"></textarea>
+        </div>
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="full">
+          <button type="submit" class="btn btn-blue" onclick="gtag('event', 'cta_click')">Start your 30-day pilot →</button>
+          <p class="form-message" id="request-msg"></p>
+        </div>
+      </form>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-label="ByteFuture logo" role="img"><rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"/><circle cx="12" cy="16" r="3.4" fill="#2563EB"/><circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"/><path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/></svg>Token Station · by ByteFuture</span>
+    <span>© 2026 ByteFuture</span>
+    <div class="foot-links">
+      <a href="/tokens/router.html">Router</a>
+      <a href="/tokens/company-brain.html">Company brain</a>
+      <a href="https://models.bytefuture.ai/intro.html">Token Station</a>
+      <a href="https://github.com/beclab/olares">Olares</a>
+      <a href="/blog/">Writings</a>
+      <a href="https://models.bytefuture.ai/privacy.html">Privacy</a>
+      <a href="https://models.bytefuture.ai/terms.html">Terms</a>
+      <a href="mailto:team@bytefuture.ai">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── JS ─── -->
+<script>
+window.dataLayer = window.dataLayer || [];
+
+// Pilot signups are stored by a Google Apps Script web app, since the site is
+// static and has no backend of its own. Source + setup: scripts/leads-apps-script.gs.
+// While LEAD_ENDPOINT is empty the forms fall back to a prefilled mail, so a
+// signup is never silently dropped.
+const LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwOYsANJ2jIiOJ5mr_7Taa1N98d1BkXhc1HkI9kK65sUrP7x1k2iLhczdIdN-rnEiKyCw/exec';
+const CONTACT_EMAIL = 'team@bytefuture.ai';
+
+function readCookie(name) {
+  const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+// Everything we know about how this visitor got here. utm_content carries the
+// ad set / angle / format, and li_fat_id is LinkedIn's first-party click id,
+// which enhanced conversion tracking appends to the landing page URL.
+function getContext() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    utm_source: p.get('utm_source') || '',
+    utm_medium: p.get('utm_medium') || '',
+    utm_campaign: p.get('utm_campaign') || '',
+    utm_content: p.get('utm_content') || '',
+    li_fat_id: p.get('li_fat_id') || readCookie('li_fat_id'),
+    page: location.pathname,
+    referrer: document.referrer || '',
+    user_agent: navigator.userAgent || ''
+  };
+}
+
+function showMessage(el, text, ok) {
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = ok ? '#0D9488' : '#b91c1c';
+  el.style.display = 'block';
+}
+
+// Last resort: hand the signup to the visitor's mail client rather than lose it.
+function mailFallback(email, plan, form) {
+  const val = function (name) { return form && form[name] ? form[name].value : ''; };
+  const body = [
+    "I'd like to start the 30-day Token Station pilot.",
+    '',
+    'Email: ' + email,
+    'Company: ' + val('company'),
+    'Company size: ' + val('company_size'),
+    'Role: ' + val('role'),
+    'Plan: ' + (plan || 'not sure yet'),
+    'What we want to route: ' + val('notes'),
+    ''
+  ].join('\r\n');
+  window.location.href = 'mailto:' + CONTACT_EMAIL
+    + '?subject=' + encodeURIComponent('Token Station Enterprise pilot')
+    + '&body=' + encodeURIComponent(body);
+}
+
+// Pricing buttons preselect the plan in the request form.
+function pickPlan(plan) {
+  const s = document.getElementById('r-plan');
+  if (s) s.value = plan;
+}
+
+async function submitEmail(e, formId, plan) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value;
+  const btn = form.querySelector('button[type="submit"]');
+  const msgEl = document.getElementById('request-msg');
+  plan = plan || (form.plan ? form.plan.value : '');
+
+  if (!LEAD_ENDPOINT) {
+    gtag('event', 'email_submit_mail');
+    showMessage(msgEl, 'Opening your mail app so you can send this to us directly.', true);
+    mailFallback(email, plan, form);
+    return;
+  }
+
+  const origBtnText = btn.textContent.trim();
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const payload = Object.assign({
+    email: email,
+    plan: plan || '',
+    form: formId,
+    company: form.company ? form.company.value.trim() : '',
+    company_size: form.company_size ? form.company_size.value : '',
+    role: form.role ? form.role.value : '',
+    notes: form.notes ? form.notes.value.trim() : '',
+    _gotcha: form._gotcha ? form._gotcha.value : ''
+  }, getContext());
+
+  try {
+    // text/plain is CORS-safelisted, so the browser sends no preflight. Apps
+    // Script cannot answer one; the body is still JSON.
+    const res = await fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json().catch(function () { return null; });
+    if (!res.ok || !data || data.ok !== true) throw new Error('rejected');
+
+    gtag('event', 'email_submit');
+    var _evId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    fbq('init', '1263865485900196', { em: email });
+    fbq('track', 'Lead', {}, {eventID: _evId});
+
+    // The thank-you page confirms the signup, asks the remaining questions, and
+    // is the URL a LinkedIn conversion rule can match. Hand it what we know so
+    // it does not ask twice; sessionStorage keeps the address out of the URL.
+    // complete: the thanks page skips its follow-up questions, since this
+    // form already asked them.
+    try {
+      sessionStorage.setItem('bf_lead', JSON.stringify(Object.assign({ complete: true }, payload)));
+    } catch (err) {}
+    showMessage(msgEl, '\u2713 Got it. One moment...', true);
+    window.location.href = '/enterprise-thanks.html';
+  } catch (err) {
+    gtag('event', 'email_submit_mail');
+    showMessage(msgEl, 'That did not go through. Opening your mail app so you can send it to us directly.', false);
+    mailFallback(email, plan, form);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origBtnText;
+  }
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Scroll 50% milestone
+(function() {
+  var fired = false;
+  window.addEventListener('scroll', function() {
+    if (fired) return;
+    var scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+    if (scrollPercent >= 0.5) {
+      fired = true;
+      gtag('event', 'scroll_50');
+    }
+  });
+})();
+
+</script>
+
+<!-- LinkedIn Insight Tag -->
+<script type="text/javascript">
+_linkedin_partner_id = "9448460";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=9448460&fmt=gif" />
+</noscript>
+<!-- End LinkedIn Insight Tag -->
+
+</body>
+</html>

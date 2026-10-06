@@ -12,7 +12,7 @@ draft: false
 
 <div class="note">
 
-このチュートリアルの手順と説明は、[models.bytefuture.ai](https://models.bytefuture.ai/) の公開 Token Station を前提にしている。プール型のサブスクリプション、割引 API キー、スマートルーティングでコストを抑えるために、自社専用の Token Station インスタンスを構築したい場合は、[お問い合わせください](/enterprise.html)。
+このチュートリアルの手順と説明は、[models.bytefuture.ai](https://models.bytefuture.ai/) の公開 Token Station を前提にしている。プール型のサブスクリプション、割引 API キー、スマートルーティングでコストを抑えるために、自社専用の Token Station インスタンスを構築したい場合は、[お問い合わせください](/tokens/enterprise.html)。
 
 </div>
 

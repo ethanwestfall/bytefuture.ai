@@ -12,7 +12,7 @@ draft: false
 
 <div class="note">
 
-이 튜토리얼의 단계와 설명은 [models.bytefuture.ai](https://models.bytefuture.ai/)의 공개 Token Station을 기준으로 한다. 공동 구독, 할인된 API 키, 스마트 라우팅으로 비용을 아끼기 위해 전용 Token Station 인스턴스를 직접 구축하고 싶다면 [문의해 주세요](/enterprise.html).
+이 튜토리얼의 단계와 설명은 [models.bytefuture.ai](https://models.bytefuture.ai/)의 공개 Token Station을 기준으로 한다. 공동 구독, 할인된 API 키, 스마트 라우팅으로 비용을 아끼기 위해 전용 Token Station 인스턴스를 직접 구축하고 싶다면 [문의해 주세요](/tokens/enterprise.html).
 
 </div>
 

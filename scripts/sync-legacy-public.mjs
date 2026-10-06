@@ -20,6 +20,7 @@ const copyNames = [
   'blog',
   'family_health',
   'legal_sme',
+  'tokens',
 ];
 
 function rmrf(target) {
