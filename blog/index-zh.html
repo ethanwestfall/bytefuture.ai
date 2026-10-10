@@ -128,7 +128,7 @@
     /* Grid */
     .posts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 
-    @media (max-width: 960px) {
+    @media (max-width: 1150px) {
       .featured-inner { flex-direction: column !important; }
       .featured-inner > div { width: 100% !important; }
       .featured-cover { aspect-ratio: 1200/630 !important; align-self: stretch !important; }
@@ -287,7 +287,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
     if (!post) { section.innerHTML = ''; return; }
     // Cover image when the post has one; gradient fallback otherwise.
     var media = post.cover
-      ? '<img src="' + esc(coverUrl(post.cover)) + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;">'
+      ? '<img src="' + esc(coverUrl(post.cover)) + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top;display:block;">'
       : '<div style="position:absolute;inset:0;background:linear-gradient(135deg,#2563EB 0%,#0D9488 60%,#7C3AED 100%);display:flex;align-items:center;justify-content:center;">' +
           '<svg width="120" height="120" viewBox="0 0 120 120" fill="none" style="opacity:0.15;"><circle cx="60" cy="60" r="50" stroke="#fff" stroke-width="2"/><path d="M40 60L55 75L80 45" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '</div>';
@@ -295,7 +295,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(e
       '<a href="/blog/' + encodeURIComponent(post.slug) + SUF + '.html" style="text-decoration:none;color:inherit;" onclick="gtag(\'event\',\'blog_click\',{label:\'featured\'})">' +
         '<article class="featured-card animate-on-scroll">' +
           '<div class="featured-inner" style="display:flex;">' +
-            '<div style="width:50%;aspect-ratio:1200/630;align-self:flex-start;position:relative;overflow:hidden;background:#faf9f5;" class="featured-cover">' +
+            '<div style="width:50%;aspect-ratio:1200/630;align-self:stretch;position:relative;overflow:hidden;background:#faf9f5;" class="featured-cover">' +
               media +
               '<div style="position:absolute;bottom:24px;left:24px;"><span style="font-size:11px;font-family:\'JetBrains Mono\',monospace;color:#ffffff;letter-spacing:0.1em;text-transform:uppercase;background:rgba(24,24,27,0.55);padding:4px 10px;border-radius:50px;">' + T.featured + '</span></div>' +
             '</div>' +

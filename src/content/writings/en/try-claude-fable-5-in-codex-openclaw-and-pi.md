@@ -2,7 +2,7 @@
 slug: "try-claude-fable-5-in-codex-openclaw-and-pi"
 lang: "en"
 title: "Try Before You Commit: Claude Fable 5 in Codex, OpenClaw, and Pi"
-summary: "Anthropic's new flagship is state-of-the-art, controversial, and $10/$50 per million tokens. Experiment with it temporarily in your existing harness. No Anthropic account, just Token Station free credits."
+summary: "Anthropic's new flagship is state-of-the-art, controversial, and $10/$50 per million tokens. Experiment with it temporarily in your existing harness. No Anthropic account, just a Token Station key."
 category: "tutorial"
 date: "2026-06-12"
 cta: "https://models.bytefuture.ai/intro.html"
@@ -16,7 +16,7 @@ draft: false
 
   <p>That combination, clearly brilliant yet openly distrusted and priced like a luxury good, calls for a specific posture: <strong>experiment with it, but don't commit to it.</strong> Don't sign up for a new account, don't fund a new balance, don't re-platform your workflow. Run it <em>temporarily</em> inside the coding harness you already use, on pay-as-you-go tokens you can stop spending the moment you've seen enough.</p>
 
-  <p>Fable 5 is live on <a href="https://models.bytefuture.ai">Token Station</a> as <code>anthropic/claude-fable-5</code>, at Anthropic's list price with zero markup, and your <a href="https://models.bytefuture.ai/signup">$1 signup credit</a> works on it. This guide shows the exact setup for <strong>Codex</strong>, <strong>OpenClaw</strong>, and <strong>Pi</strong>. (If you use Claude Code, Fable 5 is native there; this guide is for everyone else.)</p>
+  <p>Fable 5 is live on <a href="https://models.bytefuture.ai">Token Station</a> as <code>anthropic/claude-fable-5</code>, at Anthropic's list price with zero markup, and a small balance is enough to try it. This guide shows the exact setup for <strong>Codex</strong>, <strong>OpenClaw</strong>, and <strong>Pi</strong>. (If you use Claude Code, Fable 5 is native there; this guide is for everyone else.)</p>
 
   <h2 id="what-it-is">What Fable 5 actually is</h2>
 
@@ -66,12 +66,12 @@ draft: false
 
   <p>That's 2× Opus 4.8 on both sides, and <strong>25× Grok Build</strong> on output. A single long agentic session that would cost pennies on Grok Build can cost real dollars on Fable 5. Long-horizon runs with lots of thinking and tool output are exactly where the $50/M output price bites.</p>
 
-  <p>The flip side: even the $1 Token Station signup credit is enough for a first taste: roughly 100K input tokens or 20K output tokens at Fable 5 prices, which in practice means a handful of moderate coding-agent prompts. Enough to form a first impression; not enough to get hurt. For a fuller evaluation, your first top-up adds up to $50 in bonus credit.</p>
+  <p>The flip side: even a dollar is enough for a first taste: roughly 100K input tokens or 20K output tokens at Fable 5 prices, which in practice means a handful of moderate coding-agent prompts. Enough to form a first impression; not enough to get hurt. For a fuller evaluation, your first top-up adds up to $50 in bonus credit.</p>
 
   <h2 id="what-you-need">What you need</h2>
 
   <ul>
-    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; $1 in credit, no card required, no Anthropic account involved)</li>
+    <li>A Token Station account (<a href="https://models.bytefuture.ai/signup">sign up free</a>; no card required, no Anthropic account involved)</li>
     <li>Your Token Station API key (starts with <code>gw-</code>)</li>
     <li>Codex, OpenClaw, or Pi installed</li>
   </ul>
@@ -178,8 +178,8 @@ pi --model anthropic/claude-fable-5</code></pre>
 
   <h2 id="try-it">Run the experiment</h2>
 
-  <p>The point of this setup is that it's disposable. Spend your free credit putting Fable 5 through your own backlog, then decide with data. Because every model on Token Station sits behind the same key, the comparison is one config line: run the same task on <code>anthropic/claude-opus-4-8</code> (half the price), <code>openai/gpt-5.5</code>, or <code>xai/grok-build-0.1</code> (a twenty-fifth the output price) and see whether Fable 5's edge is worth its premium <em>for your work</em>.</p>
+  <p>The point of this setup is that it's disposable. Spend a small balance putting Fable 5 through your own backlog, then decide with data. Because every model on Token Station sits behind the same key, the comparison is one config line: run the same task on <code>anthropic/claude-opus-4-8</code> (half the price), <code>openai/gpt-5.5</code>, or <code>xai/grok-build-0.1</code> (a twenty-fifth the output price) and see whether Fable 5's edge is worth its premium <em>for your work</em>.</p>
 
   <p>If it is, great: keep the config and add funds. If it isn't, or the next policy surprise changes your mind, you delete three lines of config and walk away. Nothing was subscribed to. Nothing needs canceling.</p>
 
-  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($1 in free credit, no card, no Anthropic account; up to $50 bonus on your first top-up) and find out what a Mythos-class model does on your code.</p>
+  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> (no card, no Anthropic account; a 100% match up to $50 on your first top-up) and find out what a Mythos-class model does on your code.</p>

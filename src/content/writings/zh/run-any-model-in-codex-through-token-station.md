@@ -6,6 +6,7 @@ summary: "OpenAI 的 Codex 可以运行任意模型，不只是 OpenAI 自家的
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/run-any-model-in-codex-through-token-station-cover.png"
 draft: false
 ---
 
@@ -103,4 +104,4 @@ codex exec "Respond with exactly the word: pong"</code></pre>
 
   <p>让 Codex 运行任意模型，归根结底就是四行 TOML 加一个环境变量，唯一会绊住你的要求就是 Responses API。Token Station 把它托管的每个模型都通过这个 API 提供，所以上面的配置原封不动就能用，无论你跑的是 GPT-5.5、Claude、GLM-5.2，还是一个配了路由的工作负载。</p>
 
-  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（1 美元免费额度，无需信用卡；首次充值最高再送 50 美元），把 key 填进 <code>TOKEN_STATION_API_KEY</code>，跑一下 <code>pong</code> 验证。一个 key、一个端点，你的 Codex 会话需要的每个模型都在这里。</p>
+  <p>到 <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> 注册（无需信用卡，首次充值可获 100% 匹配、最高 50 美元奖励），把 key 填进 <code>TOKEN_STATION_API_KEY</code>，跑一下 <code>pong</code> 验证。一个 key、一个端点，你的 Codex 会话需要的每个模型都在这里。</p>

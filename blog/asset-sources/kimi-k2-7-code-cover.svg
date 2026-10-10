@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <title>kimi-k2-7-code-cover</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Source+Serif+4:ital,opsz,wght@1,8..60,400&amp;display=swap');
+  </style>
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1.2" fill="rgb(24,24,27)" fill-opacity="0.07"/>
+    </pattern>
+    <radialGradient id="wash1" gradientUnits="userSpaceOnUse" cx="1040" cy="120" r="480.83">
+      <stop offset="0" stop-color="rgb(13,148,136)" stop-opacity="0.16"/>
+      <stop offset="0.45" stop-color="rgb(37,99,235)" stop-opacity="0.1"/>
+      <stop offset="0.7" stop-color="rgb(0,0,0)" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="wash2" gradientUnits="userSpaceOnUse" cx="140" cy="590" r="424.26">
+      <stop offset="0" stop-color="rgb(37,99,235)" stop-opacity="0.1"/>
+      <stop offset="0.65" stop-color="rgb(0,0,0)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sh1" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="rgb(13,148,136)" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="#faf9f5"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#grid)"/>
+  <rect x="700" y="-220" width="680" height="680" fill="url(#wash1)"/>
+  <rect x="-160" y="290" width="600" height="600" fill="url(#wash2)"/>
+  <rect x="877.59" y="84" width="250.41" height="139" rx="16" fill="rgb(13, 148, 136)" filter="url(#sh1)" transform="rotate(-5 1002.8 153.5)"/>
+  <circle cx="1002.8" cy="84" r="7" fill="rgb(250, 249, 245)" stroke="rgb(13, 148, 136)" stroke-width="4" transform="rotate(-5 1002.8 153.5)"/>
+  <text x="920.7" y="118" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="400" letter-spacing="1.92px" fill="rgba(250, 249, 245, 0.7)" transform="rotate(-5 1002.8 153.5)">API PRICE / 1M TOK</text>
+  <text x="908.89" y="169" font-family="'Space Grotesk', sans-serif" font-size="40" font-weight="700" letter-spacing="-0.8px" fill="rgb(250, 249, 245)" transform="rotate(-5 1002.8 153.5)">$0.95</text>
+  <text x="1024.5" y="169" font-family="'Space Grotesk', sans-serif" font-size="40" font-weight="700" letter-spacing="-0.8px" fill="rgb(253, 230, 138)" transform="rotate(-5 1002.8 153.5)">/</text>
+  <text x="1048.59" y="169" font-family="'Space Grotesk', sans-serif" font-size="40" font-weight="700" letter-spacing="-0.8px" fill="rgb(250, 249, 245)" transform="rotate(-5 1002.8 153.5)">$4</text>
+  <text x="905.59" y="199" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="400" fill="rgba(250, 249, 245, 0.7)" transform="rotate(-5 1002.8 153.5)">a twelfth of Fable 5 output</text>
+  <text x="72" y="81" font-family="'JetBrains Mono', monospace" font-size="17" font-weight="600" letter-spacing="3.06px" fill="rgb(13, 148, 136)">KIMI K2.7 CODE · ON TOKEN STATION</text>
+  <text x="72" y="187" font-family="'Space Grotesk', sans-serif" font-size="88" font-weight="700" letter-spacing="-3.08px" fill="rgb(24, 24, 27)">The opposite bet.</text>
+  <text x="72" y="256.75" font-family="'Source Serif 4', serif" font-size="44" font-weight="400" font-style="italic" letter-spacing="-0.44px" fill="rgb(82, 82, 91)">A $4 workhorse next to your SOTA model.</text>
+  <rect x="72.5" y="508.5" width="191.81" height="57" rx="28.5" fill="rgb(255, 255, 255)" stroke="rgb(228, 228, 231)" stroke-width="1"/>
+  <text x="99" y="545" font-family="'Space Grotesk', sans-serif" font-size="23" font-weight="600" fill="rgb(24, 24, 27)">Claude Code</text>
+  <rect x="279.31" y="508.5" width="122.86" height="57" rx="28.5" fill="rgb(255, 255, 255)" stroke="rgb(228, 228, 231)" stroke-width="1"/>
+  <text x="305.81" y="545" font-family="'Space Grotesk', sans-serif" font-size="23" font-weight="600" fill="rgb(24, 24, 27)">Codex</text>
+  <rect x="417.17" y="508.5" width="162.84" height="57" rx="28.5" fill="rgb(255, 255, 255)" stroke="rgb(228, 228, 231)" stroke-width="1"/>
+  <text x="443.67" y="545" font-family="'Space Grotesk', sans-serif" font-size="23" font-weight="600" fill="rgb(24, 24, 27)">OpenClaw</text>
+  <text x="594.52" y="546" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="400" fill="rgb(161, 161, 170)">→</text>
+  <rect x="635.02" y="508.5" width="270.73" height="57" rx="28.5" fill="rgb(240, 253, 250)" stroke="rgba(13, 148, 136, 0.4)" stroke-width="1"/>
+  <text x="661.52" y="545" font-family="'Space Grotesk', sans-serif" font-size="23" font-weight="600" fill="rgb(13, 148, 136)">kimi/kimi-k2.7-code</text>
+  <svg x="946" y="526" width="40" height="40" viewBox="0 0 32 32" fill="none">
+    <rect x="2.5" y="2.5" width="27" height="27" rx="8" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="1.6"></rect>
+    <circle cx="12" cy="16" r="3.4" fill="#2563EB"></circle>
+    <circle cx="21.5" cy="16" r="3.4" fill="none" stroke="#0D9488" stroke-width="1.8"></circle>
+    <path d="M15.4 16h2.7" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"></path>
+  </svg>
+  <text x="999" y="554.5" font-family="'Space Grotesk', sans-serif" font-size="24" font-weight="600" letter-spacing="-0.24px" fill="rgb(82, 82, 91)">ByteFuture</text>
+</svg>

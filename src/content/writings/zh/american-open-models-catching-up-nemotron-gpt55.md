@@ -21,7 +21,7 @@ draft: false
 <p>两款模型都在 <strong>9 次运行中通过了全部 9 次</strong>。</p>
 <p>这并不意味着每一款开源模型都能胜过每一款闭源模型。它意味着对开发者和企业来说更重要的事：</p>
 <blockquote>美国开源模型如今已经足够强大，可以在真实的智能体工作负载上竞争，而不只是在玩具级提示上。</blockquote>
-<p>在深入之前，先说一句关于使用的事：<strong>NVIDIA NIM 正在限时免费提供 Nemotron-3 Ultra 推理</strong>，因此 <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> 也免费提供它。而你<a href="https://models.bytefuture.ai/signup">注册 Token Station</a> 时获得的免费额度可以用于 GPT-5.5 和 Claude Fable 5，因此你可以在自己的编程任务上同时评估这三款模型。</p>
+<p>在深入之前，先说一句关于使用的事：<strong>NVIDIA NIM 正在限时免费提供 Nemotron-3 Ultra 推理</strong>，因此 <strong><a href="https://models.bytefuture.ai">Token Station</a></strong> 也免费提供它。而同一个 <a href="https://models.bytefuture.ai/signup">Token Station</a> key 也能用于 GPT-5.5 和 Claude Fable 5，因此你可以在自己的编程任务上同时评估这三款模型。</p>
 <h2 id="why-this-matters">这为何重要</h2>
 <p>过去，开源与闭源模型之争大多停留在理念层面。</p>
 <p>开源模型给开发者更多控制权。闭源模型通常提供更好的性能。</p>

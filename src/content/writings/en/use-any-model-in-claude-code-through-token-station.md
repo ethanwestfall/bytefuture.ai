@@ -6,6 +6,7 @@ summary: "Claude Code can run through Token Station with either a persistent ~/.
 category: "tutorial"
 date: "2026-06-18"
 cta: "https://models.bytefuture.ai/intro.html"
+cover: "blog/use-any-model-in-claude-code-through-token-station-cover.png"
 draft: false
 ---
 
@@ -101,4 +102,4 @@ claude -p "Respond with exactly the word: pong"</code></pre>
 
   <p>For a permanent setup, use <code>~/.claude/settings.json</code>. For a temporary setup, export the variables in your current shell. In both cases the check is the same: run <code>claude -p "Respond with exactly the word: pong"</code> and look for <code>pong</code>.</p>
 
-  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> ($1 in free credit, no card; up to $50 bonus on your first top-up), put your <a href="https://models.bytefuture.ai">Token Station</a> key into Claude Code, and route Claude Code's model slots to the models you actually want to use.</p>
+  <p>Sign up at <a href="https://models.bytefuture.ai/signup">models.bytefuture.ai</a> (no card required, with a 100% match up to $50 on your first top-up), put your <a href="https://models.bytefuture.ai">Token Station</a> key into Claude Code, and route Claude Code's model slots to the models you actually want to use.</p>

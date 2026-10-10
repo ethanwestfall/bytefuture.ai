@@ -9,6 +9,10 @@ const copyNames = [
   'index-zh.html',
   'index-ja.html',
   'index-ko.html',
+  'enterprise.html',
+  'enterprise-thanks.html',
+  'Viral-Beauty-Playbook.html',
+  'marketing',
   'CNAME',
   '.nojekyll',
   'robots.txt',
@@ -44,6 +48,11 @@ const migratedBlogHtml = migratedBlogHtmlNames();
 function shouldSkip(src, name) {
   if (skip.has(name)) return true;
   const rel = path.relative(root, src).replaceAll(path.sep, '/');
+  // The SVG an image was authored from is authoring-time only: the reader gets
+  // the committed raster and nothing else. Scoped to this one directory on
+  // purpose. blog/asset-sources/ stays published because two legacy chart
+  // sources live in there and check:legacy-links guards their URLs.
+  if (rel === 'marketing/asset-sources') return true;
   return rel.startsWith('blog/') && migratedBlogHtml.has(name);
 }
 

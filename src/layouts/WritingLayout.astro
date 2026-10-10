@@ -7,12 +7,15 @@ export interface Props {
   category: string;
   date: Date;
   cta: string;
+  cover?: string;
   draft?: boolean;
 }
 
-const { title, summary, slug, lang, category, date, cta, draft = false } = Astro.props;
+const { title, summary, slug, lang, category, date, cta, cover, draft = false } = Astro.props;
 const suffix = lang === 'en' ? '' : `-${lang}`;
 const url = `https://bytefuture.ai/blog/${slug}${suffix}.html`;
+// Covers are repo-root-relative in frontmatter (blog/foo.png); og:image needs an absolute URL.
+const coverUrl = cover ? `https://bytefuture.ai/${cover.replace(/^\/+/, '')}` : undefined;
 const locale = { en: 'en_US', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR' }[lang];
 const htmlLang = { en: 'en', zh: 'zh-Hans', ja: 'ja', ko: 'ko' }[lang];
 const writings = { en: 'Writings', zh: '文章', ja: '記事', ko: '글' }[lang];
@@ -61,6 +64,15 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
   <meta property="og:type" content="article" />
   <meta property="og:url" content={url} />
   <meta property="og:locale" content={locale} />
+  {coverUrl && (
+    <>
+      <meta property="og:image" content={coverUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={title} />
+    </>
+  )}
+  <meta name="twitter:card" content={coverUrl ? 'summary_large_image' : 'summary'} />
   <link rel="alternate" hreflang="en" href={`https://bytefuture.ai/blog/${slug}.html`} />
   <link rel="alternate" hreflang="zh-Hans" href={`https://bytefuture.ai/blog/${slug}-zh.html`} />
   <link rel="alternate" hreflang="ja" href={`https://bytefuture.ai/blog/${slug}-ja.html`} />
@@ -104,8 +116,13 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .prose h2 { font-family:system-ui,sans-serif; font-size:28px; margin:56px 0 16px; scroll-margin-top:120px; overflow-wrap:anywhere; }
     .prose h3 { font-family:system-ui,sans-serif; overflow-wrap:anywhere; }
     .prose p,.prose ul,.prose ol { color:#27272a; margin:0 0 24px; }
+    .prose .note { background:#fff; border:1px solid #e4e4e7; border-left:3px solid #2563EB; border-radius:12px; padding:16px 20px; margin:0 0 36px; font-family:system-ui,sans-serif; font-size:15px; line-height:1.65; color:#52525b; }
+    .prose .note p { margin:0; color:inherit; }
+    .prose .note p + p { margin-top:10px; }
     .prose figure { margin:32px 0; max-width:100%; overflow:hidden; }
     .prose img { display:block; width:100%; max-width:100%; height:auto; object-fit:contain; }
+    .prose video { display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid #e4e4e7; }
+    .prose figcaption { font-size:14px; color:#71717a; margin-top:10px; text-align:center; }
     .prose pre { background:#fff; border:1px solid #e4e4e7; border-radius:12px; padding:20px 24px; overflow-x:auto; margin:32px 0; max-width:100%; }
     .prose pre, .prose code { font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:0.9em; }
     .code-wrap { position:relative; margin:32px 0; }
@@ -121,9 +138,8 @@ const dateText = new Intl.DateTimeFormat(lang === 'zh' ? 'zh-CN' : lang === 'ja'
     .share-btn.copied { border-color:#0D9488; color:#0D9488; }
     .prose code { white-space:pre-wrap; overflow-wrap:anywhere; }
     .prose table { display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:32px 0; font-family:system-ui,sans-serif; font-size:15px; }
-    .prose th,.prose td { border:1px solid #e4e4e7; padding:10px 14px; text-align:left; vertical-align:top; white-space:nowrap; }
+    .prose th,.prose td { border:1px solid #e4e4e7; padding:10px 14px; text-align:left; vertical-align:top; }
     .prose th { background:#f4f4f5; font-weight:600; }
-    .prose tbody td:first-child,.prose td:first-child { white-space:normal; }
     footer { max-width:1200px; margin:0 auto; padding:48px 24px; display:flex; justify-content:space-between; gap:24px; font-family:system-ui,sans-serif; color:#71717a; }
     @media (max-width:1024px){ .page-grid{grid-template-columns:1fr; max-width:760px;} .sidebar-left,.sidebar-right{display:none;} }
     @media (max-width:640px){ .nav-inner{padding:0 16px;} .nav-hide-sm{display:none;} .article-header{padding-top:48px;} .prose{font-size:17px;} footer{flex-direction:column;} }
